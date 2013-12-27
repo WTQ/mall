@@ -1,0 +1,18 @@
+<?php
+//===========================================================
+$act=isset($_POST['action'])?$_POST['action']:NULL;
+if($act=="submit")
+{
+	$admin->update_custom_cat(1);
+	msg("main.php?m=product&s=admin_product_cat&time=".time());
+}
+if($_GET['deid'])
+{
+	$admin->del_custom_cat($_GET['deid']);
+}
+$tpl->assign("re",$admin->get_custom_cat_list(1,0));
+//==================================
+$tpl->assign("config",$config);
+$tpl->assign("lang",$lang);
+$output=tplfetch("admin_product_cat.htm");
+?>

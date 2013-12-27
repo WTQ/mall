@@ -1,0 +1,36 @@
+<link href="<{$config.weburl}>/module/vote/templates/vote.css" rel="stylesheet" type="text/css" />
+<div class="main">
+<div class="vote"> <{if $tit}>
+  <div class="title">
+    <h1><{$tit}></h1>
+  </div>
+  <{else}> <br />
+  <{/if}>
+  <div class="scon">
+    <div class="div1">
+      <ul>
+        <li>调查结果</li>
+      </ul>
+    </div>
+    <div class="div2"> <{foreach item=list name=name from=$vote}>
+      <table cellpadding="0" cellspacing="0" border="0">
+        <tr>
+          <th colspan="4"><{$smarty.foreach.name.iteration}>. <{$list.title}></th>
+        </tr>
+        <{foreach item=slist name=sname from=$list.item}>
+        <tr>
+          <td width="*" class="tdv"><{$smarty.foreach.sname.iteration}>. <{$slist.0}></td>
+          <td width="25%"><span>
+            <div class="color<{$smarty.foreach.sname.iteration}>" style="width:<{if $list.num!=0}><{$slist.1/$list.num*100}><{else}>0<{/if}>%;"></div>
+            </span></td>
+          <td width="10%"><{$slist.1}>票</td>
+          <td width="12%"><{if $list.num!=0}><{$slist.1/$list.num*100|number_format:2}><{else}>0<{/if}>%</td>
+        </tr>
+        <{/foreach}>
+        <tr>
+          <td colspan="4" class="td1">&nbsp;</td>
+        </tr>
+      </table>
+      <{/foreach}> </div>
+  </div>
+</div>

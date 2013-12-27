@@ -1,0 +1,131 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<title></title>
+<style>
+body{margin:0px; background-color:#FFFFFF; font-size:12px;}
+td{font-size:12px}
+.body{height:400px; width:547px; overflow-y:auto}
+.header{background-color:#A9BAD3; height:25px!important; height:22px; float:left; width:100%;}
+
+<{if $smarty.get.totalRows||$smarty.get.catid}>
+#old{margin-top:0px; }
+#new{margin-top:0px;display:none;}
+<{else}>
+#old{margin-top:0px; display:none;}
+#new{margin-top:0px;}
+<{/if}>
+.oldcon{border: solid 1px #A9BAD3; border-top:none; float:left; padding:5px; width:535px!important; width:100%;}
+.newcon{padding:20px; font-size:12px; border: solid 1px #A9BAD3; border-top:none; line-height:25px;}
+.bton{background-color:#FFFFFF; display:block; width:120px; float:left; height:auto;border: solid 1px #A9BAD3; border-bottom:none; margin-left:5px;overflow:hidden; text-align:center; font-weight:bold; padding:5px; height:auto; }
+.btoff{display:block; width:120px; float:left; height:auto;border: solid 1px #A9BAD3; border-bottom:none; margin-left:5px;overflow:hidden; text-align:center; font-weight:bold; padding:5px; height:auto; cursor:pointer; }
+.img{padding:1px;border: solid 1px #A9BAD3; width:80px; height:70px;}
+.page{ padding-right:5px; float:right; margin:3px; padding-left:200px;}
+.page a,.page b{background-color: #FFFFFF;background-repeat: no-repeat;border: 1px solid #C2D5E3;color: #333333;display: inline;float: left;height: 26px; line-height:26px;margin-left: 4px;overflow: hidden;padding: 0 8px;text-decoration: none;}
+.page b{background-color: #E5EDF2;}
+.page a.prePage{background-image:url(image/default/arw_l.gif);background-position: 50% 50%;}
+.page a.nextPage{background-image: url(image/default/arw_r.gif);background-position: 90% 50%;padding-right: 25px;}
+</style>
+</head>
+
+<body>
+<{if $smarty.get.strid}>
+	<script>
+    window.parent.picvalue('<{$smarty.get.strid}>');
+    </script>
+<{/if}>
+<center>
+<div class="body">
+<div id="new">
+    <div class="header">
+        <span class="bton"><{$lang.new_upload}></span>
+        <span class="btoff" onClick="show_div('old');"><{$lang.slect_old}></span>
+    </div>
+    <div class="newcon">
+        <form action="" method="post" enctype="multipart/form-data">
+        <input name="up_type" type="hidden" value="multi">
+        <input name="action" type="hidden" value="submit">
+        <div id="file1"><{$lang.pic1}><input name="pic1" type="file"></div>
+        <div id="file2"><{$lang.pic2}><input name="pic2" type="file"></div>
+        <div id="file3"><{$lang.pic3}><input name="pic3" type="file"></div>
+        <div id="file4"><{$lang.pic4}><input name="pic4" type="file"></div>
+        <input name="submit" value="<{$lang.submit}>" type="submit">
+        <input onClick="window.parent.picvalue('');" type="button" name="button2" id="button2" value="<{$lang.cancel}>">
+        </form>
+    </div>
+</div>
+
+
+<div id="old">
+    <div class="header">
+        <span class="btoff" onClick="show_div('new');"><{$lang.new_upload}></span>
+        <span class="bton"><{$lang.slect_old}></span>
+        <span>
+            <select name="catid" id="catid" onChange="window.location='main.php?m=album&s=admin_album&nohead=true&catid='+this.value">	
+            <option value=""><{$lang.allcat}></option>
+             <{foreach item=album_cat from=$album_custom_cat}>
+               <{if $smarty.get.catid==$album_cat.id}>selected<{/if}> ><{$album_cat.name}><option value="<{$album_cat.id}>"  <{if $smarty.get.catid==$album_cat.id}>selected<{/if}> ><{$album_cat.name}></option>
+            <{/foreach}>
+            </select>
+        </span>
+    </div>
+    
+    <div class="oldcon">
+        <form name="myform" id="myform" action="">
+        <{foreach item=list from=$de.list}>
+            <div style="float:left; width:88px; height:95px;">
+                <img class="img" src="<{$config.weburl}>/uploadfile/zsimg/size_small/<{$list.id}>.jpg" /><br />
+                <input type="checkbox" class="checkbox" id="picid" name="picid" value="<{$list.id}>" /><{$list.zname}>
+            </div>
+        <{/foreach}>
+        
+        <div style="width:100%; float:left;">
+              <span style="float:left">
+              <input onClick="get_pic();" type="button" name="button" id="button" value="<{$lang.submit}>" />
+              <input onClick="window.parent.picvalue('');" type="button" name="button2" id="button2" value="<{$lang.cancel}>">
+              </span>
+              <div class="page"><{$de.page}></div>
+        </div>
+        </form>
+	</div>
+</div>
+<script>
+function show_div(id)
+{
+	if(id=='old')
+	{
+		document.getElementById('old').style.display='block';
+		document.getElementById('new').style.display='none';
+	}
+	else
+	{
+		document.getElementById('old').style.display='none';
+		document.getElementById('new').style.display='block';
+	}
+}
+
+function get_pic()
+{
+	var strv='';
+	if(!document.myform.picid.length)
+	{
+		if(document.getElementById('picid').checked==true)
+			strv=document.getElementById('picid').value;
+	}
+	for(i=0;i<=document.myform.picid.length;i++)
+	{
+		if(document.myform.picid[i])
+		{
+			if(document.myform.picid[i].checked)
+			{
+				strv=strv+document.myform.picid[i].value+",";
+			}
+		}
+	}
+	window.parent.picvalue(strv);
+}
+</script>
+</center>
+</body>
+</html>

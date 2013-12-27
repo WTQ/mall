@@ -1,0 +1,73 @@
+<link href="<{$config.weburl}>/module/news/templates/news.css" rel="stylesheet" type="text/css" />
+<div class="menu_bottom L1">				
+    <div class="headtop_L">
+        <{$lang.you_are_here}><a href='<{$config.weburl}>/'><{$lang.indexpage}></a> &raquo; <a href="<{$config.weburl}>/?m=news"><{$lang.bizchenter}></a> &raquo; <{if $cat!=''}><{$cat}><{else}><{$smarty.get.key}><{/if}>
+    </div>
+    <div class="headtop_R"></div>		
+</div>
+
+<{if !$smarty.get.key&&$news_menu.0.catid}>
+    <div class="second_menu">
+        <li><{$lang.newnav}></li>
+		<{foreach item=list from=$news_menu}>
+		<li><a href="<{$config.weburl}>/?m=news&s=news_list&id=<{$list.catid}>"><{$list.cat}></a></li>
+		<{/foreach}>
+    </div>
+<{/if}>
+
+<!--主体开始 -->
+	<div id="mainbody1" class="m1">
+	<script src='<{$config.weburl}>/api/ad.php?id=28&catid=<{$smarty.get.id}>&sname=<{$sname}>'></script>
+		<!--主体左侧开始 -->
+		<div class="leftbar">
+			<div class="title4"><div class="title_left2 L2">
+            <{if $cat!=''}><{$cat}><{else}><{$lang.bizchenter}><{/if}>
+            </div></div>
+			<div class="content4 overflow">
+                     <div class="newslist">
+	                 <{foreach item=list key=num from=$re.list}>
+                        <{if ($num+1)%5==0}>
+                        <li style="border-bottom: 1px dotted #999999; margin-bottom:8px;">
+                        <{else}>
+						<li>
+                        <{/if}>
+                         <span class="time"><{$list.uptime|date_format}></span>
+                        <a <{$list.style}> href="<{$config.weburl}>/?m=news&s=newsd&id=<{$list.nid}>" title="<{$list.title}>" target="_blank"><{$list.ftitle|strip_tags|replace:"%":"％"|truncate:80:'...'}></a>
+                        </li>
+					<{/foreach}>
+					</div>
+					<div class="page"><{$re.page}></div>
+			</div>
+		</div>
+		<!--主体左侧结束 -->
+		
+		<!--主体右侧开始 -->
+		<div class="rightbar">
+		     <div class="right1">
+				<div class="sectitle" >
+						<div class="title_left2 L2"><{$lang.picnew}></div>
+		        </div>
+				<div class="seccon">
+					<ul class="ul1 pic_list">
+					  <{insert name="label" type='news' temp='news_list_2' img='true' leng=16 limit=$config.rec_pic_num}>
+                    </ul> 
+                    <div class="clear"></div>
+			    </div>
+				<div class="clear"></div>
+			</div>
+			<div class="right1 m1">
+				<div class="sectitle" >
+						<div class="title_left2 L2"><{$lang.recread}></div>
+		        </div>
+				<div class="seccon" >
+					<ul class="ul1">
+					 	<{insert name="label" type="news" temp='news_default_list' rec=1 leng=32 limit=$config.rec_news_num}>
+				   </ul>
+				   <div class="clear"></div>
+			    </div>
+				
+			</div>
+
+		</div>		
+		<!--主体右侧结束 -->
+	</div>

@@ -1,0 +1,101 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<link href="admin.css" rel="stylesheet" type="text/css" />
+<script type="text/javascript" src="../script/jquery-1.4.4.min.js"></script>
+<title><{if $smarty.get.operation==''}>店铺认证<{else}>店主认证<{/if}></title>
+</head>
+<body>
+	<div class="container">
+        <div class="flow">
+            <div class="itemtitle">
+                <h3>认证</h3>
+                <ul>
+                    <li <{if $smarty.get.operation==''}>class="current"<{/if}>><a href="?m=<{$smarty.get.m}>&s=<{$smarty.get.s}>"><span>店铺认证</span></a></li>
+                    <li <{if $smarty.get.operation=='shopkeeper'}>class="current"<{/if}>><a href="?m=<{$smarty.get.m}>&s=<{$smarty.get.s}>&operation=shopkeeper"><span>店主认证</span></a></li>
+                </ul>
+            </div>
+        </div>
+        <div class="h35"></div>
+        <script type="text/javascript">
+        $(function(){
+            /* 全选 */
+             $('.checkall').click(function(){
+                var _self = this;
+                $('.checkitem').each(function(){
+                    if (!this.disabled)
+                    {
+                        $(this).attr('checked', _self.checked);
+                    }
+                });
+                $('.checkall').attr('checked', this.checked);
+            });	 
+        });
+        </script>
+        <form action="" method="post">
+        <table class="table">
+        	<thead>
+                <tr>
+                    <th class="partition" colspan="99"></th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr class="header">
+                    <th width="30"></th>
+                    <th width="120">店主用户名</th>
+                    <th>商铺名称</th>
+                    <th width="120">店铺等级</th>
+                    <th width="140"><{if $smarty.get.operation==''}>营业执照<{else}>身份证<{/if}></th>
+                    <th width="140"><{if $smarty.get.operation==''}>店铺认证<{else}>店主认证<{/if}></th>
+                    <th width="120">创店时间</th>
+          		</tr>
+                <{foreach item=list from=$de.list}>
+                <tr>
+                    <td><input type="checkbox" value="<{$list.userid}>" class="checkitem" name="chk[]"></td>
+                    <td><a target="_blank" href="../home.php?uid=<{$list.userid}>"><{$list.user}></a></td>
+                    <td><a target="_blank" href="../shop.php?uid=<{$list.userid}>"><{$list.company}></a></td>
+                    <td><{$list.grade}></td>
+                    <td>
+                    <{if $smarty.get.operation=='' }>
+                    	<a target="_blank" href="<{$list.shop_auth_pic}>"><img align="absmiddle" src="../image/default/image_s.gif"></a>
+                    <{else}>
+                    	<a target="_blank" href="<{$list.shopkeeper_auth_pic}>"><img align="absmiddle" src="../image/default/image_s.gif"></a>
+                    <{/if}>
+                    </td>
+                    <td>
+                    <{if $smarty.get.operation=='' }>
+                    	<{if $list.shop_auth==1}>通过<{elseif $list.shop_auth=='-1'}>不通过<{else}>待审核<{/if}>
+                    <{else}>
+                    	<{if $list.shopkeeper_auth==1}>通过<{elseif $list.shopkeeper_auth=='-1'}>不通过<{else}>待审核<{/if}>
+                    <{/if}>
+                    </td>
+                    <td><{$list.create_time|date_format:"%Y-%m-%d <br> %H:%M:%S"}></td>
+                </tr>
+                <{foreachelse}>
+                <tr>
+                    <td class="norecord" colspan="99"><i></i><span>暂无符合条件的数据记录</span></td>
+                </tr>
+                <{/foreach}>
+            </tbody>
+            <tfoot>
+                <tr>
+                	<td colspan="3">
+                        <div class="del">
+                        <input type="checkbox" class="checkall" id="del">
+                        <label for="del">全选</label>
+                        </div>
+                        
+                        <input type="hidden" name="act" value="<{if $smarty.get.operation=='' }>shop<{else}>shopkeeper<{/if}>" />
+                        
+                        <input name="submit" type="submit" value="<{$lang.pass1}>" />
+                        <input name="submit" type="submit" value="<{$lang.npass}>" />
+                    </td>
+                    <td colspan="99"><div class="page"><{$de.page}></div></td>
+                </tr>
+            </tfoot>
+        </table>
+        </form>
+    </div>
+</body>
+</html>

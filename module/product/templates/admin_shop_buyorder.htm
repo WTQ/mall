@@ -1,0 +1,62 @@
+<style>
+.table{ border-collapse: collapse; border-color: #E6E6E6; border-style: solid; border-width: 0 1px 1px; border-top: 2px solid #FFCCAA; }
+.table th{ background: url("image/default/tb-th.gif") repeat-x 0 0 #F7F7F7; color: #666666; font-weight: normal; height: 31px;}
+.table td { vertical-align: middle; border-color: #E6E6E6; border-image: none;  border-style: solid; border-width: 1px 0 0 1px;  padding: 10px 4px 5px; text-align: center; }
+.table td .img{ border: 1px solid #E1E1E1;  float: left; margin-bottom: 4px; margin-right: 4px; }
+</style>
+<div class="admin_right_top"><{$lang.mybuy}></div>
+<table class="admin_table" border="0" cellspacing="1" align="center">
+	<tr>
+	  <td colspan="2" align="left" bgcolor="#FFFFFF" >
+		  <{foreach item=list key=num from=$blist.process}>
+		  <a href="<{$config.weburl}>/main.php?m=product&s=admin_shop_buyorder&status=<{$num}>"><{$list}></a>|
+		  <{/foreach}>
+	  </td>
+   </tr>
+</table>
+
+<table width="100%" class="table"> 
+<tr>
+    <th>订单号</th>
+    <th>订单商品</th>
+    <th>收货人</th>
+    <th>订单金额</th>
+    <th>订单时间</th>
+    <th>订单状态</th>
+    <th>操作</th>
+</tr>
+<{foreach item=buylist from=$blist.list}>
+<tr>
+    <td width="120"><{$buylist.order_id}></td>
+    <td style=" padding:10px 3px 5px 7px;">
+    <{foreach item=plist from=$buylist.product}>
+    <a class="img" href="<{$config.weburl}>/?m=product&s=detail&id=<{$plist.pid}>">
+        <{if $plist.pic}>
+            <img src="uploadfile/product/<{$plist.pic}>" width="50" height="50" />
+        <{else}>
+            <img src="image/default/nopic.gif" width="50" height="50" />
+        <{/if}>
+    </a>
+    <{/foreach}>
+    </td>
+    <td width="80"><{$buylist.buyer_name}></td>
+    <td width="100"><{$config.money}><{$buylist.product_price+$buylist.logistics_price|number_format:2}></td>
+    <td width="80" align="center"><{$buylist.creat_time|date_format:"%Y-%m-%d </br> %H:%M:%S"}></td>
+    <td width="86"><{$buylist.statu_text}></td>
+    <td width="60">
+        <{if $buylist.status==1}>
+            <a href='main.php?m=payment&s=admin_pay&order_id=<{$buylist.order_id}>'>付款</a> <br />
+            <a href='main.php?m=product&s=admin_shop_buyorder&flag=0&id=<{$buylist.order_id}>'>取消</a><br />
+        <{/if}>
+        <a target="_blank" href="main.php?m=product&s=admin_shop_orderdetail&id=<{$buylist.order_id}>">查看</a>
+    </td>
+</tr>
+<{foreachelse}>
+<tr>
+    <td colspan="7"><{$lang.noorder}></td>
+</tr>  
+<{/foreach}> 
+<tr>
+   <td colspan="7"><div class="page"><{$blist.page}></div></td>
+</tr> 
+</table>

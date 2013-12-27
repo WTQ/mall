@@ -1,0 +1,85 @@
+<link href="<{$config.weburl}>/module/shop/templates/company.css" rel="stylesheet" type="text/css" />
+<script type="text/javascript" charset="utf-8" src="<{$config.weburl}>/script/district.js" ></script>
+<script>
+var weburl="<{$config.weburl}>";
+tonextClass('<{$smarty.get.province}>|1');
+tonextClass('<{$smarty.get.city}>|2');
+</script>
+
+<div id="mainbody1" class="m1">
+    <div class="comli">
+    	<li>分类列表</li>
+    	<li>
+        <{foreach item=cList key=num from=$cat}>
+        <a href="<{$config.weburl}>/?m=shop&id=<{$cList.id}>"title="<{$cList.name}>"><{$cList.name}></a>
+        <{/foreach}>
+        </li>
+    	<div class="clear"></div>
+    </div>
+    
+  	<div class="comlid" style="border-top:0; margin-bottom:10px;">
+        <form action="<{$config.weburl}>">
+            <li><label>搜店铺：</label><input  class="text" type="text" value="<{$smarty.get.keys}>" size="20" name="keys" /></li>
+            <li>
+            <input type="hidden" name="province" id="id_1" value="" />
+            <select id="select_1" onChange="selClass(this);">
+            <option value="">--请选择--</option>
+            <{$province}>
+            </select>
+            </li>
+            <li>
+			<input type="hidden" name="city" id="id_2" value="" />
+            <select id="select_2" onChange="selClass(this);" class="hidden"><option value="">--请选择--</option></select>       
+            </li>
+            <li><input name="m" id="m" type="hidden" value="<{$smarty.get.m}>" />
+            <input type="submit" value="<{$lang.isure}>" /></li>
+        </form>
+    </div>	
+    
+    <{foreach item=list from=$info.list}>
+    <div class="comlis">
+    	<div class="left">
+        <table>
+    		<tr>
+            	<td colspan="2">
+                <dl>
+                    <dt>
+                    	<a target="_blank" href="shop.php?uid=<{$list.userid}>">
+                        <{if $list.logo}>
+                            <img width="90" height="80" src="<{$list.logo}>">
+                        <{else}>
+                            <img src="image/default/nopic.gif" width="90" height="80" />
+                        <{/if}>
+                        </a>
+                    </dt>
+                    <dd><font color="#3366CC" style="font-weight:bold;"><a href="shop.php?uid=<{$list.userid}>"><{$list.name}></a></font> <a href="main.php?m=message&s=admin_message_sed&uid=<{$list.userid}>" target="_blank"> <img alt="发站内信" src="<{$config.weburl}>/templates/user_templates_default/img/mail.gif"></a></dd>
+                    <dd><{if $list.sellerpointsimg}><img alt="卖家信用:<{$list.sellerpoints}>" title="卖家信用:<{$com.sellerpoints}>" align="absmiddle" src="<{$config.weburl}>/image/points/<{$list.sellerpointsimg}>"><{else}>卖家信用:<{$list.sellerpoints}><{/if}>
+                    </dd>
+                    <dd>好评率：<{$list.favorablerate|number_format:2}>%</dd>
+                    <dd>商品数量：<{$list.count}></dd>
+                </dl>
+                </td>
+            </tr>
+            <tr><td colspan="2"><a target="_blank" href="shop.php?uid=<{$list.userid}>"><strong><{$list.company}></strong></a></td></tr>  
+           	<tr><td width="80" valign="top">联系电话：</td><td width="150"><{$list.tel}></td></tr>
+            <tr><td valign="top">所在地区：</td><td><{$list.area}></td></tr>
+            <tr><td valign="top">详细地址：</td><td><{$list.addr}></td></tr>
+        </table>
+        </div>
+        <div class="right">
+        	<ul>
+            <{foreach item=slist from=$list.pro}>
+                <li><a target="_blank" title="<{$slist.pname}>" href="<{$config.weburl}>/?m=product&s=detail&id=<{$slist.id}>">
+                    <img src="<{$slist.pic}>_220X220.jpg" width=160  height=160 alt="<{$slist.pname}>" /></a>
+                    <a class="com_pname" target="_blank" title="<{$slist.pname}>" href="<{$config.weburl}>/?m=product&s=detail&id=<{$slist.id}>"><p><{$slist.pname|truncate:50}></p>
+                    </a>
+                    <p class="redprice"><{$config.money}> <{$slist.price}></p>
+                </li>
+            <{/foreach}>
+            </ul>
+        </div>
+        <div class="clear"></div>
+    </div>    
+    <{/foreach}>
+    <div class="page"><{$info.page}></div>
+</div>

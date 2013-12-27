@@ -1,0 +1,47 @@
+<?php 
+ if(!isset($lang))
+	$lang=array();
+ global $_LANG_MOD_MESSAGE; 
+ $_LANG_MOD_MESSAGE = array (
+  'addr' =>'地址',
+  'addtime' =>'添加时间',
+  'aef' => '添加/编辑好友',
+  'bsm' => '批量发送留言',
+  'city' => '市',
+  'comname' => '公司名称',
+  'conc' => '联系人',
+  'country' => '国家',
+  'fax' => '传真',
+  'fbs' =>'写邮件',
+  'fcom' => '公司',
+  'fname' => '收件人',
+  'kw' => '关键词',
+  'mc' => '内容',
+  'memo' => '备注',
+  'mobi' => '手机',
+  'ms' => '发送',
+  'msg_1' =>'邮件发送成功!',
+  'msg_2' =>'空留言内容，发送失败!',
+  'msmail' =>'同时发送电子邮件',
+  'mt' => '标题',
+  'myf' => '我的好友',
+  'name' => '姓名',
+  'pos' => '职位',
+  'prov' => '省',
+  'queryt' => '查询类别',
+  'readnow' => '查阅',
+  'suredel' => '确定要删除吗',
+  'tel' => '电话',
+  'uname' => '会员名',
+  'select_user'=>'选择联系人',
+  'recover'=>'恢复',
+  'no_data'=>'暂无数据',
+  'transferred'=>'转存至储存箱',
+  'from_to'=>'收件人/发件人',
+  'reply'=>'回复',
+  'mail_con' => '内容:',
+  'mail_detail' => '详情',
+  'mail_title' => '主题',
+); 
+  $lang = array_merge($lang, $_LANG_MOD_MESSAGE); 
+?>

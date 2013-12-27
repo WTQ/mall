@@ -1,0 +1,90 @@
+<div class="path">
+  <div> <a href="main.php?cg_u_type=2">卖家中心</a> <span>&gt;</span> <a href="main.php?m=shop&s=admin_link">合作伙伴管理</a> <span>&gt;</span> <{if $smarty.get.type=='add'}>新增合作伙伴<{elseif $smarty.get.type=='edit'}>编辑合作伙伴<{else}>合作伙伴列表<{/if}> </div>
+</div>
+<div class="main">
+  <div class="wrap">
+    <div class="hd">
+      <ul class="tabs">
+        <li class="<{if $smarty.get.type}>normal<{else}>active<{/if}>"><a href="main.php?m=shop&s=admin_link">合作伙伴列表</a></li>
+        <li class="<{if $smarty.get.type=='add'}>active<{else}>normal<{/if}>"><a href="main.php?m=shop&s=admin_link&type=add">新增合作伙伴</a></li>
+        <{if $smarty.get.type=='edit'}>
+        <li class="active"><a href="main.php?m=shop&s=admin_link&type=edit">编辑合作伙伴</a></li>
+        <{/if}>
+      </ul>
+    </div>
+    <{if $smarty.get.type=='add' or $smarty.get.type=='edit'}>
+    <div class="form-style">
+      <form action="" method="post">
+        <input type="hidden" value="<{$link.id}>" name="id">
+        <input type="hidden" value="<{if $link.id}>edit<{else}>add<{/if}>" name="submit">
+        <dl>
+          <dt><em>*</em>标题：</dt>
+          <dd>
+            <input type="text" value="<{$link.name}>" name="name" class="w150 text">
+          </dd>
+        </dl>
+        <dl>
+          <dt><em>*</em>链接：</dt>
+          <dd>
+            <p>
+              <input type="text" value="<{$link.url}>" name="url" class="w300 text">
+            </p>
+            <p class="hint">请填写包含http://的完整URL地址</p>
+          </dd>
+        </dl>
+        <dl>
+          <dt>排序：</dt>
+          <dd>
+            <p>
+              <input type="text" value="<{if $link.displayorder}><{$link.displayorder}><{else}>255<{/if}>" name="displayorder" class="w50 text">
+            </p>
+            <p class="hint">数字需大于零，越小越靠前</p>
+          </dd>
+        </dl>
+        <dl>
+          <dt>描述：</dt>
+          <dd>
+            <input type="text" value="<{$link.desc}>" name="desc" class="w300 text">
+          </dd>
+        </dl>
+        <dl class="foot">
+          <dt>&nbsp;</dt>
+          <dd>
+            <input type="submit" value="提交" class="submit">
+          </dd>
+        </dl>
+      </form>
+    </div>
+    <{else}>
+    <table class="table-list-style">
+      <thead>
+        <tr>
+          <th width="60">排序</th>
+          <th width="10"></th>
+          <th class="tl" width="200">标题</th>
+          <th class="tl">链接</th>
+          <th width="70">状态</th>
+          <th width="90">操作</th>
+        </tr>
+      </thead>
+      <tbody>
+      <{foreach item=list key=num from=$link}>
+      <tr>
+        <td><{$list.displayorder}></td>
+        <td></td>
+        <td class="tl"><a title="<{$list.desc}>" href="<{$list.url}>" target="_blank"><{$list.name}></a></td>
+        <td class="tl"><{$list.url}></td>
+        <td><{if $list.status==1}>已审核<{else}>未审核<{/if}></td>
+        <td><p><a href="main.php?m=shop&s=admin_link&type=edit&id=<{$list.id}>">编辑</a></p>
+          <p><a href="main.php?m=shop&s=admin_link&type=del&id=<{$list.id}>">删除</a></p></td>
+      </tr>
+      <{foreachelse}>
+      <tr>
+        <td colspan="20" class="norecord"><i></i><span>暂无符合条件的数据记录</span></td>
+      </tr>
+      <{/foreach}>
+        </tbody>
+      
+    </table>
+    <{/if}> </div>
+</div>

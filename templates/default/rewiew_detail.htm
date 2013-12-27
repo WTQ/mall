@@ -1,0 +1,33 @@
+<{include file="header.htm"}>
+<div class="menu_bottom L1">				
+    <div class="headtop_L">
+        <{$lang.you_are_here}><a href='<{$config.weburl}>/'><{$lang.indexpage}></a> &raquo; <{$guide}>
+    </div>
+    <div class="headtop_R"></div>		
+</div>
+
+<div id="mainbody1" class="topm" style="border:1px solid #CFCFCF; padding:5px;">
+
+	<div class="newstitle">
+	<{$tmsg}><font color="red" size="4"><{$lang.allrewiew}></font>
+	</div> 
+	 <table width="100%" height="100%" style="border-collapse:collapse;border:solid #999;border-width:1px 0px 0px 0px;">
+	  <tr>
+		<th width="50" height="30" scope="col" style="border-bottom: 1px solid #999999;" align="left"><{$lang.number}></th>
+		<th width="*" scope="col" style="border-bottom: 1px solid #999999;" align="left"><{$lang.revcon}></th>
+		<th width="100" align="left" style="border-bottom:1px solid #999999">评论人</th>
+		<th width="100" align="left" style="border-bottom:1px solid #999999"><{$lang.rewtime}></th>
+	  </tr>
+	  <{foreach key=num item=rev from=$revdetail.list}>
+	  <tr>
+		<td scope="row" style="border-bottom: 1px dotted #999999;" align="left" ><{$num+1}></td>
+		<td style="border-bottom: 1px dotted #999999;" align="left"><{$rev.content}></td>
+		<td style="border-bottom: 1px dotted #999999;" align="left"><{$rev.user}></td>
+		<td style="border-bottom: 1px dotted #999999;" align="left"><{$rev.uptime|date_format}></td>
+	  </tr>
+	   <{/foreach}>
+	</table>              
+</div>
+
+
+<{include file="footer.htm"}>

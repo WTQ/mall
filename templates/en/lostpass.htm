@@ -1,0 +1,46 @@
+<script type="text/javascript" src="script/Validator.js"></script>
+<!--主体开始 -->
+
+<table width="100%" border="0" align="left" cellspacing="1" bgcolor="#b6daeb" style="margin-top:0px">
+  <tr>
+    <td height="39" align="left" valign="middle" bgcolor="#FFFFFF"><form method="post" action="" onSubmit="return Validator.Validate(this,3)">
+        <table width="100%" border="0" cellspacing="0" cellpadding="0">
+          <tr>
+            <td height="28" colspan="2" align="left" bgcolor="#E8F3FD">&nbsp;<{$lang.callpass}></td>
+          </tr>
+          <tr>
+            <td width="18%" height="128"></td>
+            <td width="82%" valign="bottom"><{$lang.entercomname}><br />
+              <input name="user" type="text" id="user" dataType="Require" msg="<{$lang.pls_user}>" size="40" value="<{$smarty.post.user}>" /></td>
+          </tr>
+          <tr>
+            <td></td>
+            <td><{$lang.email}><br />
+              <input name="email" size="40" type="text" value="<{$smarty.post.email}>" dataType="Email" msg="<{$lang.pls_email}>" /></td>
+          </tr>
+          <tr>
+            <td height="152"></td>
+            <td valign="top"><input type="submit" name="Submit" value="<{$lang.isure}>" />
+              <input name="action" type="hidden" id="action" value="com" />
+            </td>
+          </tr>
+        </table>
+      </form>
+      <{if $smarty.post.action!=''}>
+      <form action="" method="post">
+        <table width="95%" border="0" cellpadding="0" cellspacing="0"  style="margin-left:5px;">
+          <tr>
+            <td><{if $company.userid!=""}>
+              <input name="userid" type="radio" value="<{$company.userid}>|<{$company.email}>" />
+              <a href="shop.php?uid=<{$company.userid}>" target="_blank"><{$company.user}></a> <br />
+              <input name="action" type="hidden" id="action" value="submit" />
+              <input name="<{$lang.isure}>" type="submit" value="<{$lang.isure}>" />
+              <{else}>
+              <{$lang.nosearch}><a href="<{$config.regname}>" target="_blank"><{$lang.reguser}></a> <{$lang.contactme}><a href="aboutus.php?type=3" target="_blank"><{$lang.conme}></a>．
+              <{/if}> </td>
+          </tr>
+        </table>
+      </form>
+      <{/if}> </td>
+  </tr>
+</table>

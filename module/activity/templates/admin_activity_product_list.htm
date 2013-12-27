@@ -1,0 +1,117 @@
+<div class="path">
+    <div>
+    	<a href="main.php?cg_u_type=2">卖家中心</a> <span>&gt;</span> 
+    	<a href="main.php?m=activity&s=admin_activity">促销活动</a> <span>&gt;</span> 
+        参与活动
+    </div>
+</div>
+<script>
+$(function(){
+    /* 全选 */
+	 $('.checkall').click(function(){
+        var _self = this;
+        $('.checkitem').each(function(){
+            if (!this.disabled)
+            {
+                $(this).attr('checked', _self.checked);
+            }
+        });
+        $('.checkall').attr('checked', this.checked);
+    });
+});
+</script>
+<div class="main">
+	<div class="wrap">
+        <div class="hd">
+            <ul class="tabs">
+            	<li class="normal"><a href="main.php?m=activity&s=admin_activity">活动列表</a></li>
+                <li class="active"><a href="#">参与活动</a></li>
+            </ul>
+        </div>
+        <table class="table-list-style">
+            <thead>
+            <tr>
+                <th width="70"></th>
+                <th class="tl">商品名称</th>
+                <th width="100">价格</th>
+                <th width="100">库存</th>
+                <th width="90">审核状态</th>
+            </tr>
+            </thead>
+            <tbody>
+            <{foreach item=list from=$ad}>
+            <tr>
+            	<td>
+                <div class="pic-small">
+                    <a target="_blank" href="<{$config.weburl}>/?m=product&s=detail&id=<{$list.product_id}>"><img width=60 height=60 src="<{if !$list.pic }><{$config.weburl}>/image/default/nopic.gif<{else}><{$list.pic}><{/if}>" alt="<{$list.pname}>" /></a>
+                </div>
+                </td>
+            	<td class="tl" valign="top"><a target="_blank" href="<{$config.weburl}>/?m=product&s=detail&id=<{$list.product_id}>"><{$list.pname}></a></td>
+            	<td><{$list.price}></td>
+            	<td><{$list.amount}></td>
+            	<td><{if $list.status==1}>待审核<{elseif $list.status==2}>已通过<{elseif $list.status==3}>未通过<{else}>再次申请<{/if}></td>
+            </tr>
+            <{foreachelse}>
+            <tr>
+            	<td colspan="20" class="norecord">
+                	<i></i><span>暂无符合条件的数据记录</span>	
+                </td>
+            </tr>
+            <{/foreach}>
+            </tbody>
+        </table>
+        <div class="activity">
+        	<h3>选择商品</h3>
+            <form action="" method="post">
+            <input type="hidden"  name="id" value="<{$smarty.get.id}>">
+            <input type="hidden"  name="act" value="add">
+         	<table class="table-list-style">
+            	<tbody>
+                <{if $pro.list }>
+                <tr>
+                	<td colspan="20">
+                    <ul>
+                    	<{foreach item=list from=$pro.list}>
+                        	<li>
+                            	<input type="checkbox" value="<{$list.id}>" class="checkitem" name="chk[]" id="chpro<{$list.id}>">
+                                <label for="chpro<{$list.id}>">
+                                <div class="pic">
+                                <img width=70 height=70 src="<{if !$list.pic }><{$config.weburl}>/image/default/nopic.gif<{else}><{$list.pic}><{/if}>" alt="<{$list.pname}>" />
+                                </div>
+                                <h4><a target="_blank" href="<{$config.weburl}>/?m=product&s=detail&id=<{$list.id}>"><{$list.pname}></a></h4>
+                            	</label>
+                            </li>
+                        <{/foreach}>
+                    </ul>
+                    </td>
+                </tr>
+                <{else}>
+                <tr>
+                    <td colspan="20" class="norecord">
+                        <i></i><span>暂无符合条件的数据记录</span>	
+                    </td>
+                </tr>
+                <{/if}>
+                </tbody>
+                <tfoot>
+                <tr>
+                	<td>
+                        <input style="margin:4px 5px 0 12px; float: left;" type="checkbox" class="checkall" id="del">
+                        <label for="del" class="btn2">全选</label>
+                        <div class="pagination"><{$pro.page}></div>
+                    </td>
+                </tr>
+                </tfoot>
+            </table>
+            
+            <dl class="foot">
+                <dt>&nbsp;</dt>
+                <dd class="tc"><input type="submit" value="选择完毕,参与活动" class="submit"></dd>
+            </dl>
+            </form>
+        </div>  
+        
+        
+        
+     </div>
+</div>

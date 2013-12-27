@@ -1,0 +1,336 @@
+<link type="text/css" rel="stylesheet" href="<{$config.weburl}>/module/product/templates/pro.css">
+<script src="<{$config.weburl}>/script/jquery-1.4.4.min.js" type=text/javascript></script>
+<script src="<{$config.weburl}>/lib/jquery.jqzoom1.0.1.js" type="text/javascript"></script>
+<script type="text/javascript">
+function getfav()
+{	
+	var url = '<{$config.weburl}>/ajax_back_end.php';
+	var myurl='<{$config.weburl}>/?m=product%26s=detail%26id=<{$smarty.get.id}>';
+	var u='<{$smarty.cookies.USER}>';
+	if(u=='')
+	{
+		alert('<{$lang.no_logo}>');
+		window.location.href='<{$config.weburl}>/login.php?forward=?m=product&s=detail&id=<{$smarty.get.id}>';
+		return false;
+	}
+	var fu='<{$smarty.get.id}>';
+	var typ='3';
+	var ttil="<{$prod.pname|regex_replace:"/[\r\t\n]/":""}>";
+	var mpic='<{$config.weburl}>/uploadfile/zsimg/<{$prod.showimg}>.jpg';
+	var des="<{$prod.pname|strip_tags}>";
+	var pars = 'user='+u+'&fid='+fu+'&type='+typ+'&title='+ttil+'&url='+myurl+'&des='+des+'&picurl='+mpic;
+	$.post(url, pars,showResponse);
+	function showResponse(originalRequest)
+	{
+		if(originalRequest>1)
+			alert('<{$lang.fav_ok}>');
+		else if (originalRequest>0)
+			alert('<{$lang.fav_isbing}>');
+		else
+			alert('<{$lang.error}>');
+	}
+}
+var CID = "endtime";
+if(window.CID != null)
+{
+	//var iTime = document.getElementById(CID).innerHTML;
+	//var Account;
+	//RemainTime();
+}
+function RemainTime()
+{
+	var iDay,iHour,iMinute,iSecond;
+	var sDay="",sHour="",sMinute="",sSecond="",sTime="";
+	if (iTime >= 0)
+	{
+		iDay = parseInt(iTime/24/3600);
+		if (iDay > 0)
+			sDay = iDay + "<{$lang.day}>";
+		iHour = parseInt((iTime/3600)%24);
+		if (iHour > 0)
+			sHour = iHour + "<{$lang.hour}>";
+		iMinute = parseInt((iTime/60)%60);
+		if (iMinute > 0)
+			sMinute = iMinute + "<{$lang.minute}>";
+		iSecond = parseInt(iTime%60);
+		if (iSecond >= 0)
+			sSecond = iSecond + "<{$lang.second}>";
+		
+		if ((sDay=="")&&(sHour==""))
+			sTime="<span style='color:darkorange'>" + sMinute+sSecond + "</font>";
+		else
+			sTime=sDay+sHour+sMinute+sSecond;
+		if(iTime==0)
+		{
+			clearTimeout(Account);
+			sTime="<span style='color:green'><{$lang.timeisend}></span>";
+		}
+		else
+			Account = setTimeout("RemainTime()",1000);
+		iTime=iTime-1;
+	}
+	else
+		sTime="<span style='color:red'><{$lang.countdownisend}></span>";
+	document.getElementById(CID).innerHTML = sTime;
+}
+
+function seebig(url,id)
+{
+	if(url=='')
+		return;
+	url = url.substr(0,url.lastIndexOf('/')+1)+'big_'+url.substr(url.lastIndexOf('/')+1);
+    document.getElementById('imgmove').innerHTML='<a class="jqzoom" href="<{$config.weburl}>/'+url+'" target="_blank">'+
+	'<img id="img'+id+'" border="0" height="300" src="<{$config.weburl}>/'+url+'" ></a><span style="position:absolute;left:660px;top:450px;"></span>';
+	$(".jqzoom").jqzoom();
+}
+
+$(function() {
+	$(".jqzoom").jqzoom();
+});
+$(document).ready(function(){
+	$("#add_cart").click(
+		function()
+		{
+			var price=$('#price').html();
+			var num=$('#nums').val();
+			var sid=$('#sid').val();
+			var pid='<{$smarty.get.id}>';
+			$('#cart_show').fadeIn(500);
+		    $('#cart_show').load('<{$config.weburl}>/?m=product&s=shop_cart&add_cart=1&price='+price+'&num='+num+'&pid='+pid+'&sid='+sid);
+			x=$(".buy_box").offset();
+			$("#cart_show").offset({top:x.top,left:x.left});
+			return false;
+		}
+	);
+	$("#low_num").click(
+	function()
+	{
+		var num=$('#nums').val()*1;
+		if(num>1)
+			$('#nums').val(num-1)
+	}
+	);
+	
+	$("#add_num").click(
+	function()
+	{
+		var num=$('#nums').val()*1;
+		if(num<$('#stock').html())
+			$('#nums').val(num+1)
+	}
+	);
+});
+function chk(price,stock,id)
+{
+	$("[name='label']").attr("class", "");
+	$('#label'+id).attr("class", "dotted");
+	$('#price').html(price);
+	$('#stock').html(stock);
+	$('#sid').val(id);
+}
+</script>
+<div class="menu_bottom">
+  <div class="headtop_L"> <{$lang.you_here}> : <a href='<{$config.weburl}>/'><{$lang.home}></a> &raquo; <a href="<{$config.weburl}>/?m=product"><{$lang.shop}></a> &raquo;<{$guide}> </div>
+</div>
+
+<div class="propic">
+  <div id="imgmove" class="imgmove"> <{assign var=img value=$prod.cover}>
+    <{html_image file=$img width=300 alt=$list.pname}> </div>
+  <div id="infopic" class="small_pic"> <{foreach item=pic key=num from=$prod.pic}>
+    <{if $pic&&$num<4}> <img onMouseOver="seebig('<{$pic}>',<{$num}>)" style="cursor:pointer" src="<{$config.weburl}>/<{$pic}>" border=0 width="45" height="40"> <{/if}>
+    <{/foreach}> </div>
+    <p><div id="bdshare" class="bdshare_t bds_tools get-codes-bdshare">
+<a class="bds_qzone"></a>
+<a class="bds_tsina"></a>
+<a class="bds_tqq"></a>
+<a class="bds_renren"></a>
+<a class="bds_t163"></a>
+<span class="bds_more">更多</span>
+<a class="shareCount"></a>
+</div>
+<script type="text/javascript" id="bdshare_js" data="type=tools&amp;uid=0" ></script>
+<script type="text/javascript" id="bdshell_js"></script>
+<script type="text/javascript">
+document.getElementById("bdshell_js").src = "http://bdimg.share.baidu.com/static/js/shell_v2.js?cdnversion=" + Math.ceil(new Date()/3600000)
+</script>
+</p>
+</div>
+
+<div class="proinfo">
+  <div class="pro_title"><{$prod.pname}></div>
+  <form action="<{$config.weburl}>" method="get">
+    <table width="330" border="0">
+     
+      <tr>
+        <td class="pro_text">本 店 价</td>
+        <td><{$config.money}> <span id="price"  style="color:#FF5500; font-size:24px;"><{$prod.price|number_format:2}></span></td>
+      </tr>
+      <tr>
+        <td width="97" class="pro_text"><{$lang.have_sell}></td>
+        <td width="223"><{$prod.sell_amount}></td>
+      </tr>
+      <tr>
+        <td width="97" class="pro_text"><{$lang.brand}></td>
+        <td width="223"><{$prod.brand}></td>
+      </tr>
+      <tr>
+        <td class="pro_text"><{$lang.ptime}></td>
+        <td><{$prod.uptime|date_format}></td>
+      </tr>
+      <tr>
+        <td class="pro_text"><{$lang.read_num}></td>
+        <td><{$prod.read_nums}> <{insert name="label" type="statics" temp='statics_default' ctype=3 id=$prod.id}></td>
+      </tr>
+      <td colspan="2">
+       <!--{if $de.isbuy==1}-->
+					 <div class="buy_box">
+						 <!-- 
+						 <{if $de.have_time!=6}>
+						 <{$lang.time_left}>: <span id="endtime"><{$de.have_time}></span><br />
+						 <{/if}>
+						 -->
+						 <{if $prod.amount>0 || !$prod.setmeal }>
+                             <{$lang.nums}>
+							 <span id="low_num">-</span>
+							 <input onkeyup="check_nums();" size="3" name="nums" id="nums" type="text" value="1" />
+							 <span id="add_num">+</span>(<{$lang.stock}><span id="stock"><{$prod.amount}></span>)
+							 <input name="id" type="hidden" value="<{$prod.id}>" />
+                             <input name="sid" id="sid" type="hidden" value="0" />
+							 <input name="m" type="hidden" value="product" />
+							 <input name="s" type="hidden" value="shop_cart" />
+						 <{/if}>
+                         <{if $prod.amount<=0 || $prod.setmeal }>
+							 <{if $prod.setmeal }>
+                             套餐：
+                             <{foreach item=list key=num from=$prod.setmeal}>
+							 <input style="display:none" <{if $num==0}> checked="checked" <{/if}> name="setmeal"  type="radio" id="r<{$num}>" value="<{$list.id}>" /><label <{if $num==0}> class="dotted" <{/if}> name="label" id="label<{$list.id}>" onclick="chk('<{$list.price}>','<{$list.stock}>','<{$list.id}>')" for="r<{$num}>"><{$list.setmeal}></label>
+							 <{/foreach}>
+                             <br>
+                             <{/if}>
+                             <{$lang.nums}>
+							 <span id="low_num">-</span>
+							 <input onkeyup="check_nums();" size="3" name="nums" id="nums" type="text" value="1" />
+							 <span id="add_num">+</span>(<{$lang.stock}><span id="stock"><{$prod.setmeal.0.stock}></span>)
+							 <input name="id" type="hidden" value="<{$prod.id}>" />
+							 <input name="sid" id="sid" type="hidden" value="<{$prod.setmeal.0.id}>" />
+							 <input name="m" type="hidden" value="product" />
+							 <input name="s" type="hidden" value="shop_cart" />
+						 <{/if}>
+						 <br />
+	
+						<img id="add_cart" src="<{$config.weburl}>/image/default/add_cart.gif" />
+					</div>
+				<!--{/if}-->
+                <div id="cart_show"></div>
+                <script>
+				 function check_nums()
+				 {
+				 	var v=document.getElementById('nums').value*1;
+				 	if(!v)
+						document.getElementById('nums').value=1;
+					if(v>$('#stock').html()*1)
+					{
+						document.getElementById('nums').value=$('#stock').html()*1;
+						return false;
+					}
+				 }
+				 </script>
+      </td>
+      </tr>
+    </table>
+  </form>
+</div>
+<div id="pro_det_body">
+	<div class="left_deli">
+     <{if $smarty.get.id}>
+    	<div class="lelist mb10">
+             <div class="letit L5">推荐产品</div>
+             <div class="lesec">
+             	<ul>
+                	
+                <{insert name="label" catid=$smarty.get.id type="product" temp="pro_list_recde" limit=5}>
+                </ul>
+             </div>
+      		
+        </div>
+        <{/if}>
+       
+	
+	</div>
+	<div class="leftbar" style="float:right;">
+    	<script>
+		function setTab(c)
+		{
+			for(i=1;i<=3;i++)
+			{
+				document.getElementById('otab'+i).className='';
+				document.getElementById('con_detail'+i).style.display='none';
+			}
+			document.getElementById('otab'+c).className='selected';
+			document.getElementById('con_detail'+c).style.display='block';
+			if(c>1)
+			document.getElementById('con_title'+c).style.display='none';
+		}
+		</script>
+		<div class="con_title">
+			<li class="selected"  id="otab1" onmouseover="setTab(1);"><a href="#"><{$lang.pro_detail}></a></li>
+			<li id="otab2" onmouseover="setTab(2);"><a href="#">评价详情</a></li>
+			<li id="otab3" onmouseover="setTab(3);"><a href="#">成交记录</a></li>
+		</div>
+		<div class="pro_con">
+			<div id="con_detail1" class="con_detail">
+				  <{if $addfieldlist}>
+					  <div class="pro_cat">
+						 <{foreach item=fieldlist from=$addfieldlist}>
+							<div style="float:left; width:200px;">
+								<span class="pro_text" style="width:100px;"><{$fieldlist.catInfo}>:</span> 
+								<{$fieldlist.fieldvalue}>
+							</div> 
+						 <{/foreach}>
+						 <div style="clear:left;"></div>
+					  </div>
+				 <{/if}>
+				<{$de.detail}>
+			</div>
+			<div id="con_detail2" class="con_detail">
+				<div id="con_title2" class="letits L5 m1">累计评价</div>
+                <table width="100%" class="product_commnet">
+                    <{foreach item=list from=$review.list}>
+                        <tr>
+                            <td width="85%"><{$list.con}></td>
+                            <td><{$list.user}></td>
+                        </tr>
+                        <tr class="baseline">
+                        	<td><{$list.uptime|date_format}></td>
+                            <td></td>
+                            <td></td>
+                        </tr>
+                    <{/foreach}>
+                </table>
+
+			</div>
+			<div id="con_detail3" class="con_detail">
+				<div id="con_title3" class="letits L5 m1">成交记录</div>
+				<table width="100%" class="buy_info">
+					<tr>
+						<th width="20%">买家</th>
+						<th>产品名称</th>
+						<th width="15%">拍下价格</th>
+						<th width="15%">购买数量</th>
+						<th width="25%">成交时间</th>
+					</tr>
+					<{foreach item=list from=$buy_rec.list}>
+					<tr>
+						<td><{$list.user}></td>
+						<td><{$list.name}></td>
+						<td align="center"><b style=" color:#FF5500; "><{$config.money}> <{$list.price*$list.num}></b></td>
+						<td align="center"><{$list.num}></td>
+						<td align="center"><{$list.time|date_format:"%Y-%m-%d %H:%M:%S"}> </td>
+					</tr>
+					<{/foreach}>
+				</table>
+			</div>
+		</div>
+		
+	</div>
+</div>

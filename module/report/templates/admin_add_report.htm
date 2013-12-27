@@ -1,0 +1,67 @@
+<script src="script/my_lightbox.js" language="javascript"></script>
+<div class="path">
+    <div>
+    	<a href="main.php?cg_u_type=2">卖家中心</a> <span>&gt;</span> 
+        我的举报
+    </div>
+</div>
+<div class="main">
+	<div class="wrap">
+        <div class="hd">
+            <ul class="tabs">
+                <li class="active"><a href="main.php?m=report&s=admin_myreport">我的举报</a></li>
+            </ul>
+        </div>
+        <div class="form-style">
+            <form action="" method="post" enctype="multipart/form-data">
+            <input type="hidden" value="<{$product_info.id}>" name="pid">
+            <input type="hidden" value="<{$product_info.pname}>" name="pname">
+            <input type="hidden" value="add" name="submit">
+            <dl>
+                <dt>商品名称：</dt>
+                <dd><a target="_blank" href="<{$config.weburl}>/?m=product&s=detail&id=<{$product_info.id}>"><{$product_info.pname}></a></dd>
+            </dl>
+            <dl>
+                <dt>举报类型：</dt>
+                <dd>
+                	<{foreach item=list key=num from=$subject_type}>
+                   	<p><input type="radio" id="st<{$num}>" <{if $num==0}>checked="checked"<{/if}> value="<{$list.id}>" name="subject_type">
+                    <label for="st<{$num}>"><{$list.type_name}></label></p>
+                    <{if $list.desc}><p class="hint"><{$list.desc}></p><{/if}>
+                   <{/foreach}>
+                </dd>
+            </dl>
+            <dl>
+                <dt>举报主题：</dt>
+                <dd>
+                	<select name="subject_name" id="subject_name" class="w200">
+                    	<option value="">-请选择-</option>
+                        <{foreach item=list key=num from=$subject}>
+                        	<option value="<{$list.id}>,<{$list.content}>"><{$list.content}></option>
+                        <{/foreach}>
+                    </select>
+                </dd>
+            </dl>
+            
+            <dl>
+                <dt>举报内容：</dt>
+                <dd><textarea name="content" id="content"></textarea></dd>
+            </dl>
+            <dl>
+                <dt>图片：</dt>
+                <dd>
+                    <input name="pic" type="text" id="pic" />
+                    [<a href="javascript:uploadfile('Style images','pic',300,300)"><{$lang.upload}></a>] 
+                    [<a href="javascript:preview('pic');"><{$lang.preview}></a>]
+                    [<a href="javascript:delet_pic('pic');"><{$lang.delete}></a>]
+                </dd>
+            </dl>
+            <dl class="foot">
+                <dt>&nbsp;</dt>
+                <dd><input type="submit" value="提交" class="submit"></dd>
+            </dl>
+            </form>
+        </div>  
+       
+    </div>
+</div>

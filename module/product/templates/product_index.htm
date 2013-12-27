@@ -1,0 +1,112 @@
+<link type="text/css" rel="stylesheet" href="<{$config.weburl}>/module/product/templates/pro.css">
+</div>
+<div id="mall_in">
+  <div id="menu_top">
+    <div class="menu_left" >
+      <div class="menu_con"> <{insert name="label" type="cat" rec=1 temp="pro_cat_mall"}> </div>
+      <div class="menu_doad m1">
+      	<div class="grec_title">
+        	 <li title="grec_con1" class="on">公告</li>
+          	 <li title="grec_con2">团购</li>
+             <div class="clear"></div>
+        </div>
+        <div class="grec_con">
+        	<div id="grec_con1" class="tabc"> 
+            <ul class="ind_notice">
+              <{insert name="getNotice" limit=5}>
+            </ul></div>
+            <div id="grec_con2"  style="display:none;" >
+            <{foreach item=list key=num from=$tj}>
+      <div class="indx_tg">
+       <a style="color:#333333; margin-top:10px;" href="<{$config.weburl}>/?m=tg"> <img width="190" height="90" src="<{$list.pic}>">
+        </a>
+        <p ><{$list.name|truncate:30:""}> 
+       </p>
+        </span> <span class="right"> <a class="buyers" href="<{$config.weburl}>/?m=tg&s=detail&id=<{$list.id}>">立即抢购</a> </span> </div>
+      <{/foreach}> 
+  </div>
+            </div>
+ 		
+  </div>
+    </div>
+    <div class="menu_right">
+       <script src='<{$config.weburl}>/api/ad.php?id=8&catid=<{$smarty.get.id}>&name=<{$smarty.get.key}>'></script>
+       </div>
+    <div class="mrec_left">
+        <div class="mrec_title">
+          <li title="mrec_con1" class="on">疯狂抢购</li>
+          <li title="mrec_con2">热卖产品</li>
+          <li title="mrec_con3">热评产品</li>
+          <li title="mrec_con4">新品上架</li>
+        </div>
+        <div class="mrec_con">
+          <div style="display:block" id="mrec_con1"> <{insert name="label" type="product" proid=$config.qanggou temp="pro_picpricemall" limit=5 }> </div>
+          <div id="mrec_con2" > <{insert name="label" type="product" proid=$config.hot_sell temp="pro_picpricemall" limit=5 }> </div>
+          <div id="mrec_con3" > <{insert name="label" type="product" proid=$config.hot_commen temp="pro_picpricemall" limit=5 }> </div>
+          <div id="mrec_con4" > <{insert name="label" type="product" proid=$config.new_pro temp="pro_picpricemall" limit=5 }> </div>
+        </div>
+    <script>
+		$(document).ready(function(){
+				$(".mrec_title li").mouseover(function(){
+					$(".mrec_title li").attr('class','');
+					$(this).attr('class','on'); 
+
+					$(".mrec_con div").hide();
+					$("#"+this.title).show();
+			});
+			$(".grec_title li").mouseover(function(){
+					$(".grec_title li").attr('class','');
+					$(this).attr('class','on'); 
+
+					$(".grec_con>div").hide();
+					$("#"+this.title).show();
+			});
+		});
+		</script> 
+  </div>
+    	</div>
+  </div>
+</div>
+<div id="wrapper" >
+<{foreach item=list key=num from=$cat_pro}>
+<{if $num==1}>
+<div id="main_topa" class="main_topa">
+<{elseif $num==2}>
+<div id="main_topb" class="main_topb">
+<{else $num==3}>
+<div id="main_topc" class="main_topc"> <{/if}>
+  <div class="main_ma">
+    <div class="mpleft">
+      <h2> <a href="<{$config.weburl}>/?m=product&s=list&id=<{$list.catid}>">F<{$num+1}> <{$list.name}></a> </h2>
+      <script src='<{$config.weburl}>/api/ad.php?id=7&catid=<{$num+1}>&name=<{$smarty.get.key}>'></script>
+      <ul>
+        <{foreach item=clist key=nums from=$list.sub_cat}>
+        <{if $nums < 10}>
+        <li><a href="<{$config.weburl}>/?m=product&s=list&id=<{$clist.catid}>"><span><{$clist.cat}></span></a></li>
+        <{/if}>
+        <{/foreach}>
+      </ul>
+    </div>
+    <ul class="mpright">
+      <{foreach item=rlist from=$list.rec_pro}>
+      <li> <a target="_blank" href="<{$config.weburl}>/?m=product&s=detail&id=<{$rlist.id}>"> <img src='<{$rlist.pic}>_220X220.jpg'/> </a> <a class="name" target="_blank" href="<{$config.weburl}>/?m=product&s=detail&id=<{$rlist.id}>"> <{$rlist.pname|truncate:38:""}></a>
+        <p><strong><{$config.money}><{$rlist.price|number_format:0}></strong></p>
+      </li>
+      <{/foreach}>
+    </ul>
+    <div class="clear"></div>
+  </div>
+  <ul class="mp_brand">
+    <{foreach item=rlist from=$list.brand}>
+    <li> <a target="_blank" href="<{$config.weburl}>/?m=product&s=list&brand=<{$rlist.name}>"> <img width="85" height="50" align="<{$rlist.name}>" src="<{$rlist.logo}>"/></a> </li>
+    <{/foreach}>
+  </ul>
+  <div class="clear"></div>
+</div>
+<{/foreach}>
+<div class="main_top">
+  <div class="brand_title clear"> <span class="left">品牌推荐</span><span class="right f2"><a href="<{$config.weburl}>/?m=brand">+更多</a></span> </div>
+  <div class="brand_con"><{insert name="label" type="brand" temp='brand_product_index' rec=2 pic="true" limit=9}></div>
+</div>
+<div class="clear"></div>
+<div class="m1"> <{insert name="label" type="ftlink" temp="ftlink_list"}> </div>

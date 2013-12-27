@@ -1,0 +1,31 @@
+<div class="leftbar">
+<div><strong><{$lang.resetpass}></strong></div>
+<div style="text-align:left;" class="content4 overflow"><br />
+  <form action="" method="post">
+	<table width="100%" border="0" cellspacing="0" cellpadding="3">
+	  <tr>
+		<td>&nbsp;</td>
+		<td style="color:#FF0000; font-weight:bold;"><{if $smarty.get.msg==1}><{$lang.norepeat}><{/if}>
+		  <{if $smarty.get.msg==2}><{$lang.suc}><{/if}> </td>
+	  </tr>
+	  <{if $smarty.get.msg!=2}>
+	  <tr>
+		<td width="20%" align="right"><{$lang.newpass}></td>
+		<td width="80%"><input type="password" name="newpass" id="newpass" /></td>
+	  </tr>
+	  <tr>
+		<td align="right"><{$lang.repass}></td>
+		<td><input type="password" name="newpass1" id="newpass1" />
+		</td>
+	  </tr>
+	  <tr>
+		<td>&nbsp;</td>
+		<td><input type="submit" name="button" id="button" value="<{$lang.isure}>" />
+		  <input name="resetpass" type="hidden" id="resetpass" value="1" /></td>
+	  </tr>
+	  <{/if}>
+	</table>
+  </form>
+  <div class="clear"></div>
+</div>
+</div>

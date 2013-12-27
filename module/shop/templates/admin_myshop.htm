@@ -1,0 +1,155 @@
+<script type="text/javascript" src="script/Validator.js"></script>
+<script src="script/my_lightbox.js" language="javascript"></script>
+<script type="text/javascript" charset="utf-8" src="<{$config.weburl}>/script/district.js" ></script>
+<script>
+var weburl="<{$config.weburl}>";
+</script>
+<div class="path">
+    <div>
+    	<a href="main.php?cg_u_type=2">卖家中心</a> <span>&gt;</span> 
+        <a href="main.php?m=shop&s=myshop">店铺设置</a> <span>&gt;</span> 
+        店铺设置
+    </div>
+</div>
+<div class="main">
+	<div class="wrap">
+        <div class="hd">
+            <ul class="tabs">
+                <li class="active"><a href="main.php?m=shop&s=myshop">店铺设置</a></li>
+                <li class="normal"><a href="main.php?m=shop&s=admin_custom_service">客服中心</a></li>
+                <li class="normal"><a href="main.php?m=shop&s=admin_certification">认证设置</a></li>
+                <li class="normal"><a href="main.php?m=shop&s=admin_shop_set">幻灯片设置</a></li>
+			</ul>
+        </div>
+        
+        <div class="form-style">
+            <form action="" method="post" enctype="multipart/form-data" onSubmit="return Validator.Validate(this,3)">
+            <input type="hidden" value="edit" name="submit">
+            <input type="hidden" name="shop_statu" value="<{$de.shop_statu}>">
+            <dl>
+                <dt><em>*</em>店铺名称：</dt>
+                <dd>
+                <p><input name='company' type='text' value="<{$de.company}>" class="w400 text" dataType="Require" msg="<{$lang.ar_company}>"></p>
+                <p class="hint">店铺名称请控制长度不超过20字 </p>
+                </dd>
+            </dl>
+            <dl>
+                <dt>主营商品：</dt>
+                <dd>
+                	<p><textarea class="textarea w394" rows="2" name="main_pro"><{$de.main_pro}></textarea></p>
+                    <p class="hint">主营商品关键字（Tag）有助于搜索店铺时找到您的店铺<br />关键字最多可输入50字，请用","进行分隔，例如”男装,女装,童装”</p>
+                </dd>
+            </dl>
+            <dl>
+                <dt>店铺分类：</dt>
+                <dd>
+                	<p><{$de.cat}></p>
+                </dd>
+            </dl>
+            <dl>
+                <dt>店铺logo：</dt>
+                <dd>
+                <input name="old_shop_logo" type="hidden" value="<{$de.shop_logo}>" />
+                <p class="pic" style=" width:200px; height:60px; "><img id="shop_logo_img" src="<{if $de.shop_logo}><{$de.shop_logo}><{else}><{$config.weburl}>/image/default/user_admin/default_shop_logo.png<{/if}>" height="60" width="200" /></p>
+                <p><input name="shop_logo" type="text" id="shop_logo" value="<{$de.shop_logo}>" class="w150 text" /> <a class="upload-button" href="javascript:uploadfile('Style images','shop_logo',200,60,'shop');"><{$lang.upload}></a></p>
+                <p class="hint">此处为您的店铺logo，将显示在店铺Logo栏里；<br><span style="color:orange;">建议使用宽200像素-高60像素内的GIF或PNG透明图片；点击下方"提交"按钮后生效。</span></p>
+                </dd>
+            </dl>
+            <dl>
+                <dt>店铺条幅：</dt>
+                <dd>
+                <input name="old_shop_banner" type="hidden" value="<{$de.shop_banner}>" />
+                <p class="pic" style=" width:600px; height:150px; "><img id="shop_banner_img" src="<{if $de.shop_banner}><{$de.shop_banner}><{else}><{$config.weburl}>/image/default/user_admin/default_banner.png<{/if}>" height="150" width="600" /></p>
+                <p><input type="text" id="shop_banner" name="shop_banner" value="<{$de.shop_banner}>" class="w150 text"> <a class="upload-button" href="javascript:uploadfile('Style images','shop_banner',961,150,'shop')"><{$lang.upload}></a></p>
+                <p class="hint">此处为您的店铺条幅，将显示在店铺导航上方的banner位置；<br><span style="color:orange;">建议使用宽961像素*高150像素的图片；点击下方"提交"按钮后生效。</span></p>
+                </dd>
+            </dl>
+            <dl>
+                <dt>店铺标志：</dt>
+                <dd>
+                <input name="old_logo" type="hidden" value="<{$de.logo}>" />
+                <p class="pic" style=" width:100px; height:100px; "><img id="logo_img" src="<{if $de.logo}><{$de.logo}><{else}><{$config.weburl}>/image/default/user_admin/default_logo.gif<{/if}>" height="100" width="100" /></p>
+                <p><input name="logo" type="text" id="logo" value="<{$de.logo}>" class="w150 text" /> <a class="upload-button" href="javascript:uploadfile('Style images','logo',100,100,'shop')"><{$lang.upload}></a></p>
+                <p class="hint">此处为您的店铺标志，将显示在店铺信息栏里；<br><span style="color:orange;">建议使用宽100像素-高100像素内的GIF或PNG透明图片；点击下方"提交"按钮后生效。</span></p>
+                </dd>
+            </dl>
+            <dl>
+                <dt><em>*</em>所在地区：</dt>
+                <dd>
+                <input type="hidden" name="t" id="t" value="<{$de.area}>" />
+                <input type="hidden" name="province" id="id_1" value="<{$de.provinceid}>" />
+                <input type="hidden" name="city" id="id_2" value="<{$de.cityid}>" />
+                <input type="hidden" name="area" id="id_3" value="<{$de.areaid}>" />
+                <{if $de.area}><div id="d_1"><{$de.area}>&nbsp;&nbsp;<a href="javascript:sd();">编辑</a></div><{/if}>
+                <div id="d_2" <{if $de.area}>class="hidden"<{/if}>>
+                <select id="select_1" onChange="selClass(this);">
+                <option value="">--请选择--</option>
+                <{$prov}>
+                </select>
+                <select id="select_2" onChange="selClass(this);" class="hidden"></select>
+                <select id="select_3" onChange="selClass(this);" class="hidden"></select>			</div>
+          		</dd>
+            </dl>
+            <dl>
+                <dt><em>*</em>详细地址：</dt>
+                <dd>
+                <p><input type='text' name='addr' value="<{$de.addr}>" maxlength="200" dataType="Require" msg="<{$de.ar_addr}>"  class="text w400"></p>
+                <p class="hint">不必重复填写所在地区</p>  
+          		</dd>
+            </dl>
+            <dl>
+                <dt><em>*</em>联系电话：</dt>
+                <dd><input type='text' name='tel' value="<{$de.tel}>" dataType="Require" msg="<{$lang.ar_tel}>" class="text w150"></dd>
+            </dl>
+            <dl>
+                <dt>店铺简介：</dt>
+                <dd>
+                <script charset="utf-8" src="<{$config.weburl}>/lib/kindeditor/kindeditor-min.js"></script>
+				<script>
+                var editor;
+                KindEditor.ready(function(K) {
+                    editor = K.create('textarea[name="intro"]', {
+                        langType :'<{$config.language}>',
+                    });
+                });
+                </script>
+                <textarea name="intro" style="width:100%; height:500px;"><{$de.con}></textarea>
+                </dd>
+            </dl>
+            <dl>
+                <dt>SEO标题：</dt>
+                <dd>
+                
+                <p><input type="text" name="shop_title" value="<{$de.shop_title}>" class="w400 text" /></p>
+                <p class="hint">用于店铺搜索引擎的优化</p>
+                </dd>
+            </dl>
+            <dl>
+                <dt>SEO关键字：</dt>
+                <dd>
+                <p><input type="text" name="shop_keywords" value="<{$de.shop_keywords}>" class="w400 text" /></p>
+                <p class="hint">用于店铺搜索引擎的优化，关键字之间请用英文逗号分隔</p>
+                </dd>
+            </dl>
+            <dl>
+                <dt>SEO描述：</dt>
+                <dd>
+                <p><textarea class="textarea w394" rows="2" name="shop_description"><{$de.shop_description}></textarea></p>
+                <p class="hint">用于店铺搜索引擎的优化，建议120字以内</p>
+                </dd>
+            </dl>
+            <dl>
+                <dt>店铺二维码：</dt>
+                <dd>
+                <p class="pic"><img src="<{$config.weburl}>/uploadfile/phpqrcode/<{$buid}>.jpg" /></p>
+               </dd>
+            </dl>
+            <dl class="foot">
+                <dt>&nbsp;</dt>
+                <dd><input type="submit" value="提交" class="submit" /></dd>
+            </dl>
+            </form>
+        </div>  
+        
+   </div>
+</div>

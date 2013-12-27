@@ -1,0 +1,20 @@
+<{include file="header.htm"}>
+	<div class="menu_bottom L1">				
+		<div class="headtop_L">
+			<{$lang.you_are_here}><a href='<{$config.weburl}>/'><{$lang.indexpage}></a> &raquo; <{$lang.user_reg}></a>
+		</div>	
+	</div>
+	
+	<div id="mainbody1" class="topm">
+	<div class="title4"><div class="title_left2 L2"><{$lang.user_reg}></div></div>
+
+		<div style=" height:200px;padding-top:100px; border:1px solid #b6daeb; text-align:center">
+		  <{if $smarty.get.randErr}>
+		  	　<b>激活链接错误</b>
+		  <{else}>
+			  <b><{$lang.reg_mail_msg}></b>
+			  <br /><a href="<{$config.weburl}>/<{$config.regname}>?re_email=1">如果您没有收到激活邮件，点此重发</a>
+		  <{/if}>
+		</div>
+	</div>
+<{include file="footer.htm"}>

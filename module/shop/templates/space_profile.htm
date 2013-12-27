@@ -1,0 +1,23 @@
+<div class="common_box">
+<table width="100%" border="0" cellspacing="0" cellpadding="0" >
+	<tr>
+		<td class="guide_ba">
+			<span>
+				<{if $smarty.get.authenticate==1}>
+					<{$lang.business_info}>
+				<{else}>
+					<{$lang.cominfo}>
+				<{/if}>
+			</span>
+		</td>
+	</tr>
+	<tr>
+		<td class="com_intro">
+			<{if $comintro.img!=""}>
+			 <img src="<{$comintro.img}>" style="float:right; width:250px; border:1px solid #CCCCCC;margin-left:10px;">
+			<{/if}>
+			<{$comintro.intro}>
+		</td>
+	 </tr>
+ </table>
+</div>

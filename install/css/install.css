@@ -1,0 +1,41 @@
+@charset "utf-8";
+/*	-------------------------------------------------------------
+	B2Bbuilder电子商务系统-安装向导样式文件
+	- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+	Description:	全部样式
+	Filename:		install.css 
+	-------------------------------------------------------------	*/
+body{	
+	margin:0;
+	padding-left:10px;
+	font-family:Verdana, Arial, Helvetica, sans-serif,"宋体";
+	font-size:12px;
+	color:#444;
+	line-height:150%;
+	width:96%;
+	background:#E1E1E1 url(../images/bg.jpg) no-repeat center top;
+	}
+A:link {color:#444444;text-decoration:none;}
+A:visited {color:#444444;text-decoration:none;}
+A:hover {COLOR: #ff7800; text-decoration:none;}
+A{FONT-FAMILY: Arial, Helvetica, sans-serif}
+h1,h3{font-size:16px;	font-weight:bold;margin:0px;margin-top:10px;}
+h2{font-size:18px;font-weight:bold;margin:0px;margin-top:10px; color:#FF0000;}
+.wrapper{ width:800px; margin:0px auto; text-align:left; clear: both;}
+.clear{ clear:both;}
+.indeximg{background:#E1E1E1 url(../images/installindex.jpg) no-repeat top center; width:800px; height:600px;}
+.banben{ padding-top:360px; padding-right:100px; float:right;}
+.go{ float:right; padding-right:100px;}
+.btnav{margin:0;padding:0;border:0;width:99px;height:23px;font-weight:bold;font-size:14px;color:#5E2708;background:url(../images/search_bar.gif) no-repeat 100% 100%; text-align:center; padding-top:10px;}
+.copyright{text-align:center; margin-top:30px;}
+
+.top80{height:80px;}
+.leftimg{background:url(../images/left.gif) no-repeat left top; width:200px; height:400px; float:left}
+.rightbox{float:right; width:590px; height:100%; text-align:center;}
+.licenseblock{margin-bottom:15px;padding:8px;height:400px;border:1px solid #00CCFF; background:#FFFFFB;overflow:scroll;overflow-x:hidden; text-align:left}
+.license{}
+	.license h1{ padding-bottom:10px; font-size:14px; text-align:center; }
+	.license h3{ margin:0; color:#666; }
+	.license p{ line-height:150%; margin:10px 0; text-indent:25px; }
+	.license li{ line-height:150%; margin:5px 0; }
+.ok{float:right; width:300px; padding-right:100px; padding-top:10px;}

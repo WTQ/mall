@@ -1,0 +1,38 @@
+<{include file="header.htm"}>
+
+<div class="menu_bottom L1">				
+    <div class="headtop_L">
+        <strong><{$lang.you_are_here}><a href='<{$config.weburl}>/'><{$lang.indexpage}></a> &raquo; <{$lang.des}></strong>
+    </div>
+    <div class="headtop_R"></div>		
+</div>
+
+<div id="mainbody1" class="topm">
+<table width='100%' class="member_sev" border="0" cellpadding="7" cellspacing="1" bgcolor="#e4e4e4"> 
+  <tr class="title4">
+    <td width="40"><{$lang.adid}></td>
+    <td><{$lang.name}></td>
+    <td width="110"><{$lang.adhei}>(px)</td>
+    <td width="100"><{$lang.adprice}></td>
+    <td width="80"><{$lang.adv_total}></td>
+    <td width="70"><{$lang.apply}></td>
+  </tr>
+  <{foreach item=list  from=$ad}>
+  <tr bgcolor="#FFFFFF">
+    <td><{$list.ID}></td>
+    <td><{$list.name}><span style="color:#666666"><{$list.con}></span></td>
+    <td><{if $list.height&&$list.width}><{$list.height}>*<{$list.width}><{$lang.pix}><{/if}></td>
+    <td><{$config.money}><{$list.price|number_format:2}>/<{$lang[$list.unit]}></td>
+    <td><{$list.total}></td>
+    <td>
+    <{if $list.price>0&&$list.total>$list.used_total}>
+    	<a href="main.php?action=admin_buy_adv&id=<{$list.ID}>" style="color:#005AA6"><{$lang.adv_buy}></a>
+    <{else}>
+    	&nbsp;
+    <{/if}>
+    </td>
+  </tr>
+  <{/foreach}>
+</table>
+</div>
+<{include file="footer.htm"}>

@@ -1,0 +1,54 @@
+<{include file="header.htm"}>
+<div id="mainbody1" class="topm">
+  <table width="100%" border="0" align="center" cellspacing="0" style="margin-top:5px">
+    <tr>
+      <td height="381" align="left" valign="top" bgcolor="#FFFFFF"><table width='100%' border='0' cellspacing='0' cellpadding='0' align="center" class="con">
+          <tr>
+            <td height="28" colspan="2" align="left" bgcolor="#E8F3FD">&nbsp;&raquo;<b>个人名片</b></td>
+          </tr>
+          <tr align="center">
+            <td width="247" height="1" bgcolor="#DDDDDD"></td>
+            <td width="774" bgcolor="#DDDDDD"></td>
+          </tr>
+          <tr>
+            <td valign="top" style="padding-top:50px; padding-left:30px;" width="247"><a href="<{$config.weburl}>"> <img src="<{if $config.logo}><{$config.logo}><{else}><{$config.weburl}>/image/default/logo.gif<{/if}>" /></a><br />
+              <b><{$config.company}>温馨提醒您：</b><br />
+              会员名片信息，由会员自行注册填写，<{$config.company}>没有对其提供有效性认证。 </td>
+            <td height="400" align="center"><table style="background-image:url(image/default/mpbj.jpg);" width="513" height="311" border="0" cellspacing="0" cellpadding="0">
+                <tr>
+                  <td width="35%" rowspan="9" valign="top" style="padding-top:30px;" align="center"><{if $com.plogo==0||$com.plogo==''}> <img width="120" src="image/default/photo.png" /><br />
+                    <{else}> <img width="120" src="<{$com.plogo}>" /><br />
+                    <{/if}> <a href="<{$config.weburl}>/main.php?m=message&s=admin_friends&friendid=<{$com.userid}>">+加为商友</a> </td>
+                  <td></td>
+                </tr>
+                <tr>
+                  <td height="15">&nbsp;</td>
+                </tr>
+                <tr>
+                  <td><span style="font-size:24px;"><{$com.name}></span>&nbsp;<{$com.position}></td>
+                </tr>
+                <tr>
+                  <td width="73%">联系电话：<{$com.mobile}></td>
+                </tr>
+                <tr>
+                  <td>注册邮件：<{$com.email}></td>
+                </tr>
+                <tr>
+                  <td>在线ＱＱ：<{$com.qq}></td>
+                </tr>
+                <tr>
+                  <td>注册时间：<{$com.regtime|date_format}></td>
+                </tr>
+                <tr>
+                  <td>所在地址：<{$com.province}>.<{$com.city}></td>
+                </tr>
+                <tr>
+                  <td>&nbsp;</td>
+                </tr>
+              </table></td>
+          </tr>
+        </table></td>
+    </tr>
+  </table>
+</div>
+<{include file="footer.htm"}>

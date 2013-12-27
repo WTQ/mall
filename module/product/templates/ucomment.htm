@@ -1,0 +1,56 @@
+<link type="text/css" rel="stylesheet" href="<{$config.weburl}>/module/product/templates/pro.css">
+<div id="mainbody1" class="m1" style="width:961px; margin:0 auto;">
+    <div class="flow-steps" style="width:961px;">
+        <ul>
+            <li class="don"><span class="firstg">1.查看购物车</span></li>
+            <li class="don"><span class="firstg">2.付款到网站</span></li>
+            <li class="don current-prev"><span class="firstg">3.确认收货</span></li>
+            <li class="current">4.评论</li>
+        </ul>
+    </div>
+	
+    <div class="comment">
+    	<h3>对商铺进行评价</h3>
+        <{foreach item=list key=n from=$pro}>
+    	<ul>
+        	<li class="product">商品</li>
+            <li>好评</li>
+            <li>中评</li>
+            <li>差评</li>
+        </ul>
+        <form method="post">
+        <div class="comment_con">
+        	<div class="left">
+            	<div class="img">
+                    <a target="_blank" href="<{$config.weburl}>/?m=product&s=detail&id=<{$list.id}>">
+                    <{if $list.pic}>
+                    	<img height="110" src="<{$list.pic}>" width="110" />
+                    <{else}>
+                    	<img height="110" src="image/default/nopic.gif" width="110" />
+                    <{/if}>
+                    </a>
+                </div>
+                <p><a target="_blank" href="<{$config.weburl}>/?m=product&s=detail&id=<{$list.id}>"><{$list.pname}></a></p>
+            </div>
+        	<div class="right">
+            	<table align="top" width="100%">
+                	<tr>
+                    	<td width="66"><input type="radio" name="g<{$n}>" id="good" value="1" checked="checked" /><label for="good"><img src="<{$config.weburl}>/image/default/good.gif" /></label></td>
+                    	<td width="66"><input type="radio" name="g<{$n}>" id="middle" value="0" /><label for="middle"><img src="<{$config.weburl}>/image/default/middle.gif" /></label></td>
+                    	<td><input type="radio" name="g<{$n}>" id="bad" value="-1" /><label for="bad"><img src="<{$config.weburl}>/image/default/bad.gif" /></label></td>
+                    </tr>
+                </table>
+                <div class="comment_text"><textarea name="comment_text<{$n}>"></textarea></div>    
+            </div>
+            <div class="clear"></div>
+        </div>
+        <{/foreach}>
+        <input type="hidden" name="uid" value="<{$smarty.get.uid}>" />
+        <input type="hidden" name="bid" value="<{$smarty.get.bid}>" />
+        <input type="hidden" name="id" value="<{$smarty.get.id}>" />
+        <input type="hidden" name="submit" value="submit" />
+        <div class="div_btn"><input class="btn" type="submit" value="提交评论" /></div>
+        </form>
+    </div>
+    
+</div>

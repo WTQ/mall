@@ -1,0 +1,11 @@
+<{foreach item=list from=$pro}>
+<li >
+
+		<a target="_blank" href="<{$config.weburl}>/?m=product&s=detail&id=<{$list.id}>">
+			<img src='<{$list.img}>' width=160 height=160 />
+            <br />
+            <{$list.pname|truncate:20}>
+		</a>
+	
+</li>
+<{/foreach}>

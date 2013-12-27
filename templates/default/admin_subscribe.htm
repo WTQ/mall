@@ -1,0 +1,65 @@
+<form name="subscrib" action="?action=admin_subscribe" method="POST">
+  <div class="admin_right_top"><{$lang.sub_scribe}></div>
+  <table class="admin_table" border="0" cellpadding="2" cellspacing="1" bgcolor="#FFFFFF">
+    <tr bgcolor="#E8E8E8">
+      <td colspan="9" align="left"><{$lang.keywords}>
+        <input name='keycon' type='text' id="keycon" value="<{$de.keywords}>" >
+        <{$lang.rfreq}>
+        <select name="frequency" id="frequency">
+          <option value="1" <{if $de.validity==1}>selected<{/if}>><{$lang.oday}>
+          </option>
+          <option value="7" <{if $de.validity==7}>selected<{/if}>><{$lang.oweek}>
+          </option>
+          <option value="14" <{if $de.validity==14}>selected<{/if}>><{$lang.tweek}>
+          </option>
+          <option value="30" <{if $de.validity==30}>selected<{/if}>><{$lang.omonth}>
+          </option>
+        </select>
+        <{$lang.vtime}>
+        <select name="validity" id="validity">
+          <option value="30" <{if $de.validity==30}>selected<{/if}>><{$lang.osmonth}>
+          </option>
+          <option value="60" <{if $de.validity==60}>selected<{/if}>><{$lang.tmonth}>
+          </option>
+          <option value="180" <{if $de.validity==180}>selected<{/if}>><{$lang.smonth}>
+          </option>
+          <option value="360" <{if $de.validity==360}>selected<{/if}>><{$lang.oyear}>
+          </option>
+        </select>
+		<{$lang.remail}>
+        <input name="email" value="<{$de.email}>" type="text" />
+        <input class="btn" name="addid" type="submit" value="<{if $de.id==''}><{$lang.add}><{else}><{$lang.edit}><{/if}>" onclick="return checkvalue();"/>
+        <input name="seditid" type="hidden" value="<{$de.id}>"/>
+      </td>
+    </tr>
+    <tr bgcolor="#E8E8E8">
+      <td><{$lang.keywords}></td>
+      <td>Email</td>
+      <td width="10%"><{$lang.keytype}></td>
+      <td width="13%"><{$lang.subtime}></td>
+      <td width="12%"><{$lang.lastrectime}></td>
+      <td width="15%"><{$lang.recfre}></td>
+      <td width="10%"><{$lang.vtime}></td>
+      <td width="9%" align="center"><{$lang.option}></td>
+    </tr>
+    <{foreach item=slist from=$subscribe}>
+    <tr bgcolor="#F7F7F7">
+      <td><{$slist.keywords}></td>
+      <td><{$slist.email}></td>
+      <td><{if $slist.ktype==1}><{$lang.pro}><{/if}>
+        <{if $slist.ktype==2}><{$lang.offer}><{/if}>
+        <{if $slist.ktype==3}><{$lang.exh}><{/if}>
+        <{if $slist.ktype==4}><{$lang.project}><{/if}>
+        <{if $slist.ktype==5}><{$lang.news}><{/if}> </td>
+      <td ><{$slist.uptime|date_format}></td>
+      <td ><{if $slist.lastrectime!=''}><{$slist.lastrectime|date_format}><{/if}></td>
+      <td ><{if $slist.frequency==1}><{$lang.oday}><{/if}>
+        <{if $slist.frequency==7}><{$lang.oweek}><{/if}>
+        <{if $slist.frequency==14}><{$lang.tweek}><{/if}>
+        <{if $slist.frequency==30}><{$lang.omonth}><{/if}></td>
+      <td ><{$slist.validity}><{$lang.dmonth}></td>
+      <td ><a href="?action=admin_subscribe&editid=<{$slist.id}>"><{$lang.edit}></a>|<a href="?action=admin_subscribe&delid=<{$slist.id}>" onclick="return confirm('<{$lang.suredel}>');"><{$lang.delete}></a></td>
+    </tr>
+    <{/foreach}>
+  </table>
+</form>

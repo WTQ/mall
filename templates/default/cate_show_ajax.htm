@@ -1,0 +1,333 @@
+<style>
+body {
+	font-size:12px;
+}
+#searchCatlist {
+	list-style-type:none;
+	padding:0;
+	margin:0;
+	text-align:left;
+}
+#searchCatlist a {
+	background:#DDDDDD;
+	line-height:23px;
+	margin:1px 0px;
+	padding:0px 30px 0px 20px;
+	color:blue;
+	display:block;
+	text-decoration:none;
+	font-size:12px;
+}
+#searchCatlist a:hover
+{
+	text-decoration:underline;
+	color:#ff7300;
+}
+.togg_tab
+{
+	background:#DEEBFE;
+	line-height:30px;
+	overflow:hidden;
+	width:242px;
+	margin:0 auto;
+	text-align:center;
+}
+.togg_tab a
+{
+	display:block;
+	float:left;
+	color:#FF7300;
+	text-decoration:none;
+	text-align:center;
+	width:120px;
+	border-left:1px solid #FFFFFF;
+	font-size:13px;
+	word-wrap: break-word;
+	word-break:breqk-all;
+	font-weight:bold;
+}
+.togg_tab a:hover,.togg_tab .curr
+{
+	color:#FFFFFF;
+	background:#197CC0;
+}
+</style>
+<script src="<{$config.weburl}>/script/jquery-1.4.4.min.js" type=text/javascript></script>
+<script src="<{$config.weburl}>/script/index.js" type=text/javascript></script>
+<script language="javascript">
+var currTab = 0;
+function toggCategory(e,i)
+{
+	e.className='curr';
+	i==1?document.getElementById('cate_t_2').className='':document.getElementById('cate_t_1').className='';
+	if(i==currTab)
+		return;
+	cateInit();
+	currTab = i;
+	getHTML('','tcatid');
+	if(i==1)
+	{
+		document.getElementById('sys_category').style.display='none';	
+		document.getElementById('sear_category').style.display='';		
+	}
+	else
+	{
+		document.getElementById('sear_category').style.display='none';	
+		document.getElementById('sys_category').style.display='';		
+	}	
+}
+</script>
+<form method="get" action="" id="cate_search">
+  <div style="text-align:center; border-bottom:2px solid #197CC0">
+    <div class="togg_tab"><a href="javascript:void(0);" onclick="toggCategory(this,1)" id="cate_t_1"><{$lang.sear_cate}></a><a href="javascript:void(0);" class="curr" id="cate_t_2" onclick="toggCategory(this,2)"><{$lang.sele_cate}></a></div>
+  </div>
+  <table width="100%" border="0" align="center" cellpadding="0" cellspacing="0" style="margin-top:10px;">
+    <tr>
+      <td><table width="100%" border="0" align="center" cellpadding="6" cellspacing="1" bgcolor="#DDDDDD" class="admin_table" id="sys_category" style="display:none">
+          <tr height="35px;">
+            <td bgcolor="#FFFFFF" valign="top" align="center"><select style="width:460px;" onchange="getid(this.value);" <{if !$get_user_common_cat}>disabled="disabled"<{/if}>>
+                <option value=""><{$lang.selec_com_cat}></option>
+                <{foreach item=list key=num from=$get_user_common_cat}> <{if $list}>
+                <option value="<{$num}>"><{$list}></option>
+                <{/if}> <{/foreach}>
+              </select></td>
+          </tr>
+          <tr>
+            <td bgcolor="#FFFFFF" valign="top">
+			  <select style="width:130px; height:308px;" name="catid" size="25" id="catid" onchange="getHTML(this.value,'tcatid')">
+                <option value=""><{$lang.selec_category}></option>
+                <{foreach item=list from=$cat}>
+                <option value="<{$list.catid}>" ><{$list.cat}></option>
+                <{/foreach}>
+              </select>
+			  
+              <select style="width:130px; height:308px;" name="tcatid" size="25" id="tcatid" onChange="getHTML(this.value,'scatid')">
+              </select>
+			  
+              <select style="width:130px; height:308px;"  name="scatid" size="25" id="scatid"  onChange="getHTML(this.value,'sscatid')">
+              </select>
+			  
+              <select style="width:130px; height:308px;"  onchange="allCatList()" name="sscatid" id="sscatid" size="25">
+              </select>
+			  </td>
+          </tr>
+        </table>
+        <table width="100%" border="0" align="center" cellpadding="6" cellspacing="1" bgcolor="#DDDDDD" class="admin_table" id="sear_category" style="display:table-block">
+          <tr>
+            <td bgcolor="#FFFFFF" valign="top" align="center"><p>
+                <label style="font-size:12px"><{$lang.keywords}>:<input type="text" value="<{$smarty.get.key_word}>" maxlength="50" name="keyword" id="key_word">
+                <input onclick="javascript:chooseCategory(document.getElementById('key_word').value);" value="<{$lang.search}>" type="button" name="input"></label>
+              </p></td>
+          </tr>
+          <tr style="height:321px !important;_height:318px;">
+            <td bgcolor="#FFFFFF" valign="top">
+            <div id="re_list" style="display:none;">
+              <p id="re_tip" style="font-size:12px">
+            	<div style="font-size:12px"><{$lang.sear_detail}>：</div>
+              </p>
+              <div style="margin-top:10px;height:255px; overflow-y:auto;">
+                <div id="searchCatlist" style="">
+                </div>
+              </div>
+            </div>
+            <div id="re_null" style="display:block; font-size:12px;"></div></td>
+          </tr>
+        </table></td>
+    </tr>
+    <tr bgcolor="#EAEFF3">
+      <td align="center" bgcolor="#FFFFFF" style="padding-top:10px;">
+        <span style="font-size:12px; color:#666666;"><{$lang.curr_s_cate}>：<label id='cruu_cate_text'></label>&nbsp;&nbsp;</span><input id="submit" onclick="chooseComplete()" type="button" value="<{$lang.submit}>" style="width:50px;"/></td>
+    </tr>
+  </table>
+  <input type="hidden" id="cat" value="" />
+  <input type="hidden" id="tcat" value="" />
+  <input type="hidden" id="scat" value="" />
+  <input type="hidden" id="category_id" name="category_id" value="" />
+</form>
+<script type="text/javascript">
+window.onload=function()
+{
+	document.getElementById('scatid').style.visibility="hidden";
+	document.getElementById('sscatid').style.visibility="hidden";
+	document.getElementById('tcatid').style.visibility="hidden";
+	cateInit();
+	if(document.getElementById('key_word').value!='')
+	{	
+		chooseCategory(document.getElementById('key_word').value);
+		toggCategory(document.getElementById('cate_t_1'),1);
+	}
+	else
+	{
+		toggCategory(document.getElementById('cate_t_2'),2);
+	}
+}
+function chooseComplete()
+{
+	if(document.getElementById('category_id').value==''){alert('<{$lang.product_category}>');return false;}
+	parent.setCategory(document.getElementById('category_id').value);
+}
+function cateInit()
+{
+	document.getElementById('category_id').value='';
+	document.getElementById('cruu_cate_text').innerHTML ='';
+	document.getElementById('submit').disabled = true;
+}
+function getText(ob)
+{
+	return ob.selectedIndex>0?ob.options[ob.selectedIndex].text:'';
+}
+function getCatList()
+{
+	 var catList = document.getElementById('cat').value;
+	 document.getElementById('category_id').value = document.getElementById('catid').value;
+	 if(document.getElementById('tcat').value!=''){
+	 	catList += '>'+document.getElementById('tcat').value;
+		document.getElementById('category_id').value = document.getElementById('tcatid').value;
+	 }
+	 if(document.getElementById('scat').value!=''){
+	 	catList += '>'+document.getElementById('scat').value;
+		document.getElementById('category_id').value = document.getElementById('scatid').value; 
+	 }
+	return catList;
+}
+function allCatList()
+{
+	var catList = getCatList();
+	if(catList!=''&&document.getElementById('sscatid').value!=''){
+		catList += '>'+getText(document.getElementById('sscatid'));
+		document.getElementById('category_id').value = document.getElementById('sscatid').value; 
+	}
+	document.getElementById('cruu_cate_text').title = catList;
+	document.getElementById('cruu_cate_text').innerHTML = catList.length>20?catList.substr(0,20):catList;
+}
+function getid(v)
+{	
+	id=v.split(',');
+	var sscatid=id[3]*1;
+	var scatid=id[2]*1;
+	var tcatid=id[1]*1;
+	var catid=id[0]*1;
+	for(i=0;i<document.getElementById('catid').options.length;i++)
+	{
+		if(document.getElementById('catid').options[i].value==catid)
+		{
+			document.getElementById('catid').options[i].selected = true;
+			document.getElementById('cat').value = document.getElementById('catid').options[i].text;
+		}
+	}
+	getHTML(catid,'tcatid',sscatid,scatid,tcatid);
+}
+function getHTML(v,ob,sscatid,scatid,tcatid)
+{	
+	if(ob=='tcatid'){
+		document.getElementById('scatid').options.length=0;
+		document.getElementById('sscatid').options.length=0;
+		document.getElementById('scatid').style.visibility="hidden";
+		document.getElementById('sscatid').style.visibility="hidden";
+		document.getElementById('cat').value = getText(document.getElementById('catid'));//
+		document.getElementById('tcat').value = '';
+		document.getElementById('scat').value = '';
+	}
+	if(ob=='scatid'){
+		document.getElementById('sscatid').options.length=0;
+		document.getElementById('sscatid').style.visibility="hidden";
+		document.getElementById('tcat').value = getText(document.getElementById('tcatid'));//
+		document.getElementById('scat').value= '';
+	}
+	if(ob=='sscatid')
+	{
+		document.getElementById('scat').value= getText(document.getElementById('scatid'));//
+	}
+    var url = '<{$config.weburl}>/ajax_back_end.php';
+	var sj = new Date();
+	var pars = 'shuiji=' + sj+'&cattype=pro&pcatid='+v;
+	$.post(url, pars,showResponse);
+	function showResponse(originalRequest)
+	{
+		var getstr=originalRequest;
+		var tempStr = 'var MyMe = ' + getstr; 
+		var i=1;var j=0;
+		eval(tempStr);
+		for(var s in MyMe)
+		{
+			++j;
+		}
+		if(j>0)
+			document.getElementById(ob).style.visibility="visible";
+		else
+			document.getElementById(ob).style.visibility="hidden";
+		document.getElementById(ob).options.length =j+1;
+		document.getElementById(ob).options[0].value = '';
+		document.getElementById(ob).options[0].text = '<{$lang.select_sub_categories}>';
+		document.getElementById(ob).options[0].selected = true;
+		
+		for(var k in MyMe)
+		{
+			var cityId=MyMe[k][0];
+			var ciytName=MyMe[k][1];
+			document.getElementById(ob).options[i].value = cityId;
+			document.getElementById(ob).options[i].text = ciytName;
+			
+			if(cityId==scatid||cityId==tcatid||cityId==sscatid)
+			{
+				document.getElementById(ob).options[i].selected = true;
+				scityid=cityId;
+			}
+			i++;
+	　	}
+	  
+		if(ob=='tcatid')
+			getHTML(scityid,'scatid',sscatid,scatid,tcatid);
+		
+		if(ob=='scatid')
+			getHTML(scityid,'sscatid',sscatid,scatid,tcatid);
+	 }
+	 var catList = getCatList();
+	 document.getElementById('cruu_cate_text').title = catList;
+	 document.getElementById('cruu_cate_text').innerHTML = catList.length>20?catList.substr(0,20):catList;
+	 if(document.getElementById('catid').value=='')
+	 	cateInit();
+	 else
+	 	document.getElementById('submit').disabled = false;
+　}
+function thirdCata(k,catList)
+{
+	document.getElementById('cruu_cate_text').title = catList;
+	document.getElementById('cruu_cate_text').innerHTML = catList.length>20?catList.substr(0,20):catList;
+	document.getElementById('category_id').value = k;
+	document.getElementById('submit').disabled = false;
+}
+function chooseCategory(key)
+{
+	if(key=='')
+	{
+		alert('请填写关键字');	
+		return;
+	}
+	var url = window.location.href+'&oper=ajax&call=search_cate';
+	var sj = new Date();
+	var pars = 'shuiji=' + sj+'&key_word='+key;
+	$.post(url, pars,showResponse);
+	function showResponse(originalRequest)
+	{
+		var getstr=originalRequest;
+		var tempStr = 'var MyMe = ' + getstr; 
+		eval(tempStr);
+		var str='';
+		for(var k in MyMe)
+		{
+			var catName=MyMe[k];
+			str += "<a onclick=\"thirdCata('"+k+"','"+catName+"');\" href=\"javascript:void(0)\">"+catName+"("+k+")</a>";str += "<a onclick=\"thirdCata('"+k+"','"+catName+"');\" href=\"javascript:void(0)\">"+catName+"("+k+")</a>";
+		}
+		if(str!=''){
+			document.getElementById('re_null').style.display ='none';
+			document.getElementById('searchCatlist').innerHTML = str;
+			document.getElementById('re_list').style.display ='';
+		}else{
+			document.getElementById('re_list').style.display ='none';
+			document.getElementById('re_null').style.display ='';
+			document.getElementById('re_null').innerHTML = "抱歉，没有找到与关键词 “"+key+"” 相关的类别，请更换关键词或查看全部类别。";
+		}
+	}
+}
+</script>

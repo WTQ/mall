@@ -1,0 +1,55 @@
+<script>
+function collect_goods(id){
+	
+	var url = '<{$config.weburl}>/module/sns/ajax_update.php';
+	var uname='<{$smarty.cookies.USER}>';
+	if(uname=='')
+	{
+		alert('<{$lang.no_logo}>');
+		window.location.href='<{$config.weburl}>/login.php?forward=shop.php?uid=<{$smarty.get.uid}>';
+		return false;
+	}
+	var pars = 'pid='+id+'&uname='+uname;
+	$.post(url, pars,showResponse);
+	function showResponse(originalRequest)
+	{
+		if(originalRequest>1)
+			alert('<{$lang.fav_ok}>');
+		else if (originalRequest>0)
+			alert('<{$lang.fav_isbing}>');
+		else
+			alert('<{$lang.error}>');
+	}
+	
+}
+</script>
+<div class="main-widget">
+   <div id="img" class="clearfix">
+        <{foreach item=list name=name from=$sharegoods.list}>
+        <div class="drop">
+            <dl class="drop-inner">
+                <dt class="drop-img">
+                <a title="<{$list.pname}>" href="<{$config.weburl}>/?m=product&s=detail&id=<{$list.pid}>" target="_blank"><img src="<{if $list.image}><{$list.image}><{else}>image/default/nopic.gif<{/if}>" /></a>
+                </dt>
+                <dd class="drop-cmt"><{if $list.content}><{$list.content}><{else}>分享了商品<{/if}></dd>
+                <dd class="drop-ops">
+                    <span class="collect">
+                        <a href="javascript:collect_goods('<{$list.pid}>');"><i></i>收藏</a>
+                        <strong> <{$list.collectnum}> </strong>
+                    </span>
+                </dd>
+            </dl>
+        </div>
+        <{/foreach}>
+    </div>
+</div>
+<script src="http://www.multibuy.cn/resource/js/jquery.masonry.js" type="text/javascript"></script> 
+<script type="text/javascript">
+$(function(){
+	$("#img").imagesLoaded( function(){
+		$("#img").masonry({
+			itemSelector : '.drop'
+		});
+	});
+});
+</script> 

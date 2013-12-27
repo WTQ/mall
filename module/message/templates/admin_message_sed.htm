@@ -1,0 +1,85 @@
+<div class="path">
+    <div>
+    	<{if $cg_u_type==1}>
+    		<a href="main.php?cg_u_type=1">我的商城</a> <span>&gt;</span>
+        <{else}>
+    		<a href="main.php?cg_u_type=2">卖家中心</a> <span>&gt;</span>
+        <{/if}>
+        写邮件
+    </div>
+</div>
+<div class="main">
+	<div class="wrap">
+        <div class="hd">
+            <ul class="tabs">
+                <li class="active"><a href="main.php?m=message&s=admin_message_sed">写邮件</a></li>
+            </ul>
+        </div>
+		<div class="form-style" style="position: relative;">
+            <form action="" method="post">
+			<{if $smarty.get.uid==''}>
+				<dl>
+					<dt><em>*</em>收件人：</dt>
+					<dd><input id="sendid" name="senduser" class="text w400" type="text"
+	value="<{$auser}>"></dd>
+				</dl>
+			<{else}>
+				<input style="display:none;" id="sendid" name="senduser" class="text w400" type="text" value="<{$auser}>;">
+			<{/if}>
+            <dl>
+                <dt><em>*</em>标题：</dt>
+                <dd><input name="msgtitle" value="<{if $de.sub}>Re:<{$de.sub}><{/if}>" class="text w400" type="text" id="msgtitle" maxlength="100" /></dd>
+            </dl>
+            <dl>
+                <dt><em>*</em>内容：</dt>
+                <dd>
+					<script charset="utf-8" src="<{$config.weburl}>/lib/kindeditor/kindeditor-min.js"></script>
+                    <script>
+                    var editor;
+                    KindEditor.ready(function(K) {
+                    editor = K.create('textarea[name="msgcon"]', {
+							items : [
+								'fontname', 'fontsize', '|', 'forecolor', 'hilitecolor', 'bold', 'italic', 'underline',
+								'removeformat', '|', 'justifyleft', 'justifycenter', 'justifyright', 'insertorderedlist',
+								'insertunorderedlist', '|','about'],
+							langType :'<{$config.language}>',
+						});
+                    });
+                    </script>
+                    <textarea name="msgcon" style="width:100%; height:400px;"><{$de.edit_con}></textarea>
+                    <p><input type="checkbox" class="checkbox" name="semail"  value="1" /><{$lang.msmail}></p>
+               	</dd>
+            </dl>
+         
+            <dl class="foot">
+                <dt>&nbsp;</dt>
+                <dd><input type="submit" name="msgsend" value="发送" class="submit"></dd>
+            </dl>
+            </form>
+            <!--<div class="roll">
+                <div>
+                    <{$lang.select_user}>
+                    <ul>
+                    <{foreach item=list from=$friendlist}>
+                    	<li><a title="<{$list.name}>" href="javascript:add_msgname('<{$list.username}>');" ><{$list.username}></a></li>
+                    <{/foreach}>
+                    </ul>
+                </div>
+            </div>-->
+        </div>
+     </div>
+</div>
+
+</form>
+<script>
+function add_msgname(fid)
+{
+	if(fid!='')
+	{
+		var str=document.getElementById('sendid').value;
+		str=str.replace(fid+';','');
+		document.getElementById('sendid').value=str+fid+';';	
+		
+	}	
+}
+</script>

@@ -1,0 +1,108 @@
+<link href="<{$config.weburl}>/module/brand/templates/brand.css" rel="stylesheet" type="text/css" />
+</div>
+<div id="babody">
+<center>
+	<div class="wrapper" style=" width:960px;">
+    	<div class="brl1">
+            <div class="brl11">
+            	<{foreach item=list key=num from=$cat}>
+                	<div <{if $num==0}>style="border-left:1px solid #CCCCCC"<{/if}> class="<{if $list.id!=$smarty.get.id }>brnv<{else}>brnvb<{/if}>"><a href="<{$config.weburl}>/?m=brand&s=brand_list&id=<{$list.id}>"><{$list.catname}></a></div> 
+                <{/foreach}> 
+            </div>
+            <div class="brl1d">
+                <dl class="br_list clearf">
+                    <dt>类目</dt>
+                    <dd>
+                    <{foreach item=list from=$bcat}>
+                        <a class="<{if $list.id!=$smarty.get.etgid}>brlist_bg<{else}>brlist_bg1<{/if}>" href="<{$config.weburl}>/?m=brand&s=brand_list&id=<{$smarty.get.id}>&etgid=<{$list.id}>"><{$list.catname}></a>
+                    <{/foreach}> 
+                    </dd>
+                </dl>
+            </div>
+        </div>
+        
+       <{if $brand}> 
+           <h2><div class="brl2"><{foreach item=list from=$bcat}><{if $list.id==$smarty.get.etgid}><{$list.catname}><{/if}><{/foreach}></div></h2>
+           
+           <{foreach item=list from=$brand.lists}>
+                <div class="brl3 clearf">
+                    <div class="brli_info">
+                        <p class="brli_logo">
+                            <a href="<{$config.weburl}>/?m=product&s=list&brand=<{$list.name}>">
+                                <{if $list.logo!=''}>
+                                <img width="90" height="45" src="<{$list.logo}>"/>
+                                <{else}>
+                                <img width="90"height="45" src="<{$config.weburl}>/image/default/nopic.gif"  alt="&lt;{$list.title}&gt;" />
+                                <{/if}>	
+                                <strong><{$list.name}></strong>			
+                            </a>  
+                        <p>
+                    </div>
+                    <div class="brli_pro">
+                        <div class="brli_com clearf">
+                        <a target="_blank" class="brlimore rightf" href="<{$config.weburl}>/?m=product&s=list&brand=<{$clist.name}>">更多<i class="brinflimg" ></i></a>
+                        </div>
+                        <div class="clear"></div>
+                    
+                        <div class="brli_pp">
+                            
+                        <{foreach item=slist from=$list.pro}>
+                            <div class="box">
+                            <a target="_blank" title="<{$slist.pname}>" href="?m=product&s=detail&id=<{$slist.id}>">
+                            <img src="<{$slist.pic}>_220X220.jpg" width=160  height=160 alt="<{$slist.pname}>" />
+                            
+                            </a>
+                            <a target="_blank" title="<{$slist.pname}>" href="?m=product&s=detail&id=<{$slist.id}>"><p class="brpname"><{$slist.pname}></p></a>
+                            <p class="brmored"><{$config.money}> <{$slist.price}></p>
+                            </div>
+                        
+                        <{/foreach}>
+                            
+                        </div>
+                    </div>
+            	</div>
+           <{/foreach}>
+           <div class="page"><{$brand.pages}></div> 
+       
+       <{else}>
+       		<{foreach item=list from=$bcat}>
+       		<h2><div class="brl2"><a href="<{$config.weburl}>/?m=brand&s=brand_list&id=<{$smarty.get.id}>&etgid=<{$list.id}>"><{$list.catname}></a></div></h2>
+            <{foreach item=clist from=$list.value}>
+                <div class="brl3 clearf">
+                    <div class="brli_info">
+                        <p class="brli_logo">
+                            <a href="<{$config.weburl}>/?m=product&s=list&brand=<{$clist.name}>">
+                                <{if $clist.logo!=''}>
+                                <img width="90" height="45" src="<{$clist.logo}>"/>
+                                <{else}>
+                                <img width="90"height="45" src="<{$config.weburl}>/image/default/nopic.gif"  alt="&lt;{$clist.title}&gt;" />
+                                <{/if}>	
+                                <strong><{$clist.name}></strong>			
+                            </a>  
+                        <p>
+                    </div>
+                    <div class="brli_pro">
+                        <div class="brli_com clearf">
+                            <a target="_blank" class="brlimore rightf" href="<{$config.weburl}>/?m=product&s=list&brand=<{$clist.name}>">更多<i class="brinflimg" ></i></a>
+                        </div>
+                        <div class="clear"></div>
+                        <div class="brli_pp">
+                        <{foreach item=slist from=$clist.pro}>
+                        <div class="box">
+                        < <a target="_blank" title="<{$slist.pname}>" href="?m=product&s=detail&id=<{$slist.id}>">
+                            <img src="<{$slist.pic}>_220X220.jpg" width=160  height=160 alt="<{$slist.pname}>" />
+                            
+                            </a>
+                            <a target="_blank" title="<{$slist.pname}>" href="?m=product&s=detail&id=<{$slist.id}>"><p class="brpname"><{$slist.pname}></p></a>
+                            <p class="brmored"><{$config.money}> <{$slist.price}></p>
+                        </div>
+                        <{/foreach}>
+                        </div>
+                    </div>
+                </div>
+           <{/foreach}>	
+           <div class="catMore"><a href="<{$config.weburl}>/?m=brand&s=brand_list&id=<{$smarty.get.id}>&etgid=<{$list.id}>"><{$list.catname}>全部品牌<i class="brinflimg"></i></a></div> 
+           <{/foreach}>	    
+       <{/if}>       
+    </div>
+</center>

@@ -1,0 +1,175 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<title>通知模版</title>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<link href="admin.css" rel="stylesheet" type="text/css" />
+<script type="text/javascript" src="../script/jquery-1.4.4.min.js"></script>
+<script type="text/javascript" src="../script/jquery.validation.min.js"></script>
+<script type="text/javascript" charset="utf-8" src="../script/district.js" ></script>
+<script src="../script/my_lightbox.js" language="javascript"></script>
+<script language="javascript">
+var weburl="<{$config.weburl}>";
+$(function(){
+	$('#form').validate({
+		errorPlacement: function(error, element){
+			element.next('.form-error').append(error);
+		},      
+		rules : {
+			subject:{
+				required:true
+			},
+		},
+		messages : {
+			subject:{
+				required:'请填写模板名称',
+			},
+		}
+	});
+});
+</script>
+</head>
+<body>
+	<div class="container">
+        <div class="flow">
+            <div class="itemtitle">
+                <h3>通知模版</h3>
+                <ul>
+                    
+                    
+                   
+                    <li <{if $smarty.get.operation=='' && !$smarty.get.type}>class="current"<{/if}>><a href="?m=<{$smarty.get.m}>&s=<{$smarty.get.s}>"><span>邮件模版</span></a></li>
+                    
+                    <li <{if $smarty.get.operation=='' && $smarty.get.type==1}>class="current"<{/if}>><a href="?m=<{$smarty.get.m}>&s=<{$smarty.get.s}>&type=1"><span>站内信模版</span></a></li>
+               
+                    <li <{if $smarty.get.operation=='' && $smarty.get.type==2}>class="current"<{/if}>><a href="?m=<{$smarty.get.m}>&s=<{$smarty.get.s}>&type=2"><span>手机模版</span></a></li>
+                
+                    <li <{if $smarty.get.operation=='add'}>class="current"<{/if}>><a href="?m=<{$smarty.get.m}>&s=<{$smarty.get.s}>&operation=add&type=<{$smarty.get.type}>"><span>添加</span></a></li>
+                    <{if $smarty.get.operation=='edit'}>
+                    <li class="current"><a href="#"><span>修改</span></a></li>
+                    <{/if}>
+                </ul>
+            </div>
+        </div>
+        <div class="h35"></div> 
+         
+        <{if $smarty.get.operation=='add' or $smarty.get.operation=='edit' }>
+            <form name="form" id="form" method="post">
+            <input name="id" type="hidden" id="id" value="<{$de.id}>">
+            <table class="table">
+                <thead>
+                    <tr>
+                        <th class="partition" colspan="99">通知模版</th>
+                    </tr>
+                </thead>
+                <tbody>
+                <tr>
+                    <td width="100">模板名称</td>
+                    <td>
+                    <input name="subject" id="subject" type="text" class="w350" value="<{$de.subject}>">
+                 	<div id="form-error" class="form-error"></div>
+                    </td>
+                </tr>
+                
+                <tr>
+                    <td width="100">标题</td>
+                    <td>
+                    <input name="title" id="title" type="text" class="w350" value="<{$de.title}>">
+                 	</td>
+                </tr>
+                
+                
+                <tr>
+                    <td>内容</td>
+                    <td>
+                    <script charset="utf-8" src="../lib/kindeditor/kindeditor-min.js"></script>
+					<script>
+                    var editor;
+                    KindEditor.ready(function(K) {
+                        editor = K.create('textarea[name="message"]', {
+                            resizeType : 1,
+                            allowPreviewEmoticons : false,
+                            allowImageUpload : false,
+                            langType :'<{$config.language}>',
+                        });
+                    });
+                    </script>
+                    <textarea style="width:80%; height:300px" id="message" name="message"><{$de.message}></textarea>
+                    <div id="form-error" class="form-error"></div>
+                    </td>
+				</tr>
+               
+                <tr>
+                    <td>&nbsp;</td>
+                    <td>
+                    <input class="submit" type="submit" value="提交">
+                    <input name="act" type="hidden" id="action" value="<{if !$smarty.get.editid}>save<{else}>edit<{/if}>">
+                    </td>
+                </tr>
+                </tbody>
+            </table>
+            </form>
+        <{else}>
+		<script type="text/javascript">
+        $(function(){
+            /* 全选 */
+             $('.checkall').click(function(){
+                var _self = this;
+                $('.checkitem').each(function(){
+                    if (!this.disabled)
+                    {
+                        $(this).attr('checked', _self.checked);
+                    }
+                });
+                $('.checkall').attr('checked', this.checked);
+            });	 
+        });
+        </script>
+        <form action="" method="post">
+        <input name="type" type="hidden" id="type" value="<{$smarty.get.type}>">
+        <table class="table">
+        	<thead>
+                <tr>
+                    <th class="partition" colspan="99">模版</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr class="header">
+                    <th width="30"></th>
+                    <th>模版描述</th>
+                    <th width="50"></th>
+                </tr>
+                <{foreach item=list from=$de.list}>
+                <tr>
+                    <td><input type="checkbox" value="<{$list.id}>" class="checkitem" name="chk[]"></td>
+                  	<td><{$list.subject}></td>
+                  
+                    <td>
+                    <a href="?m=<{$smarty.get.m}>&s=<{$smarty.get.s}>&operation=edit&editid=<{$list.id}>&type=<{$smarty.get.type}>"><{$editimg}></a> 
+                    <a onclick="return confirm('确定删除吗');" href="?m=<{$smarty.get.m}>&s=<{$smarty.get.s}>&delid=<{$list.id}>&type=<{$smarty.get.type}>"><{$delimg}></a>
+                    </td>
+                </tr>
+                <{foreachelse}>
+                <tr>
+                    <td class="norecord" colspan="99"><i></i><span>暂无符合条件的数据记录</span></td>
+                </tr>
+                <{/foreach}>
+            </tbody>
+            <tfoot>
+                <tr>
+                	<td colspan="3">
+                        <div class="del">
+                        <input type="checkbox" class="checkall" id="del">
+                        <label for="del">删除</label>
+                        </div>
+                        <input type="hidden" name="act" value="op" />
+                        <input type="submit" name="submit" value="<{$lang.btn_submit}>" />
+                    </td>
+                </tr>
+            </tfoot>
+        </table>
+        </form>
+        <{/if}>
+    </div>
+</body>
+</html>

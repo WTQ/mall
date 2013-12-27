@@ -1,0 +1,133 @@
+<script>
+function $$(id) {
+	return !id ? null : document.getElementById(id);
+}
+function ajaxpost(formid) {
+
+	var ajaxframeid = 'ajaxframe';
+	var ajaxframe = $$(ajaxframeid);
+	if(!ajaxframe){
+		var div = document.createElement('div');
+		div.style.display = 'none';
+		div.innerHTML = '<iframe name="' + ajaxframeid + '" id="' + ajaxframeid + '" loading="1"></iframe>';
+		ajaxframe = $$(ajaxframeid);
+		$$('append_parent').appendChild(div);
+	}
+	$$(formid).target = ajaxframeid;
+
+	$('#'+formid).validate({
+		errorPlacement: function(error, element){
+			element.next('.form-error').append(error);
+		},  
+		rules : {
+			choosestoreid:{
+				min:1
+			},
+			comment : {
+				maxlength : 140,
+			}
+		},
+		messages : {
+			choosestoreid:{
+				min:'&nbsp;&nbsp;&nbsp;<{$lang.select_a_sharing_of_goods}>~'
+			},
+			comment : {
+				maxlength: '<{$lang.Can_note140c}>'
+			}
+		}, 
+		
+		submitHandler:function(form){  
+			
+			form.submit();
+			function closefunc()
+			{
+				DialogManager.close("notice");
+				$('#friendtrace').lazyshow({url:"main.php?m=sns&s=sns&curpage=1",'iIntervalId':true});
+			}
+			function closefunc1()
+			{
+				DialogManager.close(formid);
+				var d = DialogManager.create('notice');
+				d.setTitle('<{$lang.message}>');
+				d.setContents('message', { type: 'notice', text: "<{$lang.share_successful}>" });
+				d.setWidth(270);
+				d.show('center');
+				setTimeout(closefunc,800);
+			}
+			setTimeout(closefunc1,200);
+		}
+			
+	});
+}
+</script>
+<div class="feededitor">
+<form method="post" id="sharegoods" name="sharegoods" action="main.php?m=sns&s=sns">
+<input type="hidden" name="flag" id="flag" value="false" />
+<{if $re }>
+<ul id="mycarousel" class="snsstorelist jcarousel-skin-tango">
+    <{foreach item=list key=nums from=$re}>
+        <li>
+            <a href="javascript:void(0);" value="<{$list.pid}>">
+            	<span class="thumb"><img width="90" height="90" title="<{$list.pname}>" src="<{if $list.image}><{$list.image}><{else}>image/default/nopic.gif<{/if}>" /></span>
+            	<p class="extra"><{$lang.has_been_select}></p>
+            </a>
+        </li>
+    <{/foreach}>
+</ul>
+<{elseif $de }>
+<div class="product">
+      <div class="pic">
+      <a href="?m=product&s=detail&id=<{$de.pid}>" target="_blank"><img width="90" height="90" src="<{if $de.image}><{$de.image}><{else}>image/default/user_admin/default_logo.gif<{/if}>" title="<{$de.pname}>"></a></div>
+      <dl class="intro">
+        <dt><a href="?m=product&s=detail&id=<{$de.pid}>" target="_blank"><{$de.pname}></a></dt>
+        <dd><{$lang.price}><span class="price"><{$de.price}></span></dd>
+        <dd><{$lang.favorite_popularity}><{$de.collectnum}></dd>
+      </dl>
+    </div>
+<{else}>
+<div class="share_norecord"><{$lang.also_did_not_buy_the_goods}>~</div>
+<{/if}>
+<input type="hidden" id="choosestoreid" name="choosestoreid" value="<{if $re }><{$re.0.pid}><{elseif $de }><{$de.pid}><{else}>0<{/if}>" />
+<div class="form-error"></div>
+<input type="hidden" name="act" value="sharegoods" />
+<div style="padding:10px;" >
+    <textarea resize="none" name="comment" id="comment"></textarea>
+    <div class="form-error"></div>
+    <input type="text" style="display:none;" />
+    <!-- 防止点击Enter键提交 -->
+    <div class="handle">
+    	<input type="hidden" name="sprivacy" id="sprivacy" value="0"/>
+        <div id="charcount" class="fl"></div>     
+        <input type="submit" id="btnsharegoods" value="<{$lang.share}>" class="button" name="<{$lang.share}>">
+    </div>
+</div>
+</form>
+</div>
+<script>
+$(function(){
+	//图片轮换
+    $('#mycarousel').jcarousel({visible: 4});
+	//初始化选择的店铺
+	$(".snsstorelist").find('a').eq(0).addClass("selected");
+	//商品列表绑定事件
+	$(".snsstorelist").find('a').bind("click",function(){
+		$(".snsstorelist").find('a').removeClass('selected');
+		$(this).addClass("selected");
+		var sid = $(this).attr('value');
+		$("#choosestoreid").val(sid);
+	});
+	
+	$("#comment").charCount({
+		allowed: 140,
+		warning: 10,
+		counterContainerID:'charcount',
+		firstCounterText:'<{$lang.remaining}>',
+		endCounterText:'<{$lang.characters}>'
+	});
+	
+	
+});
+$('#btnsharegoods').click(function(){
+	ajaxpost('sharegoods');
+});
+</script>

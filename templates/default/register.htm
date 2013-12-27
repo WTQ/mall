@@ -1,0 +1,112 @@
+<{include file="header.htm"}>
+<script type=text/javascript>
+	var allnotblank='<{$lang.allisnotblank}>';
+	var passlength='<{$lang.passisnotlowfour}>';
+	var passistooleng='<{$lang.passisnotlongtenw}>';
+	var passnotsame='<{$lang.passisnotsame}>';
+	var emailerror='<{$lang.emailiserror}>';
+	var changeemil='<{$lang.changeemil}>';
+	var randcodeerror='<{$lang.codeiserror}>';
+	var randcodeisemp='<{$lang.codeisempty}>';
+	var rcodeiserror='<{$lang.randcodeerror}>';
+	var enterusername='<{$lang.usernameisblank}>';
+	var unameisfour='<{$lang.usernameislowfour}>';
+	var unameisen='<{$lang.usernameisen}>';
+	var usernameprotect='<{$lang.usernameisprotect}>';
+	var have_blank='<{$lang.have_blank}>';
+	function dis()
+	{
+		if($('#submitreg').attr('disabled')==false)
+			$('#submitreg').attr('disabled',true);
+		else
+			$('#submitreg').attr('disabled',false);
+	}
+</script>
+<script src="<{$config.weburl}>/script/register.js" type=text/javascript></script>
+<script src="script/my_lightbox.js" language="javascript"></script>
+
+<div id="mainbody1" class="topm">
+<div class="reg_de">
+  <div class="breg-title">
+    <h3>用户注册</h3>
+  </div>
+  <{if $config.closetype==2}>
+  	<div style="height:300px; padding-top:150px; color:#FF0000;border: 1px solid #A9B9D3; font-size:16px"> <{$config.closecon}> </div>
+  <{else}>
+  <div class="breg-content ">
+    <form action="" method="post">
+      <table width="100%" border="0"  cellspacing="1" >
+      <tr>
+        <td height="39" align="left" valign="middle"><table width='100%' border='0' cellspacing='0' cellpadding='0'  align="center ">
+            <tr>
+              <td width='80' height="40" align="right" ><{$lang.user_name}>&nbsp;&nbsp;</td>
+              <td height="*" colspan="2" ><input onblur="check_user();" name='user' type='text' id="user" class="i-text" style="width:200px;"/>
+                <span id="tishi"></span></td>
+            </tr>
+            <tr>
+              <td width="80" height="r0" align="right" ><{$lang.email}>&nbsp;&nbsp;</td>
+              <td height="*" colspan="2" ><input onblur="check_email();" name='email' type='text' class="i-text" id="email" size='20' maxlength="30" style="width:200px;"/>
+                <span id="tishi_email"></span></td>
+            </tr>
+            <tr>
+              <td width='80' height='40' align="right" ><{$lang.user_pass}>&nbsp;&nbsp;</td>
+              <td height='*' colspan="2" ><input type='password'  name='password' id="password" class="i-text" style="width:200px;"/></td>
+            </tr>
+            <tr>
+              <td width='80' height='40' align="right" ><{$lang.pass_reenter}>&nbsp;&nbsp;</td>
+              <td height='*' colspan="2" ><input type='password'  name='re_password' id="re_password" size='20' class="i-text" style="width:200px;"/></td>
+            </tr>
+            <tr  valign="middle" height="35">
+              <td width="90" height="35" align="right" ><{$lang.randcode}>&nbsp;&nbsp;</td>
+              <td  width="133" height="*">
+              <input name="yzm" type="text" id="yzm" class="i-text" onChange="check_yzm()" style="width:100px; height: " /></td>
+              <td width="150"  height="*">
+              <img onclick="get_randfunc(this);" style="padding-left:5px; cursor:pointer" src='<{$config.weburl}>/includes/rand_func.php'/>
+              <span id="tishi2"></span>
+              </td>
+            </tr>
+            <{if $config.user_reg_verf}>
+            <tr valign="middle" height="35">
+              <td width="90" height="35" align="right" ><{$lang.randques}></td>
+              <td width="133" height="*"><input onFocus="show_yzwt();"  name="ckyzwt" type="text" id="ckyzwt" class="i-text" onChange="check_yzwt()" onclick="show_yzwt();" style="width:100px;" /></td>
+              <td width="13" height="*"><span id="yzwt" ></span>&nbsp;&nbsp;<span id="tishi8" style="color:#FF0000"></span></td>
+            </tr>
+            <{/if}>
+            <tr>
+              <td width="80" height="35" align="right" ></td>
+              <td height="*" colspan="2"><input name="readme" id="readme" type="checkbox" value="checkbox"  onclick="dis()" style="margin-top:2px; margin-left:5px;"/>
+                <a href="javascript:alertWin('会员协议',document.getElementById('rec_con'),'800','400');"><{$lang.reg_read}></a>
+				<div style="display:none;" id="rec_con"><div style="height:370px; padding:5px; overflow-y:auto;"><{$config.association}></div></div>
+				</td>
+            </tr>
+            <tr>
+              <td width='80' height="30"></td>
+              <td height="*" colspan="2"><input type='submit' name='submitreg' id="submitreg" value='<{$lang.submit_title}>' class="input" style="width:150px;" onClick="return check()" disabled="disabled"/>
+                <input name="forward" type="hidden" id="forward" value="<{$smarty.get.forward}>" />
+                <input name="connect_id" type="hidden" id="forward" value="<{$smarty.get.connect_id}>" />
+				</td>
+            </tr>
+          </table>
+    </form>
+    </td>
+    </tr>
+    </table>
+    </td>
+    <{/if}> </div>
+  <div class="breg-bottom "> </div>
+</div>
+<div class="breg_left">
+  <h3>您注册之后可以</h3>
+  <ol>
+    <li class="ico05"> <i></i> 购买商品支付订单 </li>
+    <li class="ico01"> <i></i> 申请开店销售商品 </li>
+    <li class="ico03"> <i></i> 空间好友推送分享 </li>
+    <li class="ico02"> <i></i> 收藏商品关注店铺 </li>
+    <li class="ico06"> <i></i> 商品咨询服务评价 </li>
+    <li class="ico04"> <i></i> 安全交易诚信无忧 </li>
+    <div class="clear"></div>
+  </ol>
+  <h3 class="mt20">如果您是本站用户</h3>
+  <div class="nc-login-now mt10"> <span class="ml20"> 我已经注册过帐号，立即<a class="register" href="<{$config.weburl}>/login.php">登录</a> </span> <span>或是 <a href="lostpass.php"><{$lang.forgetpass}></a></a> </span> </div>
+</div>
+<{include file="footer.htm"}>

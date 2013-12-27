@@ -1,0 +1,120 @@
+<{if $config.closetype==2}>
+<div style="height:300px; padding-top:150px; color:#FF0000;border: 1px solid #A9B9D3; font-size:16px"> <{$config.closecon}> </div>
+<{else}>
+    <{if $smarty.get.regsuc}>
+    <div style="height:300px; padding-top:150px; color:#FF0000;border: 1px solid #A9B9D3; font-size:16px"> <{$lang.reg_mail_msg}> </div>
+<{else}>
+<form action="" method="post">
+  <table width="100%" border="0" align="left" cellspacing="1" bgcolor="#b6daeb" style="margin-top:0px">
+  <tr>
+    <td bgcolor="#FFFFFF" height="39" align="left" valign="middle" ><table width='100%' border='0' cellspacing='0' cellpadding='0' align="center">
+        <tr>
+          <td height="28" colspan="3" align="left" bgcolor="#F6F6F6"><{$lang.baseinfo}></td>
+        </tr>
+        <tr  valign="middle">
+          <td width="305" align="right"><strong><{$lang.randcode}></strong></td>
+          <td width="300" height="28" align="left"><input onFocus="show_yzm();" name="yzm" type="text" id="yzm" class="input" onChange="check_yzm()" style="width:300px;" /></td>
+          <td width="373" height="28" align="left"><span id="yzm_pic"></span><span id="tishi2"></span></td>
+        </tr>
+        <{if $config.user_reg_verf}>
+        <tr  valign="middle">
+          <td width="305" align="right"><strong><{$lang.randques}></strong></td>
+          <td width="300" height="28" align="left"><input onFocus="check_yzm();"  name="ckyzwt" type="text" id="ckyzwt" class="input" onChange="check_yzwt()" onClick="show_yzwt();" style="width:300px;" /></td>
+          <td  height="28" align="left"><span id="yzwt" ></span>&nbsp;&nbsp;<span id="tishi8" style="color:#FF0000"></span></td>
+        </tr>
+        <{/if}>
+        <tr>
+          <td width="305" align="right" ><strong><{$lang.selcountry}></strong></td>
+          <td height="28" colspan="2" align="left" ><select name="country" id="country" class="input" style="width:304px;">
+              <{foreach item=list key=num from=$country}>
+              <option value="<{$list.id}>"><{$list.name}></option>
+              <{/foreach}>
+            </select></td>
+        </tr>
+        <tr>
+          <td width='305' align="right" ><strong><{$lang.user_name}></strong></td>
+          <td height="28" colspan="2" align="left" ><input name='user'  type='text' id="user" <{if $config.user_reg_verf}> onFocus="check_yzwt();" <{/if}> class="input" style="width:300px;"/><span id="tishi"></span></td>
+        </tr>
+        <tr>
+          <td width='305' align="right" ><strong><{$lang.user_pass}></strong></td>
+          <td height='35' colspan="2" align="left" ><input onFocus="check_user();" type='password'  name='password' id="password" class="input" style="width:300px;"/></td>
+        </tr>
+        <tr>
+          <td width='305' align="right" ><strong><{$lang.pass_reenter}></strong></td>
+          <td height='35' colspan="2" align="left" ><input type='password'  name='re_password' id="re_password" size='20' class="input" style="width:300px;"/></td>
+        </tr>
+        <tr align="right">
+          <td height="28" colspan="3" align="left" bgcolor="#F6F6F6" ><{$lang.personal}></td>
+        </tr>
+        <tr>
+          <td width='305' align="right" ><strong><{$lang.true_name}></strong></td>
+          <td height='35' colspan="2" align="left" ><input type='text'  name='realname' id="realnane" size='30' class="input" style="width:200px;"/>
+            <input  type="radio" name="sex" value="1" checked="checked"/>
+            <{$lang.msr}>
+            <input type="radio" name="sex" value="2" />
+            <{$lang.mis}> </td>
+        </tr>
+        <tr>
+          <td width='305' align="right" ><strong><{$lang.pos}></strong></td>
+          <td height='35' colspan="2" align="left" ><input type='text'  name='pos' id="pos" size='30' class="input" style="width:300px;"/></td>
+        </tr>
+        <tr>
+          <td width="305" valign="top" align="right" ><strong><{$lang.email}></strong></td>
+          <td height="28" align="left" ><input onblur="check_email();" name='email' type='text' class="input" id="email" size='20' maxlength="40" style="width:300px;"/>
+            <span id="tishi_email"></span> <br />
+            <span class="bz"><{$lang.email_msg}></span></td>
+          <td height="28"  ></td>
+        </tr>
+        <tr>
+          <td width='305' align="right" ><strong><{$lang.mobile}></strong></td>
+          <td height="28" colspan="2" align="left" ><input type='text'  name='mobile' id="mobile" size='30' class="input" style="width:300px;"/></td>
+        </tr>
+        <tr>
+          <td width='305' align="right" ><strong><{$lang.tel}></strong></td>
+          <td height="28" align="left" ><input type='text'  name='tel' id="tel" size='30' class="input" style="width:300px;"/></td>
+          <td height="28" >&nbsp;</td>
+        </tr>
+        <tr>
+          <td width='305' align="right" ><strong><{$lang.fax}></strong></td>
+          <td height="28" align="left" ><input type='text'  name='fax' id="fax" size='30' class="input" style="width:300px;"/></td>
+          <td height="28" >&nbsp;</td>
+        </tr>
+        <tr>
+          <td width='305' align="right" ><strong>QQ</strong></td>
+          <td height="28" colspan="2" align="left" ><input type='text'  name='qq' id="qq" size='30' class="input" style="width:300px;"/></td>
+        </tr>
+        <tr>
+          <td width='305' align="right" ><strong>MSN</strong></td>
+          <td height="28" colspan="2" align="left" ><input type='text'  name='msn' id="msn" size='30' class="input" style="width:300px;"/></td>
+        </tr>
+        <tr align="right">
+          <td height="28" colspan="3" align="left" bgcolor="#F6F6F6" ><{$lang.company}></td>
+        </tr>
+        <tr>
+          <td width='305' align="right" ><strong><{$lang.comapny_name}></strong></td>
+          <td height="28" colspan="2" align="left" ><input type='text'  name='comname' id="comname"  class="input" style="width:300px;"/></td>
+        </tr>
+        <tr>
+          <td width='305' align="right" ><strong><{$lang.addr}></strong></td>
+          <td height="28" colspan="2" align="left" ><input type='text'  name='addr' id="addr"  class="input" style="width:300px;"/></td>
+        </tr>
+        <tr>
+          <td width="305" height="28" align="right" ><strong><{$lang.reg_lim}></strong></td>
+          <td height="*" colspan="2" align="left" ><textarea name="trtext" rows="5"  style="font-size:12px;algin:left;margin-top:5px; width:300px;"><{$config.association}></textarea>
+            <br/>
+            <input name="readme" id="readme" type="checkbox" value="checkbox"  onclick="$('#submitreg').attr('disabled',false);" style="margin-top:5px;"/>
+            <{$lang.reg_read}> </td>
+        </tr>
+        <tr>
+          <td width='305'  ></td>
+          <td height="35" colspan="2" align="left" ><input class="buttonSkinA L" type='submit' name='submitreg' id="submitreg" value='Create My Account' class="input" onClick="return check()" disabled="disabled"/>
+            <input name="forward" type="hidden" id="forward" value="<{$smarty.get.forward}>" />
+            <input name="connect_id" type="hidden" id="forward" value="<{$smarty.get.connect_id}>" /></td>
+        </tr>
+      </table>
+</form>
+</td>
+</tr>
+</table>
+<{/if}>
+<{/if}>

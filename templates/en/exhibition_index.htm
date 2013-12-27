@@ -1,0 +1,122 @@
+<script language="javascript" src="<{$config.weburl}>/script/Calendar.js"></script>
+<script language="javascript">
+	var cdr = new Calendar("cdr");
+	document.write(cdr);
+	cdr.showMoreDay = true;
+</script>
+<link href="<{$config.weburl}>/templates/en/exhibition.css" rel="stylesheet" type="text/css" />
+<div class="menu_bottom L1">				
+    <div class="headtop_L">
+        <{$lang.you_are_here}><a href='<{$config.weburl}>/'><{$lang.indexpage}></a> &raquo; <{$lang.exh_center}></a>
+    </div>		
+</div>
+
+	<div id="mainbody1" class="m1">
+    	<div class="ex_fla">
+        <script src='<{$config.weburl}>/api/ad.php?id=47&catid=<{$smarty.get.id}>&name=<{$smarty.get.key}>'></script><!--{insert name="label" type='news' temp='news_flash' flash=true img='true' catname=$config.exp_news  width='325' height='240' limit=5}--></div>
+        <div class="zhanhui_news1"><{insert name="label" type='exhibition' temp='exhibition_lasted' rec=2 limit=7 }></div>
+        <div class="ex_ex1"> 
+            <div class="sectitle" style="border:none;"><div class="title_left1 L2">&nbsp;<{$lang.ser_exh}></div></div>       
+           	<div class="seccon" >
+			<form name="exh_serarch" action="<{$config.weburl}>/" method="GET">
+			<table class="zhanhui_search" align="center">
+				<tr><td width="60"><strong><{$lang.keyword}></strong></td>
+                <td><input style="width:180px;" type="text" name="key"></td></tr>
+				<tr><td width="60"><strong><{$lang.time}></strong></td><td><select class="lselect" name="years"><option value='' selected="selected"><{$lang.select_year}></option><option value="2009">2009</option><option value="2010">2010</option><option value="2011">2011</option><option value="2012">2012</option><option value="2013">2013</option><option value="2014">2014<option value="2015">2015</option><option value="2016">2016</option><option value="2017">2017</option><option value="2018">2018</option><option value="2019">2019</option><option value="2020">2020</option></select>&nbsp;&nbsp;&nbsp;
+				<select class="rselect" name="months"><option value="" selected="selected"><{$lang.select_mothe}></option><option value="1">01</option><option value="2" >02</option><option value="3">03</option><option value="4">04</option><option value="5">05</option><option value="6" >06</option><option value="7">07</option><option value="8" >08</option><option value="9" >09</option><option value="10">10</option><option value="11" >11</option><option value="12">12</option></select></td></tr>
+				<tr>
+				  <td>&nbsp;</td>
+				  <td>
+				  <input name="m" type="hidden" value="exhibition" />
+				  <input name="s" type="hidden" value="exhibition_list" />
+				  <input type="submit" value="<{$lang.search}>" />
+				  </td>
+			  </tr>  
+			</table>
+			</form>
+		    <div style="line-height:28px; border-bottom:1px dashed silver; font-size:14px; font-weight:bold;"><{$lang.exh_cop}></div>
+			<table align="center" style="line-height:21px; margin-top:5px;">
+				<tr>
+					<td width="70" align="center" valign="middle">
+					<img src="<{$config.weburl}>/image/default/zhanhui_server.gif"></td><td>
+					<{$lang.whant_send}><br>
+					<{$lang.tell}><{$config.exp_tell}><br />
+					<{$lang.email}><{$config.exp_mail}>
+					</td>
+				</tr>
+			</table>
+			</div>
+        </div>
+        <div class="clear" style="height:10px;"></div>
+		<{$config.exp_ad}>
+		<div class="clear" style="height:10px;"></div>
+		
+		<div class="leftbar">
+			<div class="title4">
+                <div class="title_left2 L2"><{$lang.rec_exh}></div>
+                <div class="more">
+                <a target="_blank" style="float:right; font-size:11px; margin-right:6px; color:#490E10; font-weight:bold;"  href="<{$config.weburl}>/?m=exhibition&s=exhibition_list">more...
+                </a>
+                </div>
+            </div>
+			<div class="content4">
+					<ul class="list6">
+                    <li>
+                 		<table width="100%" border="0" cellspacing="0" cellpadding="0">
+                      <{foreach item=list from=$exhibition_index}>
+                      <tr>
+                        <td width="5%">
+                        <a rel="nofollow" href="<{$config.weburl}>/?m=exhibition&s=exhibition_detail&id=<{$list.id}>">
+						<{if $list.pic!=''}>
+                        	<img width="100" src="<{$list.pic}>"  alt="<{$list.title}>" />
+						<{else}>
+						 	<img width="100" src="<{$config.weburl}>/image/default/nopic.gif"  alt="<{$list.title}>" />
+						<{/if}>
+                         </a>
+                        </td>
+                        <td>
+                        <strong><a href="<{$config.weburl}>/?m=exhibition&s=exhibition_detail&id=<{$list.id}>" title="<{$list.title}>" target="_blank" style="margin-left:5px;"><{$list.title|truncate:150:"...":true}></a></strong><br/>
+                        	<font style="font-weight:100;margin-left:5px;"><{$list.con|strip_tags|truncate:150:"...":true}></font><br />
+				            &nbsp;&nbsp;[<{$list.country}>-<{$list.city}>]&nbsp;&nbsp;&nbsp;&nbsp;<{$list.showroom}>
+						</td>
+                        <td width="15%" align="left"><{$lang.show_time}><br /><{$list.stime|date_format}><br/><{$list.etime|date_format}></td>
+                      </tr>
+					  <tr height="1">
+					    <td style="border-top:1px dashed #dddddd" colspan="3"></td>
+					  <tr>
+                      <{foreachelse}>
+                      <tr>
+                        <td colspan="3">
+                        	<{$lang.no_exh}><a href="<{$config.weburl}>/main.php"><{$lang.add_info}> </a>
+                        </td>
+                      </tr>
+                      <{/foreach}>
+                    </table>
+                    </li>
+				</ul>
+		  </div>
+		</div>
+		<div class="rightbar" >
+			<div class="right1">
+				<div class="sectitle" >
+					<div class="title_left1 L2"><{$lang.showroom}></div>
+		        </div>
+				 <div class="seccon">
+					<{insert name="label" type='exhibition_showroom' temp='exhibition_showroom' rec=1 limit=5}>
+                    <div class="clear"></div>
+			     </div>
+		  </div>
+			<div class="right1 m1">
+				<div class="sectitle" >
+					<div class="title_left1 L2"><{$lang.news}></div>
+		        </div>
+				<div class="seccon" >
+					<ul class="li_list">
+                        <{insert name="label" type="news" temp='news_default_list' catname=$config.exp_news leng=28 limit=$config.news_num}>
+				   </ul>
+                   <div class="clear"></div>
+			    </div>
+				<div class="clear"></div>
+			</div>
+		</div>		
+	</div>	

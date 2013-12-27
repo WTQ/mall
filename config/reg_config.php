@@ -1,0 +1,1 @@
+<?php $reg_config = unserialize('a:10:{s:12:"openregemail";s:1:"1";s:13:"user_reg_verf";s:1:"0";s:6:"invite";s:1:"0";s:8:"user_reg";s:1:"2";s:7:"openbbs";s:1:"0";s:10:"inhibit_ip";s:1:"0";s:12:"exception_ip";s:9:"127.0.0.1";s:11:"association";s:63:"这里是注册协义，可以在后台注册设置中修改。";s:9:"closetype";s:1:"0";s:8:"closecon";s:0:"";}');?>

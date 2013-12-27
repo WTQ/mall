@@ -1,0 +1,123 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<title>配置数据库及设置密码--MallBuilder安装向导</title>
+<link rel="stylesheet" type="text/css" href="css/install.css" />
+<script language="javascript"> 
+function checkpasssame() 
+{
+if (document.getElementsByName('db_host')[0].value==''||document.getElementsByName('db_username')[0].value==''||document.getElementsByName('db_name')[0].value==''||document.getElementsByName('db_table')[0].value=='') 
+{ 
+alert("数据库地址、数据库用户名、数据库名称、数据表前缀均不能为空"); 
+return false; 
+}
+if (document.dbinstall.adminpass.value=='') 
+{ 
+alert("系统管理员初始密码不能为空！"); 
+return false; 
+}
+if (document.dbinstall.adminpass.value!=document.dbinstall.adminpass2.value) 
+{ 
+alert("系统管理员初始密码两次数据不一致！"); 
+return false; 
+}
+}
+</script>
+</head>
+<body>
+<form name="dbinstall" action="index.php?action=b2b_step5" method="POST">
+  <div class="wrapper">
+    <div class="top80"></div>
+    <div class="wrapper">
+      <div class="leftimg"></div>
+      <div class="rightbox">
+        <div class="check">
+          <h1>配置数据库</h1>
+          <table width="573" style="margin:20px 0 20px 0; border-bottom:1px solid #66CCFF; width:560px;">
+            <input type="hidden" name="step2" value="2" />
+            <tr>
+              <th width="114" align="left">数据库服务器:</th>
+              <td width="189" align="left"><input name="db_host" type="text" class="txt" value="localhost" size="25" maxlength="40" /></td>
+              <td width="241" align="left">填写你的数据库地址：一般为localhost或者填写你的数据库IP地址</td>
+            </tr>
+            <tr>
+              <th align="left">数据库用户名:</th>
+              <td align="left"><input name="db_username" type="text" class="txt" value="root" size="25" maxlength="40" /></td>
+              <td rowspan="2" align="left">填写从空间服务商哪里获取的数据库账号和密码</td>
+            </tr>
+            <tr>
+              <th align="left">数据库密码:</th>
+              <td align="left"><input name="db_pass" type="password" class="txt" value="" size="25" maxlength="40" /></td>
+            </tr>
+            <tr>
+              <th height="18" align="left">数&nbsp;据&nbsp;库&nbsp;名:</th>
+              <td align="left"><input name="db_name" type="text" class="txt" value="mallbuilder" size="25" maxlength="40" /></td>
+              <td align="left">填写你使用或者新建的数据库名称</td>
+            </tr>
+            <tr>
+              <th height="18" align="left">数据表前缀:</th>
+              <td align="left"><input name="db_table" type="text" class="txt" value="mallbuilder_" size="25" maxlength="40" /></td>
+              <td align="left">填写你数据表的前缀（mallbuilder_）</td>
+            </tr>
+          </table>
+        </div>
+        <div class="check">
+          <h1>网站访问URL路径确认</h1>
+          <table width="555" height="75" style="margin:20px 0 20px 0; border-bottom:1px solid #66CCFF; width:560px;">
+            <tr>
+              <th width="150" rowspan="2" align="left">网站URL路径:</th>
+              <td height="28" align="left">以下系统自动获取的值，如果不正确，请输入正确的URL值，以便网站的访问(末尾不需要加 / )</td>
+            </tr>
+            <tr>
+             <?php
+			$rurl=$_SERVER ['HTTP_HOST'].$_SERVER['PHP_SELF'];
+			$aurl = explode("/", $rurl);
+			$realurl='';
+			for($i=0;$i<count($aurl)-2;$i++)
+				   $realurl=$realurl.$aurl[$i]."/";
+			$realurl="http://".$realurl;
+			$realurl=substr($realurl,0,-1);
+			  ?>
+              <td width="436" height="34" align="left"><input name="weburl" type="text" class="txt" value="<?php echo $realurl;?>" size="60" maxlength="100" id="weburl" /></td>
+            </tr>
+          </table>
+        </div>
+        <div class="check">
+          <h1>设置创始人密码</h1>
+          <table width="559" height="75" style="margin:20px 0 20px 0; border-bottom:1px solid #66CCFF; width:560px;">
+            <tr>
+              <th height="32" colspan="2" align="left" > 请牢记 MallBuilder 创始人密码，凭该密码登录MallBuilder。</th>
+            </tr>
+            <tr>
+              <th width="108" height="26" align="left">创始人帐号:</th>
+              <td width="439" align="left"><input  name="adminname" type="text" class="txt" size="25" maxlength="25" value="admin" disabled/></td>
+            </tr>
+            <tr>
+              <th height="32" align="left">创始人密码:</th>
+              <td align="left"><input name="adminpass" type="password" class="txt" value="" size="25" maxlength="25" /></td>
+            </tr>
+            <tr>
+              <th height="25" align="left">重复创始人密码:</th>
+              <td align="left"><input name="adminpass3" type="password" class="txt" value="" size="25" maxlength="25" /></td>
+            </tr>
+            <tr>
+              <th height="26" colspan="2" align="left"><span class="next">
+                <input type="checkbox" name="renewinstall" id="checkbox" />
+                覆盖安装(该模式会删除掉原有以你填写的前缀开头的所有数据表) </span></th>
+            </tr>
+          </table>
+        </div>
+        <div class="clear"></div>
+        <div class="next">
+          <pre><input type="button" onclick="history.back();" value="上一步" class="btnav" style="padding: 2px"> 		  &nbsp; 	<input type="submit" value="开始安装" class="btnav" style="padding: 2px" onclick="return checkpasssame();"> 		
+		  </pre>
+        </div>
+        <div class="clear"></div>
+        <div class="copyright">Copyright &copy; 2008 - 2013 ，MallBuilder. All Rights Reserved</div>
+      </div>
+    </div>
+  </div>
+</form>
+</body>
+</html>

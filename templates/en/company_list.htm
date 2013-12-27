@@ -1,0 +1,114 @@
+<script>
+function do_select()
+{
+	 var box_l = document.getElementsByName("inquery").length;
+	 for(var j = 0 ; j < box_l ; j++)
+	 {
+		if(document.getElementsByName("inquery")[j].checked==true)
+		  document.getElementsByName("inquery")[j].checked = false;
+		else
+		  document.getElementsByName("inquery")[j].checked = true;
+	 }
+}
+function goto()
+{
+	window.location='<{$config.weburl}>/?m=company&s=company_list&ct='+$('companyType').value;
+}
+function get_inquery()
+{	
+	var pid='';
+	var boxes = document.getElementsByName("inquery");   
+	for (var i = 0; i < boxes.length; i++)  
+	{  
+		if(boxes[i].checked)  
+		{  
+			pid+=boxes[i].value+',';  
+		} 
+	}
+	window.location='<{$config.weburl}>/?m=message&s=inquire&contype=3&userid='+pid;
+}
+</script> 
+<link href="<{$config.weburl}>/templates/en/company.css" rel="stylesheet" type="text/css" />
+<div class="main_guide">				
+	<{$lang.you_are_here}><a href='<{$config.weburl}>/'><{$lang.indexpage}></a> &raquo; <a href='<{$config.weburl}>/?m=company'><{$lang.comcat}></a> <{if $current_cat}>&raquo; <{$current_cat}><{/if}> &raquo; <{$lang.comlist}>
+</div>
+<div class="search_left">
+	<b>Categories</b>
+	<ul>
+	<{foreach item=cList from=$subcat}>
+	<li><a href="<{$config.weburl}>/?m=company&s=company_list&id=<{$cList.catid}>"><{$cList.cat}></a></li>
+	<{/foreach}>
+	</ul>
+</div>
+
+
+<div class="comlist">
+<table class="comtitle" width="100%" border="0" cellspacing="0" cellpadding="0">
+  <tr>
+	<td style="padding-left:7px;" align="left">
+	  <input onclick="do_select();" name="" type="checkbox" value="" />&nbsp;
+	  <input onclick="get_inquery();" name="" type="button" value="Inquire Now" />
+	  <input onclick="add_inquery('com','<{$config.weburl}>','');" name="" type="button" value="Add to Inquiry Basket" />
+	</td>
+	<td align="right">
+	<select style="width:150px;" id="companyType" onchange="goto();" name="companyType">
+	<option value="">ALL</option>
+	<{foreach item=clist from=$companyType}>
+		<option <{if $smarty.get.ct==$clist}>selected="selected"<{/if}> value="<{$clist|urlencode}>"><{$clist}></option>
+	<{/foreach}>
+	</select>
+	</td>
+  </tr>
+</table>
+
+	<{foreach item=list from=$info.list}>
+	<div class="comdetail">
+		<div class="comright" style="width:10px; padding-top:10px;"><input name="inquery" type="checkbox" value="<{$list.userid}>" /></div>
+		<div class="comright">
+			<li class="com_name">
+				<{$list.user_type}>
+					<a target="_blank" href="<{geturl uid=$list.userid user=$list.user com=$list.company}>"><{$list.company}></a>
+				<{if $list.video}>
+					<img src="<{$config.weburl}>/image/default/ico_video.gif" border="0" align="absmiddle" />
+				<{/if}>
+			</li>
+			<li class="comlist">
+			<span>Company Type:<{$list.ctype}></span>
+			<span class="span1">turnover：<{$list.turnover}></span>
+			<span class="span1">contacts：<{$list.contact}></span>
+			<span class="span1">Employees：<{$list.staff_num}></span>
+			<span class="span2">The company address：<{$list.addr}></span>
+			<{if $list.main_pro}><span class="span3">The main products：</span><{$list.main_pro}><br /><{/if}>
+			<div class="clear"></div>
+			<a href="<{$config.weburl}>/shop.php?uid=<{$list.userid}>&action=list&m=offer"><{$lang.rel_pro}></a> |
+			<a href="<{$config.weburl}>/shop.php?uid=<{$list.userid}>&action=mail&m=company"><{$lang.email_requir}></a>
+			</li>
+		</div>
+		
+		<div class="Lb1">
+			<{if $list.country}>
+				<img src="<{$config.weburl}>/image/cflag/<{$list.country}>.gif" /><br />
+			<{/if}>
+			<{$list.province}><br /><{$list.city}>
+		</div>
+		
+		<div class="Lb1">
+			<{if $list.logo}>
+				<img src="<{$list.logo}>" width="85" />
+			 <{else}>
+				<img src="image/default/nopic.gif" width="85" />
+			 <{/if}>
+		</div>
+		<div class="clear"></div>
+	</div>
+	<{foreachelse}>
+	  <div style="padding:20px; font-weight:bold">
+	  <{$lang.no_cominfo}> 
+	  <a href="<{$config.weburl}>/<{$config.regname}>">
+	   <{$lang.reg_user}>
+	  </a>
+	  </div>
+	<{/foreach}>
+	<div class="clear"></div>
+	<div class="page"><{$info.pages}></div>
+</div>

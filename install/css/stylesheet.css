@@ -1,0 +1,200 @@
+
+body {
+background: url(../images/background.gif) repeat-y;
+margin: 0px;
+padding: 0px;
+font: 14px Tahoma, Verdana, Arial, sans-serif;
+}
+
+/*  Column Structure
+--------------------------------- */
+#wrap {
+clear: both;
+width: 100%;
+text-align: left;
+}
+#main {
+  position: relative;
+  margin: 0;
+  padding: 0;
+}
+#content {
+float: left;
+width: 823px;
+}
+*html #content {
+width: auto;
+}
+#navigation {
+float: left;
+width: 180px;
+text-align:left;
+padding: 0;
+}
+#navigation p {
+	background: url(../images/grad-1.gif) bottom repeat-x;
+	padding-bottom: 20px;
+	text-align: center;
+}
+#navigation h3 {
+	font-size: 14px;
+	line-height: 30px;
+	border-bottom: 1px solid #C4E6AF;
+	margin: 0 0 0 20px;
+}
+
+
+/*  Navigation
+--------------------------------- */
+#navigation ul {
+margin: 0px 0 0 20px;
+padding: 0;
+list-style: none;
+}
+#navigation li {
+border-bottom: 1px solid #c4e6af;
+line-height: 24px;
+color: #333;
+padding-left: 5px;
+}
+
+
+body#index li#welcome,
+body#license li#license,
+body#inspect li#inspect,
+body#databasesetup li#database,
+body#databaseupgrade li#databaseupg,
+body#storesetup li#store,
+body#adminsetup li#admin,
+body#finished li#finish {
+	font-weight: bold;
+	color: #f00;
+}
+
+/*  Footer
+--------------------------------- */
+#footer { clear: both; text-align: center; margin: 20px 0 0 0;}
+
+/*  Headings
+--------------------------------- */
+h1 {
+   color: #659B28;
+   border-bottom: 1px solid #c4e6af;
+   font-size: 22px;
+   padding: 20px 0 8px 22px;
+}
+#nr {
+	clear: both;
+	margin: 30px 50px;
+	line-height: 18px;
+}
+#btn {
+	border-top: 1px solid #c4e6af;
+	padding: 0 50px 0 0;
+	text-align: right;
+}
+h2 {
+	color: #659b28;
+	font-size: 16px;
+}
+.btn2 {
+	background: #6699FF;
+	color: #ffffff;
+	border: none;
+	height: 18px;
+	padding: 0 3px;
+}
+*html .btn2 {
+	padding-top: 3px;
+}
+.extralarge {
+  font-size: 2em;
+	}
+/* Links
+--------------------------------- */
+a:link, a:visited, a:active { color:#f60; font-weight: bold; font-size: 1.1em; text-decoration:none; }
+a:hover { color:#c96e29;}
+a.button { padding: 3px 15px; color: #000; border: 3px outset #666; margin: 0px 5px; background-color: #ceddf0; }
+a.button:hover {background-color: #ceddf0; }
+.inp {
+	background: #f3f8ef;
+	border: 1px solid #deead2;
+	height: 18px;
+	color: #ff6600;
+	width: 160px;
+}
+
+.center a.btn2 {
+	color: #fff;
+}
+/*  Forms
+--------------------------------- */
+form { margin: 0; padding: 0; }
+fieldset { margin: 0; padding: 10px; border: 1px solid #c4e6af; }
+legend { margin: 0; padding: 0 4px 6px 4px; color: #585858; font-size:14px; }
+input, select, textarea { margin: 10px 5px 0; padding: 0; }
+label, span.label { margin: 0; padding: 0; font-weight: bold; }
+
+div.section { margin: 0; padding: 0; clear: both; }
+div.section input, div.section select, div.section div.input, div.section textarea { float: right; }
+div.section div.input input { float: none; }
+div#language input, div#language select { margin: 0; padding: 0; }
+
+div.section ul.inspect-list li  { list-style-type: none; }
+div.section ul.inspect-list li.OK { list-style-image: url(../images/greencheck.gif);}
+div.section ul.inspect-list li.FAIL { list-style-image: url(../images/redx.gif); }
+div.section ul.inspect-list li.WARN { list-style-image: url(../images/yellowcaution.gif); }
+div#error ul li.FAIL  { list-style-image: url(../images/redx.gif);  }
+div#error ul li.WARN { list-style-image: url(../images/yellowcaution.gif); }
+div.section ul.inspect-list li.NA { list-style-type: none;  }
+
+
+/*  Frames
+--------------------------------- */
+iframe { width: 718px; height: 320px; border: 1px solid #deead2;}
+
+/* Miscellaneous
+--------------------------------- */
+p {
+line-height: 1.5em;
+margin: 0px 0px 1em;
+padding: 0px;
+}
+.center { text-align: right; }
+.errors {  color: #FF0000;}
+SPAN.emphasis {  color:#c96e29;}
+a.nowrap {	white-space: nowrap; }
+
+/* message box */
+
+.messageBox{
+}
+.messageStackCaution{
+background-color:#ffff00;
+}
+.messageStackError,.messageStackWarning{
+background-color:#ffb3b5;
+}
+.messageStackSuccess{
+background-color:#d4ffbd;
+}
+
+
+
+
+
+#errorInformation{
+  display: inline;
+  white-space: nowrap;
+  margin: 0;
+  padding:  0.5em 0em;
+  list-style-type: none;
+}
+
+#error {
+	}
+
+#stopsign {
+  float: left;
+  width: 140px;
+	}

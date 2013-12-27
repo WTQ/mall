@@ -1,0 +1,61 @@
+<div class="prom_ad m1"> <{$pro.prom.ads_code}> </div>
+<style>
+.prom_ad{ width:960px; height:auto; overflow:hidden;}
+.pr_tit{ height:25px; border-bottom:3px solid #860000;}
+.prom{ margin-top:10px;}
+.prom ul li{ float:left; margin-left:13px;border:1px solid #DDDDDD;  width:228px; overflow:hidden; margin-bottom:15px;}
+.prom ul li:hover{border:1px solid #C00;}
+.prom ul li img{width:228px; height:228px;text-align: center;}
+.prodn{ border-top: 1px solid #DDDDDD; background:#F8F8F8; padding:5px;}
+.pro_tit{ padding:3px; height:38px;}
+.pro_price strong{
+	float:left;
+	color: #CC0000;
+    font-size: 16px;
+    line-height: 22px;
+    margin-right: 5px;}
+.pro_price del{float: left;
+height: 18px;
+line-height: 18px;
+margin-top: 3px;
+color: #9F9F9F;}
+.pro_price span{ float:right;}	
+.prom ul li a{display:block;}
+
+</style>
+<div class="pr_tit m1">
+  <h2><{$pro.prom.con}></h2>
+</div>
+<div class="prom m1">
+  <ul>
+    <{foreach  item=list  key=num from=$pro.prolist.info}>
+    <{if $num==0||$num%4==0}>
+    <li style="margin-left:0px;"> <a  target="_blank" href="<{$config.weburl}>/?m=product&s=detail&id=<{$list.id}>"><img  src="<{$list.pic}>"/></a>
+      <div class="prodn">
+      <div class="pro_tit"> <a target="_blank" href="<{$config.weburl}>/?m=product&s=detail&id=<{$list.id}>"><{$list.pname|truncate:50:""}></a> </div>
+      <div class="pro_price"> <strong><{$config.money}><{$list.price}></strong> <del><{$config.money}> <{$list.market_price}></del>
+        <div class="clear"></div>
+      </div>
+    </li>
+    <{elseif ($num+1)%4==0}>
+    <li style="float:right;"> <a  target="_blank" href="<{$config.weburl}>/?m=product&s=detail&id=<{$list.id}>"><img  src="<{$list.pic}>"/></a>
+      <div class="prodn">
+      <div class="pro_tit"> <a target="_blank" href="<{$config.weburl}>/?m=product&s=detail&id=<{$list.id}>"><{$list.pname|truncate:50:""}></a> </div>
+      <div class="pro_price"> <strong><{$config.money}><{$list.price}></strong>
+        <div class="clear"></div>
+      </div>
+    </li>
+    <{else}>
+    <li > <a  target="_blank" href="<{$config.weburl}>/?m=product&s=detail&id=<{$list.id}>"><img  src="<{$list.pic}>"/></a>
+      <div class="prodn">
+      <div class="pro_tit"> <a target="_blank" href="<{$config.weburl}>/?m=product&s=detail&id=<{$list.id}>"><{$list.pname|truncate:50:""}></a> </div>
+      <div class="pro_price"> <strong><{$config.money}><{$list.price}></strong>
+        <div class="clear"></div>
+      </div>
+    </li>
+    <{/if}>
+    <{/foreach}>
+  </ul>
+  <div class="clear"></div>
+  <div class="page"><{$pro.prolist.page}></div>
+</div>

@@ -1,0 +1,82 @@
+<div class="path">
+  <div> <a href="main.php?cg_u_type=2">卖家中心</a> <span>&gt;</span> <a href="main.php?m=product&s=admin_product_cat">分类管理</a> <span>&gt;</span> 商品分类 </div>
+</div>
+<script>
+	function option(id)
+	{
+		if(document.getElementById('subcat'+id).style.display=='none')
+		{
+			$('#opt_text'+id).html("[-]");
+			$('#subcat'+id).show();
+		}
+		else
+		{
+			$('#opt_text'+id).html("[+]");
+			$('#subcat'+id).hide();
+	
+		}
+	}
+</script>
+<div class="main">
+  <div class="wrap">
+    <div class="hd">
+      <ul class="tabs">
+        <li class="active"><a href="main.php?m=product&s=admin_product_cat">商品分类</a></li>
+      </ul>
+    </div>
+    <form action="" method="post">
+      <table class="table-list-style">
+        <thead>
+          <tr>
+            <th width="10"></th>
+            <th width="10"></th>
+            <th>分类名称</th>
+            <th width="100"><{$lang.order}></th>
+            <th width="100">操作</th>
+          </tr>
+        <tbody>
+        <{foreach item=list key=num from=$re}>
+        <tr>
+          <td><img src="image/default/user_admin/icon.jpg" /></td>
+          <td></td>
+          <td class="tl"><input value="<{$list.name}>" type="text" name="name[]" class="text w300" />
+            <input name="cid[]" type="hidden" value="<{$list.id}>" /></td>
+          <td><input name="nums[]" value="<{$list.nums}>" type="text" class="text w50" /></td>
+          <td><a href="?m=product&s=admin_product_cat&deid=<{$list.id}>">删除</a> <a id="opt_text<{$num}>" href="javascript:option('<{$num}>');">[+]</a></td>
+        </tr>
+        <{if $list.subcat}>
+        <tr>
+          <td colspan="20" class="tl"><{foreach item=slist from=$list.subcat}>
+            <div style="padding-left:54px;margin:2px;"> <img src="image/default/user_admin/icon2.jpg" />
+              <input name="snums[]" value="<{$slist.nums}>" type="text" class="text w50"  />
+              <input class="text w300" value="<{$slist.name}>" type="text" name="sname[]" />
+              <input name="scid[]" type="hidden" value="<{$slist.id}>" />
+              <a href="?m=product&s=admin_product_cat&deid=<{$slist.id}>">删除</a> </div>
+            <{/foreach}> </td>
+        </tr>
+        <{/if}>
+        <tr style="display:none;"  id="subcat<{$num}>">
+          <td colspan="20" class="tl"><div style="padding-left:56px;"> <img src="image/default/user_admin/icon2.jpg" />
+              <input name="addsnums[]" value="0" type="text"  class="text w50" />
+              <input class="text w300" value="" type="text" name="addsname[]" />
+              <input name="pid[]" type="hidden" value="<{$list.id}>" />
+            </div></td>
+        </tr>
+        <{/foreach}>
+          </tbody>
+        
+        <tr>
+          <td colspan="20" class="tl"><{$lang.newadd}>
+            <input name="nums[]" type="text" value="0" class="text w50" maxlength="3" />
+            <input class="text w300" type="text" name="name[]" /></td>
+        </tr>
+        <tfoot>
+          <tr>
+            <td colspan="20"><input class="submit" type="submit" name="button" id="button" value="<{$lang.submit}>" />
+              <input name="action" type="hidden" id="action" value="submit" /></td>
+          </tr>
+        </tfoot>
+      </table>
+    </form>
+  </div>
+</div>

@@ -1,0 +1,74 @@
+<div class="menu_bottom L1">				
+    <div class="headtop_L">
+      <a href='<{$config.weburl}>/'><{$lang.indexpage}></a> &gt; <span><{$lang.title}></span>
+    </div>
+</div>
+
+<link href="<{$config.weburl}>/templates/en/news.css" rel="stylesheet" type="text/css" />
+<div id="mainbody1">
+    <div class="second_menu">
+        <li><{$lang.title}>:</li>
+        <{foreach item=list from=$news_menu}>
+        <li><a href="<{$config.weburl}>/?m=news&s=newslist&id=<{$list.catid}>"><{$list.cat}></a></li>
+        <{/foreach}>
+    </div>
+	<div>
+    	<div class="news_left">
+        	<{insert name="label" type='news' temp='news_flash' flash=true img='true' width='295' height='222' limit=5}>
+        </div>
+    	<div class="news_middle">
+        	<ul><{insert name="label" type='news' temp='news_list_3' leng=36 limit=8}></ul>
+        </div>
+    	<div class="news_right">
+        	<div class="sectitle1"><div class="title_left1 L2">Hot News</div></div>
+            <div class="seccon1">
+                 <ul class="ul1">
+                 <{foreach item=list from=$hotnews}>
+				  	<!--<li><a href="<{$config.weburl}>/?m=news&s=newsd&id=<{$list.nid}>"><{$list.ftitle|truncate:35}></a></li>-->
+					<li><a href="<{$config.weburl}>/?m=news&s=newsd&id=<{$list.nid}>"><{$list.title|truncate:32}></a></li>
+				  <{/foreach}>
+                 </ul>
+				 <div class="clear"></div>
+           </div>
+        </div>
+       
+        <div class="adv"><{$config.index_ad}></div>
+        
+        <div class="news_l">
+        <div  style="overflow:hidden">
+        	<{foreach item=list name=loop from=$news_menu}>
+                <div class="box">
+                    <div class="sectitle2"><div class="L2"><{$list.cat}></div> 
+                    	<a target="_blank" style="float:right; font-size:11px; margin-right:6px; color:#490E10; font-weight:bold;" href="<{$config.weburl}>/?m=news&s=news_list&id=<{$list.catid}>">More</a>
+                    </div>
+                    <div style="width:auto;" class="seccon2">
+                         <ul class="ul1">
+                            <{insert name="label" type='news' temp='news_list_pic' catid=$list.catid img='true' leng=42 limit=1}>
+                            <{insert name="label" type='news' temp='news_list_1' catid=$list.catid leng=35 limit=4}>
+                         </ul>
+                         <div class="clear"></div>
+                   </div>
+                </div>
+                
+                </div><div style="overflow:hidden">
+                
+            <{/foreach}>
+            </div>
+        </div>
+        <div class="news_r">
+                <script src='<{$config.weburl}>/api/ad.php?id=48&catid=<{$smarty.get.id}>&name=<{$smarty.get.key}>'></script>
+               <div class="sectitle2">
+               <div class="L2"><{$lang.questionnaire}></div></div>
+				<div class="seccon2">
+					 <ul class="ul1">
+					   <{insert name="label" type='vote' temp='vote_list' limit=2}>
+					 </ul>
+			   </div>
+           
+        </div>
+    </div>
+</div>
+</div>
+</div>
+<div id="footbody" style="margin-top:10px;">
+<div class="footb">

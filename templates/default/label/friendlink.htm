@@ -1,0 +1,7 @@
+<{foreach item=list from=$piclist}>
+    <a href="<{$list.url}>" title="<{$list.name}>" target="_blank" ><img alt="<{$list.name}>" src="<{$list.log}>"></a>
+<{/foreach}>
+
+<{foreach item=list from=$textlist}>
+    <a href="<{$list.url}>" title="<{$list.name}>" target="_blank" ><{$list.name}></a>
+<{/foreach}>

@@ -1,0 +1,37 @@
+<{include file="header.htm"}>
+<style>
+#btn{
+	border:solid 1px;
+	background: none repeat scroll 0 0 #DDDDDD;
+	border-color: #DDDDDD #666666 #666666 #DDDDDD;
+	color: #000000;
+	cursor: pointer;
+	margin: 3px 0;
+	padding: 2px 5px;
+	vertical-align: middle;
+}
+</style>
+<div class="menu_bottom L1">
+  <div class="headtop_L"> <{$lang.you_are_here}><a href='<{$config.weburl}>/'><{$lang.indexpage}></a> &raquo; <{$lang.user_reg}></a> </div>
+</div>
+<div id="mainbody1" class="topm">
+  <div class="title4">
+    <div class="title_left2 L2"><{$lang.user_reg}></div>
+  </div>
+  <div style="padding-left:200px; color:#FF0000; font-size:14px; height:100px; padding-top:20px;"> <b>恭喜你！注册成功了</b> </div>
+  <div style="padding-left:200px; text-align:left;"> <{if $config.invite==1}>
+    <form action="" method="post">
+      选择您的邀请人或客服代表<br />
+      <select name="invite">
+        <{foreach item=list from=$invite}><{if $list.name}>
+        <option><{$list.name}></option>
+        <{/if}><{/foreach}>
+      </select>
+      <input id="btn" value="提交并进入用户中心" name="" type="Submit" />
+      <br />
+      <br />
+      <a href="main.php?action=admin_personal&info=3&guid=<{$smarty.get.guid}>">没有人介绍，点此进入用户中心</a>
+    </form>
+    <{else}> <a href="main.php?action=admin_personal&info=3&guid=<{$smarty.get.guid}>">Click here to enter the Member Center.</a> <{/if}> </div>
+</div>
+<{include file="footer.htm"}>

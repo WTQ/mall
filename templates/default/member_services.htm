@@ -1,0 +1,25 @@
+<{include file="header.htm"}>
+<div class="menu_bottom L1">				
+    <div class="headtop_L">
+        <{$lang.you_are_here}><a href='<{$config.weburl}>/'><{$lang.indexpage}></a> &raquo; <{$lang.mservices}>
+    </div>	
+</div>
+
+<div id="mainbody1" class="topm">
+<table width='100%' border="0" cellpadding="5" cellspacing="1" bgcolor="#E4E4E4" class="member_sev"> 
+	<tr class="title4">
+		<td colspan="3" align="left">会员组权限</td>
+    </tr>
+	<{foreach item=list from=$group}>
+	<tr bgcolor="#FFFFFF">
+	  <td width="12%" rowspan="2"><{$list.name}><img src="<{$list.minilogo}>" /></td>
+	  <td width="44%" align="left">积分满足点数：<{$list.groupfee}></td>
+      <td width="44%" align="left">折扣率：<{$list.rebate}>%</td>
+    </tr>
+	<tr bgcolor="#FFFFFF">
+	  <td valign="top" colspan="2" height="200" width="88%"><{$list.con}></td>
+    </tr>
+	<{/foreach}>
+</table>
+</div>
+<{include file="footer.htm"}>

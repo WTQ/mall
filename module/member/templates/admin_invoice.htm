@@ -1,0 +1,140 @@
+<script type="text/javascript">
+function display(id,type)
+{
+	if(type == 'hide')
+		$("#"+id).hide();
+	else
+		$("#"+id).show();
+}
+</script>
+<div class="path">
+    <div>
+    	<{if $cg_u_type==1}>
+    		<a href="main.php?cg_u_type=1">我的商城</a> <span>&gt;</span>
+        <{else}>
+    		<a href="main.php?cg_u_type=2">卖家中心</a> <span>&gt;</span>
+        <{/if}>
+        <a href="main.php?m=member&s=admin_invoice">发票信息</a> <span>&gt;</span>
+        <{if $smarty.get.type=='add'}>新增发票<{elseif $smarty.get.type=='edit'}>编辑发票<{else}>发票列表<{/if}>
+    </div>
+</div>
+<div class="main">
+	<div class="wrap">
+        <div class="hd">
+            <ul class="tabs">
+                <li class="<{if $smarty.get.type}>normal<{else}>active<{/if}>"><a href="main.php?m=member&s=admin_invoice">发票列表</a></li>
+                <li class="<{if $smarty.get.type=='add'}>active<{else}>normal<{/if}>"><a href="main.php?m=member&s=admin_invoice&type=add">新增发票</a></li>
+                <{if $smarty.get.type=='edit'}>
+                <li class="active"><a href="main.php?m=member&s=admin_invoice&type=edit">编辑发票</a></li>
+                <{/if}>
+            </ul>
+        </div>
+        <{if $smarty.get.type=='add' or $smarty.get.type=='edit'}>
+        <div class="form-style">
+            <form action="" method="post">
+            <input type="hidden" value="<{$de.id}>" name="id">
+            <input type="hidden" value="<{if $de.id}>edit<{else}>add<{/if}>" name="submit">
+            <dl>
+                <dt>发票类型：</dt>
+                <dd>
+                <input onclick="display('tbody','hide');display('rise','show')" type="radio" id="type0" value="0" name="type" <{if $de.type==0 or !$de.id}>checked="checked"<{/if}> /><label onclick="display('tbody','hide');display('rise','show')" for="type0"><{$lang.itype.0}></label>
+                <input onclick="display('tbody','show');display('rise','hide');display('company','hide')" type="radio" id="type1" value="1" name="type" <{if $de.type==1}>checked="checked"<{/if}> /><label onclick="display('tbody','show');display('rise','hide')" for="type1"><{$lang.itype.1}></label>
+                </dd>
+            </dl>
+            <div id="tbody" <{if $de.type==0 or !$de }>style="display:none"<{/if}>>	
+            <dl>
+                <dt>单位名称:</dt>
+                <dd><input type="text" class="text w300" name="company1" value="<{$de.company}>" /></dd>
+            </dl>
+            <dl>
+                <dt>纳税人识别号:</dt>
+                <dd><input type="text" class="text w300" name="number" value="<{$de.number}>" /></dd>
+            </dl>
+            <dl>
+                <dt>注册地址:</dt>
+                <dd><input type="text" class="text w300" name="address" value="<{$de.address}>" /></dd>
+            </dl>
+            <dl>
+                <dt>注册电话:</dt>
+                <dd><input type="text" class="text w300" name="telephone" value="<{$de.telephone}>" /></dd>
+            </dl>
+            <dl>
+                <dt>开户银行:</dt>
+                <dd><input type="text" class="text w300" name="bank" value="<{$de.bank}>" /></dd>
+            </dl>
+            <dl>
+                <dt>银行帐户:</dt>
+                <dd><input type="text" class="text w300" name="account" value="<{$de.account}>" /></dd>
+            </dl>
+            </div> 
+            
+            
+            <dl id="rise" <{if $de.type==1 }>style="display:none"<{/if}> >
+                <dt>发票抬头：</dt>
+                <dd>
+                <input onclick="display('company','hide')" type="radio" id="rise0" value="0" name="rise" <{if $de.rise==0 or !$de.id}>checked="checked"<{/if}> /><label onclick="display('company','hide')" for="rise0"><{$lang.irise.0}></label>
+      <input onclick="display('company','show')" type="radio" id="rise1" value="1" name="rise" <{if $de.rise==1}>checked="checked"<{/if}> /><label onclick="display('company','show')" for="rise1"><{$lang.irise.1}></label>
+                </dd>
+            </dl>
+            <dl id="company" <{if $de.rise==0 or !$de or $de.type==1 }>style="display:none"<{/if}>>
+                <dt>单位名称：</dt>
+                <dd><input type="text" class="text w300" name="company" value="<{$de.company}>" /></dd>
+            </dl>
+            <dl>
+                <dt>发票内容：</dt>
+                <dd>
+                <{foreach item=list key=num from=$lang.icontent}>
+      <input type="radio" id="content<{$num}>" value="<{$num}>" name="content" <{if $de.content==$num or !$num}>checked="checked"<{/if}> /><label for="content<{$num}>"><{$list}></label>
+     			<{/foreach}>
+               	</dd>
+            </dl>
+            <dl class="foot">
+                <dt>&nbsp;</dt>
+                <dd><input type="submit" value="提交" class="submit"></dd>
+            </dl>
+            </form>
+        </div>  
+        <{else}>
+        <table class="table-list-style">
+            <thead>
+            <tr>
+                <th width="80">序号</th>
+                <th></th>
+                <th width="140">操作</th>
+            </tr>
+            </thead>
+            <tbody>
+            <{foreach item=list key=num from=$invoice}>
+            <tr>
+            	<td><{$num+1}></td>
+                <td class="tl">
+                <p class="f14">发票类型：<{foreach item=v key=num from=$lang.itype}><{if $num==$list.type}><{$v}><{/if}><{/foreach}></p>
+                <{if $list.type!=1 }>
+                <p class="f14">发票抬头：<{foreach item=v key=num from=$lang.irise}><{if $num==$list.rise}><{$v}><{/if}><{/foreach}></p>
+                <{if $list.rise==1 && $list.type==0}><p class="f14">单位名称：<{$list.company}></p><{/if}>
+                <{/if}>
+                <p class="f14">发票内容：<{foreach item=v key=num from=$lang.icontent}><{if $num==$list.content}><{$v}><{/if}><{/foreach}></p>
+                <{if $list.type==1}>
+                <p class="f14">单位名称：<{$list.company}>&nbsp;&nbsp;纳税人识别号：<{$list.number}><p>
+                <p class="f14">注册地址：<{$list.address}>&nbsp;&nbsp;注册电话：<{$list.telephone}><p>
+                <p class="f14">开户银行：<{$list.bank}>&nbsp;&nbsp;银行帐户：<{$list.account}><p>
+                <{/if}>
+                </td>
+                <td>
+                <{if $list.checked!=1}><a href="<{$config.weburl}>/main.php?m=member&s=admin_invoice&did=<{$list.id}>">默认</a><{/if}>
+                <a href="<{$config.weburl}>/main.php?m=member&s=admin_invoice&type=edit&id=<{$list.id}>">修改</a>
+                <a href="<{$config.weburl}>/main.php?m=member&s=admin_invoice&edid=<{$list.id}>">删除</a>
+                </td>
+            </tr>
+            <{foreachelse}>
+            <tr>
+            	<td colspan="20" class="norecord">
+                	<i></i><span>暂无符合条件的数据记录</span>	
+                </td>
+            </tr>
+            <{/foreach}>
+            </tbody>
+        </table>
+        <{/if}>
+     </div>   
+</div>

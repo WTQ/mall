@@ -1,0 +1,153 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<title>店铺分类</title>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<link href="admin.css" rel="stylesheet" type="text/css" />
+<script type="text/javascript" src="../script/jquery-1.4.4.min.js"></script>
+</head>
+<body>
+	<div class="container">
+        <div class="flow">
+            <div class="itemtitle">
+                <h3>店铺分类</h3>
+                <ul>
+                    <li <{if $smarty.get.operation==''}>class="current"<{/if}>><a href="?m=<{$smarty.get.m}>&s=<{$smarty.get.s}>"><span>管理</span></a></li>
+                </ul>
+            </div>
+        </div>
+        <div class="h35"></div>
+        <form action="" method="post">
+        <table class="table">
+        	<thead>
+                <tr>
+                    <th class="partition" colspan="99">店铺分类</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr class="header">
+                    <th width="30"></th>
+                    <th width="70">显示顺序</th>
+                    <th>分类名称</th>
+                    <th width="70"></th>
+                </tr>
+            </tbody>    
+            <{foreach item=list from=$de}>
+            <tbody>
+                <tr>
+                    <td onclick="toggle_group('group_<{$list.id}>')">
+                    <a id="a_group_<{$list.id}>" href="javascript:void(0)"><{if $list.scat}>[+]<{else}>[-]<{/if}></a>
+                    </td>
+                    <td><input type="text" class="w50" maxlength="3" name="displayorder[<{$list.id}>]" value="<{$list.displayorder}>" onbeforepaste="clipboardData.setData('text',clipboardData.getData('text').replace(/[^\d]/g,''))" onkeyup="value=value.replace(/[^\d]/g,'')" /></td>
+                    <td>
+                        <div>
+                            <input type="text" class="w150" name="name[<{$list.id}>]" value="<{$list.name}>" />
+                            <a class="addchildboard" onclick="addrowdirect = 1;addrow(this, 1,<{$list.id}>)" href="javascript:void(0);">添加二级分类</a>
+                        </div>
+                    </td>
+                    <td>
+                    <a onclick="return confirm('确定删除吗');" href="?m=shop&s=shop_cat.php&delid=<{$list.id}>"><{$delimg}></a>
+                   </td>
+                </tr>
+                <tr style="display:none"><td></td></tr>
+            </tbody>
+            <tbody style="display:none" id="group_<{$list.id}>">
+            	<{foreach item=slist from=$list.scat}>
+                <tr>
+                	<td></td>
+                	<td><input type="text" class="w50" maxlength="3" name="displayorder[<{$slist.id}>]" value="<{$slist.displayorder}>" onbeforepaste="clipboardData.setData('text',clipboardData.getData('text').replace(/[^\d]/g,''))" onkeyup="value=value.replace(/[^\d]/g,'')" /></td>
+                    <td><div class="board"><input type="text" class="w150" name="name[<{$slist.id}>]" value="<{$slist.name}>" /></div></td>
+                    <td>
+                    <a onclick="return confirm('确定删除吗');" href="?m=shop&s=shop_cat.php&delid=<{$slist.id}>"><{$delimg}></a>
+                   </td>
+                </tr>
+                <{foreachelse}>
+                <{/foreach}>
+            </tbody>
+            <{foreachelse}>
+            <tr>
+                <td class="norecord" colspan="99"><i></i><span>暂无符合条件的数据记录</span></td>
+            </tr>
+            <{/foreach}>
+            <tbody>
+                <tr>
+                    <td></td>
+                    <td colspan="99"><div><a class="addtr" onclick="addrow(this, 0)" href="javascript:void(0);">添加一级分类</a></div></td>
+                </tr>
+            </tbody>
+            
+            <tfoot>
+                <tr>
+                	<td colspan="3">
+                        <input type="hidden" name="act" value="op" />
+                        <input type="submit" name="submit" value="<{$lang.btn_submit}>" />
+                    </td>
+                    <td colspan="99"><div class="page"><{$de.page}></div></td>
+                </tr>
+            </tfoot>
+        </table>
+        </form>
+    </div>
+</body>
+<script>
+var rowtypedata = [
+	[
+		[1, ''], 
+		[1,'<input type="text" class="w50" maxlength="3" name="newdisplayorder[]" value="255" />'], 
+		[1, '<div><input name="newname[]" class="w150" type="text" /><a href="javascript:;" class="deleterow" onClick="deleterow(this)">删除</a></div>'],
+		[1, '']
+	],
+	[
+		[1, ''], 
+		[1,'<input type="text" class="w50" maxlength="3" name="neworder[{1}][]" value="255" />'], 
+		[1, '<div class="board"><input name="newname1[{1}][]" class="w150" type="text" /><a href="javascript:;" class="deleterow" onClick="deleterow(this)">删除</a></div>'],
+		[1, '']
+	],
+];
+
+var addrowdirect = 0;
+var addrowkey = 0;
+function addrow(obj, type) {
+	var table = obj.parentNode.parentNode.parentNode.parentNode.parentNode;
+	var tbody = obj.parentNode.parentNode.parentNode.parentNode;
+	if(!addrowdirect) {
+		var row = table.insertRow(obj.parentNode.parentNode.parentNode.rowIndex);
+	} else {
+		var row = table.insertRow(obj.parentNode.parentNode.parentNode.rowIndex + 1);
+	}
+	var typedata = rowtypedata[type];
+	for(var i = 0; i <= typedata.length - 1; i++) {
+		var cell = row.insertCell(i);
+		cell.colSpan = typedata[i][0];
+		var tmp = typedata[i][1];
+		if(typedata[i][2]) {
+			cell.className = typedata[i][2];
+		}
+		tmp = tmp.replace(/\{(n)\}/g, function($1) {return addrowkey;});
+		tmp = tmp.replace(/\{(\d+)\}/g, function($1, $2) {return addrow.arguments[parseInt($2) + 1];});
+		cell.innerHTML = tmp;
+	}
+	addrowkey ++;
+	addrowdirect = 0;
+}
+function deleterow(obj) {
+	var table = obj.parentNode.parentNode.parentNode.parentNode.parentNode;
+	var tr = obj.parentNode.parentNode.parentNode;
+	table.deleteRow(tr.rowIndex);
+}
+function toggle_group(oid, conf) {
+	obj = $('#a_'+oid)[0];
+	if(!conf) {
+		var conf = {'show':'[-]','hide':'[+]'};
+	}
+	var obody = $('#'+oid)[0];
+	if(obody.style.display == 'none') {
+		obody.style.display = '';
+		obj.innerHTML = conf.show;
+	} else {
+		obody.style.display = 'none';
+		obj.innerHTML = conf.hide;
+	}
+}
+</script>
+</html>

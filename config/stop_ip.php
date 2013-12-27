@@ -1,0 +1,1 @@
+<?php $stop_view = unserialize('N;');$stop_reg=unserialize('N;');?>

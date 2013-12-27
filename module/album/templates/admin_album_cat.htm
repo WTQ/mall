@@ -1,0 +1,89 @@
+<div class="path">
+    <div>
+    	<a href="main.php?cg_u_type=2">卖家中心</a> <span>&gt;</span> 
+    	<a href="main.php?m=album&s=admin_album_cat">图片空间</a> <span>&gt;</span> 
+        我的相册 
+    </div>
+</div>
+<div class="main">
+	<div class="wrap">
+        <div class="hd">
+            <ul class="tabs">
+                <li class="active"><a href="main.php?m=album&s=admin_album_cat">我的相册</a></li>
+            </ul>
+            <a href="main.php?m=album&s=admin_album_cat&type=add" class="btn3">创建相册</a>
+        </div>
+        
+        <{if $smarty.get.type=="add" or $smarty.get.type=="edit"}>
+        <div class="form-style">
+            <form method="post" action="" enctype="multipart/form-data" onsubmit="return check_value();">
+            <input name="editid" type="hidden" value="<{$re.id}>" />
+           <input type="hidden" value="<{if $re.id}>edit<{else}>add<{/if}>" name="submit">
+            <dl>
+                <dt><em>*</em>相册名：</dt>
+                <dd><input name="name" id="name" maxlength="50" type="text" class="w150 text" value="<{if $smarty.get.edit && $re}><{$re.name}><{/if}>" /></dd>
+            </dl>
+            <dl>
+                <dt><em>*</em>描述：</dt>
+                <dd><textarea name="des" id="des" maxlength="50"><{if $smarty.get.edit && $re}><{$re.des}><{/if}></textarea></dd>
+            </dl>
+            <dl class="foot">
+                <dt>&nbsp;</dt>
+                <dd><input type="submit" class="submit" value=" <{if $smarty.get.edit && $re}><{$lang.album_cat_edit}><{else}><{$lang.album_album_cat_coverdd}><{/if}>" /></dd>
+            </dl>
+            </form>
+        </div>
+        <{else}>
+        <table class="table-list-style">
+            <thead>
+            <tr>
+                <th width="110"><{$lang.album_cat_cover}></td>
+                <th width="13%"><{$lang.album_cat_name}></th>
+                <th align="left"><{$lang.album_cat_des}></th>
+                <th width="22%"><{$lang.operation}></th>
+            </tr>	
+            </thead>
+       		<tbody>
+            <{foreach item=list from=$re}>
+            <tr>
+            <td><a href="?m=album&s=admin_album&catid=<{$list.id}>"><{if $list.pic}><img src="<{$list.pic}>" width="100" /><{else}><img width="100" src="image/default/nopic.gif" /><{/if}></a> </td>
+            <td><{$list.name}></td>
+            <td><{$list.des}></td>
+            <td>
+            <a href="?m=album&s=admin_album&catid=<{$list.id}>"><{$lang.up_pic}></a>
+            <a href="?m=album&s=admin_album_cat&type=add&edit=<{$list.id}>"><{$lang.edit}></a>
+            <a href="?m=album&s=admin_album_cat&deid=<{$list.id}>" onclick="return confirm('<{$lang.confirm}>');"><{$lang.del}></a>
+            </td>
+            </tr>
+            <{foreachelse}>
+            <tr>
+            	<td colspan="20" class="norecord">
+					<i></i><span>暂无符合条件的数据记录</span>	
+                </td>
+            </tr>
+            <{/foreach}>
+            </tbody>
+        </table>
+        <{/if}>
+    </div>
+</div>    
+
+<script type="text/javascript">
+function check_value()
+{
+	if(!document.getElementById('name').value){
+		alert('<{$lang.name_notice}>');
+		document.getElementById('name').focus();
+		return false;
+	}
+	if(!document.getElementById('des').value){
+		alert('<{$lang.des_notice_req}>');
+		document.getElementById('des').focus();
+		return false;
+	}else if(document.getElementById('des').value.lenght>180){
+		alert('<{$lang.des_notice_max}>');
+		document.getElementById('des').focus();
+		return false;
+    }
+}
+</script>

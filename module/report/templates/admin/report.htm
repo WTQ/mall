@@ -1,0 +1,164 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<title>举报禁售</title>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<link href="admin.css" rel="stylesheet" type="text/css" />
+<script type="text/javascript" src="../script/jquery-1.4.4.min.js"></script>
+</head>
+<body>
+	<div class="container">
+        <div class="flow">
+            <div class="itemtitle">
+                <h3>举报禁售</h3>
+                <ul>
+                    <li <{if $smarty.get.operation==''}>class="current"<{/if}>><a href="?m=report&s=report.php"><span>管理</span></a></li>
+                    <{if $smarty.get.operation=='edit'}>
+                    <li class="current"><a href="#"><span>处理</span></a></li>
+                    <{/if}>
+                </ul>
+            </div>
+        </div>
+        <div class="h35"></div>  
+        <{if $smarty.get.operation=='add' or $smarty.get.operation=='edit' }>
+            <form name="form" id="form" method="post">
+            <input name="id" type="hidden" id="id" value="<{$de.id}>">
+            <table class="table">
+                <thead>
+                    <tr>
+                        <th class="partition" colspan="99">举报禁售商品</th>
+                    </tr>
+                </thead>
+                <tbody>
+                <tr>
+                    <td width="100">商品名称</td>
+                    <td><a href="../?m=product&s=detail&id=<{$de.pid}>" target="_blank"><{$de.pname}></a></td>
+                </tr>
+                <tr>  
+                    <td>举报人</td>
+                    <td><{$de.user}></td>
+                </tr>
+                <tr>  
+                    <td>举报类型</td>
+                    <td><{$de.type_name}></td>
+                </tr>
+                <tr>  
+                    <td>举报主题</td>
+                    <td><{$de.subject_name}></td>
+                </tr>
+                <tr>  
+                    <td>举报信息</td>
+                    <td><{$de.content}></td>
+                </tr>
+                <tr>  
+                    <td>图片</td>
+                    <td><{if $de.pic}><img width="50" src="<{$de.pic}>" /><{else}>暂无图片<{/if}></td>
+                </tr>
+                <tr>  
+                	<td>举报时间</td>
+                	<td><{$de.datetime|date_format}></td>
+                </tr>
+                <tr>  
+                    <td>处理结果</td>
+                    <td><{if $de.state==2}><{if $de.handle_type==1}>无效举报<{elseif $de.handle_type==2}>恶意举报<{else}>有效举报<{/if}><{else}>未处理<{/if}></td>
+                </tr>
+                <tr>  
+                    <td>举报处理结果</td>
+                    <td>
+                    <input type="radio" id="r1" name="type" value="1" <{if $de.handle_type==1}>checked="checked"<{/if}> /><label for="r1">无效举报</label>
+                    <input type="radio" id="r2" name="type" value="2" <{if $de.handle_type==2}>checked="checked"<{/if}> /><label for="r2">恶意举报</label>
+                    <input type="radio" id="r3" name="type" value="3" <{if $de.handle_type==3}>checked="checked"<{/if}> /><label for="r3">有效举报</label>
+                    </td>
+                </tr>
+                <tr>  
+                    <td>举报处理信息</td>
+                    <td>
+                    <textarea class="w350" name="message"><{$de.handle_message}></textarea>
+                    </td>
+                </tr>
+                <tr>
+                    <td>&nbsp;</td>
+                    <td>
+                    <input class="submit" type="submit" value="提交">
+                    <input name="act" type="hidden" id="action" value="<{if !$smarty.get.editid}>save<{else}>edit<{/if}>">
+                    </td>
+                </tr>
+                </tbody>
+            </table>
+            </form>
+        <{else}>
+		<script type="text/javascript">
+        $(function(){
+            /* 全选 */
+             $('.checkall').click(function(){
+                var _self = this;
+                $('.checkitem').each(function(){
+                    if (!this.disabled)
+                    {
+                        $(this).attr('checked', _self.checked);
+                    }
+                });
+                $('.checkall').attr('checked', this.checked);
+            });	 
+        });
+        </script>
+        <form action="" method="post">
+        <table class="table">
+        	<thead>
+                <tr>
+                    <th class="partition" colspan="99">举报禁售列表</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr class="header">
+                    <th width="30"></th>
+                    <th>商品名称</th>
+                    <th width="120">举报人</th>
+                    <th width="120">举报类型</th>
+                    <th width="200">举报主题</th>
+                    <th width="70">图片</th>
+                    <th width="100">举报时间</th>
+                    <th width="80">处理结果</th>
+                    <th width="50"></th>
+          		</tr>
+                <{foreach item=list from=$de.list}>
+                <tr>
+                    <td><input type="checkbox" value="<{$list.id}>" class="checkitem" name="chk[]"></td>
+                    <td><a href="../?m=product&s=detail&id=<{$list.pid}>" target="_blank"><{$list.pname}></a> </td>
+                    <td><{$list.user}></td>
+                    <td><{$list.type_name}></td>
+                    <td><{$list.subject_name}></td>
+          			<td><{if $list.pic}><img width="50" src="<{$list.pic}>" /><{else}>暂无图片<{/if}></td>
+          			<td><{$list.datetime|date_format}></td>
+          			<td><{if $list.state==2}><{if $list.handle_type==1}>无效举报<{elseif $list.handle_type==2}>恶意举报<{else}>有效举报<{/if}><{else}>未处理<{/if}></td>
+                    
+                    <td>
+                    <a href="?m=report&s=report.php&operation=edit&editid=<{$list.id}>"><{$editimg}></a> 
+                    <a onclick="return confirm('确定删除吗');" href="?m=report&s=report.php&delid=<{$list.id}>"><{$delimg}></a> 
+                    </td>
+                </tr>
+                <{foreachelse}>
+                <tr>
+                    <td class="norecord" colspan="99"><i></i><span>暂无符合条件的数据记录</span></td>
+                </tr>
+                <{/foreach}>
+            </tbody>
+            <tfoot>
+                <tr>
+                	<td colspan="2">
+                        <div class="del">
+                        <input type="checkbox" class="checkall" id="del">
+                        <label for="del">删除</label>
+                        </div>
+                        <input type="hidden" name="act" value="op" />
+                        <input type="submit" value="提交" />
+                    </td>
+                    <td colspan="99"><div class="page"><{$de.page}></div></td>
+                </tr>
+            </tfoot>
+        </table>
+        </form>
+        <{/if}>
+    </div>
+</body>
+</html>

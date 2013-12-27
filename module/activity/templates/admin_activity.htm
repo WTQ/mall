@@ -1,0 +1,50 @@
+<div class="path">
+    <div>
+    	<a href="main.php?cg_u_type=2">卖家中心</a> <span>&gt;</span> 
+    	<a href="main.php?m=activity&s=admin_activity">促销活动</a> <span>&gt;</span> 
+        活动列表
+    </div>
+</div>
+<div class="main">
+	<div class="wrap">
+        <div class="hd">
+            <ul class="tabs">
+                <li class="active"><a href="main.php?m=activity&s=admin_activity">活动列表</a></li>
+            </ul>
+        </div>
+        <table class="table-list-style">
+        	<thead>
+            <tr>
+            	<th width="10"></th>
+            	<th class="tl">活动名称</th>
+                <th width="100">开始时间</th>
+            	<th width="100">结束时间</th>
+            	<th width="90">操作</th>
+            </tr>
+            </thead>
+            <tbody>
+            <{foreach item=list from=$re.list}>
+            <tr> 
+                <td></td>
+                <td class="tl"><{$list.title}></td>
+                <td><{$list.start_time|date_format}></td>
+                <td><{$list.end_time|date_format}></td>
+                <td><a href="<{$config.weburl}>/main.php?m=activity&s=admin_activity_product_list&id=<{$list.id}>" >参与活动</a></td>
+            </tr>
+            <{foreachelse}>
+            <tr>
+            	<td colspan="20" class="norecord">
+                	<i></i><span>暂无符合条件的数据记录</span>	
+                </td>
+            </tr>
+            <{/foreach}>
+            </tbody>
+            <tfoot>
+            <tr>
+               <td colspan="20"><div class="pagination"><{$re.page}></div></td>
+            </tr>
+            </tfoot>
+        </table>
+        
+     </div>
+</div>

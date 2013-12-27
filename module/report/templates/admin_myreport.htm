@@ -1,0 +1,90 @@
+<div class="path">
+    <div>
+    	<a href="main.php?cg_u_type=1">我的商城</a> <span>&gt;</span>
+        我的举报
+    </div>
+</div>
+<div class="main">
+	<div class="wrap">
+        <div class="hd">
+            <ul class="tabs">
+                <li class="active"><a href="main.php?m=report&s=admin_myreport"> 我的举报</a></li>
+            </ul>
+        </div>
+        
+        <table class="table-list-style">
+        	<thead>
+            <tr>
+            	<th width="10"></th>
+            	<th class="tl">商品名称</th>
+            	<th width="120">举报类型</th>
+            	<th width="120">举报主题</th>
+            	<th width="70">图片</th>
+            	<th width="100">举报时间</th>
+            	<th width="80">处理结果</th>
+            	<!--<th width="70">操作</th>-->
+            </tr>
+            </thead>
+            <tbody>
+            <{foreach item=list key=num from=$report}>
+            <tr>
+            	<td></td>
+            	<td class="tl"><a target="_blank" href="<{$config.weburl}>/?m=product&s=detail&id=<{$list.pid}>"><{$list.pname}></a></td>
+            	<td><{$list.type_name}></td>
+            	<td><{$list.subject_name}></td>
+                <td><{if $list.pic}><img onclick="preview_theme('<{$list.pic}>');" width="50" src="<{$list.pic}>" /><{else}>暂无图片<{/if}></td>
+            	<td><{$list.datetime|date_format}></td>
+            	<td><{if $list.state==2}><{if $list.handle_type==1}>无效举报<{elseif $list.handle_type==2}>恶意举报<{else}>有效举报<{/if}><{else}>未处理<{/if}></td>
+            	<!--<td><p><a class="show_detail" href="javascript:void(0)">详细</a></p></td>-->
+            </tr>
+            <{foreachelse}>
+            <tr>
+            	<td colspan="20" class="norecord">
+                	<i></i><span>暂无符合条件的数据记录</span>	
+                </td>
+            </tr>
+            <{/foreach}>
+            </tbody>
+            <tfoot>
+            <tr>
+                <td></td>
+                <td colspan="20"><div class="pagination"><{$re.page}></div></td>
+            </tr>
+            </tfoot>
+        </table>
+    </div>
+</div>
+<script>
+var preview_img = new Image();
+preview_img.onload = function(){
+    var d = DialogManager.get('preview_image');
+    if (!d)
+    {
+        return;
+    }
+
+    if (d.getStatus() != 'loading')
+    {
+
+        return;
+    }
+
+    d.setWidth(this.width + 50);
+    d.setPosition('center');
+    d.setContents($('<img src="' + this.src + '" alt="" />'));
+    ScreenLocker.lock();
+};
+preview_img.onerror= function(){
+    alert('加载预览失败');
+    DialogManager.close('preview_image');
+};
+function preview_theme(style_name){
+    var screenshot = style_name ;
+	var d = DialogManager.create('preview_image');
+    d.setTitle('效果预览');
+    d.setContents('loading', {'text':'加载中...'});
+    d.setWidth(270);
+    d.show('center');
+	preview_img.src = screenshot;
+}
+</script>

@@ -1,0 +1,3 @@
+<{foreach item=list key=num from=$brand}>
+	<li><div class="brm_num"><{$num+1}></div><div class="brm_p"><a target="_blank" href="<{$config.weburl}>/?m=product&s=list&brand=<{$list.name}>"><{$list.name}></a></div></li>
+<{/foreach}>

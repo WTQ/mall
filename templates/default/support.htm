@@ -1,0 +1,52 @@
+<{include file="header.htm"}>
+<style type="text/css">
+.header{border-bottom-width: 2px;border-bottom-style: solid;border-bottom-color: #5D81AD; padding-top:4px; font-size:14px; font-weight:bold; color:#0C2D55; background-image: url(../image/default/bg_title.jpg); margin-left:1px; margin-top:2px; margin-right:1px; text-align:left; padding-left:5px;}
+
+.lheader{background:#BFD3DE;margin-top:1px; margin-left:1px; margin-right:1px; margin-bottom:1px;padding-top:6px; font-size:12px; font-weight:bold; padding-left:15px; text-align:left; padding-bottom:6px;}
+.lheader a:link {color:#0C2D55; TEXT-DECORATION: none}
+.lheader a:visited {color:#0C2D55;TEXT-DECORATION: none}
+.lheader a:hover {color:#0C2D55; TEXT-DECORATION: none}
+
+.left-top{background-image:url(../image/default/menubg.gif);color:#FFFFFF;font-weight:bold;font-size:14px;padding:4px 15px 4px; text-align:left}
+.left-div{width:170px;float:left;border: 1px solid #A9BAD3;margin-top:4px;}
+
+.right-con{width:160px; float:left; font-size:12px; font-weight:bold; height:30px;line-height:20px;text-align:left;}
+.right-div{width:595px;float:right; border: 1px solid #A9BAD3;margin-top:4px;}
+.right-div li{height:22px; text-align:left; padding-left:20px; padding-top:10px;}
+</style>
+	<{include file="../default/i_left.htm"}>
+	
+	<div class="right-div">
+		<div class="header">客户支持－在线反馈</div>
+		<div>
+			<form action="" method="post">
+	<table width="100%" border="0" cellspacing="0" cellpadding="5" bgcolor="#999999" class="menu">
+      <tr bgcolor="#FFFFFF">
+        <td width="12%" align="center" bordercolor="#C9C9C9" bgcolor="#FAFAFA">企业名称：</td>
+        <td width="88%" bgcolor="#FAFAFA"><input type="text" name="company" style="width:300px;" /></td>
+      </tr>
+      <tr bgcolor="#FFFFFF">
+        <td width="12%" align="center" bordercolor="#C9C9C9" bgcolor="#FAFAFA">联 系 人：</td>
+        <td width="88%" bgcolor="#FAFAFA"><input type="text" name="contact" style="width:300px;" />
+        </td>
+      </tr>
+      <tr bgcolor="#FFFFFF">
+        <td width="12%" align="center" bordercolor="#C9C9C9" bgcolor="#FAFAFA">电子邮件：</td>
+        <td width="88%" bgcolor="#FAFAFA"><input type="text" name="email"  style="width:300px;" />
+        </td>
+      </tr>
+      <tr bgcolor="#FFFFFF">
+        <td width="12%" align="center" bordercolor="#C9C9C9" bgcolor="#FAFAFA">您的问题：</td>
+        <td width="88%" bgcolor="#FAFAFA"><textarea name="mes" style="width:400px;" rows="12"></textarea>
+        </td>
+      </tr>
+      <tr bgcolor="#FFFFFF">
+        <td width="12%" bgcolor="#FAFAFA" bordercolor="#C9C9C9"></td>
+        <td width="88%" bgcolor="#FAFAFA"><input type="submit" name="cc" value="提交" />
+          <input name="submit" type="hidden" id="submit" value="submit" /></td>
+      </tr>
+    </table>
+	</form>
+		</div>
+	</div>
+<{include file="footer.htm"}>

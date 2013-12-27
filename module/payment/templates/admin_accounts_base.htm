@@ -1,0 +1,45 @@
+<div class="path">
+    <div>
+    	<{if $cg_u_type==1}>
+    		<a href="main.php?cg_u_type=1">我的商城</a> <span>&gt;</span>
+        <{else}>
+    		<a href="main.php?cg_u_type=2">卖家中心</a> <span>&gt;</span>
+        <{/if}>
+        账户信息
+    </div>
+</div>
+<div class="main">
+	<div class="wrap">
+        <div class="hd">
+            <ul class="tabs">
+                <li class="active"><a href="main.php?m=payment&s=admin_accounts_base">账户信息</a></li>
+            </ul>
+        </div>
+        <div class="form-style">
+           	<dl>
+                <dt>账户余额：</dt>
+                <dd><{$config.money}> <{$re.cash|number_format:2}></dd>
+            </dl>
+            <dl>
+                <dt>冻结资金：</dt>
+                <dd><{$config.money}> <{$re.unreachable|number_format:2}></dd>
+            </dl>
+            <dl>
+                <dt>开户名：</dt>
+                <dd><{$re.master}></dd>
+            </dl>
+            <dl>
+                <dt>银行名：</dt>
+                <dd><{$re.bank}></dd>
+            </dl>
+            <dl>
+                <dt>开户行：</dt>
+                <dd><{$re.bank_addr}></dd>
+            </dl>
+            <dl>
+                <dt>银行帐号：</dt>
+                <dd><{$re.accounts}></dd>
+            </dl>
+        </div>
+    </div>
+</div>

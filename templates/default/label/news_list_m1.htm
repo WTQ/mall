@@ -1,0 +1,7 @@
+<{foreach item=list name=name key=num from=$news}>
+<{if $num>0}>
+<li>
+    <a target="_blank"  title="<{$list.title}>" <{$list.style}>  href="<{$list.url}>"><{$list.ftitle|truncate:$leng}></a>
+</li>
+<{/if}>
+<{/foreach}>

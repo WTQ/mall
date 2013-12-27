@@ -1,0 +1,99 @@
+<style>
+h3{ font-size: 14px; font-weight: bold;}
+th { font-weight: 400; letter-spacing: 1px; }
+strong{ font-weight: bold; }
+.mt{ margin-bottom: 10px; overflow: hidden;}
+.product_table{ border-bottom: 1px solid #E7CA96; border-left: 1px solid #E7CA96; width: 100%; border-spacing: 0;empty-cells: show; margin-bottom: 10px; font-family: Verdana;}
+.product_table th{ background-color: #FBF7EE; }
+.product_table th, .product_table td{ border-right: 1px solid #E7CA96; border-top: 1px solid #E7CA96;  padding: 4px 5px; }
+.product_table div{ line-height: 24px; padding: 5px;}
+.product_table .h1 { font-size: 16px; }
+.product_table .h1 .red{ color: #F00;}
+</style>
+<div class="mt"><h3>商品信息</h3></div>
+<table class="product_table">
+    <tr>
+    <th width="10%">商品名称</th>
+	<th>商品名称</th>
+    <th width="15%">价格</th>
+    <th width="15%">商品数量</th>
+    <th width="10%">操作</th>
+    </tr>
+	
+	<{foreach item=plist key=num from=$de.product}>
+    <tr>
+    <td align="center"><{$num}></td>
+    <td><a href="<{$config.weburl}>/?m=product&s=detail&id=<{$plist.pid}>" target="_blank"><{$plist.name}></a></td>
+    <td align="center"><{$config.money}> <{$plist.price|number_format:2}></td>
+	<td align="center"><{$plist.num}></td>
+    <td align="center"><a href="<{$config.weburl}>/?m=product&s=detail&id=<{$plist.pid}>" target="_blank">查看</a></td>
+    </tr>
+	<{/foreach}>
+</table>	 
+<table class="product_table">
+	<tr>
+    	<th align="left"><strong>订单信息</strong></th>
+    </tr>
+    <tr>
+    	<td>
+        	<div>
+            订单编号：<{$de.order_id}><br />
+            支付方式：在线支付<br />
+            下单时间：<{$de.creat_time|date_format:"%Y-%m-%d %H:%M:%S"}><br />
+            更新时间：<{$de.uptime|date_format:"%Y-%m-%d %H:%M:%S"}><br />
+            订单状态：<{$de.statu_text}>
+      		</div>
+        </td>
+    </tr>
+    <tr>
+    	<td>
+        	<div>
+            <strong>收货人信息</strong><br>
+            收货人姓名：<{$de.buyer_name}><br />
+            地址：<{$de.buyer_addr}><br />
+            邮编：<{$de.buyer_zip}><br />
+            固定电话：<{$de.buyer_tel}><br />
+            手机号码：<{$de.buyer_mobile}>
+      		</div>
+        </td>
+    </tr>
+    <tr>
+    	<td>
+        	<div>
+            <strong>发票信息</strong><br>
+            发票类型：<{foreach item=v key=num from=$lang.itype}><{if $num==$de.invoices.type}><{$v}><{/if}><{/foreach}><br />
+            发票抬头：<{foreach item=v key=num from=$lang.irise}><{if $num==$de.invoices.rise}><{$v}><{/if}><{/foreach}><br />
+            发票内容：<{foreach item=v key=num from=$lang.icontent}><{if $num==$de.invoices.content}><{$v}><{/if}><{/foreach}>
+      		</div>
+        </td>
+    </tr>
+    <{ if $de.logistics }>
+    <tr>
+        <td>
+            <div>
+            <strong>快递信息</strong><br>
+            快递公司：<{$de.logistics1.company }><br />
+            快递单号：<{$de.logistics1.number }><br />
+            发货时间：<{$de.logistics1.time }><br />
+            发货人：<{$de.logistics1.user }>
+            </div>
+        </td>
+    </tr>
+    <{/if}>
+    <tr>
+    	<td>
+        	<div>
+            <strong>订单备注</strong><br>
+            <{$de.des}>
+      		</div>
+        </td>
+    </tr>
+    <tr>
+    	<td>
+        	<div>
+            <strong>结算信息</strong><br>
+            商品金额: <{$de.product_price|number_format:2}> 元 + 运费: <{$de.logistics_price|number_format:2}> 元 = <strong class="h1">订单总金额: <span class="red"> <{$de.product_price+$de.logistics_price|number_format:2}>元</span></strong>
+      		</div>
+        </td>
+    </tr>
+</table>

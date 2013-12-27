@@ -1,0 +1,144 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<title>服务器环境及文件目录权限检查--B2Bbuilder安装向导</title>
+<link rel="stylesheet" type="text/css" href="css/install.css" />
+</head>
+
+<body>
+
+<div class="wrapper">
+<div class="top80"></div>
+<div class="wrapper">
+	<div class="leftimg"></div>
+	<div class="rightbox">
+	  <div class="check">
+			<h1>服务器环境</h1>
+			<table style="margin:20px 0 20px 0px; border-bottom:1px solid #66CCFF;">
+              <tr>
+                <th width="100">项目</th>
+                <th width="156">所需最低配置</th>
+                <th width="150">最佳配置</th>
+                <th width="150">当前服务器</th>
+              </tr>
+              <tr>
+                <td>操作系统</td>
+                <td>不限制</td>
+                <td>类Unix</td>
+                <td> <?php if(PATH_SEPARATOR==':') echo 'Linux';else echo 'Windows';
+?>:<?php echo $_SERVER['SERVER_NAME']; ?></td>
+              </tr>
+              <tr>
+                <td>PHP 版本</td>
+                <td>4.0</td>
+                <td>5.0</td>
+                <td><?php 
+				echo PHP_VERSION;
+				if(PHP_VERSION<'4.1.0')
+			        {
+					   echo '<img src="images/yellowcaution.gif"/>';
+		            }else {
+			           echo '<img src="images/greencheck.gif"/>';
+		            } 
+				?></td>
+              </tr>
+              <tr>
+                <td>GD库</td>
+                <td>1.6.1</td>
+                <td>2.0</td>
+                <td><?php 
+				    if(extension_loaded('gd')) 
+                     { 
+					   echo '<img src="images/greencheck.gif"/>';
+		            }
+                    else 
+                    
+                    {
+			           echo '<img src="images/redx.gif"/>';
+		            } 
+				?></td>
+              </tr>
+              <tr>
+                <td>MYSQL</td>
+                <td>4.1</td>
+                <td>5.0</td>
+                <td><?php 
+				if ($mysql_support=="ON")
+				   echo '<img src="images/greencheck.gif"/>';
+				else
+				    echo '<img src="images/redx.gif"/>';
+                ?></td>
+              </tr>
+			  <tr>
+                <td>Mb_string扩展</td>
+                <td>enabled</td>
+                <td>enabled</td>
+                <td><?php 
+				if (extension_loaded ('mbstring'))
+				    echo '<img src="images/greencheck.gif"/>';
+				else
+				    echo '<font color="red">不支持,建议开启</font><br/>开启方法:php.ini中去掉extension=php_mbstring.dll和extension_dir = "e:\php\ext\"前面的注释符号，重新启动apche或者iis';
+                ?></td>
+              </tr>
+            </table>
+	  </div>
+		<div class="check">
+			<h1>目录权限</h1>
+			<?php
+			$nop=1;
+			foreach($class_chcek as $v)
+			{
+			 if ($v=='OK')
+			   $nop=$nop&&1;
+			 else
+			   $nop=$nop&&0;
+			}
+			if($nop=='1')
+			   echo "所有目录权限检测通过!";
+			else
+			{
+			?>
+			<table style="margin:20px 0 20px 0px; border-bottom:1px solid #66CCFF;">
+              <tr>
+                <th width="200">目录文件</th>
+                <th width="150">所需状态</th>
+                <th width="150">当前状态</th>
+              </tr>
+			  <?php 
+			  foreach($w_check as $key=>$value)
+			  {
+			  if($class_chcek[$key]=='WARN')
+			  {
+              ?>
+              <tr>
+                <td align="left"><?php echo $value;?></td>
+                <td align="left">可写</td>
+                <td align="center"><?php
+				echo $check_msg[$key];
+				echo '<img src="images/yellowcaution.gif"/>';
+				?></td>
+              </tr>
+			  <?php
+			  }
+			 }
+			 }
+			  ?>
+          </table>
+		</div>
+		
+		<div class="clear"></div>
+		<div class="next">
+			<form action="index.php?action=b2b_step4" method="POST">
+			<input type="hidden" name="step" value="2" />
+			<input type="button" onclick="history.back();" value="上一步" class="btnav" style="padding: 2px">&nbsp;
+			<input type="submit" value="下一步" class="btnav" style="padding: 2px" <?php echo $disabled;?>>
+			</form>
+		</div>
+		<div class="clear"></div>
+		<div class="copyright">Copyright &copy; 2008 - 2013 ，MallBuilder. All Rights Reserved</div>
+	</div>
+</div>
+</div>
+</body>
+</html>

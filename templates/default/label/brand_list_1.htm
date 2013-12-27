@@ -1,0 +1,11 @@
+<{foreach item=list key=num from=$brand}>
+<{if $num==0}>
+<a class="brm_no1"  target="_blank" href="<{$config.weburl}>/?m=product&s=list&brand=<{$list.name}>"><img  width="184" height="115" src="<{$list.logo}>" ></a>
+<ul class="brm2_do">
+<{else if}>
+	<li><a target="_blank" href="<{$config.weburl}>/?m=product&s=list&brand=<{$list.name}>"><img width="91" height="57" src="<{$list.logo}>" ></a></li>
+<{/if}>
+<{foreachelse}>
+<ul class="brm2_do">
+<{/foreach}>
+</ul>

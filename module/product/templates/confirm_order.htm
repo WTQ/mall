@@ -1,0 +1,276 @@
+<script src="script/my_lightbox.js" language="javascript"></script>
+<style>
+.adder {
+	font-size: 18px;
+	font-weight: bold;
+	background-color: #FFF5CC;
+	line-height: 25px;
+	padding: 3px 3px 5px 0;
+	border: 1px solid #FFE580;
+}
+.textarea {
+	height: 18px;
+	width: 300px;
+	resize: none;
+	border: 1px solid #8AB6DD;
+	font-size:12px;
+}
+.textarea1 {
+	height: 34px;
+	width: 320px;
+	resize: none;
+	border:1px solid #FFAD33;
+	font-size:12px;
+}
+.address-confirm{
+    background-color: #FFEBCC;
+    border-color: #FCA700;
+    box-shadow: none;
+	padding:2px;
+	width:400px;
+}
+.address-confirm div{
+    background: none repeat scroll 0 0 #FFFFFF;
+    font-size: 12px;
+    margin-bottom: 0;
+    padding: 10px 15px 10px 10px;
+}
+.edit_addr{font-weight:100; font-size:12px;float:right;}
+.s_sumprice{font-size:24px; font-weight:bold; color:#FF5500}
+.suborder{ width:100px; height:40px; font-weight:bold; font-size:22px; margin-top:3px;}
+</style>
+<div id="mainbody1" class="m1" style="width:900px; margin:0 auto;">
+  <div class="flow-steps">
+    <ul>
+      <li class="don current-prev"> <span class="firstg">1.查看购物车</span> </li>
+      <li class="current">2.拍下商品</li>
+      <li>3.付款到网站</li>
+      <li>4.确认收货</li>
+      <li class="lastg">5.评论</li>
+    </ul>
+  </div>
+  <div class="cord_list">
+  <{if $smarty.get.type=='login'}>
+  	<a href="<{$config.weburl}>/login.php">请先登录</a>
+  <{elseif  $smarty.get.type=='orders'}>
+  	订单提交成功<br>
+	<a href="<{$config.weburl}>/?m=product">继续购物</a>
+	<a href="<{$config.weburl}>/main.php?m=product&s=admin_buyorder">进入后台</a>
+  <{elseif $smarty.get.type=='orderf'}>
+  	产品库存不足
+  <{else}>
+	  <h2>
+		  确认收货地址 
+		  <a class="manage-address" target="_blank" href="<{$config.weburl}>/main.php?m=product&s=admin_orderadder">[管理收货地址]</a>
+	  </h2>
+  <form method="post"  action="" name="form1" onsubmit="return check();">
+    <table width="100%" border="0" cellspacing="1" bgcolor="#BAD9EF" class="order_table">
+      <tr>
+        <td style="padding:20px;"; bgcolor="#FFFFFF" id="adderid">
+		 <{foreach item=list key=num from=$listadder}>
+		 
+          <div id="ar_show_<{$list.id}>"> 
+			  <input type="radio" class="radio" name="adder" <{if $smarty.get.arrid==$list.id or $num==0}>checked="checked"<{/if}> onclick="alocation(<{$list.id}>);" value="<{$list.id}>" /> <{$list.area}> <{$list.address}>
+		  
+			  <a class="edit_addr" style="color:#3366CC;" 
+			  href="javascript:alertWin('修改改收货地址','添加新的收货地址',600,270,'<{$config.weburl}>/?m=product&s=confirm_order&showadder=1&adrid=<{$list.id}>');">
+			  [修改本地址]
+			  </a>
+		  
+			  <div style="display:none;" align="right" id="ar_content_<{$list.id}>">
+				<b>寄送至:</b> <{$list.area}> <{$list.address}><br />
+				<b>收货人:</b> <{$list.name}>&nbsp;&nbsp;<{if $list.mobiel}><{$list.mobiel}><{else}><{$list.tel}><{/if}>
+			  </div>
+          </div>
+		  
+         <{/foreach}>
+		  
+          <{if $num<4}>
+			  <a style="color:#3366CC" href="javascript:alertWin('添加新收货地址','',600,250,'<{$config.weburl}>/?m=product&s=confirm_order&showadder=1');">
+				+使用新地址
+			  </a>
+		  <{/if}>
+		  
+		  </td>
+      </tr>
+    </table>
+    <br />
+    <h2>确认订单信息</h2>
+    </div>
+    <div class="buyer_list">
+      <table width="100%" border="0" style="border-bottom: 2px solid #B2D1FF;" cellspacing="0" class="order_table">
+        <tr height="28">
+          <td style="border-bottom: 3px solid #B2D1FF;" >店铺产品</td>
+          <td width="15%"style="border-bottom: 3px solid #B2D1FF;">单价(元)</td>
+          <td width="10%"style="border-bottom: 3px solid #B2D1FF;">数量</td>
+          <td width="10%"style="border-bottom: 3px solid #B2D1FF;">小计</td>
+        </tr>
+		
+        <{foreach item=list from=$cart}>
+			<tr>
+			  <td colspan="4" height="28" bgcolor="#FFFFFF" style="font-weight:bold; text-align:left;">
+				  卖家：<a href="<{$config.weburl}>/shop.php?uid=<{$list.sell_userid}>"><{$list.company}></a>
+				  电话：<{$list.tel}>
+			  </td>
+			</tr>
+			<{foreach item=pro  from=$list.prolist}>
+			<tr height="90" bgcolor="#FAFCFF" >
+			  <td class="maleft" style="border-top:1px dashed #B2D1FF"  >
+				<a href="<{$config.weburl}>/?m=product&s=detail&id=<{$pro.pid}>">
+				<img height="80" alt="<{$pro.pname}>" src="<{$pro.pic}>">
+				<{$pro.pname}></a>
+			  </td>
+			  <td style="border-top:1px dashed #B2D1FF" ><{$config.money}><{$pro.price|number_format:2}></td>
+			  <td style="border-top:1px dashed #B2D1FF" ><{$pro.num}></td>
+			  <td align="right" style="border-top:1px dashed #B2D1FF;color:#FF5500; padding-right:10px;" >
+			  <b><{$config.money}> <{$pro.sumprice|number_format:2}></b>
+			  </td>
+			</tr>
+			<{/foreach}>
+        	<tr bgcolor="#F2F7FF">
+			  <td valign="top" rowspan="2" class="maleft" style="text-align:left; border-top:1px dashed #B2D1FF;" >
+				给卖家留言：
+				<textarea  class="textarea" onblur="$('#msg_<{$list.sell_userid}>').attr('class','textarea');" 
+				onmousedown="$('#msg_<{$list.sell_userid}>').attr('class','textarea1');" id="msg_<{$list.sell_userid}>" 
+				name="msg_<{$list.sell_userid}>"></textarea>
+				
+				<input name="logistics_type_<{$list.sell_userid}>" id="logistics_type_<{$list.sell_userid}>" type="hidden" value="快递" />
+				<input name="logistics_price_<{$list.sell_userid}>" id="logistics_price_<{$list.sell_userid}>" type="hidden" value="<{$list.express}>" />
+			  </td>
+			  <td colspan="2" align="left" style="border-top:1px dashed #B2D1FF;" >
+					运费方式：
+					<{if $list.mail>0 or $list.express>0 or $list.ems>0}>
+						<select id='cem_<{$list.sell_userid}>' onchange="count_price('<{$list.sell_userid}>');">
+						
+						  <{if $list.express>0}>
+						  <option value="快递,<{$list.express}>">快递 <{$config.money}><{$list.express|number_format:2}></option>
+						  <{/if}>
+						  
+						  <{if $list.mail>0}>
+						  <option value="平邮,<{$list.mail}>">平邮 <{$config.money}><{$list.mail|number_format:2}></option>
+						  <{/if}>
+						  
+						  <{if $list.ems>0}>
+						  <option value="EMS,<{$list.ems}>">EMS <{$config.money}><{$list.ems|number_format:2}></option>
+						  <{/if}>
+						</select>
+					<{else}>
+						卖家承担
+					<{/if}>
+				</td>
+				<td style="text-align:right; padding-right:10px; border-top:1px dashed #B2D1FF;">
+				<b style="color:#FF5500"><{$config.money}> <font id="show_cem_<{$list.sell_userid}>"><{$list.express|number_format:2}></font></b>
+				</td>
+            </tr>
+            <tr style="background:#F2F7FF">
+				<td align="right" height="36" class="maright" colspan="3"  >
+					店铺合计(含运费)：
+					<b style="color:#FF5500; font-size:18px;">
+						<{$config.money}> 
+						<font class="shop_total_price" id="s_csumprice_<{$list.sell_userid}>">
+						<{$list.sumprice+$list.express|number_format:2}>
+						</font>
+					</b>
+				</td>
+        	</tr>
+        <{/foreach}>
+      </table>
+    </div>
+    <div class="cat_button">
+      <table width="100%" border="0" cellspacing="0" cellpadding="0">
+        <tr>
+          <td align="right" >
+		  	<div class="address-confirm">
+				<div>
+				<b>实付款：</b><span class="s_sumprice"><{$config.money}><span id="s_sumprice"></span></span>
+				<br />
+				<span id="show_adder_c" class="showadd"></span>
+				</div>
+			</div>
+			<input type="hidden" name="act" value="order" />
+			<input type="hidden" name="addres" id="addres" value="0" />
+            <input class="suborder" name="submit" type="submit" value="去结算" />
+			</td>
+        </tr>
+      </table>
+    </div>
+  </form>
+<script>
+function count_price(id)
+{	//计算单店铺
+	v=$('#cem_'+id).val();
+	value=v.split(',');
+	
+	$('#logistics_type_'+id).val(value[0]);
+	$('#logistics_price_'+id).val(value[1]);
+	
+	//单店总价-物流=商品总价
+	zj=$('#s_csumprice_'+id).html().replace(',','')*1-$('#show_cem_'+id).html()*1;
+	
+	$('#show_cem_'+id).html(roundAmount(value[1]));//选中的快递费
+	$('#s_csumprice_'+id).html(roundAmount(value[1]*1+zj*1));
+	
+	count_all_price();
+}
+function count_all_price()
+{	//计算本次购物总价,购物总价+所有物流价格
+	var total=0;
+	var stotal=$('.shop_total_price');
+	for (var i=0;i<stotal.length;i++)
+	{
+		total+=stotal[i].innerHTML.replace(',','')*1;
+	}
+	
+	$('#s_sumprice').html(roundAmount(total));
+}
+count_all_price();
+function roundAmount(n)
+{  
+  var   s   =   ""   +   Math.round(n*100)/100  
+  var   i   =   s.indexOf('.')  
+  if(i<0)   return   s   +   ".00"  
+  var   t=s.substring(0,   i   +   1)   +    
+		  s.substring(i   +   1,   i   +   3)  
+  if(i   +   2   ==   s.length)   t   +=   "0"  
+  return   t  
+}
+function check()
+{
+	if($('#addres').val()==0)
+	{
+		alert('请填写收货地址');
+		return false;
+	}
+	
+	return true;
+}
+
+function alocation(id)
+{
+	if(confirm('收货地址更改后,需要重新确认订单'))
+	{
+		window.location='<{$config.weburl}>/?m=product&s=confirm_order&arrid='+id;
+		showadder();
+	}
+}
+
+function showadder()
+{
+    <{foreach item=list key=num from=$listadder}>
+	     document.getElementById('ar_show_<{$list.id}>').className="";
+	<{/foreach}>
+		
+	 var obj=document.getElementsByName('adder');
+	  for(var j=0;j<obj.length;j++){		
+		   if(obj[j].checked){
+			 document.getElementById('ar_show_'+obj[j].value).className="adder";
+			 document.getElementById('show_adder_c').innerHTML=document.getElementById('ar_content_'+obj[j].value).innerHTML;
+			 saddrs=obj[j].value;
+		   }
+	  }
+   $('#addres').val(saddrs);
+}
+showadder();//判断是否已经自动选中
+</script> 
+  <{/if}>
+ </div>

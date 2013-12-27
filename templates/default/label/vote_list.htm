@@ -1,0 +1,28 @@
+<form action="<{$config.weburl}>/?m=vote&s=vote" method="post">
+<table width="100%" cellspacing="0" cellpadding="3" border="0" align="center">
+    <{foreach item=list name=name from=$vote}>
+    <tr><td colspan='2' class="td1"><{$smarty.foreach.name.iteration}>.<b><{$list.title}></b> <{if $list.end==1}><font color="#FF0000">(已结束)</font><{/if}><{if $list.ip==1}><font color="#FF0000">(已投过)</font><{/if}></td></tr>
+	<tr>
+
+    <{foreach item=slist name=loop key=num from=$list.item}>
+    <td height="28">
+	<{if $list.end!=1 and $list.ip!=1}>
+	<input type="<{if $list.votetype==0}>radio<{else}>checkbox<{/if}>" class="radio" value="<{$smarty.foreach.loop.iteration}>" name="vote<{$list.id}>[]">
+	<{/if}>
+	<u><!--<{$smarty.foreach.loop.iteration}>.--><{$slist.0}></u>
+	</td>
+	<{if ($num+1)%2==0}></tr><tr><{/if}>
+    <{/foreach}>
+	
+	</tr>
+    <tr><td colspan='2' style="border-top: 1px dashed #CFCFCF;" height="5"></td></tr>
+    <input type="hidden" name="vid[]" value="<{$list.id}>" />
+    <{/foreach}>
+    <tr>
+	<td class="td">
+        <input type="submit" value="投票" name="submit">&nbsp;&nbsp;
+        <input type="button" onClick="javascript:window.open('<{$config.weburl}>/?m=vote&vid=<{$vid}>')" value="查看" name="button">
+    </td></tr>
+</table>
+</form>
+    

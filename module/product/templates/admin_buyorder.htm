@@ -1,0 +1,114 @@
+<div class="path">
+    <div>
+    	<a href="main.php?cg_u_type=1">我的商城</a> <span>&gt;</span> 
+    	<a href="main.php?m=product&s=admin_buyorder">订单管理</a> <span>&gt;</span> 
+        <{if $smarty.get.status=='1'}>等待付款
+        <{elseif $smarty.get.status=='2'}>等待发货
+        <{elseif $smarty.get.status=='3'}>已经发货
+        <{elseif $smarty.get.status=='4'}>已经完成
+        <{elseif $smarty.get.status=='5'}>等待退货
+        <{elseif $smarty.get.status=='6'}>退货完成
+        <{elseif $smarty.get.status=='-1'}>已经取消
+        <{else}>所有订单<{/if}> 
+    </div>
+</div>
+<div class="main">
+	<div class="wrap">
+        <div class="hd">
+            <ul class="tabs">
+               <li class="<{if $smarty.get.status!=''}>normal<{else}>active<{/if}>"><a href="main.php?m=product&s=admin_buyorder">所有订单</a></li>
+                <li class="<{if $smarty.get.status=='1'}>active<{else}>normal<{/if}>"><a href="main.php?m=product&s=admin_buyorder&status=1">等待付款</a></li>
+                <li class="<{if $smarty.get.status=='2'}>active<{else}>normal<{/if}>"><a href="main.php?m=product&s=admin_buyorder&status=2">等待发货</a></li>
+                <li class="<{if $smarty.get.status=='3'}>active<{else}>normal<{/if}>"><a href="main.php?m=product&s=admin_buyorder&status=3">已经发货</a></li>
+                <li class="<{if $smarty.get.status=='4'}>active<{else}>normal<{/if}>"><a href="main.php?m=product&s=admin_buyorder&status=4">已经完成</a></li>
+                <li class="<{if $smarty.get.status=='5'}>active<{else}>normal<{/if}>"><a href="main.php?m=product&s=admin_buyorder&status=5">等待退货</a></li>
+                <li class="<{if $smarty.get.status=='6'}>active<{else}>normal<{/if}>"><a href="main.php?m=product&s=admin_buyorder&status=6">退货完成</a></li>
+                <li class="<{if $smarty.get.status=='0'}>active<{else}>normal<{/if}>"><a href="main.php?m=product&s=admin_buyorder&status=0">已经取消</a></li>
+            </ul>
+        </div>
+        <table class="table-list-style order">
+        	<thead>
+            <tr>
+                <th width="10"></th>
+                <th width="280">商品详情</th>
+                <th width="80">单价</th>
+                <th width="80">数量</th>
+                <th width="120">店铺</th>
+                <th width="120">订单总价</th>
+                <th width="120">状态与操作</th>
+            </tr>
+            </thead>
+            <tbody>
+            <{foreach item=buylist from=$blist.list}>
+            <tr>
+            	<td class="sep-row" colspan="20"></td>
+            </tr>
+            <tr>
+                <th colspan="20">
+                <span class="fl ml10">订单编号：<span style="color: #339900; font-family: Tahoma;"><{$buylist.order_id}></span></span>
+                <span class="fl ml20">下单时间：<span style="color: #999999; font-family: Tahoma;"><{$buylist.creat_time|date_format:"%Y-%m-%d %H:%M:%S"}></span></span>
+                <span class="fl ml20"><a target="_blank" class="order_show" href="<{$config.weburl}>/main.php?m=product&s=admin_orderdetail&id=<{$buylist.order_id}>">查看订单</a></span>
+                <span class="fr"><a title="打印订单" target="_blank" href="#"><i class="order_print"></i></a></span>
+                </th>
+			</tr>
+            
+            <tr> 
+                <td class="bdl"></td>
+                <td colspan="3">
+                <table>
+                <{foreach item=plist from=$buylist.product}>
+                <tr>
+                    <td class="w80">
+                    <div class="pic-small">
+                        <a target="_blank" href="<{$config.weburl}>/?m=product&s=detail&id=<{$plist.pid}>">
+                            <img width=60 height=60 src="<{if !$plist.pic }>image/default/nopic.gif<{else}><{$plist.pic}><{/if}>" alt="<{$list.pname}>" />
+                        </a>
+                    </div>
+                    </td>
+                    <td class="tl"><a href="<{$config.weburl}>/?m=product&s=detail&id=<{$plist.pid}>"><{$plist.name}></a></td>
+                    <td class="w80"><{$plist.price|number_format:2}></td>
+                    <td class="w80"><{$plist.num}></td>
+                </tr>
+                <{/foreach}>
+                </table>
+                </td>
+                <td class="bdl">
+                <p><{$buylist.company}><a href="main.php?m=message&s=admin_message_sed&uid=<{$buylist.userid}>" class="message" target="_blank"></a></p>
+                </td>
+                <td class="price bdl"><{$buylist.product_price+$buylist.logistics_price|number_format:2}></td>
+                <td class="bdl bdr">
+                
+                <p><a href="<{$config.weburl}>/main.php?m=product&s=admin_orderdetail&id=<{$buylist.order_id}>"><{$lang.orderoption}></a></p>
+                
+                <{if $buylist.status==2}><p><{$buylist.statu_text}></p><{/if}>
+                
+                <{if $buylist.status==3}><p><a class="buttons" href="main.php?m=product&s=admin_return&id=<{$buylist.order_id}>"><{$lang.applret}></a></p><{/if}>
+                <{if $buylist.status==5}> <p><a class="buttons" href="main.php?m=product&s=admin_return_step&id=<{$buylist.order_id}>">退货详情</a></p><{/if}>
+                <p><{$buylist.next_action}></p>
+                
+                
+                <{if $buylist.status==4 and !$buylist.buyer_comment}>
+                <p><a href="<{$config.weburl}>/?m=product&s=comment&uid=<{$buid}>&id=<{$buylist.order_id}>">评论</a></p>
+                <{elseif $buylist.buyer_comment==1&&$buylist.seller_comment!=1}>
+                <p>已评</p>
+                <{elseif $buylist.buyer_comment==1&&$buylist.seller_comment==1}>
+                <p>双方已评</p>
+                <{/if}>
+                </td>
+            </tr>
+            <{foreachelse}>
+            <tr>
+            	<td colspan="20" class="norecord">
+                	<i></i><span>暂无符合条件的数据记录</span>	
+                </td>
+            </tr>
+            <{/foreach}>
+            </tbody>
+            <tfoot>
+            <tr>
+                <td colspan="20"><div class="pagination"><{$blist.page}></div></td>
+            </tr>
+            </tfoot>
+        </table>
+    </div>
+</div>

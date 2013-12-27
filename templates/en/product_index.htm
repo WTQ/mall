@@ -1,0 +1,208 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<title><{if $title}><{$title}>，<{$config.company}><{else}><{$config.title}><{/if}></title>
+<link rel="shortcut icon" href="favicon.ico" type="image/x-icon" />
+<meta name="description" content="<{$config.description}>" />
+<meta name="keywords" content="<{$config.keyword}>" />
+<script src="<{$config.weburl}>/script/jq/js/jquery.js" type=text/javascript></script>
+<script src="<{$config.weburl}>/script/index.js" type="text/javascript"></script>
+<link href="<{$config.weburl}>/templates/<{$config.temp}>/page.css" rel="stylesheet" type="text/css" />
+<link type="text/css" rel="stylesheet" href="<{$config.weburl}>/templates/en/enpro.css">
+</head>
+<body>
+<div id="container"> 
+  <!--头部开始 -->
+  <div id="header" class="header">
+    <div class="head_top">
+      <div class="head_top_l">Welcome to <{$config.company}> ! &nbsp; 
+        <script src="<{$config.weburl}>/login_statu.php"></script> 
+      </div>
+      <div class="head_top_r"> <a href="#" style="CURSOR: hand" onClick="javascript:myAddPanel('<{$config.weburl}>','<{$config.company}>');" >Add to Favorite</a> | <a href="#" onClick="setHomepage('<{$config.weburl}>')">Set Homepage</a> </div>
+    </div>
+    <div class="top_menu"> 
+      <!--logo -->
+      <div class="logo"> <a href="<{$config.weburl}>"> <img src="<{if $config.logo}><{$config.logo}><{else}><{$config.weburl}>/image/default/logo.gif<{/if}>" /> </a></div>
+      <!--search -->
+      <div id="search-bar" class="search">
+        <div id="search-panel">
+          <form method="get" name="sear" id="sear" action="<{$config.weburl}>/">
+            <label class="search-key" id="searchIntelligent">
+            <input  class="hint" autocomplete="off" onkeyup="get_search_word(this.value);" value="<{$smarty.get.key}>" type="text"  id="SearchTextIdx" name="key"/>
+            <div id="key_select"></div>
+            </label>
+            <div id="fakeSelectorBox" class="search-cate">
+              <label>
+                <input class="inputEl" type="text" value="All Categories" readonly="true">
+              </label>
+            </div>
+            <{if $smarty.get.m!=''&&$smarty.get.m!='quoted_price'}>
+            <input id="m" name="m" type="hidden" value="<{$smarty.get.m}>" />
+            <input id="s" name="s" type="hidden" value="<{$smarty.get.m}>_list" />
+            <{/if}>
+            <input type="submit" style="display: inline; float:left;" class="search-btn" value="" />
+          </form>
+          <a rel="nofollow" id="cart-lnk" class="cart-lnk"  href="<{$config.weburl}>/?m=product&s=cart"><b id="my-shopcarts"> 
+          <script src="<{$config.weburl}>/?m=product&s=cart_number"></script> 
+          </b> Cart</a> <a rel="nofollow" id="wish-lnk" class="wish-lnk" href="main.php?m=sns&s=admin_share_product">Wish <b>List</b></a> </div>
+      </div>
+      <!--nav-->
+      <div id="nav" class="nav clear">
+        <div id="ennavm" class="ennavm">
+          <div class="ennavm-tit">CATEGORIES</div>
+        </div>
+        <div class="menu">
+          <ul>
+            <{foreach item=list from=$menus key=nums}> <li <{if $list.selected_flag==$current}><{/if}>><a href="<{if $list.link_addr|truncate:4:''=='http'}><{$list.link_addr}><{else}><{$config.weburl}>/<{$list.link_addr}><{/if}>"><{$list.menu_name}></a>
+            </li>
+            <{/foreach}>
+          </ul>
+        </div>
+        <div class="buy_safe"> <a href="#">Buyer Protection</a> </div>
+      </div>
+    </div>
+  </div>
+  <div class="section" style="float:left; margin-top:0px;">
+    <div class="menu_left">
+      <div class="menu_con"> <{insert name="label" type="cat" rec='1' temp="pro_cat_shop_left"}> </div>
+    </div>
+    <div class="menu_center m1">
+      <div class="r_top">
+        <div class="top_ad"> 
+          <script src='<{$config.weburl}>/api/ad.php?id=3&catid=&sname=index.php'></script> 
+        </div>
+      </div>
+    </div>
+    <div class="menu_right m1">
+      <div class="loginbtn">
+        <ul>
+          <li class="zc"><a href="<{$config.regname}>" >Buyer Join</a></li>
+          <li class="kd"><a href="<{$config.regname}>?rtype=1" >Supplier Join</a></li>
+        </ul>
+      </div>
+      <div class="top_news m1"> <span>Notice</span> </div>
+      <div class="notic">
+        <ul>
+          <{insert name="getNotice" limit=7}>
+        </ul>
+      </div>
+    </div>
+    <div class="rec_left"> 
+      <script src='<{$config.weburl}>/api/ad.php?id=4&catid=&sname=index.php'></script> 
+    </div>
+  </div>
+  <{foreach item=list key=num from=$cat_pro}>
+  <div class="section clear">
+    <div class="pleft">
+      <h3 class="cat_title"><{$list.name}></h3>
+      <div class="pl_list">
+        <div class="cat_img"> <a href="<{$config.weburl}>/?m=product&s=list&id=<{$list.catid}>"><img width="190" height="190" src="<{$list.pic}>" /></a> </div>
+        <div class="cat_tlist">
+          <ul>
+            <{foreach item=clist key=num from=$list.sub_cat}>
+            <{if $num<6}>
+            <li><a href="<{$config.weburl}>/?m=product&s=list&id=<{$clist.catid}>"><{$clist.cat}></a></li>
+            <{/if}>
+            <{/foreach}>
+          </ul>
+          <div class="pmore"><a href="<{$config.weburl}>/?m=product&s=list&id=<{$list.catid}>">View more</a></div>
+        </div>
+      </div>
+    </div>
+    <div class="pmin">
+      <h3 class="cat_title">Bestselling</h3>
+      <div id="pcon<{$num}>" class="pmincon">
+        <div style="display:block" id="p_con1<{$num}>">
+        <{foreach item=rlist key=num from=$list.rec_pro}>
+        <{if $num<8}>
+          <li> <a target="_blank" href="<{$config.weburl}>/?m=product&s=detail&id=<{$rlist.id}>"> <img src='<{$rlist.pic}>' width=130 /><br />
+            <p><{$rlist.pname|truncate:12:""}></p>
+            </a> <b style="color:#FF0000"><{$config.money}><{$rlist.price|number_format:2}></b> </li>
+         <{/if}>
+         <{/foreach}>
+        </div>
+      </div>
+    </div>
+    <div class="pright">
+      <h3 class="cat_title">Brand Showcase</h3>
+      <div class="pr_dl">
+        <ul class="pr_tit">
+          <{foreach item=rlist from=$list.brand}>
+          <li> <a target="_blank" href="<{$config.weburl}>/?m=product&s=list&brand=<{$rlist.name}>"> <img width="90" height="69" align="<{$rlist.name}>" src="<{$rlist.pic}>"/></a> </li>
+          <{/foreach}>
+        </ul>
+        <div class="pmore"><a href="<{$config.weburl}>/?m=brand">View more</a></div>
+      </div>
+    </div>
+  </div>
+  <{/foreach}> </div>
+<div id="pfoot">
+  <div class= "pmfoot" >
+    <div class="section clear"><{insert name="label" type="ftlink" temp="ftlink_list"}> </div>
+    <div class="clear"></div>
+    <div id="footer" class="topm"> <{$web_con}><br />
+      <{$bt}> </div>
+  </div>
+  <P class="grayy"> 
+    <script type="text/javascript">
+		function get_search_word(k)
+		{ 
+			if(k!='')
+			{
+				var url = '<{$config.weburl}>/ajax_back_end.php';
+				var sj = new Date();
+				var pars = 'shuiji=' + sj+'&search_flag=1&key='+k;
+				$.post(url, pars,showResponse);
+			}
+			function showResponse(originalRequest)
+			{
+				if(originalRequest)
+				{
+					$('#key_select').show();
+					//$('#key_select').css("display",'block');
+					$('#key_select').html(originalRequest);
+				}
+				else
+					$('#key_select').hide();
+			}
+			
+		}
+		function select_word(v)
+		{
+			$('#key').val(v);
+			$('#key_select').hide();
+		}
+		function get_search_word(k)
+		{ 
+			if(k!='')
+			{
+				var url = '<{$config.weburl}>/ajax_back_end.php';
+				var sj = new Date();
+				var pars = 'shuiji=' + sj+'&search_flag=1&key='+k;
+				$.post(url, pars,showResponse);
+			}
+			
+			function showResponse(originalRequest)
+			{
+				if(originalRequest)
+				{
+					$('#key_select').show();
+					//$('#key_select').css("display",'block');
+					$('#key_select').html(originalRequest);
+				}
+				else
+					$('#key_select').hide();
+			}
+			
+		}
+		function select_word(v)
+		{
+			$('#key').val(v);
+			$('#key_select').hide();
+		}
+		</script> 
+  </P>
+</div>
+</body>
+</html>

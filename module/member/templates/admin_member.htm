@@ -1,0 +1,137 @@
+<script src="script/my_lightbox.js" language="javascript"></script>
+<script type="text/javascript" src="script/Validator.js"></script>
+<script type="text/javascript" charset="utf-8" src="<{$config.weburl}>/script/district.js" ></script>
+<script>
+var weburl="<{$config.weburl}>";
+</script>
+<div class="path">
+    <div>
+    	<{if $cg_u_type==1}>
+    		<a href="main.php?cg_u_type=1"><{$lang.my_mall}></a> <span>&gt;</span>
+        <{else}>
+    		<a href="main.php?cg_u_type=2"><{$lang.seller_center}></a> <span>&gt;</span>
+        <{/if}>
+        <a href="main.php?m=member&s=admin_member"><{$lang.personal_information}></a> <span>&gt;</span>
+        <{if $smarty.get.type=='password'}><{$lang.change_password}><{elseif $smarty.get.type=='mail'}><{$lang.change_email}><{else}><{$lang.basic_information}><{/if}>
+    </div>
+</div>
+<div class="main">
+	<div class="wrap">
+        <div class="hd">
+            <ul class="tabs">
+                <li class="<{if $smarty.get.type}>normal<{else}>active<{/if}>"><a href="main.php?m=member&s=admin_member"><{$lang.basic_information}></a></li>
+                <li class="<{if $smarty.get.type=='password'}>active<{else}>normal<{/if}>"><a href="main.php?m=member&s=admin_member&type=password"><{$lang.change_password}></a></li>
+                <li class="<{if $smarty.get.type=='mail'}>active<{else}>normal<{/if}>"><a href="main.php?m=member&s=admin_member&type=mail"><{$lang.change_email}></a></li>
+                
+            </ul>
+        </div>
+        <{if $smarty.get.type=='password'}>
+        <div class="form-style">
+            <form action="" method="post">
+            <input type="hidden" value="password" name="submit">
+            <dl>
+                <dt><em>*</em><{$lang.your_password}></dt>
+                <dd><input name="oldpass" type="password" id="oldpass" class="text w150" /></dd>
+            </dl>
+            <dl>
+                <dt><em>*</em><{$lang.new_pass}></dt>
+                <dd><input name="newpass" type="password" id="newpass" class="password w150" /></dd>
+            </dl>
+            <dl>
+                <dt><em>*</em><{$lang.con_pass}></dt>
+                <dd><input name="renewpass" type="password" id="renewpass" class="password w150" /></dd>
+            </dl>
+            <dl class="foot">
+                <dt>&nbsp;</dt>
+                <dd><input type="submit" value="<{$lang.submit}>" class="submit"></dd>
+            </dl>
+            </form>
+        </div>  
+        <{elseif $smarty.get.type=='mail'}>
+        	<div class="form-style">
+            <form action="" method="post">
+            <input type="hidden" value="mail" name="submit">
+            <dl>
+                <dt><em>*</em><{$lang.your_password}></dt>
+                <dd><input name="pass" type="password" id="pass" class="password w150" /></dd>
+            </dl>
+            <dl>
+                <dt><em>*</em><{$lang.e_mail}></dt>
+                <dd><input name="mail" type="text" id="mail" class="text w150" /></dd>
+            </dl>
+            <dl class="foot">
+                <dt>&nbsp;</dt>
+                <dd><input type="submit" value="<{$lang.submit}>" class="submit"></dd>
+            </dl>
+            </form>
+            </div>
+        <{else}>
+        <div class="form-style">
+            <form action="" method="post" onSubmit="return Validator.Validate(this,3)">
+            <input type="hidden" value="edit" name="submit">
+            <dl>
+                <dt><{$lang.user_name}></dt>
+                <dd><{$smarty.cookies.USER}></dd>
+            </dl>
+            <dl>
+                <dt><{$lang.e_mail}></dt>
+                <dd><{$de.email}></dd>
+            </dl>
+            <dl>
+                <dt><em>*</em><{$lang.real_name}></dt>
+                <dd><input name='name' type='text' id="name" value="<{$de.name}>" dataType="Require" msg="<{$lang.ar_con_user}>" class="text w150"></dd>
+            </dl>
+            <dl>
+                <dt><{$lang.sex}></dt>
+                <dd>
+                <input name="sex" id="s1" type="radio"  value="1" <{if $de.sex==1}>checked="checked"<{/if}> />
+                <label for="s1"><{$lang.male}></label>
+                <input name="sex" id="s2" type="radio"  value="2" <{if $de.sex==2}>checked="checked"<{/if}> />
+                <label for="s2"><{$lang.female}></label>   
+                </dd>
+            </dl>
+            <dl>
+                <dt><{$lang.area}></dt>
+                <dd>
+                <input type="hidden" name="t" id="t" value="<{$de.area}>" />
+                <input type="hidden" name="province" id="id_1" value="<{$de.provinceid}>" />
+                <input type="hidden" name="city" id="id_2" value="<{$de.cityid}>" />
+                <input type="hidden" name="area" id="id_3" value="<{$de.areaid}>" />
+                <{if $de.area}><div id="d_1"><{$de.area}>&nbsp;&nbsp;<a href="javascript:sd();"><{$lang.edit}></a></div><{/if}>
+                <div id="d_2" <{if $de.area}>class="hidden"<{/if}>>
+                <select id="select_1" onChange="selClass(this);">
+                <option value="">--<{$lang.please_select}>--</option>
+                <{$prov}>
+                </select>
+                <select id="select_2" onChange="selClass(this);" class="hidden"></select>
+                <select id="select_3" onChange="selClass(this);" class="hidden"></select>			</div>
+                </dd>
+            </dl>
+            <dl>
+                <dt>QQ：</dt>
+                <dd><input name="qq" type="text" value="<{$de.qq}>" class="text w200"></dd>
+            </dl>
+            <dl>
+                <dt>MSN：</dt>
+                <dd><input name="msn" type="text" value="<{$de.msn}>" class="text w200"></dd>
+            </dl>
+            <dl>
+                <dt>skype：</dt>
+                <dd><input name="skype" type="text" value="<{$de.skype}>" class="text w200"></dd>
+            </dl>
+            <dl>
+                <dt><{$lang.head_portrait}></dt>
+                <dd>
+                <p class="pic" style=" width:120px; height:120px; "><img id="logo_img" src="<{if $de.logo}><{$de.logo}><{else}><{$config.weburl}>/image/default/user_admin/default_user_portrait.gif<{/if}>" height="120" width="120" /></p>
+				<p><input class="text w300" name="logo" type="text" id="logo" value="<{$de.logo}>"> <a class="upload-button" href="javascript:uploadfile('LOGO','logo',120,120,'member')"><{$lang.upload}></a></p>
+                </dd>
+            </dl>
+            <dl class="foot">
+                <dt>&nbsp;</dt>
+                <dd><input type="submit" value="<{$lang.submit}>" class="submit"></dd>
+            </dl>
+            </form>
+        </div> 
+        <{/if}>
+    </div>
+</div>

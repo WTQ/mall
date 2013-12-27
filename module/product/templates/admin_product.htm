@@ -1,0 +1,662 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="X-UA-Compatible" content="IE=EmulateIE7" />
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<title><{if $title}><{$title}> - <{$config.company}><{else}><{$config.title}><{/if}><{$config.company}></title>
+<meta name="description" content="<{$config.description}>">
+<meta name="keywords" content="<{$config.keyword}>">
+<meta name="generator" content="<{$config.version}>" />
+<meta name="author" content="MallBuilder Team and MallBuilder UI Team" />
+<meta name="copyright" content="MallBuilder" />
+<link href="<{$config.weburl}>/templates/default/user_admin.css" rel="stylesheet" type="text/css" />
+<script src="<{$config.weburl}>/script/jquery-1.4.4.min.js" type=text/javascript></script>
+<script src="script/my_lightbox.js" language="javascript"></script>
+<script type="text/javascript" charset="utf-8" src="<{$config.weburl}>/script/district.js" ></script>
+<script language="javascript">
+var searchTxt = '搜索商品！';
+var SEARCHKEY = '请输入分类属性名称';
+var weburl="<{$config.weburl}>";
+function searchFocus(e){
+	if(e.value == searchTxt){
+		e.value='';
+		$('#keyword').css("color","");
+	}
+}
+function searchBlur(e){
+	if(e.value == ''){
+		e.value=searchTxt;
+		$('#keyword').css("color","#999999");
+	}
+}
+</script>
+<style>
+.admin_table .smalltitle {
+	font-size: 14px;
+	font-weight: bold;
+	color: #3366CC;
+	padding-left: 5px;
+	background-color: #F4FAFE;
+}
+.admin_table td {
+	padding: 8px;
+	background-color: #FFFFFF;
+}
+</style>
+</head>
+
+<div id="shortcut">
+  <div class="w">
+    <div class="fl"> 
+      <script src="<{$config.weburl}>/login_statu.php"></script> 
+      <a href="<{$config.weburl}>/"><{$lang.homepage}></a>
+    </div>
+    <div class="fr"> <a href="<{$config.weburl}>/main.php?cg_u_type=1">进入买家中心</a> <a href="<{$config.weburl}>/main.php?m=sns&s=admin_share_product">我的收藏</a> <a href="<{$config.weburl}>/main.php?m=message&s=admin_message_list_inbox">站内消息</a> </div>
+  </div>
+</div>
+<div id="header">
+  <h1> <a href="<{$config.weburl}>/main.php" title="<{$config.company}>"> <img title="<{$config.company}>" src="<{if $config.logo}><{$config.logo}><{else}><{$config.weburl}>/image/default/logo.gif<{/if}>" /> </a> <i>卖家中心</i> </h1>
+  <div class="search" id="search">
+    <div id="details" class="details">
+      <ul class="tab">
+        <li class="current"><span>商品</span></li>
+      </ul>
+      <div class="form">
+        <form method="get">
+          <div class="formstyle">
+            <input type="text" maxlength="200" value=" 搜索商品！" class="textinput" id="keyword" name="keyword" onblur="searchBlur(this)" onfocus="searchFocus(this)">
+            <input type="submit" value="" class="search-button" name="">
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+</div>
+<div class="layout">
+<ul class="flow-chart">
+  <li title="选择商品所在分类" class="step a2"></li>
+  <li title="填写商品详细信息" class="step b1"></li>
+  <li title="商品发布成功" class="step c2"></li>
+</ul>
+<form method="post" action="" enctype="multipart/form-data">
+  <table style="border-spacing:1px;border-collapse:inherit;" bgcolor="#C1DBFF" width="100%" border="0" align="center" cellpadding="6" cellspacing="1" class="admin_table">
+    <thead>
+    <tr>
+      <td colspan="2" class="smalltitle">商品基本信息</td>
+    </tr>
+    </thead>
+    <tbody>
+    <tr>
+      <td align="right"><font color="red">*</font><{$lang.category}>：</td>
+      <td><span id="cate_show"><{$typenames}></span> <{if $de}>
+        <input name="catid" id="catid" type="hidden" value="<{$de.catid}>" />
+        <input name="tcatid" id="tcatid" type="hidden" value="<{$de.tcatid}>" />
+        <input name="scatid" id="scatid" type="hidden" value="<{$de.scatid}>" />
+        <input name="sscatid" id="sscatid" type="hidden" value="<{$de.sscatid}>" />
+        <{else}>
+        <input name="catid" id="catid" type="hidden" value="<{$smarty.get.catid}>" />
+        <input name="tcatid" id="tcatid" type="hidden" value="<{$smarty.get.tcatid}>" />
+        <input name="scatid" id="scatid" type="hidden" value="<{$smarty.get.scatid}>" />
+        <input name="sscatid" id="sscatid" type="hidden" value="<{$smarty.get.sscatid}>" />
+        <{/if}> </td>
+    </tr>
+    <tr>
+      <td align="right"><font color="red">*</font><{$lang.ptype}>：</td>
+      <td><{foreach item=list key=num from=$ptype}> <input name="ptype" type="radio" class="radio" value="<{$num}>" <{if $num==$de.ptype}>checked="checked"<{/if}> /><{$list}>
+        <{/foreach}> </td>
+    </tr>
+    <tr>
+      <td align="right"><font color="red"> *</font><{$lang.name}>：</td>
+      <td><input maxlength="100" name="title" type="text" id="title" style="width:420px;" value="<{$de.pname}>" /></td>
+    </tr>
+    <tr>
+      <td align="right"><{$lang.keyword}>：</td>
+      <td><input name="keywords" id="key_word" type="text" value="<{$de.keywords}>" style="width:420px;" />
+        <br>
+        <{$lang.key_des}> </td>
+    </tr>
+    <tr>
+      <td align="right">产品品牌：</td>
+      <td><span id="brand"><{$brand}></span></td>
+    </tr>
+    
+    
+   
+    <tr>
+      <td align="right"><font color="red">*</font>出售价格：</td>
+      <td><input type="text" name="price" id="price" maxlength="10" value="<{$de.price}>" />(<{$config.money}>)</td>
+    </tr>
+ 
+ 
+    </tbody>
+    
+    <{if $firstvalue.d.0}>
+    <tbody class="firstvalue">
+        <{foreach item=list key=num from=$firstvalue.d}>
+        <tr>
+            <td align="right"><{$list.name}></td>
+            <td nc_type="property_td_<{$num}>">
+                <ul class="property_ul" <{if $list.field=='color'}>id="color"<{/if}>>
+                	<{$list.item}>
+                </ul>
+                <div class="clear"></div>
+                <{if $list.field=='color'}>
+                    <table cellpadding="0" cellspacing="0" class="property" nc_type="color_img" style="display:none">
+                        <thead>
+                        <tr>
+                            <td>颜色</td>
+                            <td width="400">图片（无图片可不填）</td>
+                            <td width="100">已有图片</td>
+                        </tr>
+                        </thead>
+                        <tbody>
+                        <{foreach item=list from=$firstvalue.d}>
+                        
+                        	<{if $list.field=='color'}>
+                            <{foreach item=slist key=num from=$list.color}>
+                                <tr id="color_img_tr_<{$num}>" style="display:none">
+                                	<td><{$slist.name}></td>
+                                	<td>
+                                    <input name="color_img[<{$num}>]" type="text" id="color<{$num}>" class="w250" value="<{$slist.img}>" /> 
+                                    <a class="upload-button" href="javascript:uploadfile('Style images','color<{$num}>',310,310,'product/property');"><{$lang.upload}></a>
+                                    
+                                    <img align="absmiddle" id="color<{$num}>_img" class="imgs" src="image/default/user_admin/transparent.gif" />
+                                    </td>
+                                    <td><{if !$slist.img}>当前无图片<{else}> <img align="absmiddle"  class="imgs" src="<{$slist.img}>" /><{/if}></td>
+                                </tr>
+                            <{/foreach}>
+                            <{/if}>
+                        <{/foreach}>
+                        </tbody>
+                    </table>
+                <{/if}>
+            </td>
+        </tr>
+        <{/foreach}>
+    </tbody>
+    <tbody nc_type="property_tbody" style="display:none">
+        <tr>
+            <td align="right">库存配置</td>
+            <td>
+                <table class="property">
+                	<thead>
+                    <tr>
+                   		<{foreach item=list key=num from=$firstvalue.d}>
+                        <td><{$list.name}></td>
+                        <{/foreach}>
+                        <td><span class="red">*</span>价格</td>
+                        <td><span class="red">*</span>库存</td>
+                        <td>商品货号</td>
+                    </tr> 
+                    </thead>
+                    <tbody nc_type="property_table"></tbody>
+                </table>
+            </td>
+        </tr>        
+    </tbody>
+    <{/if}>
+    
+   
+    <tr>
+      <td align="right"><font color="red"> *</font><{$lang.amount}>：</td>
+      <td><input maxlength="7" id="amount" name="amount" type="text" value="<{$de.amount}>"/>
+        (件)</td>
+    </tr>
+    
+    
+    <tr>
+      <td align="right">商家编码：</td>
+      <td><input value="<{$de.code}>" name="code" type="text" /></td>
+    </tr>
+    <tr>
+      <td align="right"><font color="red"> *</font><{$lang.picture}>：</td>
+      <td height="95">
+
+<div class="product_image">
+    <ul id="list1">
+        <{foreach item=list key=key from=$de.pic}>
+        <li  id="p<{$key+1}>" data-itemid='<{$key+1}>'>
+            <div class="product_image_list"> 
+                <div nc_type="handle_image">
+                    <div class="image">
+                    <input name="pic[]" type="hidden" id="img<{$key}>" value="<{$list}>" />
+                    <img id="img<{$key}>_img" src="<{$list}>" width="60">
+                    </div>
+                    <div nc_type="handle" class="bg">
+                        <span title="删除" nctype="delete_image">删除</span>
+                    </div>
+                </div>
+                <div class="upload-btn"><a class="upload-button" href="javascript:uploadfile('Style images','img<{$key}>',300,300,'product')"><{$lang.upload}></a></div>
+            <div>
+        </li>
+        <{/foreach}>
+      
+        <{assign var=count value=$de.pic|@count}>
+        <{section name=name loop=$count*-1+5}>
+        
+        <li id="p<{$key+$smarty.section.name.index+1}>" data-itemid='<{$key+$smarty.section.name.index+1}>'>
+            <div nc_type="handle_image">
+                <div class="image">
+                <input name="pic[]" type="hidden" id="pic<{$smarty.section.name.index}>" value="" />
+                <img width="60" id="pic<{$smarty.section.name.index}>_img" src="<{$config.weburl}>/image/default/nopicsmall.gif"  />
+                </div>
+                <div nc_type="handle" class="bg">
+                    <span title="删除" nctype="delete_image" class="delete">删除</span>
+                </div>
+            </div>
+            <div class="upload-btn"><a class="upload-button" href="javascript:uploadfile('Style images','pic<{$smarty.section.name.index}>',300,300,'product')"><{$lang.upload}></a></div>
+        </li>
+        
+        <{/section}>
+    </ul>
+</div>
+   </td>
+    </tr>
+    <{if $firstvalue.s.0}>
+    <tr>
+      <td align="right">其它属性：</td>
+      <td><table width="100%">
+          <{foreach item=list key=num from=$firstvalue.s}>
+          <{$list}>
+          <{/foreach}>
+        </table></td>
+    </tr>
+    <{/if}>
+    <tr>
+      <td align="right"><font color="red"> *</font><{$lang.introduction}>：</td>
+      <td>
+      	<script charset="utf-8" src="<{$config.weburl}>/lib/kindeditor/kindeditor-min.js"></script>
+		<script>
+        var editor;
+        KindEditor.ready(function(K) {
+        editor = K.create('textarea[name="detail"]', {
+				langType :'<{$config.language}>',
+			});
+		});
+        </script>
+        <textarea name="detail" id="detail" style="width:98%; height:500px;"><{$de.detail}></textarea>
+      </td>
+    </tr>
+    <tr align="right">
+      <td colspan="2" align="left" class="smalltitle"><{$lang.freight}></td>
+    </tr>
+    <tr>
+      <td align="right"><font color="red"> *</font>所在地址：</td>
+      <td width="84%">
+      	<input type="hidden" name="t" id="t" value="<{$de.area}>" />
+        <input type="hidden" name="province" id="id_1" value="<{$de.province}>" />
+        <input type="hidden" name="city" id="id_2" value="<{$de.city}>" />
+        <input type="hidden" name="area" id="id_3" value="<{$de.areaid}>" />
+        <{if $de.area}>
+        	<div id="d_1"><{$de.area}>&nbsp;&nbsp;<a href="javascript:sd();">编辑</a></div>
+        <{/if}>
+        
+        <div id="d_2" <{if $de.area}>class="hidden"<{/if}>>
+        <select id="select_1" onChange="selClass(this);">
+          <option value="">--请选择--</option>
+          <{$prov}>
+        </select>
+        <select id="select_2" onChange="selClass(this);" class="hidden"></select>
+        <select id="select_3" onChange="selClass(this);" class="hidden"></select>
+        </div>
+        </td>
+    </tr>
+    <tr>
+      <td align="right">物流体积(立方米)：</td>
+      <td><input value="<{$de.weight}>" name="weight" type="text" /></td>
+    </tr>
+    <tr>
+      <td align="right">物流重量(千克)：</td>
+      <td><input value="<{$de.cubage}>" name="cubage" type="text" /></td>
+    </tr>
+    <tr>
+      <td align="right"><font color="red"> *</font><{$lang.ship}>：</td>
+      <td><input name="freight_type" value="0" onclick="$('#wl').hide();" checked="checked" type="radio" class="radio" />
+        <{$lang.sell_ship}><br />
+        <input name="freight_type" value="1" onclick="$('#wl').show();" <{if $de.freight_type==1}>checked="checked"<{/if}> type="radio" class="radio" /> <{$lang.buy_ship}>
+        <div id="wl" style="background:#F8F8F8; padding:10px; padding-left:15px; display:none;<{if $de.freight_type!=0}>display:block;<{/if}>">
+          <input onclick="$('#friet_temp').show();" checked="checked" name="freightt" type="radio" value="" />
+          使用运费模板
+          <div style="<{if !$de.freight}>display:none;<{/if}> padding-left:20px;" id="friet_temp">
+            <input name="freight" id="freight" type="hidden" value="<{$de.freight}>" />
+            <span id="select_temp_name"><{$de.freight_name}></span> <a style="background-image:url(image/default/icon_freight.png); padding-left:20px; background-repeat:no-repeat;" href="javascript:alertWin('请选择运费模板',document.getElementById('friet_temp_con'),'300','200');">请选择运费模板</a> </div>
+          <div style="padding-top:9px;"> <input onclick="$('#friet_temp').hide();$('#freight').val(0);" <{if !$de.freight}>checked="checked"<{/if}> name="freightt" type="radio" value="" />
+            平邮：
+            <input name="post_price" value="<{$de.post_price}>" type="text" />
+            元
+            快递：
+            <input name="express_price" value="<{$de.express_price}>" type="text" />
+            元
+            EMS:
+            <input name="ems_price" value="<{$de.express_price}>" type="text" />
+            元 </div>
+        </div>
+        <div style="display:none;" id="friet_temp_con">
+          <div style="padding:8px;"> <{foreach item=list from=$lgs}>
+            <input onclick="$('#freight').val(<{$list.id}>);$('#select_temp_name').html(<{$list.title}>);close_win();" name="freightcon" class="radio" type="radio" value="<{$list.id}>" />
+            <{$list.title}><br />
+            <{/foreach}> </div>
+        </div></td>
+    </tr>
+    <tr align="right">
+      <td colspan="2" align="left" class="smalltitle"><{$lang.other_info}></td>
+    </tr>
+    <tr>
+      <td align="right"><{$lang.cus_cat}>：</td>
+      <td><select name="custom_cat" style="width:133px">
+          <option value=""><{$lang.no_cat}></option>
+          <{foreach item=list from=$custom_cat}>
+          
+          <option <{if $de.custom_cat_id==$list.id}>selected="selected"<{/if}> value="<{$list.id}>"><{$list.name}>
+          </option>
+          <{foreach item=slist from=$list.subcat}>
+          <option <{if $de.custom_cat_id==$slist.id}>selected="selected"<{/if}> value="<{$slist.id}>">| _<{$slist.name}></option>
+          <{/foreach}>
+          <{/foreach}>
+        </select>
+        [<a target="_blank" href="main.php?m=product&s=admin_product_cat"><{$lang.mag_cat}></a>] </td>
+    </tr>
+    <tr>
+      <td align="right"><{$lang.validTime}>：</td>
+      <td><{foreach item=list key=num from=$validTime}> <input name="validTime" type="radio" class="radio" value="<{$num}>" <{if $num==$de.validTime}>checked="checked"<{/if}> />
+        <{$list}> 
+        <{/foreach}> </td>
+    </tr>
+    <tr>
+      <td align="right"><{$lang.stime}>：</td>
+      <td ><input checked="checked" name="stime_type" type="radio" class="radio" value="1" />
+        <{$lang.now}><br />
+        <input <{if $de.stime_type==2}>checked="checked"<{/if}> name="stime_type" type="radio" class="radio" value="2" /> 
+        <{$lang.set_time}>
+        <input value="<{$de.stime|date_format}>" onFocus="cdr.show(this);" readonly="readonly" name="stime" type="text" />
+        <br />
+        <input <{if $de.stime_type==3}>checked="checked"<{/if}> name="stime_type" type="radio" class="radio" value="3" />
+        <{$lang.add_lib}> </td>
+    </tr>
+   
+     <!--  <{if $credit}>
+    <tr>
+      <td align="right"><font color="red"> *</font>信誉保证：</td>
+      <td ><{foreach item=list key=nums from=$credit}> <input name="credit[]" type="checkbox" class="checkbox" value="<{$nums}>" <{if $de.credit}><{if in_array($nums,$de.credit)}>checked="checked"<{/if}><{/if}> />
+        <{$list}> 
+        <{/foreach}> </td>
+    </tr>
+    <{/if}>-->
+    
+    <tr>
+      <td align="right"><{$lang.rec}>：</td>
+      <td><input <{if $de.rec_pro}>checked="checked"<{/if}> name="rec_pro" type="checkbox" class="checkbox" value="1" /></td>
+    </tr>
+    <tr>
+      <td align="center" colspan="2"><input type="submit" value="<{$lang.submit}>" class="submit" onClick="return check_value();"/>
+        <input name="submit" type="hidden" id="submit" value="<{if $de.id}>edit<{else}>submit<{/if}>" />
+        <input name="editID" type="hidden" id="editID" value="<{$de.id}>" /></td>
+    </tr>
+  </table>
+</form>
+</div>
+<div id="footer">
+  <p><{$web_con}></p>
+  <{$bt}><br>
+</div>
+</body>
+</html>
+<script language="javascript" src="<{$config.weburl}>/script/Calendar.js"></script>
+<script language="javascript" src="<{$config.weburl}>/script/product.js"></script>
+<script language="javascript" src="<{$config.weburl}>/script/jquery.dragsort-0.5.1.min.js"></script>
+<script type="text/javascript">
+
+$("#list1").dragsort({ dragSelector: "div", dragSelectorExclude:"span",dragBetween: true, dragEnd: saveOrder, placeHolderTemplate: "<li class='placeHolder'><div></div></li>" });
+
+function saveOrder()
+{
+	var data = $("#list1 li").map(function() { return $(this).data("itemid"); }).get();
+};
+
+</script>
+    
+<script language="javascript">
+var cdr = new Calendar("cdr");
+document.write(cdr);
+cdr.showMoreDay = true;
+
+//==========================================
+function check_value()
+{	
+	if(!document.getElementById('title').value)
+	{
+		alert('<{$lang.notice_title}>');
+		document.getElementById('title').focus();
+		return false;
+	}
+	if(document.getElementById('catid').value=='')
+	{
+		alert('<{$lang.product_category}>');
+		return false;
+	}
+	if(document.getElementById('price').value)
+	{
+		var str = document.getElementById('price').value;
+		if(str.length>10||!str.match(/^(:?(:?\d+.\d+)|(:?\d+))$/))
+		{
+			alert('产品价格错误');
+			document.getElementById('price').focus();
+			return false;
+		}
+	}
+	else
+	{	
+		if($('#tr2').css('display') != 'none')
+		{
+			alert('请填写产品价格');
+			document.getElementById('price').focus();
+			return false;
+		}
+	}
+	if($('#amount').val()=='')
+	{
+		alert('请填写库存数量');
+		document.getElementById('amount').focus();
+		return false;
+	}
+	
+	if($('#id_3').val()=='')
+	{
+		alert('请选择产品所在区域');
+		return false;
+	}
+}
+function load_pic()
+{
+	$.getScript("<{$config.weburl}>/script/product.js");	
+}
+/*-------------规格------------------*/
+var property_checked = [<{foreach item=list key=num from=$firstvalue.d}><{if $num+1==$firstvalue.d|@count}>''<{else}>'',<{/if}><{/foreach}>];
+var str = '';
+var V = new Array();
+<{foreach item=list key=num from=$firstvalue.d}>
+var property_checked_<{$num}> = new Array();
+<{/foreach}>
+
+$(function(){
+	$('tbody[nc_type="property_table"]').find('input[type="text"]').live('change',function(){
+		s = $(this).attr('nc_type');
+		V[s] = $(this).val();
+	});
+	
+	$('span[nc_type="chk"] > input[type="checkbox"]').click(function(){
+		into_set();
+	});
+	
+	$('span[nc_type="chk"] > input[type="checkbox"]').click(function(){
+
+
+
+		stock_set();
+	});
+	
+	$('input[data_type="stock"]').live('change',function(){
+		count_stock();
+	});
+
+	$('input[data_type="price"]').live('change',function(){
+		count_price();
+	});
+	
+	$('#color').find('input[type="checkbox"]').click(function(){
+		pic_show($(this));
+	});
+	
+	$('input[type="submit"]').click(function(){
+		$('input[data_type="price"]').each(function(){
+			if($(this).val() == ''){
+				$(this).val($('input[name="price"]').val());
+			}
+		});
+		$('input[data_type="stock"]').each(function(){
+			if($(this).val() == ''){
+				$(this).val('0');
+			}
+		});
+		if($('dl[nc_type="property_tbody"]').css('display') == 'none'){
+			$('dl[nc_type="property_tbody"]').find('input').attr('disabled','disabled');
+		}
+	});
+	
+});
+
+function into_set(){
+	
+	<{foreach item=list key=num from=$firstvalue.d}>
+	property_checked_<{$num}> = new Array();
+	$('td[nc_type="property_td_<{$num}>"]').find('input[type="checkbox"]:checked').each(function(){
+		v = $(this).attr('nc_type');
+		i = $(this).val();
+	
+		property_checked_<{$num}>[property_checked_<{$num}>.length] = [v,i];
+	});
+	property_checked[<{$num}>] = property_checked_<{$num}>;
+	<{/foreach}>
+}
+
+function stock_set(){
+	
+	$('input[name="price"]').attr('readonly','readonly').css('background','#E7E7E7 none');
+	$('input[name="amount"]').attr('readonly','readonly').css('background','#E7E7E7 none');
+	
+	$('tbody[nc_type="property_tbody"]').show();
+	str = '<tr>';
+		
+	<{$abc}>
+	
+	if(str == '<tr>'){
+		$('input[name="price"]').attr('readonly','').css('background','');
+		$('input[name="amount"]').attr('readonly','').css('background','');
+		$('tbody[nc_type="property_tbody"]').hide();
+	}
+	
+	$('tbody[nc_type="property_table"]')
+		.empty()
+		.html(str)
+		.find('input[type="text"]').each(function(){
+			s = $(this).attr('nc_type');
+			try{$(this).val(V[s])}catch(ex){$(this).val('')};
+			if($(this).attr('data_type') == 'price' && $(this).val() == ''){
+				$(this).val($('input[name="price"]').val());
+			}
+		});
+	count_stock();
+	count_price();
+}
+
+function count_stock(){
+	var stock = 0;
+	$('input[data_type="stock"]').each(function(){
+		if($(this).val() != ''){
+			stock += parseInt($(this).val());
+		}
+	});
+	$('input[name="amount"]').val(stock);
+}
+
+function count_price(){
+	var max = 0.01;
+	var min = 10000000;
+	$('input[data_type="price"]').each(function(){
+		if($(this).val() != ''){
+			max = Math.max(max,$(this).val());
+			min = Math.min(min,$(this).val());
+		}
+	});
+	
+	if(min != 10000000){
+		$('input[name="price"]').val(min.toFixed(2));
+	}
+}
+
+function pic_show(Obj){
+	var V = $('#color').find('input[type="checkbox"]:checked');
+	if(V.length == 0){	
+		$('table[nc_type="color_img"]').hide();
+	}else{
+		$('table[nc_type="color_img"]').show();
+	}
+	var S = $('tr[id="color_img_tr_'+Obj.val()+'"]');
+	if(S.css('display') == 'none'){
+		S.show();
+	}else{
+		S.hide();
+	}
+}
+
+$(function(){
+	var E_SP = new Array();
+	var E_SPV = new Array();
+	
+	<{foreach item=list from=$de.porperty}>
+		<{foreach item=slist from=$list.setmeal}>
+				<{foreach item=val key=num from=$slist}>
+					E_SP[<{$num}>] = '<{$val}>';
+			<{/foreach}>
+			E_SPV['i_<{$list.property_value_id}>|price'] = '<{$list.price}>';
+			E_SPV['i_<{$list.property_value_id}>|stock'] = '<{$list.stock}>';
+			E_SPV['i_<{$list.property_value_id}>|sku'] = '<{$list.sku}>';
+		<{/foreach}>	
+	<{/foreach}>
+	
+	V = E_SPV;
+	
+	$('.firstvalue').find('input[type="checkbox"]').each(function(){
+		
+		$('input[name="price"]').attr('readonly','readonly').css('background','#E7E7E7 none');
+		$('input[name="amount"]').attr('readonly','readonly').css('background','#E7E7E7 none');
+		$('tbody[nc_type="property_tbody"]').show();
+				
+	});
+
+	into_set();
+
+	str = '<tr>';
+	
+	<{$abc}>
+	
+	if(str == '<tr>'){
+		$('input[name="price"]').attr('readonly','').css('background','');
+		$('input[name="amount"]').attr('readonly','').css('background','');
+		$('tbody[nc_type="property_tbody"]').hide();
+	}
+
+	$('tbody[nc_type="property_table"]')
+		.empty()
+		.html(str)
+		.find('input[type="text"]').each(function(){
+			s = $(this).attr('nc_type');
+			try{$(this).val(E_SPV[s])}catch(ex){$(this).val('')};
+		});
+	
+		
+	$('#color').find('input[type="checkbox"]:checked').each(function(){
+		pic_show($(this));
+	});
+});
+</script>

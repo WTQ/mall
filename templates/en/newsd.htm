@@ -1,0 +1,150 @@
+<script type="text/javascript">
+function showreview()
+{
+    document.getElementById("reviewt").style.display='block'; 
+} 
+function getfav()
+{	
+	var url = '<{$config.weburl}>/ajax_back_end.php';
+	var myurl=document.location.href;
+		myurl=myurl.replace('&','*');
+	var u='<{$smarty.cookies.USER}>';
+	if (u=='')
+	{
+		alert('<{$lang.no_logo}>');
+		window.location.href='<{$config.weburl}>/login.php';
+		return false;
+	}
+	var fu='<{$de.nid}>';
+ 	var typ='1';
+	var ttil='<{$de.title|regex_replace:"/[\r\t\n\']/":""}>';
+	var mpic='<{$config.weburl}>/uploadfile/news/<{$de.pic}>';
+	var des='<{$de.con|strip_tags|regex_replace:"/[\r\t\n\']/":""|truncate:100:"...":true}>';
+    var pars = 'user='+u+'&fid='+fu+'&type='+typ+'&title='+ttil+'&url='+myurl+'&des='+des+'&picurl='+mpic;
+	$.post(url, pars,showResponse);
+	function showResponse(originalRequest)
+	{
+	    if(originalRequest>1)
+	       alert('<{$lang.fav_ok}>');
+		else if (originalRequest>0)
+	       alert('<{$lang.fav_isbing}>');
+		else
+	       alert('<{$lang.error}>');
+	}
+}
+function printcontent()
+{
+	var printw = window.open('','','');
+	printw.opener = null;
+	printw.document.write('<div style="width:700px;">'+document.getElementById('newscon').innerHTML+'</div>');
+	printw.window.print();
+}
+function picwidth(pid, img)
+{
+	var img = img ? img : 665;
+	var wid= pid.width;
+	if(wid < img)
+		return;
+	else 
+	{
+		var hei = pid.height;
+		pid.title = 'View Big';
+		pid.onclick = function (e) {window.open(pid.src);}
+		pid.height = parseInt(hei*img/wid);
+		pid.width =img;
+	}
+}
+window.onload = function()
+{
+	var pics = document.getElementById('newscon').getElementsByTagName("img");
+	for(var i=0;i<pics.length;i++)
+	{
+		picwidth(pics[i], 665);
+	}
+}
+</script>
+<link href="<{$config.weburl}>/module/news/templates/news.css" rel="stylesheet" type="text/css" />
+<div class="menu_bottom L1">				
+    <div class="headtop_L">
+			<a href='<{$config.weburl}>/'><{$lang.indexpage}></a> &gt; <a href="<{$config.weburl}>/?m=news"><{$lang.bizchenter}></a> &gt; <a href="?m=news&s=news_list&id=<{$de.classid}>"><{$de.cat}></a> &gt; <span><{$lang.zw}></span>
+    </div>	
+</div>
+<div id="mainbody1">
+<div class="newsbodyleft">
+	<div class="newstitle"><{if $de.ftitle}><{$de.ftitle}><{else}><{$de.title}><{/if}></div> 
+	<div class="newstime">
+		<{$lang.comer}><{$de.source}>
+		<{$lang.author}><{$de.writer}>
+		<{$lang.pubtime}><{$de.uptime|date_format}>
+		<{$lang.read_count}><{insert name="readCount"}>
+		<{insert name="label" type="statics" temp='statics_default' ctype=1 id=$de.nid}>
+		<a href="javascript:getfav();"><{$lang.fav}></a>
+		<a href="javascript:printcontent();"><{$lang.print}>&nbsp;</a>
+	</div>
+	
+	<div class="newscon" id="newscon">
+	<div class="smalltext"><{$de.smalltext}></div>
+		<div style="text-indent:0em;" class="newsad">
+		<script src='<{$config.weburl}>/api/ad.php?id=29&catid=<{$smarty.get.id}>&sname=<{$sname}>'></script></div>
+		<{if $noright=='true'}>
+			<h1 style="font-size:16px"><{$lang.noright}></h1>
+		<{else}>
+			<{$ncontent}>
+		<{/if}>   
+	</div>
+	<div class="newstitle"><{$pages}></div> 
+	<div style="clear:both;"></div>
+
+	<{if $vote}>
+	<div class="vote bgw">
+	<div class="vote_tit"><span><{$lang.survey}></span></div>
+	<div class="vote_con">
+	   <form action="<{$config.weburl}>/?m=vote&s=vote&id=<{$smarty.get.id}>" method="post">
+		<table width="100%" cellspacing="0" cellpadding="3" border="0" align="center">
+			<{foreach item=list name=name from=$vote}>
+			<tr><td class="td1"><{$smarty.foreach.name.iteration}>.<b><{$list.title}></b> <{if $list.end==1}><font color="#FF0000">(<{$lang.closed}>)</font><{/if}><{if $list.ip==1}><font color="#FF0000">(<{$lang.voted}>)</font><{/if}></td></tr>
+			<{foreach item=slist name=loop from=$list.item}>
+			<tr><td><{if $list.end!=1 and $list.ip!=1}><input type="<{if $list.votetype==0}>radio<{else}>checkbox<{/if}>" class="radio" value="<{$smarty.foreach.loop.iteration}>" name="vote<{$list.id}>[]"><{/if}><u><!--<{$smarty.foreach.loop.iteration}>.--><{$slist.0}></u></td></tr>
+			<{/foreach}>
+			<tr><td height="5"></td></tr>
+			<{/foreach}>
+			<tr><td class="td">
+				<input type="submit" value="<{$lang.vote}>" name="submit">&nbsp;&nbsp;
+				<input type="button" onClick="javascript:window.open('<{$config.weburl}>/?m=vote&id=<{$smarty.get.id}>')" value="<{$lang.view}>" name="button">
+			</td></tr>
+		</table>
+		</form>
+	</div>
+	</div>
+	<{/if}>  
+
+	<{if $de.ispl!=1}>
+	<{insert name="label" type="comment" ctype=1 cid=$smarty.get.id temp="comment_default" }>
+	<{/if}>
+</div>
+
+<!--右边开始-->	
+<div class="rightbar">
+	<div class="right1">
+		<div class="sectitle" >
+			<div class="title_left2 L2"><{$lang.recread}></div>
+		</div>
+		 <div class="seccon">
+			<ul class="ul1">
+			  <{insert name="label" type="news" temp='news_default_list' rec=1 leng=32 limit=$config.rec_news_num}>
+		    </ul>
+		   <div class="clear"></div>
+		</div>
+		</div>
+	<div class="right1 m1">
+		<div class="sectitle" ><div class="title_left2 L2"><{$lang.picnews}></div></div>
+		<div class="seccon">
+			<ul class="ul1 pic_list">
+			  <{insert name="label" type='news' temp='news_list_2' img='true' leng=16 limit=$config.rec_pic_num}>
+			</ul> 
+			<div class="clear"></div>
+		</div>
+	</div>
+</div>		
+<!--右边结束-->
+</div>

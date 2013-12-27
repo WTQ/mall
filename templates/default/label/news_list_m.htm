@@ -1,0 +1,9 @@
+<{foreach item=list name=name from=$news}>
+    <{if $smarty.foreach.name.iteration==1}>  
+      <h3><a target="_blank" title="<{$list.title}>" <{$list.style}>  href="<{$list.url}>"><{$list.ftitle|truncate:30}></a></h3>
+    <{else}>
+        <li>
+        	<a class="aa" target="_blank" title="<{$list.title}>" <{$list.style}>  href="<{$list.url}>"><{$list.ftitle|truncate:$leng}></a>
+        </li>
+     <{/if}>  
+<{/foreach}>

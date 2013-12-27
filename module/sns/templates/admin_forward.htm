@@ -1,0 +1,87 @@
+<script>
+function $$(id) {
+	return !id ? null : document.getElementById(id);
+}
+function ajaxpost(formid) {
+
+	var ajaxframeid = 'ajaxframe';
+	var ajaxframe = $$(ajaxframeid);
+	if(!ajaxframe){
+		var div = document.createElement('div');
+		div.style.display = 'none';
+		div.innerHTML = '<iframe name="' + ajaxframeid + '" id="' + ajaxframeid + '" loading="1"></iframe>';
+		ajaxframe = $$(ajaxframeid);
+		$$('append_parent').appendChild(div);
+	}
+	$$(formid).target = ajaxframeid;
+	$('#'+formid).validate({
+		errorPlacement: function(error, element){
+			element.next('.form-error').append(error);
+		},  
+		rules : {
+	    	forwardcontent : {
+	            maxlength : 140
+	        }
+	    },
+	    messages : {
+	    	forwardcontent : {
+	            maxlength: '<{$lang.Can_note140c}>'
+	        }
+	    },
+		submitHandler:function(form){  
+			
+			form.submit();
+			function closefunc()
+			{
+				DialogManager.close("notice");
+				$('#friendtrace').lazyshow({url:"main.php?m=sns&s=sns&curpage=1",'iIntervalId':true});
+			}
+			function closefunc1()
+			{
+				DialogManager.close(formid);
+				var d = DialogManager.create('notice');
+				d.setTitle('<{$lang.message}>');
+				d.setContents('message', { type: 'notice', text: "<{$lang.share_successful}>" });
+				d.setWidth(270);
+				d.show('center');
+				setTimeout(closefunc,800);
+			}
+			setTimeout(closefunc1,200);
+		}
+	});
+}</script>
+<div class="feededitor">
+
+<form method="post" id="forward_form" name="forward_form" action="main.php?m=sns&s=sns" >
+<div class="form-error"></div>
+<input type="hidden" name="act" value="forward" />
+<input type="hidden" name="forwardid" value="<{$smarty.get.bid}>">
+<div style="padding:10px;" >
+    <textarea resize="none" name="forwardcontent" id="forwardcontent"></textarea>
+    <div class="form-error"></div>
+    <input type="text" style="display:none;" />
+    <!-- 防止点击Enter键提交 -->
+    <div class="handle">
+    	<input type="hidden" name="sprivacy" id="sprivacy" value="0"/>
+        <div id="charcount" class="fl"></div>     
+        <input type="submit" id="forward" value="<{$lang.share}>" class="button" name="<{$lang.share}>">
+    </div>
+</div>
+</form>
+</div>
+<script>
+$(function(){
+	
+	$("#forwardcontent").charCount({
+		allowed: 140,
+		warning: 10,
+		counterContainerID:'charcount',
+		firstCounterText:'<{$lang.remaining}>',
+		endCounterText:'<{$lang.characters}>'
+	});
+	
+});
+$('#forward').live('click',function(){
+	ajaxpost('forward_form');
+});
+</script>

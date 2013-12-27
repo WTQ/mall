@@ -1,0 +1,90 @@
+<script src="script/my_lightbox.js" language="javascript"></script>
+<script type="text/javascript" src="script/Validator.js"></script>
+<div class="path">
+    <div>
+    	<a href="main.php?cg_u_type=2">卖家中心</a> <span>&gt;</span> 
+        <a href="main.php?m=shop&s=myshop">店铺设置</a> <span>&gt;</span> 
+        认证设置
+    </div>
+</div>
+<div class="main">
+	<div class="wrap">
+        <div class="hd">
+            <ul class="tabs">
+                <li class="normal"><a href="main.php?m=shop&s=myshop">店铺设置</a></li>
+                <li class="normal"><a href="main.php?m=shop&s=admin_custom_service">客服中心</a></li>
+                <li class="active"><a href="main.php?m=shop&s=admin_certification">认证设置</a></li>
+                <li class="normal"><a href="main.php?m=shop&s=admin_shop_set">幻灯片设置</a></li>
+			</ul>
+        </div>
+        <div class="form-style">
+            <div class="notes">
+                <{if $de.shop_auth=='-1' and $de.shopkeeper_auth=='-1' }>
+                    <p>认证失败,请败重新认证。</p>
+                <{else}>
+                    <p>认证通过后将无法修改。</p>
+                <{/if}>
+            </div>
+            
+            <{if $de.shopkeeper_auth_pic || $de.shop_auth_pic}>
+                <h3>认证状态</h3>
+                <{if $de.shopkeeper_auth_pic}>
+                <dl>
+                    <dt>身份证：</dt>
+                    <dd>
+                    <img align="absmiddle" src="image/default/certautonym<{if $de.shopkeeper_auth!=1}>_no<{/if}>.gif"> 
+                    <a href="<{$de.shopkeeper_auth_pic}>">查看认证文件</a> 
+                    <{if $de.shopkeeper_auth!='1' }>(尚未认证通过或认证失败)<{/if}>
+                    </dd>
+                </dl>
+                <{/if}>
+                
+                <{if $de.shop_auth_pic}>
+                <dl>
+                    <dt>营业执照：</dt>
+                    <dd>
+                    <img align="absmiddle" src="image/default/certification<{if $de.shop_auth!=1}>_no<{/if}>.gif"> 
+                    <a href="<{$de.shop_auth_pic}>">查看认证文件</a> 
+                    <{if $de.shop_auth!='1' }>(尚未认证通过或认证失败)<{/if}>
+                    </dd>
+                </dl>
+                <{/if}>
+			<{/if}>
+            
+            <{if !$de.shop_auth_pic || !$de.shopkeeper_auth_pic}>
+            <form action="" method="post">
+            <input type="hidden" value="edit" name="submit" />
+            <h3>认证资料上传</h3>
+            <{if !$de.shopkeeper_auth_pic}>
+            <dl>
+                <dt>上传身份证：</dt>
+                <dd>
+                	<input name="shopkeeper_auth_pic" type="text" id="shopkeeper_auth_pic" class="text w300" />&nbsp;
+                    <a href="javascript:uploadfile('Style images','shopkeeper_auth_pic',500,500,'shop');" class="upload-button">上传</a>
+                </dd>
+            </dl>
+            <{else}>
+            <input name="shopkeeper_auth_pic" value="<{$de.shopkeeper_auth_pic}>" type="hidden" />
+            <{/if}>
+            
+            <{if !$de.shop_auth_pic}>
+            <dl>
+                <dt>上传营业执照：</dt>
+                <dd>
+                	<input name="shop_auth_pic" type="text" id="shop_auth_pic" class="text w300"/ >&nbsp;
+                    <a href="javascript:uploadfile('Style images','shop_auth_pic',500,500,'shop');" class="upload-button">上传</a>
+                </dd>
+            </dl>
+            <{else}>
+            <input name="shop_auth_pic" value="<{$de.shop_auth_pic}>" type="hidden" />
+            <{/if}>
+            
+            <dl class="foot">
+                <dt>&nbsp;</dt>
+                <dd><input type="submit" value="提交" class="submit"></dd>
+            </dl>
+            </form>
+            <{/if}>
+       	</div> 
+   </div>
+</div>

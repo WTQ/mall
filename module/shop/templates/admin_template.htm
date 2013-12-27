@@ -1,0 +1,81 @@
+<div class="path">
+    <div>
+    	<a href="main.php?cg_u_type=2"><{$lang.seller_center}></a> <span>&gt;</span> 
+        <a href="main.php?action=template"><{$lang.theme_settings}></a> <span>&gt;</span> 
+        <{$lang.available_topics}> 
+    </div>
+</div>
+
+<div class="main">
+	<div class="wrap">
+        <div class="hd">
+            <ul class="tabs">
+                <li class="active"><a href="main.php?m=shop&s=admin_template"><{$lang.available_topics}></a></li>
+     		</ul>
+        </div>
+        <div class="templet">
+        <{foreach item=list key=num from=$templist.list}>
+        <{if $de.template==$list.temp_file||($de.template==''&&$list.temp_file=='user_templates_default')}>
+            <div class="nonce"> <a target="_blank" href="shop.php?uid=<{$buid}>&template=<{$list.temp_file}>"><img width="200" height="200" src="templates/<{$list.temp_file}>/img/temp.jpg"></a></div>
+            <div class="txt">
+                <p><{$lang.store_name}><span><{$de.company}></span></p>
+                <p><{$lang.shop_template_name}><b><{$list.name}></b></p>
+                <p>模版风格：<b><{$list.style}></b></p>
+            </div>
+        <{/if}>
+        <{/foreach}>
+        </div>
+        <h5 style=" font-size:12px; "><{$lang.available_topics}></h5>
+        <div class="motif">
+            <ul>
+                <{foreach item=list key=num from=$templist.list}>
+                <{if $de.template==$list.temp_file||($de.template==''&&$list.temp_file=='user_templates_default')}>
+                <{else}>
+                <li>
+                    <p><a onclick="preview_theme('<{$list.temp_file}>');" href="javascript:void(0)"><img width="200" height="200" src="templates/<{$list.temp_file}>/img/temp.jpg" /></a></p>
+                    <h2><{$lang.template_name}><{$list.name}></h2>
+                    <h2>模版风格：<{$list.style}></h2>
+                	<span><a href="main.php?m=shop&s=admin_template&select_tem=<{$list.id}>"><{$lang.use}></a><a class="preview" target="_blank" href="shop.php?uid=<{$buid}>&template=<{$list.temp_file}>"><{$lang.preview}></a></span>
+                </li>
+                <{/if}>
+               <{/foreach}>
+            </ul>
+        </div>
+    </div>
+    <{$templist.pages}>
+</div>
+
+
+<script>
+var preview_img = new Image();
+preview_img.onload = function(){
+    var d = DialogManager.get('preview_image');
+    if (!d)
+    {
+        return;
+    }
+
+    if (d.getStatus() != 'loading')
+    {
+        return;
+    }
+
+    d.setWidth(this.width + 50);
+    d.setPosition('center');
+    d.setContents($('<img src="' + this.src + '" alt="" />'));
+    ScreenLocker.lock();
+};
+preview_img.onerror= function(){
+    alert('<{$lang.failed_to_load_review}>');
+    DialogManager.close('preview_image');
+};
+function preview_theme(style_name){
+    var screenshot = '<{$config.weburl}>/templates/' + style_name + '/img/temp.jpg';
+	var d = DialogManager.create('preview_image');
+    d.setTitle('<{$lang.effect_preview}>');
+    d.setContents('loading', {'text':'<{$lang.loading}>'});
+    d.setWidth(270);
+    d.show('center');
+	preview_img.src = screenshot;
+}
+</script>

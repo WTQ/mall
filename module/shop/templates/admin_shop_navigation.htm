@@ -1,0 +1,116 @@
+<div class="path">
+    <div>
+    	<a href="main.php?cg_u_type=2">卖家中心</a> <span>&gt;</span> 
+        <a href="main.php?m=shop&s=admin_shop_navigation">导航管理</a> <span>&gt;</span> 
+        <{if $smarty.get.type=='add'}>新增导航<{elseif $smarty.get.type=='edit'}>编辑导航<{else}>导航列表<{/if}>
+    </div>
+</div>
+<div class="main">
+	<div class="wrap">
+        <div class="hd">
+            <ul class="tabs">
+                <li class="<{if $smarty.get.type=='add'}>normal<{elseif $smarty.get.type=='edit'}>normal<{else}>active<{/if}>"><a href="main.php?m=shop&s=admin_shop_navigation">导航列表</a></li>
+                <li class="<{if $smarty.get.type=='add'}>active<{elseif $smarty.get.type=='edit'}>normal<{else}>normal<{/if}>"><a href="main.php?m=shop&s=admin_shop_navigation&type=add">新增导航</a></li>
+                <{if $smarty.get.type=='edit'}>
+                <li class="active"><a href="main.php?m=shop&s=admin_shop_navigation&type=add">编辑导航</a></li>
+                <{/if}>
+            </ul>
+        </div>
+        
+        <{if $smarty.get.type=='add' or $smarty.get.type=='edit'}>
+        <div class="form-style">
+            <form action="" method="post">
+            <input type="hidden" value="<{$nav.id}>" name="id">
+            <input type="hidden" value="<{if $nav.id}>edit<{else}>add<{/if}>" name="submit">
+            <dl>
+                <dt><em>*</em>导航名称：</dt>
+                <dd><input type="text" value="<{$nav.title}>" name="title" class="w150 text"></dd>
+            </dl>
+            <dl>
+                <dt>是否显示：</dt>
+                <dd>
+                    <input type="radio" id="if_show1" <{if $nav.if_show==1 or !$nav.id}>checked="checked"<{/if}> value="1" name="if_show">
+                    <label for="if_show1">是</label>&nbsp;&nbsp;&nbsp;&nbsp;
+                    <input type="radio" id="if_show0" <{if $nav.if_show==0 and $nav.id}>checked="checked"<{/if}>value="0" name="if_show">
+                    <label for="if_show0">否</label>
+                </dd>
+            </dl>
+            <dl>
+                <dt>排序：</dt>
+                <dd>
+                    <p><input type="text" value="<{if $nav.sort}><{$nav.sort}><{else}>255<{/if}>" name="sort" class="w50 text"></p>
+                    <p class="hint">数字需大于零，越小越靠前</p>
+                </dd>
+            </dl>
+            <dl>
+                <dt>内容：</dt>
+                <dd>
+                <script charset="utf-8" src="<{$config.weburl}>/lib/kindeditor/kindeditor-min.js"></script>
+				<script>
+                var editor;
+                KindEditor.ready(function(K) {
+                editor = K.create('textarea[name="content"]', {
+              			langType :'<{$config.language}>',
+                	});
+                });
+                </script>
+                <textarea name="content" style="width:100%; height:600px;"><{$nav.content}></textarea>
+                </dd>
+            </dl>
+            <dl>
+                <dt>导航外链URL：</dt>
+                <dd>
+                <p><input type="text" value="<{$nav.url}>" name="url" class="w300 text"></p>
+                <p class="hint">请填写包含http://的完整URL地址,如果填写此项则点击该导航会跳转到外链</p>
+                </dd>
+            </dl>
+            <dl>
+                <dt>新窗口打开：</dt>
+                <dd>
+                    <input type="radio" id="new_open1" <{if $nav.new_open==1 or !$nav.id}>checked="checked"<{/if}> value="1" name="new_open">
+                    <label for="new_open1">是</label>&nbsp;&nbsp;&nbsp;&nbsp;
+                    <input type="radio" id="new_open0" <{if $nav.new_open==0 and $nav.id}>checked="checked"<{/if}>value="0" name="new_open">
+                    <label for="new_open0">否</label>
+          		</dd>
+            </dl>
+            <dl class="foot">
+                <dt>&nbsp;</dt>
+                <dd><input type="submit" value="提交" class="submit"></dd>
+            </dl>
+            </form>
+        </div>  
+        <{else}>
+        <table class="table-list-style">
+        	<thead>
+            <tr>
+            	<th width="60">排序</th>
+                <th width="10"></th>
+            	<th class="tl">导航名称</th>
+            	<th width="120">是否显示</th>
+            	<th width="90">操作</th>
+            </tr>
+            </thead>
+            <tbody>
+            <{foreach item=list key=num from=$nav}>
+            <tr>
+            	<td><{$list.sort}></td>
+            	<td></td>
+            	<td class="tl"><{$list.title}></td>
+            	<td><{if $list.if_show==1}>是<{else}>否<{/if}></td>
+            	<td>
+                <p><a href="main.php?m=shop&s=admin_shop_navigation&type=edit&id=<{$list.id}>">编辑</a></p>
+                <p><a href="main.php?m=shop&s=admin_shop_navigation&type=del&id=<{$list.id}>">删除</a></p>
+                </td>
+            </tr>
+            <{foreachelse}>
+            <tr>
+            	<td colspan="20" class="norecord">
+                	<i></i><span>暂无符合条件的数据记录</span>	
+                </td>
+            </tr>
+            <{/foreach}>
+            </tbody>
+        </table>
+        <{/if}>
+    </div>
+</div>

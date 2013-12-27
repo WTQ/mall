@@ -1,0 +1,199 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<title>品牌</title>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<link href="admin.css" rel="stylesheet" type="text/css" />
+<script type="text/javascript" src="../script/jquery-1.4.4.min.js"></script>
+<script type="text/javascript" src="../script/jquery.validation.min.js"></script>
+<script src="../script/my_lightbox.js" language="javascript"></script>
+<script language="javascript">
+$(function(){
+	$('#form').validate({
+		errorPlacement: function(error, element){
+			element.next('.form-error').append(error);
+		},      
+		rules : {
+			name:{
+				required:true
+			},
+			catid:{
+				required:true
+			},
+		},
+		messages : {
+			name:{
+				required:'请填写品牌',
+			},
+			catid:{
+				required:'请填写分类',
+			},
+		}
+	});
+});
+</script>
+</head>
+<body>
+	<div class="container">
+        <div class="flow">
+            <div class="itemtitle">
+                <h3>品牌</h3>
+                <ul>
+                    <li <{if $smarty.get.operation==''}>class="current"<{/if}>><a href="?m=brand&s=brand.php"><span>管理</span></a></li>
+                    <li <{if $smarty.get.operation=='add'}>class="current"<{/if}>><a href="?m=brand&s=brand.php&operation=add"><span>添加</span></a></li>
+                    <li <{if $smarty.get.operation=='batch'}>class="current"<{/if}>><a href="?m=brand&s=brand.php&operation=batch"><span>批量添加</span></a></li>
+                    <{if $smarty.get.operation=='edit'}>
+                    <li class="current"><a href="#"><span>修改</span></a></li>
+                    <{/if}>
+                    <li><a href="?m=brand&s=brand_cat.php"><span>分类管理</span></a></li>
+                </ul>
+            </div>
+        </div>
+        <div class="h35"></div>  
+        <{if $smarty.get.operation=='add' or $smarty.get.operation=='edit' or $smarty.get.operation=='batch' }>
+            <form name="form" id="form" method="post">
+            <input name="id" type="hidden" id="id" value="<{$de.id}>">
+            <table class="table">
+                <thead>
+                    <tr>
+                        <th class="partition" colspan="99">品牌</th>
+                    </tr>
+                </thead>
+                <tbody>
+                <tr>
+                    <td width="100">品牌</td>
+                    <td>
+                    <{if $smarty.get.operation=='batch'}> 
+                    <textarea name="name" id="name" class="w350" rows="10"></textarea>
+                    <{else}>
+                    <input name="name" id="name" type="text" class="w350" value="<{$de.name}>">
+                    <{/if}>
+                    <div id="form-error" class="form-error"></div>
+                    </td>
+                </tr>
+                
+                <tr>
+                    <td>分类</td>
+                    <td>
+                    <select class="select" name='catid'>
+                    	<option value=''>选择品牌分类</option>
+                        <{foreach item=list from=$cat}>
+                        <option <{if $de.catid==$list.id}> selected="selected" <{/if}>value="<{$list.id}>"><{$list.catname}></option>	
+                        <{foreach item=slist from=$list.scat}>
+                        <option <{if $de.catid==$slist.id}> selected="selected" <{/if}>value="<{$slist.id}>">┣ <{$slist.catname}></option>	
+                        <{/foreach}> 
+                        <{/foreach}> 
+            		</select>
+                    <div id="form-error" class="form-error"></div>
+                    </td>
+                </tr>
+                
+                <tr>
+                    <td>LOGO</td>
+                    <td>
+                    <input name="pic" class="w350" type="text" id="pic" value="<{$de.logo}>" />
+                    <input name="oldpic" type="hidden" value="<{$de.logo}>" />
+                    [<a href="javascript:uploadfile('上传LOGO','pic',400,240,'brand')">上传</a>] 
+                    [<a href="javascript:preview('pic');">预览</a>]
+                    [<a onclick="javascript:$('#pic').val('');" href="#">删除</a>] <span class="bz"></span>
+                    </td>
+                </tr>
+                
+                <tr>
+                    <td>点击数</td>
+                    <td><input type="text" name="hits" value="<{if $de.hits}><{$de.hits}><{else}>0<{/if}>" onbeforepaste="clipboardData.setData('text',clipboardData.getData('text').replace(/[^\d]/g,''))" onkeyup="value=value.replace(/[^\d]/g,'')"/></td>
+				</tr>
+                
+                <tr>
+                    <td>状态</td>
+                    <td>
+                    <input type="radio" name="status" value="2" id="tj" <{if $de.status==2}>checked="checked"<{/if}>/><label for="tj">推荐</label>
+                    <input type="radio" name="status" value="1" id="open" <{if $de.status==1}>checked="checked"<{/if}>/><label for="open">开启</label>
+                    <input type="radio" name="status" value="0" id="close" <{if $de.status==0}>checked="checked"<{/if}>/><label for="close">关闭</label>
+                    </td>
+                </tr>
+               
+                <tr>
+                    <td>&nbsp;</td>
+                    <td>
+                    <input class="submit" type="submit" value="提交">
+                    <input name="act" type="hidden" id="action" value="<{if !$smarty.get.editid}><{if $smarty.get.operation=='batch'}>batch<{else}>save<{/if}><{else}>edit<{/if}>">
+                    </td>
+                </tr>
+                </tbody>
+            </table>
+            </form>
+        <{else}>
+		<script type="text/javascript">
+        $(function(){
+            /* 全选 */
+             $('.checkall').click(function(){
+                var _self = this;
+                $('.checkitem').each(function(){
+                    if (!this.disabled)
+                    {
+                        $(this).attr('checked', _self.checked);
+                    }
+                });
+                $('.checkall').attr('checked', this.checked);
+            });	 
+        });
+        </script>
+        <form action="" method="post">
+        <table class="table">
+        	<thead>
+                <tr>
+                    <th class="partition" colspan="99">品牌</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr class="header">
+                    <th width="30"></th>
+                    <th width="70">显示顺序</th>
+                    <th width="100">logo</th>
+                    <th>品牌</th>
+                    <th width="120">分类</th>
+                    <th width="100">状态</th>
+                    <th width="50"></th>
+                </tr>
+                <{foreach item=list from=$de.list}>
+                <tr>
+                    <td><input type="checkbox" value="<{$list.id}>" class="checkitem" name="chk[]"></td>
+                    <td><input type="text" class="w50" maxlength="3" name="displayorder[<{$list.id}>]" value="<{$list.displayorder}>" onbeforepaste="clipboardData.setData('text',clipboardData.getData('text').replace(/[^\d]/g,''))" onkeyup="value=value.replace(/[^\d]/g,'')" /></td>
+                    <td><{if $list.logo}><img width="40" class="img" src="<{$list.logo}>" /><{else}><img class="img" width="40" src="../image/default/nopic.gif" /><{/if}></td>
+                    <td><{$list.name}></td>
+                    <td><{$list.catname}></td>
+                    <td><{if $list.status==1}>开启<{elseif $list.status==2}>推荐<{else}>关闭<{/if}></td>
+                    <td>
+                    <a href="?m=brand&s=brand.php&operation=edit&editid=<{$list.id}>"><{$editimg}></a> 
+                    <a onclick="return confirm('确定删除吗');" href="?m=brand&s=brand.php&delid=<{$list.id}>"><{$delimg}></a>
+                    </td>
+                </tr>
+                <{foreachelse}>
+                <tr>
+                    <td class="norecord" colspan="99"><i></i><span>暂无符合条件的数据记录</span></td>
+                </tr>
+                <{/foreach}>
+            </tbody>
+            <tfoot>
+                <tr>
+                	<td colspan="4">
+                        <div class="del">
+                        <input type="checkbox" class="checkall" id="del">
+                        <label for="del">全选</label>
+                        </div>
+                        <input type="hidden" name="act" value="op" />
+                        <input type="submit" name="submit" value="<{$lang.btn_submit}>" />
+                        <input type="submit" name="submit" value="<{$lang.rc}>" />
+                        <input type="submit" name="submit" value="<{$lang.btn_open}>" />
+                        <input type="submit" name="submit" value="<{$lang.btn_close}>" />
+                    </td>
+                    <td colspan="99"><div class="page"><{$de.page}></div></td>
+                </tr>
+            </tfoot>
+        </table>
+        </form>
+        <{/if}>
+    </div>
+</body>
+</html>

@@ -1,0 +1,157 @@
+<style>
+.scroller{ background: url(image/default/credit.png) 17px 23px no-repeat; display: block; height: 22px; padding: 0 0 17px 30px; text-align: left; width: 400px; margin-right:25px; }
+.scroller span {  display: block; height: 22px; width: 0; }
+.scroller em { background: url(image/default/credit.png)  -417px 2px no-repeat;  color: white; display: block; float: right; height: 22px; padding-top: 1px;  text-align: center; width: 30px; }
+.rate-desc { height: auto; overflow: hidden; width: 400px; }
+.rate-desc li { display: block; float: left; text-align: center; width: 80px; }
+.span { background: url(image/default/star.gif) 0 -27px ; display: inline-block; height: 12px; overflow: hidden; text-align: left; vertical-align: inherit; width: 60px; }
+</style>
+<div class="module_special">
+	<h2><{$lang.dynamic_evaluation}></h2>
+    <div class="score">
+    <table width="94%" style="margin:auto;">  
+        <tr>
+            <td width="85" align="right">
+            <{$lang.goods_consistent_with_the_description}>
+            <p><{$u.a|number_format:1}><{$lang.fraction}></p>
+            <span class="star"><em style=" width:<{$u.aw}>%"><{$u.a|number_format:1}></em></span>
+            </td>
+            <td align="right">
+            <div class="scroller">
+                <span style="width: <{$u.aw}>%;"><em><{$u.a|number_format:1}></em></span>
+            </div>
+            <div class="rate-desc">
+                <ul>
+                    <li><{$lang.very_dissatisfied}></li>
+                    <li><{$lang.displeasure}></li>
+                    <li><{$lang.general}></li>
+                    <li><{$lang.satisfaction}></li>
+                    <li><{$lang.very_satisfied}></li>
+                </ul>
+            </div>
+            </td>
+        </tr>
+        
+        <tr>
+            <td align="right">
+            <{$lang.attitude_of_the_seller}>
+            <p><{$u.b|number_format:1}><{$lang.fraction}></p>
+            <span class="star"><em style=" width:<{$u.bw}>%"><{$u.b|number_format:1}></em></span>
+            </td>
+            <td align="right">
+            <div class="scroller">
+                <span style="width: <{$u.bw}>%;"><em><{$u.b|number_format:1}></em></span>
+            </div>
+            <div class="rate-desc">
+                <ul>
+                    <li><{$lang.very_dissatisfied}></li>
+                    <li><{$lang.displeasure}></li>
+                    <li><{$lang.general}></li>
+                    <li><{$lang.satisfaction}></li>
+                    <li><{$lang.very_satisfied}></li>
+                </ul>
+            </div>
+            </td>
+        </tr>
+        <tr>
+            <td align="right">
+            <{$lang.seller_speed_of_delivery}>
+            <p><{$u.c|number_format:1}><{$lang.fraction}></p>
+            <span class="star"><em style=" width:<{$u.cw}>%"><{$u.c|number_format:1}></em></span>
+            </td>
+            <td align="right">
+            <div class="scroller">
+                <span style="width: <{$u.cw}>%;"><em><{$u.c|number_format:1}></em></span>
+            </div>
+            <div class="rate-desc">
+                <ul>
+                    <li><{$lang.very_dissatisfied}></li>
+                    <li><{$lang.displeasure}></li>
+                    <li><{$lang.general}></li>
+                    <li><{$lang.satisfaction}></li>
+                    <li><{$lang.very_satisfied}></li>
+                </ul>
+            </div>
+            </td>
+        </tr>
+        <tr>
+            <td align="right">
+            <{$lang.the_speed_of_delivery_logistics}>
+            <p><{$u.d|number_format:1}><{$lang.fraction}></p>
+            <span class="star"><em style=" width:<{$u.dw}>%"><{$u.d|number_format:1}></em></span></td>
+            <td align="right">
+            <div class="scroller">
+                <span style="width: <{$u.dw}>%;"><em><{$u.d|number_format:1}></em></span>
+            </div>
+            <div class="rate-desc">
+                <ul>
+                    <li><{$lang.very_dissatisfied}></li>
+                    <li><{$lang.displeasure}></li>
+                    <li><{$lang.general}></li>
+                    <li><{$lang.satisfaction}></li>
+                    <li><{$lang.very_satisfied}></li>
+                </ul>
+            </div>
+            </td>
+        </tr>
+    </table>
+    </div>
+</div>   
+<div class="module_special">
+	<h2><{$lang.credit}></h2>
+    <div class="con">
+    	<table width="100%" class="credit">
+        	<tr class="title">
+            	<th width="20%"></th>
+            	<th width="15%"><{$lang.last_one_week}></th>
+                <th width="15%"><{$lang.recently_1_month}></th>
+                <th width="15%"><{$lang.last_6_months}></th>
+                <th width="15%"><{$lang.six_months_ago}></th>
+                <th width="15%"><{$lang.total}></th>
+            </tr>
+            <{foreach item=list key=num from=$de}>
+            <tr>
+          	    <{assign var="name" value=credit$num}>
+            	<th><b><{$lang.$name}></b></th>
+                <{foreach item=slist from=$list}>
+                <td><{$slist}></td>
+                <{/foreach}>
+                <td><{$list.3+$list.2}></td>
+            </tr>
+            <{/foreach}>
+            <tr>
+            	<th><b><{$lang.credit3}></b></th>
+                <td><{$de.0.0+$de.1.0+$de.2.0+$de.3.0}></td>
+                <td><{$de.0.1+$de.1.1+$de.2.2+$de.3.3}></td>
+                <td><{$de.0.2+$de.1.2+$de.2.2+$de.3.2}></td>
+                <td><{$de.0.3+$de.1.3+$de.2.3+$de.3.3}></td>
+                <{assign var="n" value=$de.0.2+$de.0.3+$de.1.2+$de.1.3}>
+                <{assign var="s" value=$de.2.2+$de.2.3+$de.3.2+$de.3.3}>
+                <td><{$n+$s}></td>
+            </tr>
+        </table>
+    </div>
+</div>
+<div class="module_special">    
+    <h2><{$lang.from_the_buyer_reviews}></h2>
+    <div class="con">
+        <table width="100%" class="comment">
+            <tr class="title">
+                <th width="50"></th>
+                <th></th>
+                <th align="left" width="150"><{$lang.evaluators}></th>
+                <th align="left" width="200"><{$lang.commodity}></th>
+                <th width="100"><{$lang.time}></th>
+            </tr>
+            <{foreach item=list key=num from=$comment.list}>
+            <tr>
+            	<td align="center"><{if $list.goodbad==1 }><{$lang.credit0}><{elseif $list.goodbad==0 }><{$lang.credit1}><{else}><{$lang.credit2}><{/if}></td>
+                <td><{$list.con|truncate:40}></td>
+                <td><a target="_blank" href="shop.php?uid=<{$list.userid}>"><{$list.user}></a></td>
+                <td><a target="_blank" href="<{$config.weburl}>/?m=product&s=detail&id=<{$list.pid}>"><{$list.pname|truncate:25}></a><p><{$config.money}> <{$list.price|number_format:2}></p></td>
+                <td align="center"><{$list.uptime|date_format:"%Y-%m-%d <br> %H:%M:%S"}></td>
+            </tr>
+            <{/foreach}>
+        </table>
+    </div>
+</div>

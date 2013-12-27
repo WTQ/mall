@@ -1,0 +1,69 @@
+.main_guide{ border-bottom:1px solid #CCCCCC; text-align:left; color:#0033CC; height:30px; line-height:30px;}
+.main_guide a{color:#0033CC;}
+.left_box{float:left; width:700px; margin-top:8px;}
+.country_title{border-bottom:1px solid #CCCCCC; font-weight:bold; text-align:left; font-size:14px; margin-top:10px; padding-bottom:3px;}
+.country_list li{float:left; width:155px; text-align:left; height:20px; line-height:20px; background-position:center; background-position:left; background-repeat:no-repeat;}
+
+.cateRight{float:right; width:240px; text-align:left; margin-top:8px;}
+.sideBox{border-bottom: 1px solid #C8D8E7;}
+.streeSkinA{
+	padding: 8px 12px 12px;
+    background: url("../../image/en/forBuyer_right_top_bg.gif") no-repeat scroll center top transparent;
+    padding-bottom: 20px;
+}
+.winCateSkinA, .skyWin {
+	border:1px solid #C8D8E7;
+	border-bottom:none;
+}
+.winCate{
+    clear: both;
+    margin-bottom: 0;
+    overflow: hidden;
+    padding: 18px;
+}
+.streeSkinA h3 {
+    color: #3E3A39;
+    font-size: 14px;
+}
+.winCate h3{
+    font-size: 16px;
+    font-weight: bold;
+    line-height: 25px;
+    margin: -5px 0 5px;
+    text-decoration: none;
+}
+.streeSkinA p{
+    font-family: Tahoma;
+    font-size: 11px;
+    line-height: 16px;
+	margin: 8px 0;
+	color: #7D7D7D;
+}
+.buyingLeads img{ width:100px; height:100px;}
+.search_left{ width:210px; float:left; border-top:2px solid #BFBFBF; text-align:left; margin-top:10px; background-color:#F6F6F6;
+padding-left:6px;}
+.search_left li{width:100%; padding-left:2px;}
+.search_left b{font-size:18px; margin-bottom:5px;}
+.comlist{ float:right; width:730px; height:auto;margin-top:10px;}
+.comlist span{float:left;height:21px;overflow:hidden;color:#737277;}
+.comlist .span1{width:170px;}
+.comlist .span2{width:540px;}
+.comtitle{background-image:url(../../image/en/scom.jpg); border:1px solid #E0E0E0; height:30px;}
+.sub_cat{padding-left:10px;}
+.sub_cat a{font-weight:normal;}
+.comdetail {
+    border-bottom: 1px dashed #DDDDDD;
+    float: left;
+    margin-left: 0;
+    margin-top: 10px;
+    width: 100%;
+	height:auto;
+}
+.comright {
+    display: inline;
+    float: left;
+    margin-left: 5px;
+    width: 498px;
+	height:auto;
+}
+.Lb1{ width:90px; float:left; display:inline;margin-left:0px; text-align:left;}

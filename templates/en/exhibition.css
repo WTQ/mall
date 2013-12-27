@@ -1,0 +1,28 @@
+@charset "utf-8";
+/* CSS Document */
+.list6 table td {padding:5px;}
+.newsbodyleft{padding-left:10px; width:645px;}
+.exhibition td{ padding:5px; text-align:left;}
+.newscon table td{ text-align:center;}
+.newspic,.newscon p,.newscon div,.newscon td{ text-indent:2em; line-height:25px; font-size:14px; padding:5px;}
+.hot_zhanhui{margin:0 auto 5px auto;border-bottom:1px silver dashed;}
+.hot_zhanhui a:visited,.hot_zhanhui a:link{text-decoration:none;}
+.hot_zhanhui a:hover{text-decoration:underline;color:#ff6600;}
+.hot_zhanhui_logo{width:80px;overflow:hidden;float:left;}
+.hot_zhanhui_logo img{width:80px;}
+.hot_zhanhui_item{float:right;width:175px;height:22px;line-height:22px;overflow:hidden;color:#333;}
+.lselect{width:83px;}
+.rselect{width:83px;}
+.zhanhui_search td{padding:5px;}
+.zhanhui_news1{background: url("../../image/en/newsm.jpg") repeat-x ;border: 1px solid #E9E9E9;float: left;height: 218px;margin-left: 8px;overflow: hidden;padding: 10px;width: 308px;}
+.ex_ex1{ float: left; background:  url(../../image/en/newrbg.jpg) repeat-x; border: 1px solid #FEECD6;margin-left: 8px;width: 285px; }
+.sectitle { background:none; height: 26px;line-height: 26px;}
+.seccon { background: none;padding: 3px;text-align: left;width: 277px; border:none;}
+.leftbar {display: inline; float: left;height: auto;overflow: hidden;width: 663px;}
+.title4 {background: url("../../image/en/jsbj.jpg") repeat-x;height: 26px;line-height: 26px;width: 661px;; border:1px solid #ACC4E6; border-bottom: none;}
+.content4 { border: 1px solid #ACC4E6; border-top: none; height: auto; overflow: hidden; width: 661px;}
+.rightbar {display: inline;float: right; height: auto;margin-left: 8px;overflow: hidden; width: 290px;}
+.right1 .sectitle{background: #F1F1F3; border: 1px solid #DEDAD9; border-bottom:none; }
+.right1 .seccon { border: 1px solid #DEDAD9; border-top:none;}
+.title_left2 { color: #4A0F11; display: inline;float: left;font-weight: bold;height: 25px;line-height: 25px;margin-left: 10px;overflow: hidden;}
+.zhanhui_news_ul_title1{ display: inline; width: auto; text-align: left; float:left; margin-left:5px; color: #333333; height: 22px;line-height: 22px;overflow: hidden; }

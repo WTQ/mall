@@ -1,0 +1,30 @@
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<title></title>
+<style>
+body{margin:0px; background-color:#FFFFFF; font-size:12px;}
+td{font-size:12px; padding:8px;}
+</style>
+</head>
+
+<body>
+<{if $smarty.post.submit}>
+	<script>
+    window.parent.location='main.php?m=product&s=admin_sellorder';
+    </script>
+<{/if}>
+<form id="fortopm" name="fortopm" method="post" action="">
+  <table width="100%" border="0" cellspacing="0" cellpadding="0">
+    <tr>
+      <td colspan="2">输入&quot;-&quot;值表示折扣，输入正常数字表示加价。<br />
+        如折扣２０元，写“-20”，加价２０元写“20”</td>
+    </tr>
+    <tr>
+      <td align="left" width="100"> <input type="text" name="price" id="price" /></td>
+      <td align="left"><input type="submit" name="submit" id="submit" value="提交" /></td>
+    </tr>
+  </table>
+</form>
+</body>
+</html>

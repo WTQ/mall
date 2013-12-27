@@ -1,0 +1,148 @@
+<script>
+$(function(){
+	$('#form').find('a[nctype="del"]').live('click', function(){
+		
+		$(this).parents('div:first').remove();
+		
+		var data_str = $(this).attr('data-param');
+		eval("data_str = "+data_str);
+		if(!data_str.id)
+		{
+			return false;	
+		}
+		var url = "main.php?m=shop&s=admin_custom_service";
+		var pars = 'id='+data_str.id+'&op=del';
+		$.post(url, pars);
+		
+	});
+	
+});
+function add_service(param){
+	if(param == 'pre'){
+		var text = '售前';
+	}else if(param == 'after'){
+		var text = '售后';
+	}
+	obj = $('dl[nctype="'+param+'"]').children('dd').find('p');
+	len = $('dl[nctype="'+param+'"]').children('dd').find('div').length;
+	key = 'k'+len+Math.floor(Math.random()*100);
+	$('<div class="cs_list"></div>').append('<span class="name"><input type="text" class="text w60" value="'+text+len+'" name="'+param+'name['+key+']" /></span>').append('<span class="tool">&nbsp;<select name="'+param+'tool['+key+']">><option value="1">QQ</option></select></span>').append('<span class="number">&nbsp;&nbsp;<input class="text w180" type="text" name="'+param+'num['+key+']" onkeyup="value=value.replace(/[^\\d]/g,\'\') "onbeforepaste="clipboardData.setData(\'text\',clipboardData.getData(\'text\').replace(/[^\\d]/g,\'\'))" /></span>').append('<span class="del">&nbsp;&nbsp;&nbsp;<a nctype="del" href="javascript:void(0);" class="btn2">删除</a></span>').insertBefore(obj);
+}
+ 
+</script>
+<div class="path">
+    <div>
+    	<a href="main.php?cg_u_type=2">卖家中心</a> <span>&gt;</span> 
+        <a href="main.php?m=shop&s=myshop">店铺设置</a> <span>&gt;</span> 
+        客服中心
+    </div>
+</div>
+<div class="main">
+	<div class="wrap">
+        <div class="hd">
+            <ul class="tabs">
+                <li class="normal"><a href="main.php?m=shop&s=myshop">店铺设置</a></li>
+                <li class="active"><a href="main.php?m=shop&s=admin_custom_service">客服中心</a></li>
+                <li class="normal"><a href="main.php?m=shop&s=admin_certification">认证设置</a></li>
+                <li class="normal"><a href="main.php?m=shop&s=admin_shop_set">幻灯片设置</a></li>
+			</ul>
+        </div>
+        <div class="form-style cs">
+        <form action="" method="post" id="form">
+            <input type="hidden" value="add" name="submit" />
+        	<dl nctype="pre">
+            	<dt>售前客服：</dt>
+                <dd>
+                	<div class="cs_title">
+                    	<span class="name">客服名称</span>
+                        <span class="tool">客服工具</span>
+                        <span class="number">客服账号</span>
+                    </div>
+                    
+					<{foreach item=list key=num from=$cs.pre}>
+                	<div class="cs_list">
+                    	<span class="name"><input type="text" maxlength="10" name="prename[<{$num}>]" value="<{$list.name}>" class="text w60" > </span>
+                        <span class="tool"><select name="pretool[<{$num}>]"><option <{if $list.tool==2}>selected="selected" <{/if}> value="1">QQ</option></select></span>
+                        <span class="number"><input type="text" id="number" name="prenum[<{$num}>]" class="text w180" value="<{$list.number}>" onkeyup="value=value.replace(/[^\d]/g,'') "onbeforepaste="clipboardData.setData('text',clipboardData.getData('text').replace(/[^\d]/g,''))"></span>
+                        <span class="del"><a data-param="{'id':'<{$list.id}>'}" class="btn2" href="javascript:void(0);" nctype="del">删除</a></span>
+                    </div>
+                    <{foreachelse}>
+                    <div class="cs_list">
+                        <span class="name">
+                        	<input type="text" maxlength="10" name="prename[0]" value="售前1" class="text w60" >
+                        </span>
+                        <span class="tool">
+                        <select name="pretool[0]">
+                            <option value="1">QQ</option>
+                        </select>
+                        </span>
+                        <span class="number">
+                        	<input type="text" name="prenum[0]" class="text w180" onkeyup="value=value.replace(/[^\d]/g,'')" onbeforepaste="clipboardData.setData('text',clipboardData.getData('text').replace(/[^\d]/g,''))">
+                        </span>
+                        <span class="del"><a class="btn2" href="javascript:void(0);" nctype="del">删除</a></span>
+                    </div>
+                    <{/foreach}>
+                    <p><a href="javascript:void(0);" onclick="add_service('pre');" class="btn2">添加客服</a></p>
+                </dd>
+            </dl>
+            <dl nctype="after">
+            	<dt>售后客服：</dt>
+                <dd>
+                	<div class="cs_title">
+                    	<span class="name">客服名称</span>
+                        <span class="tool">客服工具</span>
+                        <span class="number">客服账号</span>
+                    </div>
+					<{foreach item=list key=num from=$cs.after}>
+                	<div class="cs_list">
+                    	<span class="name">
+                        <input type="text" maxlength="10" name="aftername[<{$num}>]" value="<{$list.name}>" class="text w60">
+</span>
+                        <span class="tool">
+                        <select name="aftertool[<{$num}>]">
+                            <option <{if $list.tool==1}>selected="selected" <{/if}> value="1">QQ</option>
+                        </select>
+                        </span>
+                        <span class="number">
+                        	<input type="text" name="afternum[<{$num}>]" value="<{$list.number}>" class="text w180" onkeyup="value=value.replace(/[^\d]/g,'') "onbeforepaste="clipboardData.setData('text',clipboardData.getData('text').replace(/[^\d]/g,''))">
+                        </span>
+                        <span class="del"><a data-param="{'id':'<{$list.id}>'}" class="btn2" href="javascript:void(0);" nctype="del">删除</a></span>
+                    </div>
+                    <{foreachelse}>
+                    <div class="cs_list">
+                        <span class="name">
+                        	<input type="text" maxlength="10" name="aftername[0]" value="售后1" class="text w60">
+                        </span>
+                        <span class="tool">
+                        <select name="aftertool[0]">
+                            <option value="1">QQ</option>
+                        </select>
+                        </span>
+                        <span class="number">
+                        	<input type="text" name="afternum[0]" class="text w180" onkeyup="value=value.replace(/[^\d]/g,'') "onbeforepaste="clipboardData.setData('text',clipboardData.getData('text').replace(/[^\d]/g,''))">
+                        </span>
+                        <span class="del"><a class="btn2" href="javascript:void(0);" nctype="del">删除</a></span>
+                    </div>	
+                    <{/foreach}>
+                    <p><a href="javascript:void(0);" onclick="add_service('after');" class="btn2">添加客服</a></p>
+                </dd>
+            </dl>
+            <dl class="foot">
+                <dt>&nbsp;</dt>
+                <dd><input type="submit" value="提交" class="submit"></dd>
+            </dl>
+        </form>    
+        </div>    
+   </div>
+</div>
+<script>
+
+$("#form").validate({   
+	rules: {   
+		number: {   
+			required: true,   
+			digits: true  
+		}   
+	}   
+}); 
+</script>

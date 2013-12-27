@@ -1,0 +1,132 @@
+<?php
+$menu=array(
+	'main'=>array(
+			'name'=>'买家首页',
+			'action'=>'main',
+			'sub'=>array(
+				array(
+						'name'=>'已买到的商品',
+						'action'=>"?m=product&s=admin_buyorder",
+					 ),	
+				array(
+						'name'=>'我的团购商品',
+						'action'=>'?m=tg&s=admin_tg_order',
+					),
+				array(
+						'name'=>'我的收藏',
+						'action'=>array(
+							'?m=sns&s=admin_share_product'=>'收藏商品',
+							'?m=sns&s=admin_share_shop'=>'收藏店铺',
+						)
+					),
+				array(
+						'name'=>'评价管理',
+						'action'=>"?m=shop&s=admin_credit",
+					),
+				array(
+						'name'=>'咨询与维权',
+						'action'=>array(
+							'?m=report&s=admin_myreport'=>'我的举报',
+						)
+					)
+			),
+		),
+	'personal'=>array(
+			'name'=>'个人中心',
+			'action'=>$config['weburl'].'/home.php?uid='.$buid,
+		),
+	
+	'friend'=>array(
+			'name'=>'好友',
+			'sub'=>array(
+						array(
+						'name'=>'好友',
+						'action'=>array(
+							'?m=sns&s=admin_friends'=>"好友",
+						),
+					)
+			)
+	),
+	'inquire'=>array(
+			'name'=>'站内信',
+			'sub'=>array(
+						array(
+							'name'=>$lang['mes'],
+							'type'=>array(1,2),
+							'action'=>array(
+								'?m=message&s=admin_message_list_inbox'=>$lang['inbox'],
+								'?m=message&s=admin_message_list_savebox'=>$lang['savebox'],
+								'?m=message&s=admin_message_list_delbox'=>$lang['delbox'],
+								'?m=message&s=admin_message_det'=>'',
+								'?m=message&s=admin_message_sed'=>'',
+							)
+					)
+			)
+	),
+	'user'=>array(
+			'name'=>'设置',
+			'sub'=>array(
+					array(
+						'name'=>'个人信息',
+						'action'=>array(
+							'?m=member&s=admin_member'=>'个人资料',
+							'?m=member&s=admin_orderadder'=>'收货地址',
+							'?m=member&s=admin_invoice'=>'发票信息',
+						),
+					),
+					array(
+						'name'=>'支付管理',
+						'action'=>array(
+							'?m=payment&s=admin_accounts_base'=>'账户信息',
+							'?m=payment&s=admin_accounts_cashflow'=>'资金流水',
+							'?m=payment&s=admin_accounts_pay'=>'账户充值',
+							'?m=payment&s=admin_accounts_bind'=>'提现银行',
+							'?m=payment&s=admin_accounts_pickup'=>'资金提现',
+							'?m=payment&s=admin_info'=>'支付账户',
+							'?m=payment&s=admin_pay'=>'',
+						),
+					),
+			),	
+		),
+
+);
+
+//----------------------
+foreach($menu as $key=>$v)
+{
+	if(isset($menu[$key]['sub']))
+	{
+		
+		foreach($menu[$key]['sub'] as $sv)
+		{
+			if(is_array($sv['action']))
+			{
+				foreach($sv['action'] as $sskey=>$ssv)
+				{
+					if($sskey==$_GET['action']||$sskey=='?m='.$_GET['m'].'&s='.$_GET['s'])
+						$cmenu=$key;
+				}
+			}
+		}
+		ksort($menu[$key]['sub']);
+	}
+	if(isset($admin))
+	{	
+		if($key!='main'&&is_array($menu[$key]['sub']))
+		{
+			$act=each($menu[$key]['sub']);$subkey=$act['key'];//取出第一个下标
+			$act=@each($menu[$key]['sub'][$subkey]['action']);
+			$menu[$key]['action']=$act['key'];
+		}
+	}
+}
+//----------------------------------------
+if(isset($tpl))
+{
+	$cmenu=!empty($cmenu)?$cmenu:'main';
+	$smenu=!empty($cmenu)?($cmenu=='friend'||$cmenu=='inquire'?'main':$cmenu):'main';
+	$tpl->assign("submenu",$menu[$smenu]);
+	$tpl->assign("menu",$menu);
+	$tpl->assign("cmenu",$cmenu);
+}
+?>

@@ -1,0 +1,140 @@
+<div class="path">
+    <div><a href="main.php?cg_u_type=2"><{$lang.seller_center}></a> <span>&gt;</span> <{$lang.account_overview}></div>
+</div>
+<div class="main" id="home">
+    <div class="intro">
+        <div class="left">
+            <div class="store-pic">
+                <span><img width="80" height="80" src="<{if !$cominfo.logo}>image/default/user_admin/default_logo.gif<{else}><{$cominfo.logo}><{/if}>" /></span>
+                <em><a href="#"><{$lang.change_store_standards}></a></em>
+            </div>
+            <dl class="basic">
+                <dd class="member-name"><{$smarty.cookies.USER}></dd>
+                <dd>
+                <a href="main.php?m=shop&s=admin_certification">
+                <img src="image/default/certification<{if $cominfo.shop_auth!='1'}>_no<{/if}>.gif" />
+                </a>
+                <a href="main.php?m=shop&s=admin_certification">
+                <img src="image/default/certautonym<{if $cominfo.shopkeeper_auth!='1'}>_no<{/if}>.gif" />
+                </a>
+                
+                </dd>
+                <dd><{$lang.seller_credit}><{$cominfo.sellerpoints}></dd>
+            </dl>
+            <dl>
+                <dt><{$lang.store_name}></dt>
+                <dd><a target="_blank" href="<{$config.weburl}>/shop.php?uid=<{$buid}>"><{$cominfo.company}></a></dd>
+                <dd><{$cominfo.province}> <{$cominfo.city}></dd>
+            </dl>
+			 <dl>
+                <dt><{$lang.store_status}></dt>
+                <dd><{if $cominfo.shop_statu==1}><{$lang.turned_display}><{else}><{$lang.closed_unopened}><{/if}></dd>
+            </dl>
+        </div>
+        <div class="right seller-rate">
+            <h2><{$lang.shop_dynamic_rating}></h2>
+            <dl>
+                <dt><{$lang.description_match}></dt>
+                <dd class="rate-star"><em><i style="width:<{$shop_comment.aw}>%;"></i></em></dd>
+                <dd><{$shop_comment.a|number_format:1}><{$lang.pts}></dd>
+            </dl>
+            <dl>
+                <dt><{$lang.service_attitude}></dt>
+                <dd class="rate-star"><em><i style=" width:<{$shop_comment.bw}>%;"></i></em></dd>
+                <dd><{$shop_comment.b|number_format:1}><{$lang.pts}></dd>
+            </dl>
+            <dl>
+                <dt>发货速度：</dt>
+                <dd class="rate-star"><em><i style=" width:<{$shop_comment.cw}>%;"></i></em></dd>
+                <dd><{$shop_comment.c|number_format:1}><{$lang.pts}></dd>
+            </dl>
+        </div>
+    </div>
+    <div class="seller-cont">
+    	<div class="fl">
+        	<div class="container">
+                <div class="hd"><h2><{$lang.shop_tip}></h2></div>
+                <div class="content">
+                    <dl class="focus">
+                        <h2><{$lang.you_need_to_focus_on_the_shop}></h2>
+                        <dt><{$lang.commodity_tips}></dt>
+                        <dd><a href="main.php?m=product&s=admin_product_storage"><{$lang.warehouse_pending_products}> (<strong><{$shop_count.prdouct.1}></strong>)</a></dd>
+                        <dt><{$lang.consulting_tip}></dt>
+                        <dd><a href="main.php?m=shop&s=admin_credit"><{$lang.the_buyer_message}> (<strong><{$shop_count.pro_comment}></strong>)</a></dd>
+                        <dt><{$lang.violations_tips}></dt>
+                        <dd><a href="main.php?m=report&s=admin_report"><{$lang.report_lock_up}> (<strong>0</strong>)</a></dd>
+                    </dl>
+                    <ul>
+                        <li><a href="main.php?m=product&s=admin_product_list"><{$lang.sale_of_goods}> (<strong><{$shop_count.prdouct.2+$shop_count.prdouct.3}></strong>)</a></li>
+                        <li><a href="main.php?m=product&s=admin_product_storage&statu=-1"><{$lang.illegal_goods_off_the_shelf}> (<strong><{$shop_count.prdouct.0}></strong>)</a></li>
+                        <li><a href="#"><{$lang.posting}> (<strong>0</strong>)</a></li>
+                        <li><a href="main.php?m=product&s=admin_product_batch"><{$lang.taobao_data_import}></a></li>
+                    </ul>
+                </div>
+            </div>
+			<div class="container">
+                <div class="hd"><h2><{$lang.trading_tips}></h2></div>
+                <div class="content">
+                    <dl class="focus">
+                        <h2><{$lang.yntbdwito}></h2>
+                        <dt><{$lang.recent_sold}></dt>
+                        <dd><a href="main.php?m=product&s=admin_sellorder"><{$lang.trading_orders}> (<strong><{$shop_count.order.0}></strong>)</a></dd>
+                        <!--<dt>维权提示：</dt>
+                        <dd><a href="#">收到维权投诉 (<strong id="tj_consult">0</strong>)</a></dd>-->
+                    </dl>
+                    <ul>
+                        <li><a href="main.php?m=product&s=admin_sellorder&status=1"><{$lang.to_be_paid}> (<strong><{$shop_count.order.1}></strong>)</a></li>
+                        <li><a href="main.php?m=product&s=admin_sellorder&status=2"><{$lang.to_be_shipped}> (<strong><{$shop_count.order.2}></strong>)</a></li>
+                        <li><a href="main.php?m=product&s=admin_sellorder&status=3"><{$lang.pending_receipt}> (<strong><{$shop_count.order.3}></strong>)</a></li>
+                        <li><a href="main.php?m=product&s=admin_sellorder&status=5"><{$lang.return_of_goods}> (<strong><{$shop_count.order.4}></strong>)</a></li>
+                        <li><a href="main.php?m=product&s=admin_sellorder"><{$lang.recent_sold}> (<strong><{$shop_count.order.0}></strong>)</a></li>
+                        <li><a href="main.php?m=product&s=admin_sellorder&status=4">待评价 (<strong><{$shop_count.order.5}></strong>)</a></li>
+                    </ul>
+                </div>
+            </div>
+			<div class="container">
+                <div class="hd"><h2><{$lang.payment_account}></h2></div>
+                <div class="content">
+                    <div class="ico"></div>
+                    <div class="hint">
+                        <h3><{$lang.your_account_balance}><{$cash|number_format:2}> <{$lang.yuan}></h3>
+                        <a class="btn1" href="main.php?m=payment&s=admin_accounts_pay"><span><{$lang.addcash}></span></a>
+                        <ul>
+                            <li><a href="main.php?m=payment&s=admin_info"><{$lang.payment_account}></a></li>
+                            <li><a href="main.php?m=payment&s=admin_accounts_pickup"><{$lang.cash_withdrawal}></a></li>
+                            <li><a href="main.php?m=payment&s=admin_accounts_cashflow"><{$lang.access_to_the_details_of}></a></li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+			<!--<div class="container">
+                <div class="hd"><h2>店铺运营推广</h2></div>
+                <div class="content">
+                    <ul>
+                        
+                    </ul>
+                </div>
+            </div>-->
+        </div>
+        <div class="fr">
+            <div class="news container">
+                <div class="hd"><h2><{$lang.mall_announcement}></h2></div>
+                <div class="content">
+                    <ul>
+                        <{insert name="getNotice" limit=5}>
+                    </ul>
+                </div>
+            </div>
+            <div class="news container">
+                <div class="hd"><h2><{$lang.platform_contact}></h2></div>
+                <div class="content">
+                    <ul>
+                        <li><{$lang.tel}><{$config.owntel}></li>
+                        <li><{$lang.e_mail}><br /><{$config.email}></li>
+                        <li><{$lang.service_hours}><br />8:30-17:30(<{$lang.monday_to_sunday}>)</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

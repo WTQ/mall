@@ -1,0 +1,199 @@
+<script type="text/javascript">
+function showreview()
+{
+    document.getElementById("reviewt").style.display='block'; 
+} 
+function getfav()
+{	
+	var url = '<{$config.weburl}>/ajax_back_end.php';
+	var myurl=document.location.href;
+		myurl=myurl.replace('&','*');
+	var u='<{$smarty.cookies.USER}>';
+	if (u=='')
+	{
+	  alert('<{$lang.no_logo}>');
+	  window.location.href='<{$config.weburl}>/login.php';
+	  return false;
+	}
+	var fu='<{$de.nid}>';
+ 	var typ='1';
+	var ttil='<{$de.title|regex_replace:"/[\r\t\n\']/":""}>';
+	var mpic='<{$config.weburl}>/uploadfile/news/<{$de.pic}>';
+	var des='<{$de.con|strip_tags|regex_replace:"/[\r\t\n\']/":""|truncate:100:"...":true}>';
+    var pars = 'user='+u+'&fid='+fu+'&type='+typ+'&title='+ttil+'&url='+myurl+'&des='+des+'&picurl='+mpic;
+	$.post(url, pars,showResponse);
+	function showResponse(originalRequest)
+	{
+	    if(originalRequest>1)
+	       alert('<{$lang.fav_ok}>');
+		else if (originalRequest>0)
+	       alert('<{$lang.fav_isbing}>');
+		else
+	       alert('<{$lang.error}>');
+	}
+}
+function printcontent()
+{
+	var printw = window.open('','','');
+	printw.opener = null;
+	printw.document.write('<div style="width:700px;">'+document.getElementById('newscon').innerHTML+'</div>');
+	printw.window.print();
+}
+function picwidth(pid, img)
+{
+	var img = img ? img : 665;
+	var wid= pid.width;
+	if(wid < img)
+		return;
+	else 
+	{
+		var hei = pid.height;
+		pid.title = 'View Big';
+		pid.onclick = function (e) {window.open(pid.src);}
+		pid.height = parseInt(hei*img/wid);
+		pid.width =img;
+	}
+}
+window.onload = function(){
+	var pics = document.getElementById('newscon').getElementsByTagName("img");
+	for(var i=0;i<pics.length;i++)
+	{
+		picwidth(pics[i], 665);
+	}
+}
+var num=0;
+function setsTab(name,cursel,n)
+{
+	num=cursel;
+	for(i=1;i<=n;i++)
+	{
+		var menu=document.getElementById(name+i);
+		menu.className=i==cursel?"hover":"";
+		var con=document.getElementById("con_"+name+"_"+i);
+		con.style.display=i==cursel?"block":"none";
+	}
+}
+</script>
+<link href="<{$config.weburl}>/module/news/templates/news.css" rel="stylesheet" type="text/css" />
+<div class="menu_bottom L1">				
+    <div class="headtop_L">
+       <{$lang.you_are_here}><a href='<{$config.weburl}>/'><{$lang.indexpage}></a> &raquo; <a href="<{$config.weburl}>/?m=news"><{$lang.bizchenter}></a> &raquo; <a href="?m=news&s=news_list&id=<{$de.classid}>"><{$de.cat}></a> &raquo; <{$lang.zw}>
+    </div>
+    <div class="headtop_R"></div>		
+</div>
+
+<div id="mainbody1" class="m1">
+<div class="newsbodyleft">
+			<div class="newstitle"><{if $de.ftitle}><{$de.ftitle}><{else}><{$de.title}><{/if}></div> 
+            <div class="newstime">
+                <{$lang.comer}><{$de.source}>
+                <{$lang.author}><{$de.writer}>
+                <{$lang.pubtime}><{$de.uptime|date_format}>
+                <{$lang.read_count}><{insert name="readCount"}>
+                <{insert name="label" type="statics" temp='statics_default' ctype=1 id=$de.nid}>
+				<a href="javascript:getfav();"><{$lang.fav}></a>
+                <a href="javascript:printcontent();"><{$lang.print}>&nbsp;</a>
+            </div>
+			
+			<div id="news_con" class="newspic">
+      	<{foreach num=key name=name item=list from=$newscon}>
+            <div id="con_li_<{$smarty.foreach.name.iteration}>" <{if !$smarty.foreach.name.first}>style="display:none"<{/if}>>
+              <p class="aaa"><a onclick="setsTab('li',<{if $smarty.foreach.name.iteration+1<=$de.imgs|@count}><{$smarty.foreach.name.iteration+1}><{else}>1<{/if}>,<{$de.imgs|@count}>)""> <{foreach item=slist name=loop key=key from=$de.imgs}><{if $smarty.foreach.name.iteration==$smarty.foreach.loop.iteration }><img src="<{$slist.name}>"><{/if}><{/foreach}></a></p><{$list|strip_tags}>
+            </div>
+         <{/foreach}>   
+      </div>
+      <div class="imgtab">
+		<table cellpadding="0" cellspacing="0" border="0" width="92%" style="margin:auto">
+		  <tr>
+			<td><a id="pre" href="javascript:void(0)" ><img src="<{$config.weburl}>/image/default/btn_left.gif" /></a></td>
+			<td>  
+				<div class="small_pic1">
+					<div class="small_pic_list1" id="imglist">
+						<ul>
+							<{foreach item=list name=name key=key from=$de.imgs}>
+								<li id="li<{$list.id}>" onclick="setsTab('li',<{$list.id}>,<{$de.imgs|@count}>)">
+									<div>
+										<a href="javascript:getinfo(<{$list.id}>)">
+											<img src="<{$list.name}>">
+											<span><{$list.id}>/<{$de.imgs|@count}></span>
+										</a>
+									</div>
+								</li>
+							<{/foreach}>
+						</ul>
+					</div>   
+				</div>
+			</td>
+			<td><a id="next" href="javascript:void(0);" ><img src="<{$config.weburl}>/image/default/btn_right.gif" /></a></td>
+		  </tr>
+		</table>
+       </div>
+           
+
+            <{if $vote}>
+            <div class="vote bgw">
+            <div class="vote_tit"><span><{$lang.survey}></span></div>
+            <div class="vote_con">
+               <form action="<{$config.weburl}>/?m=vote&s=vote&id=<{$smarty.get.id}>" method="post">
+                <table width="100%" cellspacing="0" cellpadding="3" border="0" align="center">
+                    <{foreach item=list name=name from=$vote}>
+                    <tr><td class="td1"><{$smarty.foreach.name.iteration}>.<{$list.title}> <{if $list.end==1}><font color="#FF0000">(<{$lang.closed}>)</font><{/if}><{if $list.ip==1}><font color="#FF0000">(<{$lang.voted}>)</font><{/if}></td></tr>
+                    <{foreach item=slist name=loop from=$list.item}>
+                    <tr><td><{if $list.end!=1 and $list.ip!=1}><input type="<{if $list.votetype==0}>radio<{else}>checkbox<{/if}>" class="radio" value="<{$smarty.foreach.loop.iteration}>" name="vote<{$list.id}>[]"><{/if}><u><!--<{$smarty.foreach.loop.iteration}>.--><{$slist.0}></u></td></tr>
+                    <{/foreach}>
+                    <tr><td height="5"></td></tr>
+                    <{/foreach}>
+                    <tr><td class="td">
+                        <input type="submit" value="<{$lang.vote}>" name="submit">&nbsp;&nbsp;
+                        <input type="button" onClick="javascript:window.open('<{$config.weburl}>/?m=vote&id=<{$smarty.get.id}>')" value="<{$lang.view}>" name="button">
+                    </td></tr>
+                </table>
+                </form>
+            </div>
+            </div>
+            <{/if}>  
+
+			<{if $de.ispl!=1}>
+            	<{insert name="label" type="comment" ctype=1 cid=$smarty.get.id temp="comment_default" }>
+            <{/if}>
+</div>
+
+<!--右边开始-->
+<div class="rightbar">
+	<div class="right1">
+		<div class="sectitle" >
+			<div class="title_left1 L2"><{$lang.recread}></div>
+		</div>
+		 <div class="seccon">
+			<ul class="ul1">
+			  <{insert name="label" type="news" temp='news_default_list' rec=1 leng=32 limit=10}>
+			  <div class="clear"></div>
+		   </ul>
+		</div>
+	</div>
+	<div class="right1 m1">
+		<div class="sectitle" ><div class="title_left1 L2"><{$lang.picnews}></div></div>
+		<div class="seccon" >
+			   <ul class="ul1 pic_list">
+			  <{insert name="label" type='news' temp='news_list_2' img='true' leng=16 limit=10}>
+			  <div class="clear"></div>
+			</ul> 
+		</div>
+		<div class="bottom5"></div>
+	</div>
+</div>		
+<!--右边结束-->
+</div>
+<script src="<{$config.weburl}>/script/Scroll1.js"></script>
+<script language="javascript" type="text/javascript">
+var Scroll= new Scroll("imglist","pre","next");
+Scroll.Speed=50;
+Scroll.IsSmoothScroll= false;
+Scroll.PauseTime = 500000000;
+Scroll.Direction = "E";
+Scroll.Step =4;
+Scroll.ControllerType = "click";
+Scroll.BackCall = null;
+Scroll.Init();
+//Scroll.Start();
+</script>

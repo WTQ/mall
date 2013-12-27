@@ -1,0 +1,14 @@
+<{foreach item=list name=name from=$news}>
+    <{if $smarty.foreach.name.iteration==1}>  
+      <h3><a target="_blank" title="<{$list.title}>" <{$list.style}>  href="<{$list.url}>"><{$list.ftitle}></a></h3>
+    <{elseif $smarty.foreach.name.iteration==2 }>
+      <p><{$list.smalltext|truncate:120}></p>
+    
+      <div style="border-bottom:1px dotted #ddd; margin:5px auto; clear:both"></div>
+    <{else}>
+        <li>
+        	<span><{$list.uptime|date_format}></span>
+            <a class="aa" target="_blank" title="<{$list.title}>" <{$list.style}>  href="<{$list.url}>"><{$list.ftitle|truncate:$leng}></a>
+        </li>
+     <{/if}>  
+<{/foreach}>

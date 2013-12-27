@@ -1,0 +1,191 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<title><{if $title}><{$title}>，<{$config.company}><{else}><{$config.title}><{/if}></title>
+<link rel="shortcut icon" href="favicon.ico" type="image/x-icon" />
+<meta name="description" content="<{$config.description|regex_replace:"/[\r\t\n]/":""}>" />
+<meta name="keywords" content="<{$config.keyword|regex_replace:"/[\r\t\n]/":""}>" />
+</head>
+<body>
+<style>
+body{
+	margin:0px; padding:0px;
+	font:Arial, Helvetica, sans-serif;
+	font-size:12px;
+	font: 75%/150% arial;
+	word-wrap:break-word;
+}
+a:link {
+    color: #003399;
+    text-decoration: none;
+}
+#header { width:990px; margin:0 auto;}   
+
+#header .hleft{
+	width:300px;
+	float:left;
+	height:22px;
+	line-height:22px;
+}
+#header .hright{
+	width:300px;
+	float:right;
+	height:22px;
+	line-height:22px;
+	text-align:right;
+	padding-right:10px;
+}
+.menu{
+	background-image:url(image/en/hmbg.jpg); background-repeat:no-repeat;
+	width:960px;
+	margin-left:auto;
+	margin-right:auto;
+	height:35px;
+	line-height:35px;
+}
+.menu ul{margin:0px; padding:0px;}
+.menu li{list-style:none; float:left; font-weight:bold; color:#FFFFFF; margin-left:10px; font-size:14px; font-family:tahoma;}
+.menu a{color:#FFFFFF;}
+.clearfix:after {
+    clear: both;
+    content: " ";
+    display: block;
+    font-size: 0;
+    height: 0;
+    line-height: 0;
+    visibility: hidden;
+}
+.crumb.global {
+    background: none repeat scroll 0 0 #FFFFFF;
+    padding: 0;
+}
+.global {
+    border-bottom: 1px solid #D2E4F4;
+    padding-bottom: 10px !important;
+}
+#mainbody,.clearfix {
+    display: block;
+	width:990px;
+	margin-left:auto;
+	margin-right:auto;
+	margin-top:10px;
+}
+h1.helpTitle {
+    border: 1px solid #DDDDDD;
+    font: bold 14px/18px arial;
+    height: 23px;
+    margin: 0 0 10px;
+    padding: 6px 0 0 10px;
+}
+.helpSidebar {
+	background:#F8F8F8;
+    float: left;
+    width: 200px; 
+	border: 1px solid #DDDDDD;
+}
+.colL{float:right; width:780px;}
+#footer {
+    border-top: 1px solid #CCCCCC;
+    clear: both;
+    font: 0.85em/14px verdana;
+    margin-top: 15px;
+    padding: 10px 0;
+    text-align: center;
+	margin-top:5px;
+}
+.helpSidebar h4 {
+    font-family: Arial,Helvetica,sans-serif;
+    font-size: 14px;
+	font-weight:bold;
+    height: 29px;
+    line-height: 29px;
+    margin: 0;
+    padding: 0 10px;
+}
+.helpSidebar ul {
+    padding: 3px 10px 0 7px;
+	margin:0px;
+}
+.helpSidebar ul li{
+    line-height: 22px;
+	padding-left:10px;
+	list-style:none;
+}
+.head_top {
+    border-bottom: 1px solid #DFDFDF;
+    height: 35px;
+    line-height: 35px;
+    width: 990px;
+}
+
+.head_top_l {
+    display: inline;
+    float: left;
+    margin-left: 10px;
+}
+.head_top_r {
+    display: inline;
+    float: right;
+    margin-right: 10px;
+}
+</style>
+
+<div id="header">
+     		<div class="head_top">
+                <div class="head_top_l">Welcome to <{$config.company}> ! &nbsp;<script src="<{$config.weburl}>/login_statu.php"></script></div>
+                <div class="head_top_r"> <a href="#" style="CURSOR: hand" onClick="javascript:myAddPanel('<{$config.weburl}>','<{$config.company}>');" >Add to Favorite</a> | <a href="#" onClick="setHomepage('<{$config.weburl}>')">Set Homepage</a>
+                </div>
+			</div>		
+		 <div style="padding-top:15px; padding-bottom:15px;">
+		 	<a href="<{$config.weburl}>/">
+			<img border="0" align="absmiddle" height="48" src="<{if $config.logo}><{$config.logo}><{else}><{$config.weburl}>/image/default/logo.gif<{/if}>" /></a>
+			<img align="absmiddle" border="0" src="image/en/help_center_logo.gif">
+		</div>
+	 </div>
+</div>
+
+<div class="crumb global clearfix"> <a href="<{$config.weburl}>/">Home</a> &gt; <a href="#">Help</a> &gt; <strong><{$de.con_title}></strong> </div>
+
+<div id="mainbody">
+	<div class="colL">
+		<h1 class="helpTitle"><{$de.con_title}></h1>
+			<{$de.con_desc}>
+			<{if $de.msg_online==1}>
+				<{include file="feedback.htm"}>
+			<{/if}>
+	</div>
+	<div class="helpSidebar">
+		<{foreach item=list from=$con_groups}>
+			<h4><{$list.title}></h4>
+			<ul>
+			<{foreach item=li from=$all_web}>
+				<{if $li.con_group==$list.id}>
+					<li <{if $smarty.get.type==$li.con_id}>class='curr_web_con'<{/if}>>
+						<a href="<{if $li.con_linkaddr}><{$li.con_linkaddr}><{else}>aboutus.php?type=<{$li.con_id}><{/if}>"><{$li.con_title}></a>
+					</li>
+				<{/if}>
+			<{/foreach}>
+			</ul>
+		<{/foreach}>
+		
+		<h4><{$lang.inner_link}></h4>
+		<ul>
+		<{foreach item=li from=$all_web}>
+			<{if $li.con_group<1}>
+				<li <{if $smarty.get.type==$li.con_id}>class='curr_web_con'<{/if}>>
+					<a href="<{if $li.con_linkaddr}><{$li.con_linkaddr}><{else}>aboutus.php?type=<{$li.con_id}><{/if}>"><{$li.con_title}></a>
+				</li>
+			<{/if}>
+		<{/foreach}>
+		</ul>
+	</div>
+</div>
+<div style="clear:left; clear:both;"></div>
+
+	<div id="footer">
+	  <ul><{$web_con}></ul>
+	  <div class="copyright"><{$bt}></div>
+	</div>
+</body>
+</html>

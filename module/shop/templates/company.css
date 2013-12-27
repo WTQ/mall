@@ -1,0 +1,85 @@
+.content4{ padding:10px;}
+.content4 li{ float:left;margin-left:10px; margin-right:9px; margin-bottom:5px;text-align:center;}
+.comlist{ width:99%; height:auto; overflow:hidden;}
+.comdetail{float:left;width:100%; height:auto;margin-top:10px;border-bottom:1px #dddddd dashed; padding-bottom:5px;}
+.comright{margin-left:10px; width:540px;float:left; display:inline; line-height:21px;}
+.comright li{width:100%; display:inline;text-align:left;float:left;margin-top:5px;margin-left:5px;}
+.com_intro{margin-left:5px; height:50px;}
+.com_name{ font-weight:bold; font-size:14px;}
+.comli{
+	border:1px solid #DDDDDD;
+    line-height: 36px;
+	height:36px;
+    padding: 0 12px;
+	width:936px;
+}
+.comli li{ float:left; margin-right:10px; }
+.comli li a{height: 30px;
+	line-height: 30px;
+	float: left;
+	margin: 3px 10px;
+	color: #06C;}
+.comlid{
+	border:1px solid #DDDDDD;
+	border-top:0;
+	margin-bottom:10px;
+    line-height: 36px;
+	height:36px;
+    padding: 0 12px;
+	width:936px;
+}
+.comlid li{ float:left; margin-right:10px; }
+
+.comlid li select , .comlid li input{ float:left; margin-top:9px;}
+.comlid li label{ float:left;}
+.comlis{
+	border: 1px solid #868686;
+    height: 250px;
+    margin-bottom: 10px;
+    overflow: hidden;
+    width: 100%;}
+.comlis .left {
+	background:#F4F4F4;
+	border-right: 1px solid #F4F3F0;
+    float: left;
+    overflow: hidden;
+    padding: 10px;
+    width: 210px;
+	height:230px;
+}
+.comlis .left table{ width:100%}
+.comlis .right {
+    height: 260px;
+	float:right;
+    overflow: hidden;
+    position: relative;
+    width: 720px;
+}
+.comlis .right ul { float: right; width: 715px}
+.comlis .right ul li{ float: left;  padding-right: 13px; padding-top: 15px; width: 165px;}
+.comlis .right ul li a img{ border:1px solid #ccc; padding:2px; }
+.comlis .right ul li a:hover img{ border:1px solid #000}
+.comli_info dt,.comli_info dd{ float:left;text-align: left;}
+.name{
+    margin-top: 4px;
+    overflow: hidden;
+}
+.name a{display: inline;
+    float: left;
+    font-weight: bold;
+    margin-right: 5px;}
+.comli_info dd{margin-left: 5px;
+    max-height: 65px;
+    overflow: hidden;
+	float:left;
+    width: 145px;}
+.border_img{ border: 1px solid #CCCCCC;}
+.redprice{ color:#FF3300; font-weight:bold;}
+.redprice span{ color: #999999;
+    margin-left: 8px;}
+.commore{ width:70px; float:right; margin-right:10px;}
+.com_pname{ float:left; height:42px; width:165px; overflow:hidden;}
+.left dl { display: block; line-height: 24px;}
+.left dl dt { float: left; width: 90px; height:80px; overflow:hidden; border: 1px solid #D8D8D8; box-shadow: 1px 1px 1px 1px #E7E7E7; padding:5px 4px; margin-bottom:5px; }
+.left dl dd { float: right; line-height: 24px; width: 90px; color: #555555; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; text-align: left; }
+.left dl dd a { cursor:pointer; }

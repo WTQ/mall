@@ -1,0 +1,13 @@
+<div class="ftlink">
+	<{foreach item=link from=$links}>
+		<div class="ftlink_list" style="width:<{math  equation="(100/x)-2"  x=$links|@count}>%;">
+			<h3 style="background:url(<{$link.logo}>) no-repeat left center;"><{$link.title}>&nbsp;</h3>
+			<ul>
+				<{foreach item=list from=$link.list}>
+				<li><a href="<{$list.con_linkaddr}>"><{$list.con_title}></a></li>
+				<{/foreach}>
+			</ul>
+		</div>
+	<{/foreach}>
+	<div class="clear"></div>
+</div>

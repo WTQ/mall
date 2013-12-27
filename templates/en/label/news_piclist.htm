@@ -1,0 +1,15 @@
+<{foreach item=list from=$news}>
+<table width="100%" border="0" cellspacing="3" cellpadding="3">
+  <tr>
+  	<td width="15%" align="left" valign="top">
+	<img src="<{$list.pic}>" width=80 >
+    <{html_image file=$img width=80 }>
+	</td>
+    <td width="85%" align="left" valign="top">
+	<b><a <{if $list.color}>style="color:<{$list.color}>"<{/if}> href="<{$list.url}>"><{$list.title}></a></b>
+    <br />
+    <{$list.smalltext|truncate:50}>
+	</td>
+  </tr>
+</table>
+<{/foreach}>

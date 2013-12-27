@@ -1,0 +1,11 @@
+<?php
+//=====================管理员后台==================
+$mem['member'][1][2]=array(
+	'',
+	array(
+		//'module_config.php,1,message,模块设置',
+		'hy_feedback.php,1,message,站内消息',
+		//'right_config.php,1,company,权限设置',
+	)
+)
+?>

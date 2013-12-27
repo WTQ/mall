@@ -1,0 +1,23 @@
+@charset "utf-8";
+/* CSS Document */
+
+.vote .title{ background:#F9F9F9; border-color:#D9D9D9 #D9D9D9 #72A0BA; border-style:solid; border-width:1px 1px 6px; height:82px; margin:10px auto; text-align:center; width:959px;}
+.vote h1{ font-family:"黑体"; font-size:30px; font-weight:normal; padding:15px 0 8px;}
+.vote h1 a{ color:#2b2b2b}
+.vote .scon{ border:1px solid #D9D9D9; width:959px; margin:auto; text-align:left}
+.vote .div1{ height:39px; background-color:#fefefe;}
+.vote ul{ padding:8px 0 0 35px; }
+.vote li{ border:1px solid #D8D8D8; border-bottom:1px solid #FFF; float:left; font-size:14px; font-weight:bold; height:30px; line-height:30px; text-align:center; width:122px; color:#8F1E23; }
+.vote .div2{ margin:0 auto; padding:24px 20px 10px 20px; width:919px; border-top:1px solid #D9D9D9}
+.vote .div2 table{ font-size:14px; width:87%; margin:0 auto 22px auto}
+.vote .div2 th{ color:#416573; font-weight:bold; height:26px; text-indent:15px; text-align:left;}
+.vote .div2 td{ height:26px; text-indent:7px; padding-left:10px;}
+.vote .div2 .td1{ background:url(../../../../image/default/bg_vote.gif) repeat-x center bottom ; margin:0 auto;}
+.vote .tdv{ text-indent:18px !important;}
+.vote .div2 td span{ background:#E1E1E1; float:left; height:12px; width:150px;}
+.vote .div2 td span div { background:#E7AB6D; height:12px;}
+.vote .color2{ background:#5DBC5B !important}
+.vote .color3{ background:#6C81B6 !important}
+.vote .color4{ background:#A5CBD6 !important}
+.vote .color5{ background:#D843B3 !important}
+.vote .color6{ background:#6A219D !important}

@@ -1,0 +1,197 @@
+<style>
+.price {
+	color: #FF5500;
+	font-weight: bold;
+	font-size: 18px
+}
+.orderdetai td {
+	border-bottom: 1px solid #EEEEDD;
+	height: 30px;
+	padding: 3px;
+}
+.stbox {
+	border: 1px solid #F7E4A5;
+	background-color: #FFFCF3;
+	padding: 20px;
+	overflow: hidden;
+	color: #FF6600;
+	font-weight: bold;
+	margin-bottom: 3px;
+	margin: 10px auto 0;
+	width: 94%;
+}
+.buttons {
+	background-image: url(image/default/searchbutton.gif);
+	margin: 5px;
+	width: 76px;
+	height: 21px;
+	border: 0px;
+	display: block;
+	text-align: center;
+	padding-top: 5px;
+	overflow: hidden;
+	float: left;
+}
+.buyer_order {
+	border: 1px solid #F7E4A5;
+	width: 98%;
+	background-color: #FFFCF3;
+	padding: 5px;
+	margin: 10px auto 0;
+}
+.buyer_order td {
+	padding: 3px;
+}
+</style>
+<div class="stbox"> <{$lang.ostatu}>：<{$de.statu_text}>
+  <{if $de.status<4&&$de.status>0}> <br />
+  <{$lang.ltime}>：<span class="endtime" id="endtime"><{$de.remainder}></span> <br />
+  <{$de.next_action}>
+  <{/if}>
+  <{if !$de.time_expand and $de.remainder-86400<=0}><a class="buttons" nc_type="time_expand" data-param="{'oid':'<{$de.order_id}>'}" href="javascript:void(0);" >延长时间</a><{/if}>
+  </div>
+<div class="buyer_order"> <{if $de.sellerinfo.user!=''}>
+  <table width="100%" border="0" cellspacing="0" cellpadding="3">
+    <tr>
+      <td><strong><{$lang.sdet}></strong>: <{$de.sellerinfo.company}>(<{$de.sellerinfo.user}>) <strong> <{$lang.tel}></strong>:<{$de.sellerinfo.tel}> </td>
+    </tr>
+  </table>
+  <{else}>
+  <table width="100%" border="0" cellspacing="0" cellpadding="3">
+    <tr>
+      <td colspan="4" bgcolor="#EAEFF3"><b><{$lang.bdet}></b></td>
+    </tr>
+    <tr>
+      <td width="100"><strong><{$lang.uname}></strong></td>
+      <td><{$de.buyerinfo.user}></td>
+      <td width="100"><strong><{$lang.contact}></strong></td>
+      <td><{$de.buyerinfo.name}><{$de.buyerinfo.position}></td>
+    </tr>
+    <tr>
+      <td><strong><{$lang.email}></strong></td>
+      <td><{$de.buyerinfo.email}></td>
+      <td><strong><{$lang.tel}></strong></td>
+      <td><{$de.buyerinfo.tel}> <{$de.buyerinfo.mobile}></td>
+    </tr>
+  </table>
+  <{/if}>
+  <table width="99%" border="0" cellspacing="0" style="border:1px solid #DDDDDD;">
+    <tr bgcolor="#E8F2FF">
+      <td width="12%" height="24"><{$lang.opname}></td>
+      <td width="33%">&nbsp;</td>
+      <td width="25%"><{$lang.pprice}></td>
+      <td width="15%"><{$lang.onums}></td>
+      <td width="15%">小计</td>
+    </tr>
+    <{foreach item=plist from=$de.product}>
+    <tr>
+      <td><{if $plist.pic}> <img src="<{$plist.pic}>" width="70" /> <{else}> <img src="image/default/nopic.gif" width="70" /> <{/if}> </td>
+      <td valign="top" align="left"><a href="<{$config.weburl}>/?m=product&s=detail&id=<{$plist.pid}>" target="_blank" > <{$plist.name}> </a></td>
+      <td><{$config.money}> <{$plist.price|number_format:2}></td>
+      <td><{$plist.num}></td>
+      <td><{$config.money}> <{$plist.num*$plist.price|number_format:2}></td>
+    </tr>
+    <{/foreach}>
+  </table>
+  <div align="right" style="padding:4px; line-height:25px;"> <{$lang.logistics}>
+    <{if $de.logistics_price==''&&$de.logistics_type==''}>
+    <{$lang.spayfee}>
+    <{else}>
+    (<{$de.logistics_type}>): <span class="price"><{$config.money}> <{$de.logistics_price|number_format:2}></span> <{/if}> <br />
+    <{$lang.pallprice}>: <span class="price"><{$config.money}> <{$de.product_price+$de.logistics_price|number_format:2}></span> </div>
+  <table width="99%" border="0" cellspacing="0" class="orderdetai">
+    <tr>
+      <td width="15%"><{$lang.ordid}></td>
+      <td><{$de.order_id}></td>
+    </tr>
+    <tr>
+      <td><{$lang.ordertim}></td>
+      <td><{$de.creat_time|date_format}></td>
+    </tr>
+    <tr>
+      <td><{$lang.buyername}></td>
+      <td><{$de.buyer_name}></td>
+    </tr>
+    <tr>
+      <td><{$lang.buyeraddr}></td>
+      <td><{$de.buyer_addr}></td>
+    </tr>
+    <tr>
+      <td height="25"><{$lang.buyertel}></td>
+      <td><{$de.buyer_tel}></td>
+    </tr>
+    <tr>
+      <td><{$lang.buyerzip}></td>
+      <td><{$de.buyer_zip}></td>
+    </tr>
+    <{if $de.des}>
+    <tr>
+      <td><{$lang.buyerinfo}></td>
+      <td><{$de.des}></td>
+    </tr>
+    <{/if}>
+  </table>
+</div>
+<script type="text/javascript">
+
+$(function(){
+	$("[nc_type='time_expand']").click(function(){
+
+		var data_str = $(this).attr('data-param');
+		eval("data_str = "+data_str);
+		var url = "<{$config.weburl}>/main.php?m=product&s=admin_orderdetail";
+		var pars = 'oid='+data_str.oid+'&time_expand=true';
+		$.post(url, pars,showResponse);
+		function showResponse(originalRequest)
+		{
+			document.location.reload();
+			return false;
+		}
+	});
+});
+
+var CID = "endtime";
+if(window.CID != null)
+{
+    var iTime = document.getElementById(CID).innerHTML;
+    var Account;
+    RemainTime();
+}
+function RemainTime()
+{
+    var iDay,iHour,iMinute,iSecond;
+    var sDay="",sHour="",sMinute="",sSecond="",sTime="";
+    if (iTime >= 0)
+    {
+        iDay = parseInt(iTime/24/3600);
+        if (iDay > 0)
+            sDay = iDay + "<{$lang.days}>";
+        iHour = parseInt((iTime/3600)%24);
+        if (iHour > 0)
+            sHour = iHour + "<{$lang.hour}>";
+        iMinute = parseInt((iTime/60)%60);
+        if (iMinute > 0)
+            sMinute = iMinute + "<{$lang.minute}>";
+        iSecond = parseInt(iTime%60);
+        if (iSecond >= 0)
+            sSecond = iSecond + "<{$lang.second}>";
+        if ((sDay=="")&&(sHour=="")){
+            sTime="<span style='color:darkorange'>" + sMinute+sSecond + "</font>";
+        }
+        else
+            sTime=sDay+sHour+sMinute+sSecond;
+        if(iTime==0)
+		{
+            clearTimeout(Account);
+            sTime="<span style='color:green'><{$lang.timeisend}></span>";
+        }
+        else
+            Account = setTimeout("RemainTime()",1000);
+        iTime=iTime-1;
+    }
+    else
+        sTime="<span style='color:red'><{$lang.countdownisend}></span>";
+	if(document.getElementById(CID))
+    	document.getElementById(CID).innerHTML = sTime;
+}
+</script> 

@@ -1,0 +1,118 @@
+<div class="path">
+    <div>
+    	<a href="main.php?cg_u_type=1">我的商城</a> <span>&gt;</span> 
+        好友
+    </div>
+</div>
+<script>
+$(function(){
+	//加关注
+	$("[nc_type='followbtn']").live('click',function(){
+		
+		var url = '<{$config.weburl}>/module/sns/ajax_update.php';
+		var uname='<{$smarty.cookies.USER}>';
+		var data_str = $(this).attr('data-param');
+        eval( "data_str = "+data_str);
+		var pars = 'mid='+data_str.mid+'&uname='+uname+'&op=add';
+		$.post(url, pars,showResponse);
+		function showResponse(originalRequest)
+		{
+			if(originalRequest>1)
+				$('#gz_statu').html('成功添加');
+			else if (originalRequest>0)
+				$('#gz_statu').html('已添加');
+			else
+				alert('参数传递错误，无法完成操作');
+		}
+	});
+	//取消关注
+	$("[nc_type='cancelbtn']").live('click',function(){
+		
+		var url = '<{$config.weburl}>/module/sns/ajax_update.php';
+		var uname='<{$smarty.cookies.USER}>';
+		var data_str = $(this).attr('data-param');
+        eval( "data_str = "+data_str);
+		var pars = 'fid='+data_str.fid+'&op=del';
+		$.post(url, pars,showResponse);
+		function showResponse(originalRequest)
+		{
+			if(originalRequest>1)
+				document.location.reload();
+			else
+				alert('参数传递错误，无法完成操作');
+		}
+	});
+});
+</script>
+<div class="main">
+	<div class="wrap">
+        <div class="hd">
+            <ul class="tabs">
+                <li class="<{if $smarty.get.type}>normal<{else}>active<{/if}>"><a href="main.php?m=sns&s=admin_friends">我关注的</a></li>
+                <li class="<{if $smarty.get.type==fan}>active<{else}>normal<{/if}>"><a href="main.php?m=sns&s=admin_friends&type=fan">关注我的</a></li>
+            </ul>
+        </div>
+        <table class="table-list-style">
+            
+            <tbody>
+            <{if $re.list}>
+            <tr>
+                <td style="border-top:none">
+                <ul class="friend_list">
+                    <{foreach item=slist from=$re.list}>
+                    <{if $smarty.get.type==fan}>
+                    	<li>
+                        <div class="friend_img"><a target="_blank" href="<{$config.weburl}>/home.php?uid=<{$slist.uid}>"><img width="100" height="100" src="<{if $slist.uimg}><{$slist.uimg}><{else}>image/default/user_admin/default_user_portrait.gif<{/if}>"></a></div>
+                        <dl>
+                            <dt>
+                            <a class="friend_name" target="_blank" href="<{$config.weburl}>/home.php?uid=<{$slist.uid}>"><{$slist.uname}></a>
+                            <a class="message" target="_blank" href="main.php?m=message&s=admin_message_sed&uid=<{$slist.uid}>">&nbsp;</a>
+                            <em class=""></em></dt>
+                        <dd class="credit"><{if $slist.buyerpointsimg}><img align="absmiddle" src="<{$config.weburl}>/image/points/<{$slist.buyerpointsimg}>" /><{else}>买家信用：<{$slist.buyerpoints}><{/if}></dd>
+                        <dd class="area"><{$slist.area}></dd>
+                        <dd>
+						<span id="gz_statu">
+							<{if $slist.state==2}>
+								互相关注
+							<{else}>
+								<a class="btn2" href="javascript:void(0)" nc_type="followbtn" data-param="{'mid':'<{$slist.uid}>'}">加关注</a>
+							<{/if}>
+						</span>
+						</dd>
+                        </dl>
+                        </li>
+                    <{else}>
+						<li>
+                        <div class="friend_img"><a target="_blank" href="<{$config.weburl}>/home.php?uid=<{$slist.fuid}>"><img width="100" height="100" src="<{if $slist.fuimg}><{$slist.fuimg}><{else}>image/default/user_admin/default_user_portrait.gif<{/if}>"></a></div>
+                        <dl>
+                            <dt>
+                            <a class="friend_name" target="_blank" href="<{$config.weburl}>/home.php?uid=<{$slist.fuid}>"><{$slist.funame}></a>
+                            <a class="message" target="_blank" href="main.php?m=message&s=admin_message_sed&uid=<{$slist.fuid}>">&nbsp;</a>
+                            <em class=""></em></dt>
+                        <dd class="credit"><{if $slist.buyerpointsimg}><img align="absmiddle" src="<{$config.weburl}>/image/points/<{$slist.buyerpointsimg}>" /><{else}>买家信用：<{$slist.buyerpoints}><{/if}></dd>
+                        <dd class="area"><{$slist.province}> <{$slist.city}></dd>
+                        <dd><span class="cancel"><a class="btn2" href="javascript:void(0)" nc_type="cancelbtn" data-param="{'fid':'<{$slist.id}>'}">取消关注</a></span></dd>
+                        </dl>
+                        </li>
+					<{/if}>
+                    <{/foreach}>
+                </ul>
+                </td>
+            </tr>
+            <{/if}>
+            <{if !$re.list}>
+            <tr>
+            	<td colspan="20" class="norecord ntb">
+                	<i></i><span>暂无符合条件的数据记录</span>	
+                </td>
+            </tr>
+            <{/if}>
+            </tbody>
+            <tfoot>
+            <tr>
+            	<td><div class="pagination"><{$re.page}></div></td>
+            </tr>
+            </tfoot>
+        </table>
+     </div>   
+</div>

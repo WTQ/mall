@@ -1,0 +1,67 @@
+<div class="path">
+    <div>
+    	<{if $cg_u_type==1}>
+    		<a href="main.php?cg_u_type=1">我的商城</a> <span>&gt;</span>
+        <{else}>
+    		<a href="main.php?cg_u_type=2">卖家中心</a> <span>&gt;</span>
+        <{/if}>
+        支付账户
+    </div>
+</div>
+<div class="main">
+	<div class="wrap">
+        <div class="hd">
+            <ul class="tabs">
+                <li class="<{if $smarty.get.type!='password'}>active<{else}>normal<{/if}>"><a href="main.php?m=payment&s=admin_info">支付账户 </a></li>
+                <li class="<{if $smarty.get.type=='password'}>active<{else}>normal<{/if}>"><a href="main.php?m=payment&s=admin_info&type=password">支付账户 </a></li>
+            </ul>
+        </div>
+        <div class="form-style">
+            <form action="" method="post">
+            <input type="hidden" value="add" name="submit">
+            
+          	<{if $smarty.get.type!='password'}>
+            <dl>
+                <dt>Email：</dt>
+                <dd>
+					<{if $first}>
+						<p><input value="<{$de.email}>" name="email" type="text" id="email" class="w300 text" /></p>
+						<p class="hint">确认后不可以修改</p>
+					<{else}>
+						<{$de.email}>
+					<{/if}>
+                </dd>
+            </dl>
+            <dl>
+                <dt>姓名：</dt>
+                <dd><input name="name" type="text" id="name" class="w150 text" value="<{$de.name}>" /></dd>
+            </dl>
+            <dl>
+                <dt>电话：</dt>
+                <dd><input name="tell" type="text" id="tell" class="w150 text" value="<{$de.tell}>" /></dd>
+            </dl>
+            <dl>
+                <dt>手机：</dt>
+                <dd><input name="mobile" type="text" id="mobile" class="w150 text" value="<{$de.mobile}>" /></dd>
+            </dl>
+            <{else}>
+            <dl>
+                <dt>支付密码：</dt>
+                <dd>
+                <p><input name="pay_pass" type="password" id="pay_pass" class="w150 text" /></p>
+                <p class="hint">不修改密码请留空</p>
+                </dd>
+            </dl>
+            <dl>
+                <dt>确认密码：</dt>
+                <dd><input name="pay_pass2" type="password" id="pay_pass2" class="w150 text" /></dd>
+            </dl>
+            <{/if}>
+            <dl class="foot">
+                <dt>&nbsp;</dt>
+                <dd><input type="submit" value="提交" class="submit"></dd>
+            </dl>
+            </form>
+        </div>
+     </div>   
+</div>

@@ -1,0 +1,60 @@
+
+	<{if $smarty.get.stype==1}>
+			<div style="height:300px; text-align:center; font-weight:bold; color:#FF0000; font-size:14px; padding-top:100px;">
+				<{$lang.mes_suc}>
+			</div>
+		<{else}>
+    <script type="text/javascript" src="script/Validator.js"></script>
+	<form action="<{$config.weburl}>/aboutus.php" method="post" onSubmit="return Validator.Validate(this,3)">
+	<table width="100%" border="0" cellpadding="4" cellspacing="1" bgcolor="#F2F9FF">
+      <tr >
+        <td width="17%" height="30" align="left" bgcolor="#FFFFFF"  ><{$lang.com_name}></td>
+        <td width="83%" height="30" bgcolor="#FFFFFF">
+		<input type="text" name="company" value="<{$com.company}><{$smarty.post.company}>" style="width:300px;" dataType="Require" msg="<{$lang.pls_com_name}>" /></td>
+      </tr>
+      <tr >
+        <td width="17%" height="30" align="left" bgcolor="#FFFFFF"  ><{$lang.conect_name}></td>
+        <td height="30" bgcolor="#FFFFFF" ><input type="text" name="contact" value="<{$com.contact}>" style="width:300px;" dataType="Require" msg="<{$lang.pls_name}>" />        </td>
+      </tr>
+      <tr >
+        <td width="17%" height="30" align="left" bgcolor="#FFFFFF"  ><{$lang.email}></td>
+        <td height="30" bgcolor="#FFFFFF" ><input type="text" name="email" value="<{$com.email}>"  style="width:300px;" dataType="Email" msg="<{$lang.pls_email}>" />        </td>
+      </tr>
+      <tr >
+        <td height="26" align="left" bgcolor="#FFFFFF"  ><{$lang.tell}></td>
+        <td bgcolor="#FFFFFF" >
+          <input type="text" name="tell" id="tell" value="<{$com.tell}>" style="width:300px;" dataType="Require" msg="<{$lang.pls_tell}>"/>        </td>
+      </tr>
+      <tr >
+        <td height="27" align="left" bgcolor="#FFFFFF"  ><{$lang.addr}></td>
+        <td bgcolor="#FFFFFF" ><input type="text" name="addr" value="<{$com.addr}>" id="addr" style="width:300px;" dataType="Require" msg="<{$lang.pls_addr}>"/></td>
+      </tr>
+      <tr >
+        <td width="17%" align="left" bgcolor="#FFFFFF"  ><{$lang.you_qus}></td>
+        <td bgcolor="#FFFFFF" ><textarea name="mes" style="width:400px;" rows="12" dataType="Require" msg="<{$lang.pls_qus}>"></textarea>        </td>
+      </tr>
+      <tr >
+        <td height="30" align="left" bgcolor="#FFFFFF"  ><{$lang.rand_func}></td>
+        <td height="30" bgcolor="#FFFFFF" ><img src='includes/rand_func.php'/>
+          <input dataType="Require" msg="<{$lang.pls_rand}>" name="yzm" type="text" id="yzm" size="4" />
+		  <{if $smarty.get.stype==2}><font color="red"><{$lang.err_rand}></font><{/if}>
+	    </td>
+      </tr>
+	  <{if $config.user_reg_verf}>
+      <tr >
+        <td align="left" bgcolor="#FFFFFF">验证问题</td>
+        <td bgcolor="#FFFFFF">
+		<{$qut}><br />
+		<input name="ckyzwt" type="text" id="ckyzwt" class="input" dataType="Require" msg="<{$lang.pls_qus}>" />
+		<{if $smarty.get.stype==3}><br /><font color="red"><{$lang.err_randqut}></font><{/if}>
+		</td>
+      </tr>
+	  <{/if}>
+      <tr >
+        <td width="17%" bgcolor="#FFFFFF"  ></td>
+        <td bgcolor="#FFFFFF" ><input type="submit" name="cc" value="<{$lang.submit}>" />
+          <input name="submit" type="hidden" id="submit" value="submit" /></td>
+      </tr>
+    </table>
+	</form>
+	<{/if}>

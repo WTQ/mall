@@ -1,0 +1,36 @@
+<div class="m1"> <{$pro.prom.ads_code}> </div>
+<style>
+.prom ul{display:inline;}
+.prom ul li{ float:left; margin-left:13px; border:1px solid #CCC; width:228px; background:#C84C4C; overflow:hidden;}
+.prom ul li img{width:228px; height:200px;}
+.prom ul li a{display:block;}
+.prom ul li div{ padding-left:10px; height:40px;border-top:1px solid #CCC;   background:#FFFFFF;}
+.prom ul li span{ margin-left:10px; color:#FFFFFF; margin-top:5px;}
+.prom ul li span a{ float:right; margin-right:10px; color:#FFFFFF;}
+.prom ul li span a:hover{color:#FFFFFF;}
+.prom ul li span a:visited{color:#FFFFFF;}
+.prom ul li span a:active{color:#FFFFFF;}
+.prom ul li span a:link{color:#FFFFFF;}
+</style>
+<div align="center"> <strong> <{$pro.prom.con}> </strong> </div>
+<div class="prom m1">
+  <ul>
+    <{foreach  item=list  key=num from=$pro.prolist.info}>
+    <{if $num==0||$num%4==0}>
+    <li style="margin-left:0px;"> <a  target="_blank" href="<{$config.weburl}>/?m=product&s=detail&id=<{$list.id}>"><img  src="<{$list.pic}>"/></a>
+      <div>价格 : <{$list.price}> <{$config.money}></div>
+      <span><a target="_blank" href="<{$config.weburl}>/?m=product&s=detail&id=<{$list.id}>&m=product&s=cart&nums=1">立即购买</a><{$list.pname}></span> </li>
+    <{elseif ($num+1)%4==0}>
+    <li style="float:right;"> <a target="_blank" href="<{$config.weburl}>/?m=product&s=detail&id=<{$list.id}>"><img  src="<{$list.pic}>"/></a>
+      <div>价格 : <{$list.price}> <{$config.money}></div>
+      <span><a target="_blank" href="<{$config.weburl}>/?m=product&s=detail&id=<{$list.id}>&m=product&s=cart&nums=1">立即购买</a><{$list.pname}></span> </li>
+    <{else}>
+    <li > <a target="_blank" href="<{$config.weburl}>/?m=product&s=detail&id=<{$list.id}>"><img  src="<{$list.pic}>"/></a>
+      <div>价格 : <{$list.price}> <{$config.money}></div>
+      <span><a target="_blank" href="<{$config.weburl}>/?m=product&s=detail&id=<{$list.id}>&m=product&s=cart&nums=1">立即购买</a><{$list.pname}></span> </li>
+    <{/if}>
+    <{/foreach}>
+  </ul>
+  <div class="clear"></div>
+  <div class="page"><{$pro.prolist.page}></div>
+</div>

@@ -1,0 +1,91 @@
+<{include file="header.htm"}>
+<link href="<{$config.weburl}>/templates/<{$config.temp}>/pro.css" rel="stylesheet" type="text/css" />
+<div class="menu_bottom L1">				
+    <div class="headtop_L">
+        <{$lang.you_are_here}><a href='<{$config.weburl}>/'><{$lang.indexpage}></a> &raquo; <a href='<{$config.weburl}>/?m=product'><{$lang.procat}></a> &raquo; <{$guide}>
+    </div>
+    <div class="headtop_R"></div>		
+</div>
+
+	<div id="mainbody1" class="m1">
+			<div class="leftbar1">
+			<div class="left2">
+				<div class="title9" >
+					<div class="title_left1 L2"><{$lang.recpro}></div><div class="more"></div>
+		        </div>
+				 <div class="content9">
+					<ul class="list8">
+					 	<{insert name="getPro" leng="20" rec="2" img="true" limit=6 }>
+				   </ul>
+				   <script src='<{$config.weburl}>/api/ad.php?id=11&catid=<{$smarty.get.id}>&sname=<{$sname}>'></script>
+			    </div>
+			</div>
+		</div>
+		<div class="big_img_div" id="big_img_div" style="display:none;">&nbsp;</div>
+		<div class="rightbar1">
+		        <{if $subcat.0.cat||$brand.0.name}>
+			<div class="title10">
+            	<div class="title_left L2"><{$lang.catnav}></div>
+            </div>
+				<div class="content10" style="padding-left:20px; padding-right:20px;">
+					 <{foreach item=list from=$subcat}>
+						&nbsp;<a href="<{$config.weburl}>/?m=product&s=list&id=<{$list.catid}>"><{$list.cat}>(<{$list.rec_nums}>)</a> &nbsp;
+					 <{/foreach}>
+                   <{if $brand.0.name}>
+                   	<br><hr size="1"  noshade style="border:1px dotted #dddddd;float:left;width:750px;display:inline;"><br>
+                      <span style="width:100%;float:left;text-align:left;line-height:25px;"><{$lang.brands}></span>
+                   <{foreach item=list from=$brand}>
+                    <a href="<{$config.weburl}>/?m=product&s=list&brand=<{$list.name}>&id=<{$smarty.get.id}>&trade_type=<{$smarty.get.trade_type}>"><{$list.name}></a> &nbsp;&nbsp;
+                   <{/foreach}>
+                   <{/if}>
+			    </div>
+            <div class="bottom10" style="margin-bottom:5px"></div>
+		<{/if}>
+			<div class="title10">
+            	<div class="title_left L2"><{$lang.prolist}></div>
+                <div class="lookmore">
+                    <{if $config.domaincity&&$config.base_url}>
+                        <a href="http://www.<{$config.baseurl}>/?m=product&s=list&id=<{$smarty.get.id}>"><{$lang.lookmore}><{$current_cat}></a>
+                    <{/if}>
+                </div>
+            </div>
+			<div class="content10">
+			  <ul class="list9">
+			  <{foreach item=list from=$info.list}>
+                <li>
+                  <div class="Lb0"><input name="inquery" type="checkbox" value="<{$list.id}>" /></div>
+                  <div class="Lb1">
+                  <a rel="nofollow" href="<{$config.weburl}>/?m=product&s=detail&id=<{$list.id}>">
+                  <{html_image file=$list.img width=80 alt=$list.pname}>
+                  </a>
+                  </div>
+                  <div class="Lb2">
+                    <p style="font-size:14px;"><a href="<{$config.weburl}>/?m=product&s=detail&id=<{$list.id}>">
+					<strong><{$list.pname}></strong></a></p>
+                    <p><{$list.con|strip_tags|truncate:100:"...":true}></p>
+                    <p>
+                    <{$lang.seller}>
+					<a href="<{geturl uid=$list.userid user=$list.user}>"><{$list.company}><{$list.user_type}>
+					</a>
+                    </p>
+                  </div>
+                  <div class="Lb3"> <span class="bmoney"><{$config.money}><{$list.price|number_format:2}>/<{$list.unit}></span></div>
+                  <div class="Lb4"><{$list.freight|explode_one:","}>                 
+                  </div>
+                  <div class="Lb5"><{$list.province}><{$list.city}></div>
+                </li>
+				<{foreachelse}>
+				  <div style="padding:20px; font-weight:bold">
+				  <{$lang.norelinfo}>
+				  <a href="<{$config.weburl}>/main.php">
+				   <{$lang.clicktoadd}>
+				  </a>
+				  </div>
+				<{/foreach}>
+		      </ul>
+			  <div class="page"><{$info.page}></div>
+              <div class="clear"></div>
+		  </div>
+		</div>	
+	</div>
+	<{include file="footer.htm"}>

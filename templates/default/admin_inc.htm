@@ -1,0 +1,122 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="X-UA-Compatible" content="IE=EmulateIE7" />
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<title><{if $title}><{$title}> - <{$config.company}><{else}><{$config.title}><{/if}><{$config.company}></title>
+<meta name="description" content="<{$config.description}>">
+<meta name="keywords" content="<{$config.keyword}>">
+<meta name="generator" content="<{$config.version}>" />
+<link href="<{$config.weburl}>/templates/default/user_admin.css" rel="stylesheet" type="text/css" />
+<script src="<{$config.weburl}>/script/jquery-1.4.4.min.js" type=text/javascript></script>
+<script src="<{$config.weburl}>/script/index.js" type=text/javascript></script>
+<script type="text/javascript" charset="utf-8" src="<{$config.weburl}>/script/jquery.ui.js" ></script>
+<script type="text/javascript" id="dialog_js" charset="utf-8" src="<{$config.weburl}>/script/dialog/dialog.js" ></script>
+<script language="javascript">
+var searchTxt = ' <{$lang.search_products}>';
+function searchFocus(e){
+	if(e.value == searchTxt){
+		e.value='';
+		$('#keyword').css("color","");
+	}
+}
+function searchBlur(e){
+	if(e.value == ''){
+		e.value=searchTxt;
+		$('#keyword').css("color","#999999");
+	}
+}
+// 收缩展开效果
+$(document).ready(function(){
+	$(".sidebar dl dt").click(function(){
+		$(this).toggleClass("hou");
+		var sidebar_id = $(this).attr("id");
+		var sidebar_dd = $(this).next("dd");
+		sidebar_dd.slideToggle("slow",function(){
+				sidebar_dd.css("display");
+		 });
+	});
+});
+</script>
+</head>
+<div id="shortcut">
+    <div class="w">
+        <div class="fl">
+            <script type="text/javascript" src="<{$config.weburl}>/login_statu.php" /></script>
+			<a href="<{$config.weburl}>/"><{$lang.homepage}></a>
+        </div>
+        <div class="fr">
+            <!-- <a href="<{$config.weburl}>/main.php?cg_u_type=1"><{$lang.enter_the_buyer_center}></a> -->
+            <a href="<{$config.weburl}>/main.php?m=sns&s=admin_share_product"><{$lang.my_favorites}></a>
+            <a href="<{$config.weburl}>/main.php?m=message&s=admin_message_list_inbox"><{$lang.news_station}></a>
+        </div>
+    </div>
+</div>
+<div id="header">
+    <h1>
+    	<a href="<{$config.weburl}>/main.php" title="<{$config.company}>">
+        <img title="<{$config.company}>" alt="<{$config.company}>" src="<{if $config.logo}><{$config.logo}><{else}><{$config.weburl}>/image/default/logo.gif<{/if}>"  />
+        </a>
+        <i><{$lang.seller_center}></i>
+	</h1>
+    <div class="search" id="search">
+        <div id="details" class="details">
+            <ul class="tab">
+                <li class="current"><span><{$lang.goods}></span></li>
+                <!--<li><span>店铺</span></li>-->
+            </ul>
+            <div class="form">
+                <form target="_blank" action="<{$config.weburl}>/" method="get">
+                <input type="hidden" name="m" value="" />
+                <input type="hidden" name="s" value="list" />
+                <div class="formstyle">
+                    <input type="text" maxlength="200" value=" <{$lang.search_products}>" class="textinput" id="keyword" name="key" onblur="searchBlur(this)" onfocus="searchFocus(this)">
+                    <input type="submit" value="" class="search-button" name="">
+                </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+<div id="topnav" class="clearfix">
+    <ul>
+        <{foreach item=list name=name key=num from=$menu}>
+		<li class="<{if $smarty.foreach.name.iteration==1}>first<{elseif $smarty.foreach.name.last}>last<{/if}><{if $cmenu==$num}> selected<{/if}>"><a href="<{if $list.action|truncate:1:''!='?'}>?action=<{/if}><{$list.action}>"><span><{$list.name}></span></a></li>
+        <{/foreach}>
+    </ul>
+	<a href="<{$config.weburl}>/shop.php?uid=<{$buid}>" class="mytb"><span><{$lang.my_shop}>&gt;&gt;</span></a>
+</div>
+<{if !$shop_statu}>
+<div class="shop_close_info">店铺开启申请审核中。</div>
+<{/if}>
+<div class="layout">
+	<div class="sidebar">
+        <{foreach item=list from=$submenu.sub}>
+        <dl>
+        	<dt><i class="pngFix"></i><{$list.name}></dt>
+            <dd style="display:">
+            	<ul>
+                	<{foreach item=slist key=akey from=$list.action}>
+                    <{if $slist}>
+                    <{assign var="gets" value=$akey|explode:"&"}>
+                        <li>
+                        <a <{if $akey|truncate:4:''=='http'}>target="_blank"<{/if}><{if $smarty.get.action==$akey or in_array($smarty.get.type,$gets) or in_array($smarty.get.s,$gets)}> class="active" <{/if}> href="<{if $akey|truncate:1:''=='?' or $akey|truncate:4:''=='http'}><{else}>?action=<{/if}><{$akey}>"><{$slist}></a>
+                        </li>
+                    <{/if}>
+                    <{/foreach}>
+                </ul>
+            </dd>
+        </dl>
+        <{/foreach}>
+    </div>
+    <div class="right_content"><{$output}></div>
+    <div class="clear"></div>
+</div>
+
+<div id="footer">
+  <p><{$web_con}></p>
+  <{$bt}><br>
+</div>
+
+</body>
+</html>

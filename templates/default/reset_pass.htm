@@ -1,0 +1,56 @@
+<{include file="header.htm"}>
+<!--主体开始 -->
+	<div id="mainbody1" class="topm">
+	
+	    <!--主体右侧开始 -->
+		<div class="rightbar">
+			<div class="right1">
+				<div class="sectitle" ><div class="title_left1 L2"><{$lang.sitelink}></div></div>
+				<div class="seccon">
+					<div style="padding-left:5px;">
+					<{$web_con|replace:"|":"<br />"}>
+					</div>
+				</div>
+				<div class="bottom5"></div>
+				<div class="clear"></div>
+			</div>
+		</div>		
+		<!--主体右侧结束 -->
+		
+		<!--主体左侧开始 -->
+		<div class="leftbar" style="float:right;">
+			<div class="title4"><div class="title_left2 L2"><{$lang.resetpass}></div></div>
+			<div style="text-align:left;" class="content4 overflow"><br />
+            <form action="" method="post">
+            <table width="100%" border="0" cellspacing="0" cellpadding="3">
+			  <tr>
+				<td>&nbsp;</td>
+				<td style="color:#FF0000; font-weight:bold;">
+				<{if $smarty.get.msg==1}><{$lang.norepeat}><{/if}>
+				<{if $smarty.get.msg==2}><{$lang.suc}><{/if}>
+				</td>
+			  </tr>
+			  <{if $smarty.get.msg!=2}>
+			  <tr>
+				<td width="20%" align="right"><{$lang.newpass}></td>
+				<td width="80%"><input type="password" name="newpass" id="newpass" /></td>
+			  </tr>
+			  <tr>
+				<td align="right"><{$lang.repass}></td>
+				<td><input type="password" name="newpass1" id="newpass1" /> </td>
+			  </tr>
+			  <tr>
+				<td>&nbsp;</td>
+				<td><input type="submit" name="button" id="button" value="<{$lang.isure}>" />
+				  <input name="resetpass" type="hidden" id="resetpass" value="1" /></td>
+			  </tr>
+			  <{/if}>
+			</table>
+ 			</form>
+	<div class="bottom4"></div>
+	<div class="clear"></div>
+	</div>
+</div>
+</div>
+
+<{include file="footer.htm"}>

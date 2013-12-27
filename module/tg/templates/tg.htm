@@ -1,0 +1,62 @@
+<div class="menu_bottom L1">				
+    <div class="headtop_L">
+       <{$lang.you_are_here}><a href='<{$config.weburl}>/'><{$lang.indexpage}></a> &raquo; <a style="color:#1B4C7A" href="<{$config.weburl}>/?m=download">直销商店</a> &raquo; <{$catname}>
+    </div>
+    <div class="headtop_R"></div>		
+</div>
+
+<div id="mainbody1" class="m1">
+
+	<div class="leftbar">
+	
+		<div class="title4"><div class="title_left2 L2"><{$catname}></div></div>
+		<div class="content4 overflow ">
+<table width="620" cellpadding="0" cellspacing="0" border="0">
+<{foreach item=list key=num from=$showlist}>
+<tr><td width="32" valign="middle">
+<img src="<{$config.weburl}>/module/download/images/<{$list.pic}>.png"></td>
+<td align="left">
+<a style="color:#003278" href="<{$config.weburl}>/?m=download&s=detail&id=<{$list.id}>"><{$list.downname}></a>
+</td>
+<td width="100"><{$list.filesize}></td>
+<td width="194"><{'Y-m-d H:m'|date:$list.create_time}></td>
+</tr>
+<{/foreach}>
+<tr><td colspan="4" align="center"><{$page}></td></tr></table>
+		</div>
+
+	</div>
+	
+	<div class="rightbar">
+		<div class="right1">
+			<div class="sectitle" ><div class="title_left1 L2">按分类浏览</div></div>
+			<div class="seccon">
+			<ul class="li_list">
+				<{foreach item=list key=num from=$downcat}>
+				<li>
+				<a style="color:#1B4C7A" href="<{$config.weburl}>/?m=download&s=list&id=<{$list.id}>&catname=<{$list.catname}>"><{$list.catname|truncate:15:""}></a>&nbsp;&nbsp;
+				</li>
+				<{/foreach}>
+			</ul>
+            <div class="clear"></div>
+       
+			</div>
+		</div>
+		
+		
+			<div class="right1 m1 mgt10">
+			<div class="sectitle" ><div class="title_left1 L2">推荐商品</div></div>
+			<div class="seccon">
+				<ul class="li_list">
+				<{foreach item=list key=num from=$tj}>
+<li class="dliclass<{$num+1}>"><a style="color:#003278" href="<{$config.weburl}>/?m=download&s=detail&id=<{$list.id}>"><{$list.downname|truncate:15:""}></a></li>
+<{/foreach}>
+				</ul>
+                <div class="clear"></div>
+			</div>
+		</div>
+	</div>
+
+
+
+</div>

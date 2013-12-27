@@ -1,0 +1,52 @@
+<div class="path">
+  <div> <{if $cg_u_type==1}> <a href="main.php?cg_u_type=1">我的商城</a> <span>&gt;</span> <{else}> <a href="main.php?cg_u_type=2">卖家中心</a> <span>&gt;</span> <{/if}>
+    定单支付 </div>
+</div>
+<div class="main">
+  <div class="wrap">
+    <div class="hd">
+      <ul class="tabs">
+        <li class="active"><a href="#">定单支付</a></li>
+      </ul>
+    </div>
+    <div class="form-style">
+      <form action="" method="post">
+        <input type="hidden" value="add" name="submit">
+        <dl>
+          <dt>账户余额：</dt>
+          <dd><{$account.cash}></dd>
+        </dl>
+        <dl>
+          <dt>流水号：</dt>
+          <dd><{$de.flow_id}></dd>
+        </dl>
+        <dl>
+          <dt>订单编号：</dt>
+          <dd><{$de.order_id}></dd>
+        </dl>
+        <dl>
+          <dt>产品信息：</dt>
+          <dd><{$de.note}></dd>
+        </dl>
+        <dl>
+          <dt>支付金额：</dt>
+          <dd><span style="color:#F00; font-size:16px;"><{$de.price*-1|number_format:2 }></span></dd>
+        </dl>
+        <{if $de.statu==1}>
+        <dl>
+          <dt>支付密码：</dt>
+          <dd>
+            <input name="pay_pass" type="password" id="pay_pass" class="password w150" />
+          </dd>
+        </dl>
+        <dl class="foot">
+          <dt>&nbsp;</dt>
+          <dd>
+            <input type="submit" value="提交" class="submit">
+          </dd>
+        </dl>
+        <{/if}> 
+      </form>
+    </div>
+  </div>
+</div>

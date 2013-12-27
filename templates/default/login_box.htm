@@ -1,0 +1,34 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<title><{$lang.ulogo}></title>
+<link href="templates/<{$config.temp}>/logoin.css" type="text/css" rel="stylesheet" />
+</head>
+<body>
+        <div class="title2"><strong><{$lang.ulogo}></strong></div>
+        <div class="content3" style="font-size:12px">
+        <{if $smarty.cookies.USER!=''}>
+        <br />
+         <{$lang.welcome}><{$smarty.cookies.USER}>，<{$lang.congramsg}><br /><br />
+
+        <a href="main.php" target="_parent"><{$lang.myoffice}></a> | <a href="main.php?action=logout" target="_parent"><{$lang.exit}></a>
+		<br />
+		&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<br />
+		<span id="linkweb" name="linkweb"></span>
+ <script>
+	setInterval("document.getElementById('linkweb').innerHTML=new Date().toLocaleString()+' 星期'+'日一二三四五六'.charAt(new Date().getDay());",1000);	
+</script>
+        <{else}>
+            <form id="login" name="login" action="login.php" method="post" target="_parent">
+                <p><{$lang.uname}><input value='<{$smarty.get.user}>' name='user' id='user' type="text" class="editbox1"></p>
+                <p><{$lang.logpass}><input name='password' id="password" type="password" class="editbox2"></p>
+                <p><{$lang.randcode}><input name='randcode' id="randcode" type="text" class="inputrand">&nbsp;&nbsp;<img align="absmiddle" src="includes/rand_func.php" border="0"></p>
+               <span><input type="submit" class="button1" name="Submit2" value="" /></span>
+               <input name="action" type="hidden" value="submit" />
+               <p><a href="<{$config.regname}>" target="_parent"><{$lang.regnow}></a><a href="lostpass.php" target="_parent"><{$lang.forgetpass}></a></p>
+            </form>
+            <{/if}> 
+        </div>
+</body>
+</html>

@@ -1,0 +1,421 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<link href="admin.css" rel="stylesheet" type="text/css" />
+<script type="text/javascript" src="../script/jquery-1.4.4.min.js"></script>
+<script type="text/javascript" src="../script/district.js"></script>
+<script type="text/javascript" src="../script/Calendar.js"></script>
+<script>
+var weburl="<{$config.weburl}>";
+function getHTML(v,ob,sscatid,scatid,tcatid)
+{	
+	if(ob=='tcatid'){
+		document.getElementById('scatid').options.length=0;
+		document.getElementById('sscatid').options.length=0;
+		document.getElementById('scatid').style.visibility="hidden";
+		document.getElementById('sscatid').style.visibility="hidden";
+	}
+	if(ob=='scatid'){
+		document.getElementById('sscatid').options.length=0;
+		document.getElementById('sscatid').style.visibility="hidden";
+	}
+	var url = '<{$config.weburl}>/ajax_back_end.php';
+	var sj = new Date();
+	var pars = 'shuiji=' + sj+'&cattype=com&pcatid='+v;
+	$.post(url, pars,showResponse);
+	function showResponse(originalRequest)
+	{
+		if(originalRequest=='')
+			return false;
+		var tempStr = 'var MyMe = ' + originalRequest; 
+		var i=1;var j=0;
+		eval(tempStr);
+		for(var s in MyMe)
+		{
+			++j;
+		}
+		if(j>0)
+			document.getElementById(ob).style.visibility="visible";
+		else
+			document.getElementById(ob).style.visibility="hidden";
+		document.getElementById(ob).options.length =j+1;
+		document.getElementById(ob).options[0].value = '';
+        document.getElementById(ob).options[0].text = '--请选择--';
+		document.getElementById(ob).options[0].selected = true;
+		for(var k in MyMe)
+		{
+			var cityId=MyMe[k][0];
+			var ciytName=MyMe[k][1];
+			document.getElementById(ob).options[i].value = cityId;
+			document.getElementById(ob).options[i].text = ciytName;
+			
+			if(cityId==scatid||cityId==tcatid||cityId==sscatid)
+			{
+				document.getElementById(ob).options[i].selected = true;
+				scityid=cityId;
+			}
+			i++;
+	　	}
+	 }
+}
+function sd()
+{
+	$("#d_1").attr('class','hidden')
+	$("#d_2").removeClass('hidden')
+}
+</script>
+<title>店铺</title>
+</head>
+<body>
+	<div class="container">
+        <div class="flow">
+            <div class="itemtitle">
+                <h3>店铺</h3>
+                <ul>
+                    <{if $smarty.get.operation==''}>
+                    <li <{if $smarty.get.operation==''}>class="current"<{/if}>><a href="?m=<{$smarty.get.m}>&s=<{$smarty.get.s}>"><span>搜索</span></a></li>
+                    <{/if}>
+                    
+                    <{if $smarty.get.operation!=''}>
+                    <li <{if $smarty.get.operation=='list'}>class="current"<{/if}>><a href="?m=<{$smarty.get.m}>&s=<{$smarty.get.s}>&operation=list"><span>管理</span></a></li>
+                    <li><a href="?m=<{$smarty.get.m}>&s=shop_application.php"><span>开店申请</span></a></li>
+                    <{/if}>
+                    
+                    <{if $smarty.get.operation=='edit'}>
+                    <li class="current"><a href="#"><span>修改</span></a></li>
+                    <{/if}>
+                </ul>
+            </div>
+        </div>
+        <div class="h35"></div>   
+        <{if $smarty.get.operation=='edit'}>
+        <table class="table">
+            <tr>
+                <th class="partition" colspan="99">操作提示</th>
+            </tr>
+            <tr>
+                <td>
+                    <ul class="tips">
+                        <li>如会员在与网站签约的时候可以约定此会员拥有哪项服务，点选后，这里的状态值会在会员店铺中显示，产品列表或详情处等</li>
+                    </ul>
+                </td>
+            </tr>
+        </table>   
+        <form name="form" id="form" method="post">
+        <input name="id" type="hidden" id="id" value="<{$de.userid}>">
+ 		<table class="table">
+            <thead>
+                <tr>
+                    <th class="partition" colspan="99">
+                    店铺信息
+                    <a class="fr" href="to_login.php?action=submit&user=<{$de.user}>" target="_blank">进入店铺后台</a>
+                    </th>
+                </tr>
+            </thead>
+            <tbody>
+            <tr>
+                <td width="100">店主用户名</td>
+                <td><a target="_blank" href="../home.php?uid=<{$de.userid}>"><{$de.user}></a></td>
+            </tr>
+            <tr>
+                <td>商铺名称</td>
+                <td>
+                <a target="_blank" href="../shop.php?uid=<{$de.userid}>"><{$de.company}></a>&nbsp;
+                <{if $de.shop_auth==1}>
+                <a target="_blank" href="<{$de.shop_auth_pic}>"><img align="absmiddle" src="../image/default/certification.gif" /></a>
+                <{else}>
+                <img align="absmiddle" src="../image/default/certification_no.gif" />
+                <{/if}>
+                 <{if $de.shopkeeper_auth==1}>
+                <a target="_blank" href="<{$de.shopkeeper_auth_pic}>"><img align="absmiddle" src="../image/default/certautonym.gif" /></a>
+                <{else}>
+                <img align="absmiddle" src="../image/default/certautonym_no.gif" />
+                <{/if}>
+                </td>
+            </tr>
+            <tr>
+                <td>地址</td>
+                <td><{$de.area}> <{$de.addr}></td>
+            </tr>
+            <tr>
+                <td>联系电话</td>
+                <td><{$de.tel}></td>
+            </tr>
+            <tr>
+                <td>主营商品</td>
+                <td><{$de.main_pro}></td>
+            </tr>
+            <tr>
+                <td>上次登入时间</td>
+                <td><{$de.uptime|date_format:"%Y-%m-%d %H:%M:%S"}></td>
+            </tr>
+            <tr>
+                <td>创店时间</td>
+                <td><{$de.create_time|date_format:"%Y-%m-%d %H:%M:%S"}></td>
+            </tr>
+            <tr>
+                <td>商品数量</td>
+                <td><a href="module.php?m=product&s=prolist.php&type=3&key=<{$de.company}>"><{$de.product_num}></a></td>
+            </tr>
+            <tr>
+                <td>收藏数量</td>
+                <td><{$de.shop_collect}></td>
+            </tr>
+            <tr>
+                <td>访问数量</td>
+                <td><input type="text" name="view" value="<{$de.view_times}>"></td>
+            </tr>
+            <tr>  
+                <td>有效期</td>
+                <td>
+                <script language="javascript">
+				var cdr = new Calendar("cdr");
+				document.write(cdr);
+				cdr.showMoreDay = true;
+				</script>
+				<input type="text" name="stime" value="<{$de.stime}>" onFocus="cdr.show(this);"/>
+				--
+				<input type="text" name="etime" value="<{$de.etime}>" onFocus="cdr.show(this);"/> (exp:2008-02-01)
+                </td>
+            </tr>
+            
+            <tr>  
+                <td>店铺等级</td>
+                <td>
+                <select name="grade" id="grade">
+                    <{foreach item=list from=$grade}>
+                    <option value="<{$list.id}>" <{ if $de.grade==$list.id }>selected="selected"<{/if}> ><{$list.name}></option>
+                    <{/foreach}>
+                </select>
+                </td>
+            </tr>
+            <tr>  
+                <td>店铺分类</td>
+                <td>
+                    <input type="hidden" name="oldcatid" value="<{$de.catid}>" />
+                    <{if $de.cat}><div id="d_1"><{$de.cat}>&nbsp;&nbsp;<a href="javascript:sd();">编辑</a></div><{/if}>
+                	<div id="d_2" <{if $de.cat}>class="hidden"<{/if}>>
+                    <select class="select" name="catid" id="catid" onChange="getHTML(this.value,'tcatid')">
+                    <option value="">--请选择--</option>
+                    <{foreach item=list from=$catlist}><option value="<{$list.id}>" <{if $list.id==$de.catid}>selected="selected"<{/if}> ><{$list.name}>
+                    </option>
+                    <{/foreach}>
+                    </select>
+                    <select class="select" style="visibility:hidden" name="tcatid" id="tcatid" onChange="getHTML(this.value,'scatid')">
+                    </select>
+                    <select class="select" style="visibility:hidden" name="scatid" id="scatid" onChange="getHTML(this.value,'sscatid')">
+                    </select>
+                    <select class="select" style="visibility:hidden"  name="sscatid" id="sscatid">
+                    </select>
+                    </div>
+                </td>
+            </tr>
+           	<tr>
+                <td>保证金</td>
+                <td><{$de.earnest}></td>
+            </tr>
+            <tr>
+                <td>增加保证金</td>
+                <td><input type="text" name="earnest" value=""></td>
+            </tr>
+            <tr>  
+                <td>信誉状态</td>
+                <td>
+                    <{foreach item=list key=num from=$credit}> 
+                    <input <{if @in_array($num,$de.credit) }>checked<{/if}> name="credit[]" type="checkbox" value="<{$num}>" id="cr<{$num}>" /><label for="cr<{$num}>"><{$list}></label>       
+                    <{/foreach}>
+                </td>
+            </tr>
+            <tr>  
+                <td>是否开通店铺</td>
+                <td>
+                	<input name="shop_statu" <{ if $de.shop_statu==1 }>checked="checked"<{ /if }> type="radio" class="radio" value="1" id="open" /><label for="open">开启</label>
+             		<input name="shop_statu" <{ if $de.shop_statu==2 }>checked="checked"<{ /if }> type="radio" class="radio" value="2" id="close" /><label for="close">关闭</label>
+            	</td>
+            </tr>
+            <tr>
+                <td>推荐状态</td>
+                    <td>
+                    <{foreach item=list key=num from=$rc_member }>
+                    
+                    <input type="radio" name="statu" id="tj<{$num}>" value="<{$num}>" <{ if $de.statu==$num }> checked="checked" <{/if}> ><label for="tj<{$num}>"><{$list}></label>
+                    </option>
+                    <{/foreach }>
+                </td>
+            </tr>
+            <tr>
+                <td>&nbsp;</td>
+                <td>
+                <input class="submit" type="submit" value="提交">
+                <input name="act" type="hidden" id="action" value="edit">
+                </td>
+            </tr>
+            </tbody>
+        </table>
+        </form>
+        <{elseif $smarty.get.operation=='list'}>
+        <script type="text/javascript">
+        $(function(){
+            /* 全选 */
+             $('.checkall').click(function(){
+                var _self = this;
+                $('.checkitem').each(function(){
+                    if (!this.disabled)
+                    {
+                        $(this).attr('checked', _self.checked);
+                    }
+                });
+                $('.checkall').attr('checked', this.checked);
+            });	 
+        });
+        </script>
+        <form action="" method="post">
+        <table class="table">
+        	<thead>
+                <tr>
+                    <th class="partition" colspan="99">店铺</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr class="header">
+                    <th width="30"></th>
+                    <th width="70">排名指数</th>
+                    <th width="120">店主用户名</th>
+                    <th>商铺名称</th>
+                    <th width="120">店铺等级</th>
+                    <th width="120">商品数量</th>
+                    <th width="120">保证金</th>
+                    <th width="120">创店时间</th>
+                   	<th width="50"></th>
+          		</tr>
+                <{foreach item=list from=$de.list}>
+                <tr>
+                    <td><input type="checkbox" value="<{$list.userid}>" class="checkitem" name="chk[]"></td>
+                    <td><input type="text" class="w50" maxlength="3" name="rank[<{$list.userid}>]" value="<{$list.rank}>" onbeforepaste="clipboardData.setData('text',clipboardData.getData('text').replace(/[^\d]/g,''))" onkeyup="value=value.replace(/[^\d]/g,'')" /></td>
+                    
+                    <td><a target="_blank" href="../home.php?uid=<{$list.userid}>"><{$list.user}></a></td>
+                    <td>
+                    <a target="_blank" href="../shop.php?uid=<{$list.userid}>"><{$list.company}></a>&nbsp;
+                    <{if $list.shop_auth==1}>
+                    <a target="_blank" href="<{$list.shop_auth_pic}>"><img align="absmiddle" src="../image/default/certification.gif" /></a>
+                    <{else}>
+                    <img align="absmiddle" src="../image/default/certification_no.gif" />
+                    <{/if}>
+                    <{if $list.shopkeeper_auth==1}>
+                    <a target="_blank" href="<{$list.shopkeeper_auth_pic}>"><img align="absmiddle" src="../image/default/certautonym.gif" /></a>
+                    <{else}>
+                    <img align="absmiddle" src="../image/default/certautonym_no.gif" />
+                    <{/if}>
+                    </td>
+                    <td><{$list.grade}></td>
+                    <td>&nbsp;<a href="module.php?m=product&s=prolist.php&type=3&key=<{$list.company}>"><{$list.product_num}></a></td>
+                    <td>&nbsp;<{$list.earnest}></td>
+                    <td><{$list.create_time|date_format:"%Y-%m-%d <br> %H:%M:%S"}></td>
+          			
+                    <td>
+                    <a href="?m=shop&s=shop.php&operation=edit&editid=<{$list.userid}>&<{$getstr}>"><{$editimg}></a>
+                    <a href="to_login.php?action=submit&user=<{$list.user}>" target="_blank"><{$setimg}></a>
+                    </td>
+                    
+                </tr>
+                <{foreachelse}>
+                <tr>
+                    <td class="norecord" colspan="99"><i></i><span>暂无符合条件的数据记录</span></td>
+                </tr>
+                <{/foreach}>
+            </tbody>
+            <tfoot>
+                <tr>
+                	<td colspan="2">
+                        <div class="del">
+                        <input type="checkbox" class="checkall" id="del">
+                        <label for="del">删除</label>
+                        </div>
+                        <input type="hidden" name="act" value="op" />
+                        <input type="submit" value="提交" />
+                    </td>
+                    <td colspan="99"><div class="page"><{$de.page}></div></td>
+                </tr>
+            </tfoot>
+        </table>
+        </form>
+        <{else}>
+        <table class="table">
+            <tr>
+                <th class="partition" colspan="99">提示</th>
+            </tr>
+            <tr>
+            	<td>
+                	<ul class="tips">
+                    	<li>通过店铺管理，您可以进行编辑店铺信息、店铺类型以及删除店铺等操作。</li>
+                        <li>请先根据条件搜索用户，然后选择相应的操作。</li>
+                    </ul>
+                </td>
+            </tr>
+        </table>
+        <form name="form" id="form" method="get">
+        <input name="m" type="hidden" id="m" value="<{$smarty.get.m}>">
+        <input name="s" type="hidden" id="s" value="<{$smarty.get.s}>">
+        <input name="operation" type="hidden" id="operation" value="list">
+        <table class="table">
+            <tbody>
+            <tr>
+                <td width="100">会员名</td>
+                <td><input type="text" class="w350" name="name" id="name" /></td>
+            </tr>
+            <tr>
+                <td width="100">会员ID</td>
+                <td><input type="text" class="w350" name="id" id="id" /></td>
+            </tr>
+            <tr>
+                <td>商铺名称</td>
+                <td><input type="text" class="w350" name="shop_name" id="shop_name" /></td>
+            </tr>
+            <tr>  
+                <td>店铺类型</td>
+                <td>
+                <select name="grade[]" id="grade" class="w350" size="5" style="height:auto;" multiple="multiple">
+               		<{foreach item=list from=$grade}>
+                    <option value="<{$list.id}>"><{$list.name}></option>
+                    <{/foreach}>
+                </select>
+                </td>
+            </tr>
+            <tr>  
+                <td>店铺分类</td>
+                <td>
+                <select name="catid[]" id="catid" class="w350" size="10" style="height:auto;" multiple="multiple">
+                    <{foreach item=list from=$catlist}>
+                    <option value="<{$list.id}>"><{$list.name}></option>
+                    <{/foreach}>
+                </select>
+                </td>
+            </tr>
+            <tr>  
+                <td>所在地区</td>
+                <td>
+                <input type="hidden" id="t" />
+                <input type="hidden" name="province" id="id_1" />
+                <input type="hidden" name="city" id="id_2"  />
+                <input type="hidden" name="area" id="id_3" />
+                <select id="select_1" onChange="selClass(this);">
+                <option value="">--请选择--</option>
+                <{$prov}>
+                </select>
+                <select id="select_2" onChange="selClass(this);" class="hidden"></select>
+                <select id="select_3" onChange="selClass(this);" class="hidden"></select>			
+                </td>
+            </tr>
+           
+            <tr>
+                <td>&nbsp;</td>
+                <td><input class="submit" type="submit" value="提交"></td>
+            </tr>
+            </tbody>
+        </table>
+            </form>
+        <{/if}>
+    </div>
+</body>
+</html>

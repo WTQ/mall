@@ -1,0 +1,47 @@
+<script type="text/javascript" src="script/Validator.js"></script>
+<div class="path">
+    <div>
+    	<{if $cg_u_type==1}>
+    		<a href="main.php?cg_u_type=1">我的商城</a> <span>&gt;</span>
+        <{else}>
+    		<a href="main.php?cg_u_type=2">卖家中心</a> <span>&gt;</span>
+        <{/if}>
+        账户充值 
+    </div>
+</div>
+<div class="main">
+	<div class="wrap">
+        <div class="hd">
+            <ul class="tabs">
+                <li class="active"><a href="main.php?m=payment&s=admin_accounts_pay">账户充值</a></li>
+            </ul>
+        </div>
+        <div class="form-style">
+            <form target="_blank" action="" method="post" onSubmit="return Validator.Validate(this,3)">
+            <input type="hidden" value="add" name="submit">
+            <dl>
+                <dt><em>*</em>充值金额：</dt>
+                <dd><input type="text" name="amount" value="<{$smarty.get.price}>" class="w50 text" autocomplete="off" dataType="Double" msg="<{$lang.pay_g}>"> 元</dd>
+            </dl>
+            <dl>
+                <dt>支付方式：</dt>
+                <dd>
+                <ul class="pay_list">
+                <{foreach key=nums item=list from=$re}>
+                <li>
+                <p><input type="radio" class="radio" id="pay<{$nums}>" value="<{$list.payment_type}>" name="payment_type" <{if $nums==0 }>checked<{/if}> ></p>
+                <label for="pay<{$nums}>"><img width="133" src="<{$config.weburl}>/image/payment/<{$list.payment_type}>.gif" ></label>
+                <span><{$list.payment_desc}></span>
+                </li>
+                <{/foreach}>
+                 </ul>
+                </dd>
+            </dl>
+            <dl class="foot">
+                <dt>&nbsp;</dt>
+                <dd><input type="submit" value="提交" class="submit"></dd>
+            </dl>
+            </form>
+        </div>
+     </div>   
+</div>

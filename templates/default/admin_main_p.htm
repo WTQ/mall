@@ -1,0 +1,210 @@
+<script>
+function ajax_form(id, title, url, width, model)
+{
+    if (!width)	width = 480;
+    if (!model) model = 1;
+    var d = DialogManager.create(id);;
+    d.setTitle(title);
+    d.setContents('ajax', url);
+    d.setWidth(width);
+    d.show('center',model);
+    return d;
+}
+</script>
+<div id="append_parent"></div>
+<div id="ajaxwaitid"></div>
+<div class="main_buyer">
+    <div class="wrap_buyer">
+    	<div class="layout_l">
+        	<div class="member_info">
+                <dl>
+                	<dt><a title="<{$lang.editing_user_infomation}>" href="main.php?action=admin_personal"><{$cominfo.name}></a>&nbsp;(<{$smarty.cookies.USER}>)</dt>
+                    <dd><img align="absmiddle" src="<{$config.weburl}>/image/points/<{$cominfo.buyerpointsimg}>" title="<{$cominfo.buyerpoints}>" alt="<{$cominfo.buyerpoints}>"></dd>
+                    <dd>
+					<{$lang.cash_one}><span class="price"><{$cash|number_format:2}></span><{$lang.yuan}>
+					<a href="main.php?m=payment&s=admin_accounts_bind"><{$lang.cash_withdrawal}></a>
+					<a href="main.php?m=payment&s=admin_accounts_cashflow"><{$lang.details}></a>
+					</dd>
+                </dl>
+                <ul>
+                    <li class="<{if $shop_count.order.0}>yes<{else}>no<{/if}>"><a href="main.php?m=product&s=admin_buyorder&status=1"><{$lang.pending_payment_orders}>&nbsp;(<strong><{$shop_count.order.0}></strong>)</a></li>
+                    <li class="<{if $shop_count.order.1}>yes<{else}>no<{/if}>"><a href="main.php?m=product&s=admin_buyorder&status=3"><{$lang.wait_for_confirmation_of_receipt}>&nbsp;(<strong><{$shop_count.order.1}></strong>)</a></li>
+                    <li class="<{if $shop_count.order.2}>yes<{else}>no<{/if}>"><a href="main.php?m=product&s=admin_buyorder&status=4"><{$lang.waiting_for_the_evaluation_of_the_transaction}>&nbsp;(<strong><{$shop_count.order.2}></strong>)</a></li>
+                </ul>
+            	<div class="clear"></div>
+            </div>
+            <ul class="release-tab">
+                <li class="sharemood"><em></em><a href="javascript:void(0)"><{$lang.share_feelings}></a><i></i></li>
+                <li id="snssharegoods" class="sharegoods"><em></em><a href="javascript:void(0)"><{$lang.share_product}></a><i></i></li>
+                <li id="snssharestore" class="sharestore"><em></em><a href="javascript:void(0)"><{$lang.share_shop}></a></li>
+            </ul>
+    		
+            <div class="release-content"><span class="arrow"></span>
+            <form action="main.php?m=sns&s=sns" name="shareform" id="shareform" method="post">
+              	<input type="hidden" name="act" value="share">
+            	
+                <textarea resize="none" name="content" id="content"></textarea>
+               
+                <span class="error"></span>
+                <div class="weibocharcount"><span class="counter"><{$lang.140_words_can_be_input}></span></div>
+                <input type="hidden" value="0" id="privacy" name="privacy">
+        		<input type="text" style="display:none;" class="text">
+                <!-- 防止点击Enter键提交 -->
+                <input type="submit" name="btn" id="btn" value="<{$lang.share}>" class="button">
+			</form>
+            </div>
+            
+            <div class="tabmenu">
+                <ul class="tab">
+                	<li class="active"><a href="javascript:void(0)"><{$lang.friends_news}></a></li>
+                </ul>
+            </div>
+            <div class="friendtrace" id="friendtrace"> </div>
+        </div>
+        
+    	<div class="layout_r">
+            <div class="visitors">
+                <h4><span><{$lang.recent_visitors}></span></h4>
+             	<ul>
+                	<{foreach item=list key=nums from=$uvlist}>
+                    <li>
+                        <div class="visitor_pic">
+                            <span>
+                            <a target="_blank" href="home.php?uid=<{$list.userid}>">
+                            <img height="50" width="50" src="<{if $list.logo!=''&&$list.logo!='0'}><{$list.logo}><{else}>image/default/user_admin/default_user_portrait.gif<{/if}>" />
+                            </a>
+                            </span>
+                        </div>
+                        <p class="visitor_name"><a target="_blank" href="home.php?uid=<{$list.userid}>"><{$list.user}></a></p>
+                        <p class="visitor_time"><{$list.time|date_format:"%m-%d"}></p>
+                    </li>
+                    <{foreachelse}>
+                    <span>&nbsp;&nbsp;<{$lang.no_visitors}></span>
+                    <{/foreach}>
+                </ul>
+            </div>
+            
+            <div class="visitors">
+                <h4><span><{$lang.about_friends}></span></h4>
+             	<ul>
+                	<{foreach item=list key=nums from=$friend}>
+                    <li>
+                        <div class="visitor_pic">
+                            <span>
+                            <a target="_blank" href="home.php?uid=<{$list.fuid}>">
+                            <img height="50" width="50" src="<{if $list.fuimg!=''&&$list.fuimg!='0'}><{$list.fuimg}><{else}>image/default/user_admin/default_user_portrait.gif<{/if}>" />
+                            </a>
+                            </span>
+                        </div>
+                        <p class="visitor_name"><a target="_blank" href="home.php?uid=<{$list.fuid}>"><{$list.funame}></a></p>
+                    </li>
+                    <{foreachelse}>
+                    <span>&nbsp;&nbsp;<{$lang.no_visitors}></span>
+                    <{/foreach}>
+                </ul>
+            </div>
+        </div>
+        <div class="clear"></div>
+    </div>
+</div>
+<script>
+
+//显示分享商品页面	
+$('#snssharegoods').click(function(){	
+	ajax_form("sharegoods", '<{$lang.share_buy_and_collection_of_baby}>', '<{$config.weburl}>/main.php?m=sns&s=sns&op=sharegoods', 500);
+	return false;
+});
+
+//显示分享店铺页面
+$('#snssharestore').click(function(){
+	ajax_form("shareshop", '<{$lang.share_shop}>', '<{$config.weburl}>/main.php?m=sns&s=sns&op=shareshop', 500);
+	return false;
+});
+
+$("[nc_type='fd_forwardbtn']").live('click',function(){
+	var data = $(this).attr('data-param');
+	eval("data = "+data);
+	ajax_form("forward_form", '<{$lang.forwarding}>', '<{$config.weburl}>/main.php?m=sns&s=sns&op=forward&bid='+data.bid, 500);
+	return false;
+});
+
+$("[nc_type='fd_del']").live('click',function(){
+	var data_str = $(this).attr('data-param');
+	eval("data_str = "+data_str);
+	var url = "<{$config.weburl}>/main.php?m=sns&s=sns";
+	
+	var pars = 'bid='+data_str.bid+'&op=del';
+	$.post(url, pars,showResponse);
+	function showResponse(originalRequest)
+	{
+		var d = DialogManager.create('notice');
+		d.setTitle('<{$lang.message}>');
+		d.setContents('message', { type: 'notice', text: "<{$lang.deleted_successfully}>" });
+		d.setWidth(270);
+		d.show('center');
+		function closefunc()
+		{
+			DialogManager.close("notice");
+			$('#friendtrace').lazyshow({url:"main.php?m=sns&s=sns&curpage=1",'iIntervalId':true});
+		}
+		setTimeout(closefunc,  1000);
+	}
+});
+
+$("#btn").bind('click',function(){		
+	ajaxpost('shareform');
+});
+function $$(id) {
+	return !id ? null : document.getElementById(id);
+}
+function ajaxpost(formid) {
+	
+	var ajaxframeid = 'ajaxframe';
+	var ajaxframe = $$(ajaxframeid);
+	if(!ajaxframe){
+		var div = document.createElement('div');
+		div.style.display = 'none';
+		div.innerHTML = '<iframe name="' + ajaxframeid + '" id="' + ajaxframeid + '" loading="1"></iframe>';
+		ajaxframe = $$(ajaxframeid);
+		$$('append_parent').appendChild(div);
+	}
+	$$(formid).target = ajaxframeid;
+
+	$('#'+formid).validate({
+		errorPlacement: function(error, element){
+			element.next('.form-error').append(error);
+		},  
+		rules : {
+			content : {
+				maxlength : 140,
+			}
+		},
+		messages : {
+			content : {
+				maxlength: '<{$lang.Can_note140c}>'
+			}
+		}, 
+		
+		submitHandler:function(form){  
+			
+			form.submit();
+			function closefunc()
+			{
+				$("#content").val('');
+				DialogManager.close("notice");
+				$('#friendtrace').lazyshow({url:"main.php?m=sns&s=sns&curpage=1",'iIntervalId':true});
+			}
+			var d = DialogManager.create('notice');
+			d.setTitle('<{$lang.message}>');
+			d.setContents('message', { type: 'notice', text: "<{$lang.share_successful}>" });
+			d.setWidth(270);
+			d.show('center');
+			setTimeout(closefunc,800);
+		}
+			
+	});
+}
+
+$('#friendtrace').lazyinit();
+$('#friendtrace').lazyshow({url:"main.php?m=sns&s=sns&curpage=1",'iIntervalId':true});
+</script>

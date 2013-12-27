@@ -1,0 +1,476 @@
+<script src="<{$config.weburl}>/lib/jquery.jqzoom1.0.1.js" type="text/javascript"></script>
+<script type="text/javascript">
+function seebig(url,id)
+{
+	if(url=='')
+		return;
+    document.getElementById('imgmove').innerHTML='<a class="jqzoom" href="'+url+'" target="_blank">'+'<img id="img'+id+'" border="0" height="260" src="'+url+'" ></a><span style=""></span>';
+	$(".jqzoom").jqzoom();
+}
+$(function() {
+	$(".jqzoom").jqzoom();
+});
+$(document).ready(function(){
+	$("#add_cart").click(
+		function()
+		{
+			var price=$('#price').html();
+			var num=$('#nums').val();
+			var sid=$('#sid').val();
+			var pid='<{$smarty.get.id}>';
+			$('#cart_show').fadeIn(500);
+		    $('#cart_show').load('<{$config.weburl}>/?m=product&s=cart&add_cart=1&price='+price+'&nums='+num+'&id='+pid+'&sid='+sid);
+			x=$(".buy_box").offset();
+			$("#cart_show").offset({top:x.top,left:x.left});
+			return false;
+		}
+	);
+	$("#low_num").click(
+	function()
+	{
+		var num=$('#nums').val()*1;
+		if(num>1)
+			$('#nums').val(num-1)
+	}
+	);
+	
+	$("#add_num").click(
+	function()
+	{
+		var num=$('#nums').val()*1;
+		if(num<$('#stock').html())
+			$('#nums').val(num+1)
+	}
+	);
+});
+
+function collect_goods(id){
+	
+	var url = '<{$config.weburl}>/module/sns/ajax_update.php';
+	var uname='<{$smarty.cookies.USER}>';
+	if(uname=='')
+	{
+		alert('<{$lang.no_logo}>');
+		window.location.href='<{$config.weburl}>/login.php?forward=shop.php?uid=<{$smarty.get.uid}>';
+		return false;
+	}
+	var pars = 'pid='+id+'&uname='+uname;
+	$.post(url, pars,showResponse);
+	function showResponse(originalRequest)
+	{
+		if(originalRequest>1)
+			alert('<{$lang.fav_ok}>');
+		else if (originalRequest>0)
+			alert('<{$lang.fav_isbing}>');
+		else
+			alert('<{$lang.error}>');
+	}
+	
+}
+function buy()
+{
+	var B = false;
+	$('ul[nc_type="property"]').each(function(){
+	
+		if(!$(this).find('label').hasClass('checked')){
+	        B = true;
+		}
+	});
+	
+    if (goodsspec.getSpec() == null || B)
+    {
+        alert('请选择相关规格');
+        return !B;
+    }
+	else
+	{
+		return !B;	
+	}
+	
+}
+
+var psrc='<img height="260" alt="<{$de.pname}>" src="<{if $de.pic}><{$de.pic}><{else}>image/default/nopic.gif<{/if}>" title="<{$de.pname}>">';
+function chk1(str,id,src)
+{
+	$("[name='radio"+str+"']").attr("class", "");
+	$('#radio'+str+''+id).attr("class", "checked");
+	if(src)
+	{
+		$('#imgmove').find('img').attr('src',src);	
+	}
+	else
+	{
+		$('#imgmove').find('a').html(psrc);	
+	}
+}
+function chk2(str,id)
+{
+	$("[name='radio"+str+"']").attr("class", "");
+	$('#radio'+str+''+id).attr("class", "checked");
+}
+</script>
+<link href="<{$config.weburl}>/module/product/templates/space_pro_detail.css" rel="stylesheet" type="text/css" />
+<div class="common_box">
+<div class="report">
+	<span><a title="<{$lang.report_center}>" href="javascript:void(0)"><{$lang.report_center}><i></i></a></span>
+    <ul>
+    	<li><a title="<{$lang.report_this_product}>" href="main.php?m=report&s=admin_add_report&pid=<{$de.id}>"><{$lang.report_this_product}></a></li>
+    </ul>
+</div>
+<table width="100%" border="0" cellpadding="4" cellspacing="1">
+	<tr><td height="60" colspan="2" align="center"><h1><{$de.pname}></h1></td></tr>
+	  <tr>
+        <td valign="top" width="262">
+			<div id="imgmove" style="border:1px solid #E4F3FA;margin:0 auto;height:250px; weight:250;overflow:hidden;">       
+				<a class="jqzoom" title="zoom" href="<{if $de.pic}><{$de.pic}><{else}>image/default/nopic.gif<{/if}>">
+					
+					<img height="260" alt="<{$de.pname}>" src="<{if $de.pic}><{$de.pic}><{else}>image/default/nopic.gif<{/if}>" title="<{$de.pname}>">
+				</a>
+				<span style="position:absolute;left:660px;top:450px;"></span>
+			 </div>
+           
+		    <{if $de.pic.0!=''}>
+			<div id="infopic" style="overflow:hidden;width:250px;margin-top:10px;">         
+			<{foreach item=pic key=num from=$de.pic_more}>
+				<{if $pic&&$num<4}><li style="float:left; margin-left:3px;">
+				 <img onMouseOver="seebig('<{$pic}>',<{$num}>)" style="cursor:pointer; border:1px solid #CCCCCC;" src="<{$pic}>_60X60.jpg" width="50"></li>
+				 </li>
+				<{/if}>
+			 <{/foreach}>
+			</div>
+			<{/if}>
+			
+            <div class="share">
+            <div class="handle">
+                <div class="handle_left">
+                    <i class="share_goods"></i>
+                    <a href="javascript:collect_goods('<{$de.id}>');"><{$lang.favorite}></a>
+                </div>
+            </div>
+           </td>
+        <td valign="top">
+			<form onsubmit="return buy()" action="<{$config.weburl}>/?m=product&s=cart" method="post">
+			<table class="pro_info" width="430" border="0">
+            	　<tr>
+					 <td class="pro_text"><{$lang.price}></td>
+					 <td><{$config.money}> <span id="price" style="color:#CC0000; font-size:24px;"><{$de.price|number_format:2}></span></td>
+				 </tr>
+                 <tr>
+					<td width="97" class="pro_text"><{$lang.freight}></td>
+					<td width="223">
+                    <{if $de.freight_type==0}>
+                    	<{$lang.sell_freight}>
+                    <{else}>
+                    	<{if $de.user_ip}><{$de.area}>|<{$lang.to}> <{$de.user_ip}><{/if}>
+						<{if !$de.freight}>
+							<{$lang.sent_by_post}>：<{$de.post_price}>
+							<{$lang.express_delivery}><{$de.express_price}>
+							EMS：<{$de.ems_price}>
+						<{else}>
+							<{$de.freight_count}>
+						<{/if}>
+                    <{/if}>
+                    </td>
+				 </tr>
+               
+                <tr>
+					<td width="97" class="pro_text"><{$lang.have_sell}></td>
+					<td width="223"><span style="color:#C31815"><b><{$de.sell_amount}></b></span> <{$lang.item}></td>
+				 </tr>
+               
+                 <tr>
+					 <td class="pro_text"><{$lang.pro_city}></td>
+					 <td><{$de.area}></td>
+				 </tr>
+                 <tr>
+					 <td class="pro_text"><{$lang.ptime}></td>
+					 <td><{$de.uptime|date_format}></td>
+				 </tr>
+				 <tr>
+				 <td colspan="2">
+				 <{if $de.isbuy==1}>
+					 <div class="buy_box">
+                     
+                     	<{if $de.porperty}>
+					 	<div class="select_style">
+							<{foreach item=list from=$de.extfiled.d}>
+								<{$list}>
+							<{/foreach}>
+						</div>
+                        <{/if}>
+                        
+                        <div class="clear"></div>
+                        
+                        <{$lang.nums}>
+                        <span id="low_num">-</span>
+                        <input onkeyup="check_nums();" size="3" name="nums" id="nums" type="text" value="1" />
+                        <span id="add_num">+</span>(<{$lang.stock}><span id="stock"><{$de.amount}></span><{$lang.item}>)
+                        <input name="id" type="hidden" value="<{$de.id}>" />
+                        <input name="sid" id="sid" type="hidden" value="0" />
+                        <br />
+	 					<input type="image" src="<{$config.weburl}>/image/default/buy.gif" />
+						<img id="add_cart" src="<{$config.weburl}>/image/default/add_cart.gif" />
+					</div>
+				<{/if}>
+				<div id="cart_show"></div>
+				<script>
+			
+				 function check_nums()
+				 {
+				 	var v=document.getElementById('nums').value*1;
+				 	if(!v)
+						document.getElementById('nums').value=1;
+					if(v>$('#stock').html()*1)
+					{
+						document.getElementById('nums').value=$('#stock').html()*1;
+						return false;
+					}
+				 }
+								 /* spec对象 */
+				function spec(id, spec, price, stock)
+				{
+					this.id    = id;
+					this.spec  = spec;
+					this.price = price;
+					this.stock = stock;
+				}
+				/* goodsspec对象 */
+				function goodsspec(specs, specQty, defSpec)
+				{
+					this.specs = specs;
+					this.specQty = specQty;
+					this.defSpec = defSpec;
+					this.spec1 = null;
+					this.spec2 = null;
+					if (this.specQty >= 1)
+					{
+						for(var i = 0; i < this.specs.length; i++)
+						{
+							if (this.specs[i].id == this.defSpec)
+							{
+									this.spec1 = this.specs[i].spec[0];
+									this.spec2 = this.specs[i].spec[1];
+									break;
+							}
+						}
+					}
+				
+					// 取得选中的spec
+					this.getSpec = function()
+					{
+						for (var i = 0; i < this.specs.length; i++)
+						{
+								if (this.specs[i].spec[0] != this.spec1) continue;
+								if (this.specs[i].spec[1] != this.spec2) continue;
+								return this.specs[i];
+						}
+						return null;
+					}
+				
+				}
+				
+				/* 选中某规格 num=1,2 */
+				function selectSpec(num, SID)
+				{
+					goodsspec['spec' + num] = SID;
+					
+					var spec = goodsspec.getSpec();
+					if (spec != null)
+					{
+						$('#stock').html(spec.stock);
+						$('#price').html(spec.price.toFixed(2));
+						$('#sid').val(spec.id);
+					}
+				}
+				
+				var specs = new Array();
+				
+				<{foreach item=list key=num from=$de.porperty}>
+				specs.push(new spec(<{$list.id}>, ['<{$list.property_value_id|replace:",":"','"}>'], <{$list.price}>, <{$list.stock}>));
+				<{/foreach}>
+				
+				var specQty = <{$de.extfiled.d|@count}>;
+				var defSpec = <{$de.porperty.0.id}>;
+				var goodsspec = new goodsspec(specs, specQty, defSpec);
+				</script>
+				 </script>
+                 </td>
+				 </tr>
+				</table>
+            </form>
+		</td>
+	  </tr>
+	  <tr>
+	    <td colspan="2" align="left" valign="top">
+		<script>
+		function setTab(c)
+		{
+			for(i=1;i<=3;i++)
+			{
+				document.getElementById('otab'+i).className='';
+				document.getElementById('con_detail'+i).style.display='none';
+			}
+			document.getElementById('otab'+c).className='selected';
+			document.getElementById('con_detail'+c).style.display='block';
+		}
+		function setTab1(c)
+		{
+			for(i=1;i<=4;i++)
+			{
+				document.getElementById('tagli'+i).className='';
+				document.getElementById('con_tab'+i).style.display='none';
+			}
+			document.getElementById('tagli'+c).className='selected';
+			document.getElementById('con_tab'+c).style.display='';
+			
+		}
+	
+		</script>
+		<div class="con_title">
+			<li class="selected"  id="otab1" onmouseover="setTab(1);"><a><{$lang.pro_detail}></a></li>
+			<li id="otab2" onmouseover="setTab(2);"><a><{$lang.details_of_the_evaluation}></a></li>
+			<li id="otab3" onmouseover="setTab(3);"><a><{$lang.transaction_records}></a></li>
+		</div>
+		<div class="pro_con">
+			<div id="con_detail1" class="con_detail">
+
+					  <div class="pro_cat">
+					     
+						<div style="float:left; width:200px;">
+							<span class="pro_text" style="width:100px;"><{$lang.brand}>:</span> 
+							<{$de.brand}>
+						</div>
+						<div style="float:left; width:200px;">
+							<span class="pro_text" style="width:100px;"><{$lang.ptype}>:</span> 
+							<{$de.ptype}>
+						</div>
+						
+						<{foreach item=list from=$de.extfiled.s}>
+						<div style="float:left; width:200px;">
+							<{$list}>
+						</div> 
+						<{/foreach}>
+						 <div style="clear:left;"></div>
+					  </div>
+				<{$de.detail}>
+			</div>
+			<div id="con_detail2" class="con_detail" style="display:none">
+                <div class="score-box">
+                <table width="90%" style="margin:auto" >
+                <tr>
+                    <td width="130" style=" text-indent:0px; border-right:1px dotted #DDDDDD"><h4><{$lang.goods_consistent_with_the_description}></h4><p style="color:#FF6600; font-weight:100; margin:2px 0; font-family: Arial; font-size: 30px; line-height:30px; padding:1px 0 0; ">5.0<{$lang.fraction}></p></td>
+                    <td align="right" style="text-indent:0px;">
+                        <div class="scroller">
+                        <span style="width: <{$u.aw}>%;"><em><{$u.a|number_format:1}></em></span>
+                        </div>
+                        <div class="rate-desc">
+                            <ul>
+                                <li><{$lang.very_dissatisfied}></li>
+                                <li><{$lang.displeasure}></li>
+                                <li><{$lang.general}></li>
+                                <li><{$lang.satisfaction}></li>
+                                <li><{$lang.very_satisfied}></li>
+                            </ul>
+                        </div>
+                    </td>
+                </tr>
+                </table>
+                </div>
+                <div class="taglist">
+                	<ul>
+                    	<li id="tagli1" class="selected"><input type="radio" checked="checked" name="tagli" id="t1" onclick="setTab1(1);"> <label for="t1"><span><{$lang.whole}></span></label></li>
+                        <li id="tagli2"><input type="radio" name="tagli" id="t2" onclick="setTab1(2);"> <label for="t2"><span><{$lang.credit0}></span></label></li>
+                        <li id="tagli3"><input type="radio" name="tagli" id="t3" onclick="setTab1(3);"> <label for="t3"><span><{$lang.credit1}></span></label></li>
+                        <li id="tagli4"><input type="radio" name="tagli" id="t4" onclick="setTab1(4);"> <label for="t4"><span><{$lang.credit2}></span></label></li>
+                    </ul>
+                    <div class="clear"></div>
+                </div>
+                <table width="100%" class="product_commnet" id="con_tab1">
+                    <{foreach item=list from=$review.list}>
+                        <tr>
+                            <td width="85%"><{$list.con}></td>
+                            <td><{$list.user}></td>
+                        </tr>
+                        <tr class="baseline">
+                        	<td><{$list.uptime|date_format}></td>
+                            <td></td>
+                            <td></td>
+                        </tr>
+					<{foreachelse}>
+                    <tr><td height="70"><{$lang.no_results_found}></td></tr>
+                    <{/foreach}>
+                </table>
+                <table width="100%" class="product_commnet" id="con_tab2" style="display:none">
+                    <{foreach item=list from=$review2.list}>
+                        <tr>
+                            <td width="85%"><{$list.con}></td>
+                            <td><{$list.user}></td>
+                        </tr>
+                        <tr class="baseline">
+                        	<td><{$list.uptime|date_format}></td>
+                            <td></td>
+                            <td></td>
+                        </tr>
+                    <{foreachelse}>
+                    <tr><td height="70"><{$lang.no_results_found}></td></tr>
+                    <{/foreach}>
+                </table>
+                <table width="100%" class="product_commnet" id="con_tab3" style="display:none">
+                    <{foreach item=list from=$review3.list}>
+                        <tr>
+                            <td width="85%"><{$list.con}></td>
+                            <td><{$list.user}></td>
+                        </tr>
+                        <tr class="baseline">
+                        	<td><{$list.uptime|date_format}></td>
+                            <td></td>
+                            <td></td>
+                        </tr>
+                    <{foreachelse}>
+                    <tr><td height="70"><{$lang.no_results_found}></td></tr>  
+                    <{/foreach}>
+                </table>
+                <table width="100%" class="product_commnet" id="con_tab4" style="display:none">
+                    <{foreach item=list from=$review4.list}>
+                        <tr>
+                            <td width="85%"><{$list.con}></td>
+                            <td><{$list.user}></td>
+                        </tr>
+                        <tr class="baseline">
+                        	<td><{$list.uptime|date_format}></td>
+                            <td></td>
+                            <td></td>
+                        </tr>
+                    <{foreachelse}>
+                    <tr><td height="70"><{$lang.no_results_found}></td></tr>
+                    <{/foreach}>
+                </table>
+			</div>
+			<div id="con_detail3" class="con_detail" style="display:none">
+				<table width="100%" class="buy_info">
+					<tr>
+						<th width="20%"><{$lang.buyer}></th>
+						<th><{$lang.product_name}></th>
+						<th width="15%"><{$lang.paiprice}></th>
+						<th width="15%"><{$lang.add_num}></th>
+						<th width="25%"><{$lang.transaction_time}></th>
+					</tr>
+					<{foreach item=list from=$buy_rec.list}>
+					<tr>
+						<td><{$list.user}></td>
+						<td><{$list.name}></td>
+						<td align="center"><b style=" color:#FF5500; "><{$config.money}> <{$list.price*$list.num}></b></td>
+						<td align="center"><{$list.num}></td>
+						<td align="center"><{$list.time|date_format:"%Y-%m-%d %H:%M"}></td>
+					</tr>
+					<{/foreach}>
+				</table>
+			</div>
+		</div>
+	</td>
+	</tr>
+	</table>
+</div>
+
+
+

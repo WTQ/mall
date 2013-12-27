@@ -1,0 +1,118 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<title><{if $title}><{$title}>，<{$config.company}><{else}><{$config.title}><{/if}></title>
+<link rel="shortcut icon" href="favicon.ico" type="image/x-icon" />
+<meta name="description" content="<{$config.description}>" />
+<meta name="keywords" content="<{$config.keyword}>" />
+<script src="<{$config.weburl}>/script/jquery-1.4.4.min.js" type=text/javascript></script>
+<script src="<{$config.weburl}>/script/index.js" type="text/javascript"></script>
+<link href="<{$config.weburl}>/templates/<{$config.temp}>/page.css" rel="stylesheet" type="text/css" />
+</head>
+<body>
+<script>
+function get_search_word(k)
+{ 
+	if(k!='')
+	{
+		var url = '<{$config.weburl}>/ajax_back_end.php';
+		var sj = new Date();
+		var pars = 'shuiji=' + sj+'&search_flag=1&key='+k;
+		$.post(url, pars,showResponse);
+	}
+	
+	function showResponse(originalRequest)
+	{
+		if(originalRequest)
+		{
+			$('#key_select').show();
+			//$('#key_select').css("display",'block');
+			$('#key_select').html(originalRequest);
+		}
+		else
+			$('#key_select').hide();
+	}
+	
+}
+function select_word(v)
+{
+	$('#key').val(v);
+	$('#key_select').hide();
+}
+
+$(function(){
+	$(".sel").click(function(){ 
+		var obj=$(this);
+		$(this).next().slideToggle("fast",function(){
+		if($(obj).next().is(":visible")){
+			$(document).one('click',function(){
+				$(".sel").next().slideUp("fast");
+			});
+		}});
+	});
+	$(".h_sel li").click(function(){
+		var str=$(this).html();
+		$("#id").attr("value",$(this).attr("key"));
+		$(this).parent().prev().html(str);
+		$(this).parent().slideToggle();
+	});
+});
+</script>
+<div id="container">
+	<!--头部开始 -->
+	<div id="eheader" class="eheader">
+    	<div id="elogo" class="elogo"><a href="<{$config.weburl}>"><img src="<{if $config.logo}><{$config.logo}><{else}><{$config.weburl}>/image/default/logo.gif<{/if}>" /></a></div>
+        <div id="elogo_r" class="elogo_r">
+        	<div id="site-nav" class="site-nav">
+                <a href="#" style="CURSOR: hand" onClick="javascript:myAddPanel('<{$config.weburl}>','<{$config.company}>');" >Add to Favorite</a> | <a href="#" onClick="setHomepage('<{$config.weburl}>')">Set Homepage</a>
+            </div>
+            <div class="ewel">
+        		<div class="welcome">Welcome to <{$config.company}> ! &nbsp;<script src="<{$config.weburl}>/login_statu.php"></script></div>
+                <div class="esafe"><a rel="nofollow" href="#">Buyer Protection</a></div>
+            </div>
+        <div class="clear"></div>    
+        </div>
+		<div id="channel-wrap" class="channel-wrap cw-promote clear" style="z-index: 0;">
+        	<div id="eennavm" class="ennavm">
+                <div class="categories-main">CATEGORIES</div>
+                <{if $current!='home'}>
+                    <div class="cat_box" id="cat_box">
+                        <{insert name="label" type="cat" temp="cat_list_box"}>
+                    </div>
+                <{/if}>
+            </div>
+            
+            <div id="search-bar" class="esearch">
+            	<div id="esearch-panel"> 
+            	<form method="get" name="sear" id="sear" action="<{$config.weburl}>/">
+        		<label class="esearch-key" id="searchIntelligent">
+                <div class="esearch-key1"></div>
+        			<input  autocomplete="off" onkeyup="get_search_word(this.value);" value="<{$smarty.get.key}>" type="text"  id="SearchTextIdx" name="key"/>
+                    <div id="key_select"></div> 
+        		</label>        		
+        		<div id="fakeSelectorBox" class="esearch-cate">
+                    <div class="sel_list">
+                        <input type="hidden" id="id" name="id" value="" />
+                        <div class="sel">All Categories</div>
+                        <ul style="display: none;" class="h_sel">
+                        <{insert name="label" type="cat" temp="cat_list"}>
+                        </ul>
+                    </div>
+         		</div>
+            
+                <input id="m" name="m" type="hidden" value="product" />
+                <input id="s" name="s" type="hidden" value="list" />
+				
+        <input type="submit" style="display: inline; float:left;" class="esearch-btn" value="" />
+      </form>
+      <a rel="nofollow" id="cart-lnk" class="cart-lnk"  href="<{$config.weburl}>/?m=product&s=cart"><b id="my-shopcarts"><script src="<{$config.weburl}>/?m=product&s=cart_number"></script></b>Cart</a>
+      <a rel="nofollow" id="wish-lnk" class="wish-lnk" href="main.php?m=sns&s=admin_share_product">Wish <b>List</b></a>
+      </div>
+            </div>
+        </div>
+    </div>
+<div class="clear"></div>
+</div>
+<div id="wrapper">
+       

@@ -1,0 +1,18 @@
+<{foreach item=list from=$pro}>
+<li>
+<table width="0%" border="0" cellspacing="0" cellpadding="0">
+  <tr>
+    <td align="center">
+		<a target="_blank" href="<{$config.weburl}>/?m=product&s=detail&id=<{$list.id}>">
+			<img src='<{$list.pic}>_220X220.jpg' width=115 height=115 />
+		</a>
+	</td>
+    </tr>
+    <tr>
+    <td style="padding-left:5px; width:136px; text-align:center; " valign="top"><a style=" height:18px; line-height:16px;color:#005AA0;" target="_blank" href="<{$config.weburl}>/?m=product&s=detail&id=<{$list.id}>"><{$list.pname|truncate:14:""}></a>
+		<p style="height:18px; line-height:16px;"><span style="color:#999999">价格：</span> <span style="color:#FF0000"><b><{$config.money}><{$list.price}></b></span></p>
+</td>   
+  </tr>
+</table>
+</li>
+<{/foreach}>

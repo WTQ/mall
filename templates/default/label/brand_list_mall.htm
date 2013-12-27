@@ -1,0 +1,7 @@
+<{if $brand.0.name!=""}>
+	<{foreach item=list from=$brand}>
+		<li>
+			 <a target="_blank" href="<{$config.weburl}>/?m=product&s=list&brand=<{$list.name}>"><img src="<{$list.logo}>" ></a>
+		</li>
+	<{/foreach}>
+<{/if}>

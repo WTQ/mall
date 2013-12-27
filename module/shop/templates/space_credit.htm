@@ -1,0 +1,58 @@
+<div class="common_box">
+    <table width="100%" class="credit">
+        <tr>
+            <td colspan="6" class="guide_ba"><span><{$lang.credit}></span></td>
+        </tr>
+        <tr class="title">
+            <th width="20%"></th>
+            <th width="15%">最近1周</th>
+            <th width="15%">最近1个月</th>
+            <th width="15%">最近6个月</th>
+            <th width="15%">6个月前</th>
+            <th width="15%">总计</th>
+        </tr>
+        <{foreach item=list key=num from=$de}>
+        <tr>
+            <{assign var="name" value=credit$num}>
+            <th><b><{$lang.$name}></b></th>
+            <{foreach item=slist from=$list}>
+            <td><{$slist}></td>
+            <{/foreach}>
+            <td><{$list.3+$list.2}></td>
+        </tr>
+        <{/foreach}>
+        <tr>
+            <th><b><{$lang.credit3}></b></th>
+            <td><{$de.0.0+$de.1.0+$de.2.0+$de.3.0}></td>
+            <td><{$de.0.1+$de.1.1+$de.2.2+$de.3.3}></td>
+            <td><{$de.0.2+$de.1.2+$de.2.2+$de.3.2}></td>
+            <td><{$de.0.3+$de.1.3+$de.2.3+$de.3.3}></td>
+            <{assign var="n" value=$de.0.2+$de.0.3+$de.1.2+$de.1.3}>
+            <{assign var="s" value=$de.2.2+$de.2.3+$de.3.2+$de.3.3}>
+            <td><{$n+$s}></td>
+        </tr>
+    </table>
+</div>
+<div class="common_box" style="margin-top:10px;">
+    <table width="100%" class="comment">
+        <tr>
+            <td colspan="5" class="guide_ba"><span>来自买家的评论</span></td>
+        </tr>
+        <tr class="title">
+            <th width="50"></th>
+            <th></th>
+            <th align="left" width="150">评价人</th>
+            <th align="left" width="200">商品</th>
+            <th width="100">时间</th>
+        </tr>
+         <{foreach item=list key=num from=$comment.list}>
+        <tr>
+            <td align="center"><{$slist.goodbad}></td>
+            <td><{$slist.con|truncate:40}></td>
+            <td><a target="_blank" href="shop.php?uid=<{$slist.userid}>"><{$slist.user}></a></td>
+            <td><a target="_blank" href="<{$config.weburl}>/?m=product&s=detail&id=<{$slist.pid}>"><{$slist.pname|truncate:25}></a><p><{$config.money}> <{$slist.price|number_format:2}></p></td>
+            <td align="center"><{$slist.uptime|date_format:"%Y-%m-%d <br> %H:%M:%S"}></td>
+        </tr>
+        <{/foreach}>
+    </table>
+</div>

@@ -1,0 +1,125 @@
+<link href="<{$config.weburl}>/module/brand/templates/brand.css" rel="stylesheet" type="text/css" />
+</div>
+<div id="babody">
+<center>
+	<div class="wrapper" style="width:960px;">
+	<div style="height:0px; background:#E2E0E1; width:960px;"></div>
+        <div class="menu_left">
+            <div class="menu_con">
+                <ul id="catarea" class="area">
+                    <{foreach item=list key=num from=$bcat}>
+                        <li><a target="_blank" href="<{$config.weburl}>/?m=brand&s=brand_list&id=<{$list.id}>" title="<{$list.catname}>"><{$list.catname}></a>
+                            <{if $list.catname}>
+                                <dl>
+                                    <{foreach item=slist from=$list.list key=nums}>
+                                         <dd><a target="_blank" href="<{$config.weburl}>/?m=brand&s=brand_list&id=<{$list.id}>&etgid=<{$slist.id}>" title="<{$slist.catname}>"><{$slist.catname}></a></dd>
+                                     <{/foreach}>
+                                 </dl>
+                            <{/if}>
+                        </li>
+                    <{/foreach}>
+                </ul>
+            </div>
+            <div class="afbrand" >
+            <ol class="afbrandlist clear">
+                <li id="A" ><a href="?m=brand&s=brand_azlist&firstLetter=A">A</a></li>
+                <li id="B" ><a href="?m=brand&s=brand_azlist&firstLetter=B">B</a></li>
+                <li id="C" ><a href="?m=brand&s=brand_azlist&firstLetter=C">C</a></li>
+                <li id="D" ><a href="?m=brand&s=brand_azlist&firstLetter=D">D</a></li>
+                <li id="E" ><a href="?m=brand&s=brand_azlist&firstLetter=E">E</a></li>
+                <li id="F" ><a href="?m=brand&s=brand_azlist&firstLetter=F">F</a></li>
+                <li id="G" ><a href="?m=brand&s=brand_azlist&firstLetter=G">G</a></li>
+                <li id="H" ><a href="?m=brand&s=brand_azlist&firstLetter=H">H</a></li>
+                <li id="I" ><a href="?m=brand&s=brand_azlist&firstLetter=I">I</a></li>
+                <li id="J" ><a href="?m=brand&s=brand_azlist&firstLetter=J">J</a></li>
+                <li id="K" ><a href="?m=brand&s=brand_azlist&firstLetter=K">K</a></li>
+                <li id="L" ><a href="?m=brand&s=brand_azlist&firstLetter=L">L</a></li>
+                <li id="M" ><a href="?m=brand&s=brand_azlist&firstLetter=M">M</a></li>
+                <li id="N" ><a href="?m=brand&s=brand_azlist&firstLetter=N">N</a></li>
+                <li id="O" ><a href="?m=brand&s=brand_azlist&firstLetter=O">O</a></li>
+                <li id="P" ><a href="?m=brand&s=brand_azlist&firstLetter=P">P</a></li>
+                <li id="Q" ><a href="?m=brand&s=brand_azlist&firstLetter=Q">Q</a></li>
+                <li id="R" ><a href="?m=brand&s=brand_azlist&firstLetter=R">R</a></li>
+                <li id="S" ><a href="?m=brand&s=brand_azlist&firstLetter=S">S</a></li>
+                <li id="T" ><a href="?m=brand&s=brand_azlist&firstLetter=T">T</a></li>
+                <li id="U" ><a href="?m=brand&s=brand_azlist&firstLetter=U">U</a></li>
+                <li id="V" ><a href="?m=brand&s=brand_azlist&firstLetter=V">V</a></li>
+                <li id="W" ><a href="?m=brand&s=brand_azlist&firstLetter=W">W</a></li>
+                <li id="X" ><a href="?m=brand&s=brand_azlist&firstLetter=X">X</a></li>
+                <li id="Y" ><a href="?m=brand&s=brand_azlist&firstLetter=Y">Y</a></li>
+                <li id="Z" ><a href="?m=brand&s=brand_azlist&firstLetter=Z">Z</a></li>
+            </ol>
+            </div>   
+        </div>        
+        <script type=text/javascript>
+    function showcat()
+    {
+        try{
+            var lies = document.getElementById("catarea").getElementsByTagName("li");
+            for (var i=0; i< lies.length; i++) {
+                lies[i].onmouseover= function() {
+                    this.className="lion";
+                }
+                lies[i].onmouseout= function() {
+                    this.className="";
+                }
+            }
+        }
+        catch(e){}
+    }
+    showcat();
+    </script>
+        <div class="menu_right">
+             <div class="b_top">
+                <div class="top_ad">
+                    <script src='<{$config.weburl}>/api/ad.php?id=37&catid=&name=<{$smarty.get.key}>'></script></div>
+                <div class="top_r">
+                <div class="reclogo">
+                    <h3>推荐品牌</h3>
+                    <div class="reclogos clear">
+                        <{insert name="label" type="brand" temp="brand_list_mall" rec=2 limit=8}>
+                        <div class="clear"></div>
+                    </div>
+                    <div class="reclogos m1">
+                     <script src='<{$config.weburl}>/api/ad.php?id=36&catid=&name=<{$smarty.get.key}>'></script>
+                    </div>
+                <div class="clear"></div>
+                </div>
+            </div>
+        </div>
+    </div>
+        <div class="clear"></div>
+        </div>
+        <div class="wrapper" style="width:960px;">
+        
+        <{foreach item=clist key=num from=$bcat}>
+            <div style="margin-top:15px;" >
+                <div class="brm1"> <h3><em class="br_num"><{$num+1}></em><a target="_blank" href="<{$config.weburl}>/?m=brand&s=brand_list&id=<{$clist.id}>"><b class="brinfl"><{$clist.catname}></b><i class="brinflimg"></i></a></h3></div>
+                    <div class="brm2">
+                        <ul class="brm2u" >
+                            <{foreach item=slist from=$clist.list key=nums}>
+                            <{if $nums<4}>
+                                <li class="brm2li">
+                                    <div class="brm2_up"><a target="_blank" style="color:#FFF;" href="<{$config.weburl}>/?m=brand&s=brand_list&id=<{$clist.id}>&etgid=<{$slist.id}>"><{$slist.catname}></a></div>
+                                    <{insert name="label" type="brand" temp="brand_list_1" rec=2 catid=$slist.id limit=9}>
+                                </li>
+                            <{/if}>
+                            <{/foreach}>
+                        </ul>
+                    <div class="brm2d">
+                        <div class="reclogo" style="margin-bottom:0px;">
+                        <h3>品牌排行榜</h3>
+                        
+                        <ul class="brm_f">
+                        	<{insert name="label" type="brand" temp="brand_list_2" pid=$clist.id limit=10}>
+                        </ul>
+                <div class="clear"></div>
+                </div></div>
+                 </div>
+                <div class="clear"></div>
+            </div>
+        <{/foreach}>
+        </div>
+	</div>
+</center>
+ <div style=" background:#F1EBEB; margin:0 auto; padding-top:10px;">

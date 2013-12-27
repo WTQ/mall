@@ -1,0 +1,15 @@
+<{foreach item=list name=name from=$news}>
+<div class="div1">
+    <div>
+    <a target="_blank"  title="<{$list.title}>" href="<{$list.url}>">
+        <img width="105" height="105" src="<{$list.pic}>" />
+    </a>
+    </div>
+    <dl>
+        <dt><a target="_blank" style=" font-weight:bold; color:#A70006" title="<{$list.title}>" <{$list.style}>  href="<{$list.url}>"><{$list.ftitle|truncate:90}></a></dt>
+        <dd>
+            <{$list.smalltext|truncate:150}>
+        </dd>
+    </dl>
+</div>
+<{/foreach}>

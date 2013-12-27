@@ -1,0 +1,40 @@
+<div class="menu_bottom L1">				
+	<div class="headtop_L">
+	   <{$lang.you_are_here}><a href='<{$config.weburl}>/'><{$lang.indexpage}></a> &raquo; <{$lang.com_res}></a>
+	</div>	
+</div>
+<!--主体开始 -->
+<div id="mainbody1" class="m1">	
+	<!--主体左侧开始 -->
+	<div class="leftbar">
+
+		<div id="starcompany">
+			<div class="title4"><div class="title_left2 L2">最新专题</div></div>
+			<div style="padding-left:5px;" class="content4">
+					<{foreach item=list from=$new_spe}>
+						<h2><a href="<{$config.weburl}>/?m=special&s=spd&id=<{$list.id}>" target="_blank"><{$list.name}></a></h2>
+						<div style="text-indent:1em; color:#CCCCCC;"><{$list.con}></div>
+					<{/foreach}>
+			</div>
+		</div>
+
+
+	</div>
+	<!--主体左侧结束 -->
+	
+	<!--主体右侧开始 -->
+	<div class="rightbar">
+		<div class="right1">
+			<div class="sectitle" ><div class="title_left1 L2">推荐专题</div></div>
+			<div class="seccon">
+				<ul class="li_list">
+				 	<{foreach item=list from=$rec_spe}>
+						<li><a href="<{$config.weburl}>/?m=special&s=spd&id=<{$list.id}>" target="_blank"><{$list.name}></a></li>
+					<{/foreach}>
+			   </ul>
+			   <div class="clear"></div>
+			</div>
+		</div>
+	</div>		
+	<!--主体右侧结束 -->
+</div>

@@ -1,0 +1,120 @@
+<script type="text/javascript" charset="utf-8" src="<{$config.weburl}>/script/district.js" ></script>
+<script>
+var weburl="<{$config.weburl}>";
+</script>
+<div class="path">
+    <div>
+    	<a href="main.php?cg_u_type=2">卖家中心</a> <span>&gt;</span> 
+        <a href="main.php?m=logistics&s=admin_start_addr">发货地址</a> <span>&gt;</span>
+        <{if $smarty.get.type=='add'}>新增发货地址<{elseif $smarty.get.type=='edit'}>编辑发货地址<{else}>发货地址列表<{/if}>
+    </div>
+</div>
+<div class="main">
+	<div class="wrap">
+        <div class="hd">
+            <ul class="tabs">
+                <li class="<{if $smarty.get.type}>normal<{else}>active<{/if}>"><a href="main.php?m=logistics&s=admin_start_addr">发货地址列表</a></li>
+                <li class="<{if $smarty.get.type=='add'}>active<{else}>normal<{/if}>"><a href="main.php?m=logistics&s=admin_start_addr&type=add">新增发货地址</a></li>
+                <{if $smarty.get.type=='edit'}>
+                <li class="active"><a href="main.php?m=logistics&s=admin_start_addr&type=edit">编辑发货地址</a></li>
+                <{/if}>
+            </ul>
+        </div>
+        <{if $smarty.get.type=='add' or $smarty.get.type=='edit'}>
+        <div class="form-style">
+            <form action="" method="post">
+            <input type="hidden" name="id" value="<{$de.id}>"/>
+ 			<input type="hidden" name="action" id="action" value="<{if $de.id}>edit<{else}>save<{/if}>" /> 
+            <dl>
+                <dt><em>*</em>联系人：</dt>
+                <dd><input name="name" class="text w100" value="<{$de.name}>" maxlength="30" type="text" id="name" /></dd>
+            </dl>
+            
+            <dl>
+                <dt><em>*</em>所在地区：</dt>
+                <dd>
+                <input type="hidden" name="t" id="t" value="<{$de.area}>" />
+                <input type="hidden" name="province" id="id_1" value="<{$de.provinceid}>" />
+                <input type="hidden" name="city" id="id_2" value="<{$de.cityid}>" />
+                <input type="hidden" name="area" id="id_3" value="<{$de.areaid}>" />
+                <{if $de.area}><div id="d_1"><{$de.area}>&nbsp;&nbsp;<a href="javascript:sd();">编辑</a></div><{/if}>
+                <div id="d_2" <{if $de.area}>class="hidden"<{/if}>>
+                <select id="select_1" onChange="selClass(this);">
+                <option value="">--请选择--</option>
+                <{$prov}>
+                </select>
+                <select id="select_2" onChange="selClass(this);" class="hidden"></select>
+                <select id="select_3" onChange="selClass(this);" class="hidden"></select>			</div>
+                </dd>
+            </dl>
+            <dl>
+                <dt><em>*</em>街道地址：</dt>
+                <dd><input class="text w300" name="addr" maxlength="150" type="text" id="oldpass3"  value="<{$de.addr}>"/></dd>
+            </dl>
+            <dl>
+                <dt><em>*</em>邮政编码：</dt>
+                <dd><input name="post" class="text w100" maxlength="6" type="text" id="post" value="<{$de.post}>"/></dd>
+            </dl>
+            <dl>
+                <dt>电话号码：</dt>
+                <dd><input name="tel" class="text w100" maxlength="20" type="text" id="oldpass5" value="<{$de.tel}>"/></dd>
+            </dl>
+            <dl>
+                <dt>手机号码：</dt>
+                <dd><input name="mobile" class="text w100" maxlength="15" type="text" id="oldpass6" value="<{$de.mobile}>"/></dd>
+            </dl>
+            <dl>
+                <dt>公司名称：</dt>
+                <dd><input name="company" class="text w300" maxlength="50" type="text" value="<{$de.company}>" id="oldpass7" /></dd>
+            </dl>
+            <dl>
+                <dt>备注：</dt>
+                <dd><input name="con" class="text w300" type="text" value="<{$de.con}>" id="oldpass8" /></dd>
+            </dl>
+            <dl class="foot">
+                <dt>&nbsp;</dt>
+                <dd><input type="submit" value="提交" class="submit"></dd>
+            </dl>
+            </form>
+        </div>  
+        <{else}>
+        <table class="table-list-style">
+            <thead>
+            <tr>
+                <th width="60">发货地址</th>
+                <th width="60">退货地址</th>
+                <th width="100">联系人</th>
+                <th class="tl">所在地区</th>
+                <th width="70">邮政编码</th>
+                <th width="70">电话号码</th>
+                <th width="70">手机号码</th>
+                <th width="80">操作</th>
+            </tr>
+            </thead>
+            <tbody>
+            <{foreach item=list key=num from=$info}>
+            <tr>
+                <td><input <{if $list.default_receipt}>checked="checked"<{/if}> onclick="javascript:window.location='<{$config.weburl}>/main.php?m=logistics&s=admin_start_addr&fid=<{$list.id}>';"  name="defaultreceipt" type="radio" value="<{$list.id}>" /> 默认</td>
+                <td><input <{if $list.default_delivery}>checked="checked"<{/if}>  onclick="javascript:window.location='<{$config.weburl}>/main.php?m=logistics&s=admin_start_addr&tid=<{$list.id}>';" name="defaultdelivery" type="radio" value="<{$list.id}>" /> 默认</td>
+                <td><{$list.name}></td>
+                <td class="tl"><{$list.area}> <{$list.addr}></td>
+                <td><{$list.post}></td>
+                <td><{$list.tel}></td>
+                <td><{$list.mobile}></td>
+                <td>
+                <p><a href="<{$config.weburl}>/main.php?m=logistics&s=admin_start_addr&type=edit&id=<{$list.id}>">编辑</a></p>
+                <p><a href="<{$config.weburl}>/main.php?m=logistics&s=admin_start_addr&delid=<{$list.id}>">删除</a></p>
+                </td>
+            </tr>
+            <{foreachelse}>
+            <tr>
+            	<td colspan="20" class="norecord">
+                	<i></i><span>暂无符合条件的数据记录</span>	
+                </td>
+            </tr>
+            <{/foreach}>
+            </tbody>
+        </table>
+        <{/if}>
+    </div>
+</div>

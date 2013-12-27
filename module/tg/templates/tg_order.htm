@@ -1,0 +1,154 @@
+<{if !$buid}>
+	正在跳转到登录页面...
+    <script>
+		parent.window.location.href = 'login.php?forward='+encodeURIComponent('<{$smarty.server.HTTP_REFERER}>');
+	</script>
+<{else}>
+<script language="javascript">
+function searchFocus(e){
+	e.value='';
+	$('#remark').css("color","#333333");
+}
+</script>
+<script src="<{$config.weburl}>/script/jquery.validation.min.js" type="text/javascript"></script>
+<link type="text/css" rel="stylesheet" href="<{$config.weburl}>/module/tg/templates/tg.css">
+<form id="form" name="form" method="post">
+<div class="cart">
+    <div class="cart-title">
+        <h3>收货人地址</h3>
+        <div class="btns">
+            <a class="editadd" target="_blank" href="<{$config.weburl}>/main.php?m=product&s=admin_orderadder">管理收货人地址</a>
+        </div>
+	</div>
+    
+    <div class="address-list">
+    <{foreach item=list name=name from=$listadder}>
+        <ul class="address-item <{if $smarty.foreach.name.iteration==1}> checked<{/if}>">
+            <li class="goto"><{if $smarty.foreach.name.iteration==1}>寄送至<{else}>&nbsp;<{/if}></li>
+            <li>
+                <input type="radio" name="addr" <{if $smarty.foreach.name.iteration==1}> checked="checked"<{/if}>  value="<{$list.id}>" />
+                <label><{$list.area}> <{$list.address}> <{$list.name}>(收)</label>
+            </li>
+        </ul>
+    <{/foreach}>
+    <input type="hidden" name="addressid" id="addressid" value="<{$listadder.0.id}>" />
+    </div>
+    <div class="cart-title"><h3>确认购物清单</h3></div>
+    <div class="tg-list">
+        <table width="100%" cellpadding="50" cellspacing="2">
+            <thead>
+            <tr>
+                <th colspan="2">商品</th>
+                <th width="120">单价(元)</th>
+                <th width="160">数量</th>
+                <th width="120">小计(元)</th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr>
+               	<td width="70">
+                <a target="_blank" href="<{$config.weburl}>/?m=tg&s=detail&id=<{$de.id}>"><{if $de.pic}><img width="120" src="<{$de.pic}>"><{else}><img width="120" src="image/default/nopic.gif" /><{/if}></a>
+                </td>
+                <td class="tal">
+                <a target="_blank" href="<{$config.weburl}>/?m=tg&s=detail&id=<{$de.id}>"><{$de.name}></a>
+                </td>
+                <td class="price"><{$de.price|number_format:2}></td>
+                <td>
+                <input maxlength="3" type="text" name="quantity" id="quantity" value="1" onbeforepaste="clipboardData.setData('text',clipboardData.getData('text').replace(/[^\d]/g,''))" onkeyup="value=value.replace(/[^\d]/g,'');" onblur="count();" />
+                <{if $de.limit_quantity!=0}><span>&nbsp;&nbsp;限购:<{$de.limit_quantity}></span><{/if}>
+                </td>
+                <td class="count"><{$de.price|number_format:2}></td>
+            </tr>
+            </tbody>
+            <tfoot>
+            <tr>
+                <th class="tal" colspan="99">备&nbsp;注：
+                <input type="text" name="remark" id='remark' value="选填，可以告诉卖家您对商品的特殊需求，如颜色、尺码等" onfocus="searchFocus(this)" /></th>
+            </tr>
+            </tfoot>
+        </table>
+    </div>
+    <div class="form-error"></div>
+    <div class="cart-bottom">
+        <div class="cart-buttons">
+            <a class="cart-back-button mr10" href="?m=tg">返回</a>
+            <a class="cart-button" id="submitToPay" href="javascript:void(0)">下单完成并支付</a>
+        </div>
+    </div>	
+</div>
+</form>
+<script>
+$(function(){
+    //选择已经存在的收货人地址
+    $('.address-item').live('click',function(){
+    	$(this).parent().find('.goto').html('&nbsp;');
+    	$(this).children().first().html('寄送至');
+        var checked_address_radio = $(this).find("input[name='addr']");
+        $(checked_address_radio).attr('checked', true);
+        $('.address-item').removeClass('checked');
+        $(this).addClass('checked');
+		$("#addressid").val($(checked_address_radio).val());
+        
+    });
+	<{if $de.limit_quantity < $de.stock }>
+		<{if $de.limit_quantity==0}>
+		num='<{$de.stock}>';
+		str='库存不足';
+		<{else}>
+		num='<{$de.limit_quantity}>';
+		str='超出限购数量';
+		<{/if}>
+	<{else}>
+	num='<{$de.stock}>';
+	str='库存不足';
+	<{/if}>
+	$('#submitToPay').click(function(){
+		$('#form').validate({
+			errorPlacement: function(error, element){
+				Width=document.body.clientWidth/2-60;
+				Height=document.body.clientHeight/2;
+				$('.form-error').offset({top:Height,left:Width});
+				$('.form-error').html(error);
+			},      
+			rules : {
+				addr:{
+					required:true
+				},
+				addressid:{
+					required:true
+				},
+				quantity:{
+					required:true,
+					digits:true,
+					max:num,
+					min:1,
+				}
+			},
+			messages : {
+				addr:{
+					required:'请设置收货地址',
+				},
+				addressid:{
+					required:'请设置收货地址',
+				},
+				quantity:{
+					required:'请填写数量',
+					digits:'必须输入整数',
+					max:str,
+					min:"必须大于0",
+				}
+				
+			},
+		});
+		$('#form').submit();
+	});
+											  
+});
+function count(){
+	var	price=<{$de.price}>;
+	var	num=$('#quantity').val();
+	var count=price*1*num*1;
+	$('.count').html(count.toFixed(2));
+}
+</script>
+<{/if}>

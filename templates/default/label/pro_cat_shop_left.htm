@@ -1,0 +1,32 @@
+<ul id="catarea" class="area">
+ <{foreach item=cList key=num from=$cat}>
+	<li><a href="<{$config.weburl}>/?m=product&s=list&id=<{$cList.catid}>" 
+		title="<{$cList.cat}>"><{$cList.cat}></a>
+		<{if $cList.scat}>
+		<dl>
+		 <{foreach item=sublist from=$cList.scat key=nums}>
+				<dd><a href="<{$config.weburl}>/?m=product&s=list&id=<{$sublist.catid}>" title="<{$sublist.cat}>"><{$sublist.cat}></a></dd>
+		 <{/foreach}>
+		 </dl>
+		 <{/if}>
+	</li>
+ <{/foreach}>
+</ul>
+<script type=text/javascript>
+function showcat()
+{
+	try{
+		var lies = document.getElementById("catarea").getElementsByTagName("li");
+		for (var i=0; i< lies.length; i++) {
+			lies[i].onmouseover= function() {
+				this.className="lion";
+			}
+			lies[i].onmouseout= function() {
+				this.className="";
+			}
+		}
+	}
+	catch(e){}
+}
+showcat();
+</script>

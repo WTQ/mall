@@ -1,0 +1,121 @@
+<script>
+function ajax_form(id, title, url, width, model)
+{
+    if (!width)	width = 480;
+    if (!model) model = 1;
+    var d = DialogManager.create(id);;
+    d.setTitle(title);
+    d.setContents('ajax', url);
+    d.setWidth(width);
+    d.show('center',model);
+    return d;
+}
+
+$(function(){
+    /* 全选 */
+	 $('.checkall').click(function(){
+        var _self = this;
+        $('.checkitem').each(function(){
+            if (!this.disabled)
+            {
+                $(this).attr('checked', _self.checked);
+            }
+        });
+        $('.checkall').attr('checked', this.checked);
+    });
+	 
+	$('a[nc_type="batchbutton"]').click(function(){
+		/* 是否有选择 */
+		if($('.checkitem:checked').length == 0){    //没有选择
+			return false;
+		}
+		var _uri = $(this).attr('uri');
+		var _name = $(this).attr('name');
+		
+		var handleResult = function(uri,name) {
+			/* 获取选中的项 */
+			var items = '';
+				$('.checkitem:checked').each(function(){
+					items += this.value + ',';
+			});
+			items = items.substr(0, (items.length - 1));
+			/* 将选中的项通过GET方式提交给指定的URI */
+			//window.location.href=uri + '&' + name + '=' + items;
+			$.get(uri, name + '=' + items,showResponse);
+			function showResponse(originalRequest)
+			{
+				document.location.reload();
+			}
+			return false;
+		}
+		handleResult(_uri,_name);
+	});
+});
+</script>
+<div class="path">
+    <div>
+    	<a href="main.php?cg_u_type=1">我的商城</a> <span>&gt;</span> 
+        收藏商品
+    </div>
+</div>
+<div class="main">
+	<div class="wrap">
+        <div class="hd">
+            <ul class="tabs">
+                <li class="active"><a href="main.php?m=sns&s=admin_share_product">收藏商品</a></li>
+                <li class="normal"><a href="main.php?m=sns&s=admin_share_shop">收藏店铺</a></li>
+            </ul>
+        </div>
+        <table class="table-list-style">
+            <tr>
+                <td colspan="20" class="pic_model">
+                    <ul>
+                    <{foreach item=list key=num from=$re.list}>
+                    	<li>
+                        <dl>
+                            <dt>
+                           <input type="checkbox" value="<{$list.id}>" class="checkitem" name="chk[]">
+                            <a target="_blank" href="<{$config.weburl}>/?m=product&s=detail&id=<{$list.pid}>"><{$list.pname}></a></dt>
+                            <dd class="picture">
+                                <div><a target="_blank" href="<{$config.weburl}>/?m=product&s=detail&id=<{$list.pid}>"><img width="150" height="150" src="<{if $list.image}><{$list.image}><{else}>image/default/nopic.gif<{/if}>"></a></div>
+                                <div class="handle"><a href="main.php?m=sns&s=admin_share_product&type=del&id=<{$list.id}>">删除</a></div>
+                            </dd>
+                            <dd>价格：<em class="price"><{$list.price}></em> 元</dd>
+                            <dd class="share"><span>售出：<em><{$list.sell_amount}></em>件</span> <span>(<em><{$list.commentcount}></em>条评论)</span></dd>
+                            <dd><span class="fl">收藏人气：<{$list.collectnum}></span><!--<a title="分享商品" data-param="{&quot;pid&quot;:&quot;<{$list.pid}>&quot;}" nc_type="sharegoods" class="sharep" n href="javascript:void(0)">分享</a>--></dd>
+                        </dl>
+                        </li>
+                    <{/foreach}>
+                    </ul>
+                </td>
+            </tr>
+			<{if !$re.list}>
+            <tr>
+            	<td colspan="20" class="norecord" style="border-top:none;">
+                	<i></i><span>暂无符合条件的数据记录</span>	
+                </td>
+            </tr>
+            <{/if}>
+            </tbody>
+            <tfoot>
+            <tr>
+            	<td>
+                <input type="checkbox" class="checkall" id="del" style="margin:5px 10px 0 20px; float:left;">
+                <label for="del" class="btn2">全选</label>
+                <a nc_type="batchbutton" confirm="您确定要删除吗?" name="pid" uri="main.php?m=sns&s=admin_share_product" class="btn2" href="javascript:void(0);">删除</a>
+                <div class="pagination"><{$re.page}></div>
+                </td>
+            </tr>
+            </tfoot>
+        </table>
+     </div>   
+</div>
+<script>
+//显示分享商品页面
+$("[nc_type='sharegoods']").bind('click',function(){
+		var data_str = $(this).attr('data-param');
+	    eval( "data_str = "+data_str);
+		ajax_form("sharegoods", '分享已买到和收藏的宝贝', '<{$config.weburl}>/main.php?action=main&op=sharegoods&pid='+data_str.pid, 500);
+		return false;
+	});
+</script>

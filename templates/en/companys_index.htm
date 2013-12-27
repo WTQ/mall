@@ -1,0 +1,64 @@
+<link href="<{$config.weburl}>/templates/en/company.css" rel="stylesheet" type="text/css" />
+<div class="main_guide">				
+	<{$lang.you_are_here}><a href='<{$config.weburl}>/'><{$lang.indexpage}></a> &raquo; Companies</a>
+</div>
+
+<div class="left_box">
+	<div class="country_list">
+		<div class="country_title">Search by Country/Region</div>
+		<ul>
+			<{foreach item=list key=num from=$country}>
+				<{if $num<44}>
+				<li style="background-image:url(image/cflag/<{$list.flag}>.gif); padding-left:20px;">
+					<a href="<{$config.weburl}>/?m=company&s=company_list&country=<{$list.id}>"><{$list.name}></a>
+				</li>
+				<{/if}>
+			<{/foreach}>
+			<div class="clear"></div>
+		</ul>
+	</div>
+	
+	<div class="cat_list">
+		<div class="country_title">Search by Category</div>
+		
+		<div class="">
+				<ul>
+                <{foreach item=cList key=num from=$cat}>
+					<div style="text-align:left; border-bottom:1px dashed #CCCCCC; padding-top:10px; padding-bottom:10px; padding-left:10px;">
+						<h3 style="font-size:14px">
+						<a href="<{$config.weburl}>/?m=company&s=company_list&id=<{$cList.catid}>" title="<{$cList.cat}>">
+						<{$cList.cat}></a>
+						</h3>
+						<p class="sub_cat">
+						 <{if $cList.subcat}>
+								<{foreach item=sublist from=$cList.subcat key=nums}>
+									<a style="background-image:url(http://cpbay.com/image/cpbay/action3.gif); background-repeat:no-repeat; background-position:left; padding-left:8px; width:210px; display:block; float:left;" href="<{$config.weburl}>/?m=company&s=company_list&id=<{$sublist.catid}>" title="<{$sublist.cat}>"><{$sublist.cat}></a>
+								<{/foreach}>
+						 <{/if}>
+						 <div class="clear"></div>
+						<p>
+						<div class="clear"></div>
+					</div>
+			  <{/foreach}>
+
+			</ul>
+		  </div>
+		
+	</div>
+</div>
+
+<div class="cateRight">
+	<div class="sideBox">
+		<div class="winCate winCateSkinA streeSkinA">
+			<div style="font-size:16px; font-weight:bold;">Top Suppliers</div>
+			<div class="box">
+				<ul class="buyingLeads" id="latestBuyingLeads">
+					<{insert name="getUser" field="company" filter="star" leng=30 limit=18}>
+				</ul>
+			</div>
+		</div>
+	</div>
+</div>
+<div class="cateRight">
+	<script src='<{$config.weburl}>/api/ad.php?id=19&catid=<{$smarty.get.id}>&name=<{$smarty.get.key}>'></script>
+</div>

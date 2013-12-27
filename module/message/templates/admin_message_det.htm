@@ -1,0 +1,55 @@
+<div class="main">
+	<div class="wrap">
+		<div class="form-style" style="position: relative;">
+            <{if $re.fromuserid}>
+            <dl>
+                <dt><{if $re.msgtype=='2'}>收件人<{else}>发件人<{/if}>：</dt>
+                <dd><{$re.fromInfo.user}> <a href="home.php?uid=<{$re.fromInfo.userid}>" target="_blank"><{$re.fromInfo.name}></a></dd>
+            </dl>
+            <dl>
+                <dt>标题：</dt>
+                <dd><{$re.sub}></dd>
+            </dl>
+			<{if $re.fromInfo.addr}>
+            <dl>
+                <dt>地址：</dt>
+                <dd><{$re.fromInfo.addr}></dd>
+            </dl>
+			<{/if}>
+			
+			<{if $re.fromInfo.tel}>
+            <dl>
+                <dt>电话：</dt>
+                <dd><{$re.fromInfo.tel}></dd>
+            </dl>
+			<{/if}>
+			
+            <dl>
+                <dt>日期：</dt>
+                <dd><{$re.date}></dd>
+            </dl>
+            <{elseif $re.fromInfo!=''}>
+                <dl>
+                    <dt><{$lang.cinfo}></dt>
+                    <dd><{$re.fromInfo}></dd>
+            	</dl>
+            <{/if}>
+			<{if $re.about!=''}>
+                <dl>
+                    <dt><{$lang.about}></dt>
+                    <dd><{$re.about}></dd>
+            	</dl>
+            <{/if}>
+			<dl>
+                <dt>详情	：</dt>
+                <dd><{$re.con}></dd>
+            </dl>
+          <{if $re.reply_by}>
+          <font color="red">请在<{$re.reply_by|date_format}>回复我</font>
+          <{/if}>
+          <{if $re.receive_type}><br />询价类型:<{$re.receive_type}><{/if}>
+        </div>
+     </div>
+</div>
+
+	  

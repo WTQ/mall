@@ -1,0 +1,42 @@
+<{include file="header.htm"}>
+<style>
+dt,dt a { font-size:24px; font-weight:bold; padding:10px 0;}
+dd b{ font-size:20px; font-weight:normal; margin-right: 5px;}
+</style>
+<div id="mainbody1" class="topm">
+	<{if $config.baseurl}>
+		<div style=" font-size:14px; font-weight:bold; text-align:left; padding:10px;border: 1px solid #A9BAD3;">
+		<{$lang.selectcity}>
+		</div>
+		
+        <div style="border: 1px solid #A9BAD3; margin-top:5px;padding:10px;">
+			<span style="width:200px;text-align:left; display:block; height:30px;">
+			   <a href="http://www.<{$config.baseurl}>"><strong><{$lang.backto}></strong></a>
+			</span>
+            <dl>
+			<{foreach item=list from=$prov}>
+				<dt>
+				<{if $list.domain }><a href="http://<{$list.domain}>.<{$config.baseurl}>"><{$list.con}></a><{else}><{$list.con}><{/if}>
+                </dt>
+				
+                <{foreach item=slist from=$list.city}>
+                <dd>  
+                    <{if $slist.domain }><a href="http://<{$slist.domain}>.<{$config.baseurl}>"><b><{$slist.con2}></b></a><{else}><b><{$slist.con2}></b><{/if}>
+                    
+                    <{foreach item=clist from=$slist.area}>
+                    <span><{if $clist.domain }><a href="http://<{$clist.domain}>.<{$config.baseurl}>"><{$clist.con3}></a><{else}><{$clist.con3}><{/if}></span>
+                    <{/foreach}>
+                </dd>
+                <{/foreach}>
+                
+			<{/foreach}>
+            </dl>
+		<div class="clear"></div>
+		</div>
+        
+	<{else}>
+		系统基本路径没有设置，二级域名分站不可用。
+	<{/if}>
+</div>
+
+<{include file="footer.htm"}>

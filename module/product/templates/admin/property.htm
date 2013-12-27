@@ -1,0 +1,131 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<title>产品类型</title>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<link href="admin.css" rel="stylesheet" type="text/css" />
+<script type="text/javascript" src="../script/jquery-1.4.4.min.js"></script>
+</head>
+<body>
+	<div class="container">
+        <div class="flow"> 
+            <div class="itemtitle">
+                <h3>产品类型</h3>
+                <ul>
+                    <li <{if $smarty.get.operation==''}>class="current"<{/if}>><a href="?m=<{$smarty.get.m}>&s=<{$smarty.get.s}>"><span>管理</span></a></li>
+                </ul>
+            </div>
+        </div>
+        <div class="h35"></div>  
+        <{if $smarty.get.operation=='edit' }>
+            
+        <{else}>
+		<script type="text/javascript">
+        $(function(){
+            /* 全选 */
+             $('.checkall').click(function(){
+                var _self = this;
+                $('.checkitem').each(function(){
+                    if (!this.disabled)
+                    {
+                        $(this).attr('checked', _self.checked);
+                    }
+                });
+                $('.checkall').attr('checked', this.checked);
+            });	 
+        });
+        </script>
+        <form action="" method="post">
+        <table class="table">
+        	<thead>
+                <tr>
+                    <th class="partition" colspan="99">产品类型</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr class="header">
+                    <th width="30"></th>
+                    <th width="70">显示顺序</th>
+                    <th>类型名称</th>
+                    <th width="50"></th>
+                </tr>
+                <{foreach item=list from=$de.list}>
+                <tr>
+                    <td><input type="checkbox" value="<{$list.id}>" class="checkitem" name="chk[]"></td>
+                    <td><input type="text" class="w50" name="displayorder[<{$list.id}>]" value="<{$list.displayorder}>" onbeforepaste="clipboardData.setData('text',clipboardData.getData('text').replace(/[^\d]/g,''))" onkeyup="value=value.replace(/[^\d]/g,'')"/></td>
+                    <td><input type="text" class="w150" name="name[<{$list.id}>]" value="<{$list.name}>"></td>
+                    <td>
+                    <a onclick="return confirm('确定删除吗');" href="?m=<{$smarty.get.m}>&s=<{$smarty.get.s}>&delid=<{$list.id}>"><{$delimg}></a>
+                    
+                    <a href="?m=<{$smarty.get.m}>&s=<{$smarty.get.s}>&operation=list&id=<{$list.id}>"><{$setimg}></a>
+                    </td>
+                </tr>
+                <{foreachelse}>
+                <tr>
+                    <td class="norecord" colspan="99"><i></i><span>暂无符合条件的数据记录</span></td>
+                </tr>
+                <{/foreach}>
+                <tr>
+                    <td></td>
+                    <td colspan="99"><div><a class="addtr" onclick="addrow(this, 0)" href="javascript:void(0);">添加产品类型</a></div></td>
+                </tr>
+            </tbody>
+            <tfoot>
+                <tr>
+                	<td colspan="3">
+                        <div class="del">
+                        <input type="checkbox" class="checkall" id="del">
+                        <label for="del">删除</label>
+                        </div>
+                        <input type="hidden" name="act" value="op" />
+                        <input type="submit" name="submit" value="<{$lang.btn_submit}>" />
+                    </td>
+                    <td colspan="99"><div class="page"><{$de.page}></div></td>
+                </tr>
+            </tfoot>
+        </table>
+        </form>
+        <{/if}>
+    </div>
+</body><script>
+var rowtypedata = [
+	[
+		[1, ''], 
+		[1,'<input type="text" class="w50" maxlength="3" name="newdisplayorder[]" value="255" />'], 
+		[1, '<div><input name="newname[]" class="w150" type="text" /><a href="javascript:;" class="deleterow" onClick="deleterow(this)">删除</a></div>'],
+		[1, '']
+	],
+];
+
+var addrowdirect = 0;
+var addrowkey = 0;
+function addrow(obj, type) {
+	var table = obj.parentNode.parentNode.parentNode.parentNode.parentNode;
+	var tbody = obj.parentNode.parentNode.parentNode.parentNode;
+	if(!addrowdirect) {
+		var row = table.insertRow(obj.parentNode.parentNode.parentNode.rowIndex);
+	} else {
+		var row = table.insertRow(obj.parentNode.parentNode.parentNode.rowIndex + 1);
+	}
+	var typedata = rowtypedata[type];
+	for(var i = 0; i <= typedata.length - 1; i++) {
+		var cell = row.insertCell(i);
+		cell.colSpan = typedata[i][0];
+		var tmp = typedata[i][1];
+		if(typedata[i][2]) {
+			cell.className = typedata[i][2];
+		}
+		tmp = tmp.replace(/\{(n)\}/g, function($1) {return addrowkey;});
+		tmp = tmp.replace(/\{(\d+)\}/g, function($1, $2) {return addrow.arguments[parseInt($2) + 1];});
+		cell.innerHTML = tmp;
+	}
+	addrowkey ++;
+	addrowdirect = 0;
+}
+function deleterow(obj) {
+	var table = obj.parentNode.parentNode.parentNode.parentNode.parentNode;
+	var tr = obj.parentNode.parentNode.parentNode;
+	table.deleteRow(tr.rowIndex);
+}
+</script>
+</html>

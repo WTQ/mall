@@ -1,0 +1,93 @@
+<div class="common_box">
+  <form name="pro_search" method="post" action="shop.php?uid=<{$com.userid}>&action=product_list&list_type=<{$smarty.get.list_type}>&cat=<{$smarty.get.cat}>&m=product&sort=<{$smarty.get.sort}>" style="margin-top:0px;">
+    <input id="search" type="hidden" name="search" value="search" />
+    <div class="dpr01">
+      <div class="dpr011"> <span style=" width:180px;  color:#668ED6; padding-left:15px; float:left;">所有商品分类 <span style="width:90px;  color:#FD1717; padding-left:15px;">所有分类</span></span> <span style="width:150px; float:right; padding-right:15px; text-align:right; color:#9FA0A2 "> </span>
+        <div class="clear"></div>
+      </div>
+      <div class="dpr012">
+        <table width="100%" border="0" cellspacing="0" cellpadding="0">
+          <tr>
+            <td>共搜索到<span style="color:#F00; font-weight:bold; "> <{$pro_rows}> </span>个符合条件的商品</td>
+            <td> 搜索店内关键字：
+              <input id="qq" type="text" style="width:120px;" name="keyword" value="<{$smarty.post.keyword}>" />
+              &nbsp;&nbsp;价格：
+              <input id="qq" type="text" style="width:50px;" name="price1" value="<{$smarty.post.price1}>" />
+              到
+              <input id="qq" type="text" style="width:50px;" name="price2" value="<{$smarty.post.price2}>" />
+              &nbsp;&nbsp;
+              <input id="su" class="dpsos" type="submit" onmouseout="this.className='dpsos'" onmousedown="this.className='dpsos btn_h'" value="搜索" /></td>
+          </tr>
+        </table>
+      </div>
+    </div>
+  </form>
+  <div class="dpr02">
+    <div class="drp021"> <{if $smarty.get.list_type==2}> <span> <a href="shop.php?uid=<{$com.userid}>&action=product_list&list_type=1&cat=<{$smarty.get.cat}>&m=product"> <span><img src="<{$config.weburl}>/image/default/col_list.gif"></span> 纵向显示 </a> </span> <{else}> <span> <a href="shop.php?uid=<{$com.userid}>&action=product_list&list_type=2&cat=<{$smarty.get.cat}>&m=product"> <span><img  src="<{$config.weburl}>/image/default/row_list.gif"></span>横向显示 </a> </span> <{/if}>
+      排序:<span><a href="shop.php?uid=<{$com.userid}>&action=product_list&list_type=<{$smarty.get.list_type}>&cat=<{$smarty.get.cat}>&m=product&sort=sell_amount">销量</a> <img  src="<{$config.weburl}>/image/default/dp_11.jpg"></span> <span><a href="shop.php?uid=<{$com.userid}>&action=product_list&list_type=<{$smarty.get.list_type}>&cat=<{$smarty.get.cat}>&m=product&sort=price">价格</a> <img  src="<{$config.weburl}>/image/default/dp_11.jpg"></span> <span><a href="shop.php?uid=<{$com.userid}>&action=product_list&list_type=<{$smarty.get.list_type}>&cat=<{$smarty.get.cat}>&m=product&sort=uptime">上架时间</a> <img src="<{$config.weburl}>/image/default/dp_11.jpg"></span> <span><a href="shop.php?uid=<{$com.userid}>&action=product_list&list_type=<{$smarty.get.list_type}>&cat=<{$smarty.get.cat}>&m=product&sort=read_nums">点击数</a> <img src="<{$config.weburl}>/image/default/dp_11.jpg"></span> </div>
+  </div>
+  <table cellpadding="0" cellspacing="0" border="0" width="100%">
+    <tr align="left"> <{if $cat }>
+      <select onchange="if(this.value!='')  window.location='shop.php?uid=<{$com.userid}>&action=product_list&list_type=1&m=product&cat='+this.value">
+        <option value="" ><{$lang.pro}></option>
+        <{foreach item=list from=$cat}>
+        	<option value="<{$list.id}>" <{if $list.id==$smarty.get.cat }>selected="selected"<{/if}> >
+				<{$list.name}>
+			</option>
+        <{/foreach}>
+      </select>
+      <{/if}>
+      </td>
+    </tr>
+    <tr>
+      <td class="com_intro"><{assign var="list_type" value=$smarty.get.list_type|default:1}>
+        <{foreach item=list from=$info.list}>
+        <{if $list_type=='1' }>
+        <table width="100%" border="0" cellspacing="0" cellpadding="0">
+          <tr>
+            <td width="100" style="border:0px;border-bottom:1px #CCCCCC dashed;"><div class="probox"> <{if $com.open_info_type}> <a href="<{$config.weburl}>/?m=product&s=detail&id=<{$list.id}>" title="<{$list.pname}>" target="_blank"> <{else}> <a href="<{$config.weburl}>/?m=product&s=detail&id=<{$list.id}>" title="<{$list.pname}>" target="_blank"> <{/if}>
+                <{assign var="imgs" value=$list.img}>
+                <{html_image file=$imgs width=160  height=160 alt=$list.pname}> </a> </div></td>
+            <td valign="top" style="border:0px;border-bottom:1px #CCCCCC dashed;"><{if $com.open_info_type}> <a href="<{$config.weburl}>/?m=product&s=detail&id=<{$list.id}>" title="<{$list.pname}>" target="_blank"> <{else}> <a href="<{$config.weburl}>/?m=product&s=detail&id=<{$list.id}>" title="<{$list.pname}>" target="_blank"> <{/if}> <strong><{$list.pname}></strong> </a><br />
+              <p><span style="color:#9D0301; font-weight:bold; font-size:14px;">促销价：<{$config.money}><{$list.price}></span></p>
+              <p style="color:#999;"><{$list.uptime|date_format}></p></td>
+            <td width="120" valign="top" style="border:0px;border-bottom:1px #CCCCCC dashed;"><p style="background:url(image/default/dp_15.jpg) no-repeat left center; padding-left:15px;"><a href="aboutus.php?type=66">无假货承诺</a></p>
+              <p style="background:url(image/default/dp_12.jpg) no-repeat left center; padding-left:15px;"><a href="aboutus.php?type=66">7天无理由退换</a></p>
+              <p style="background:url(image/default/dp_14.jpg) no-repeat left center; padding-left:15px;"><a href="aboutus.php?type=66">免费安装</a></p>
+              <p style="background:url(image/default/dp_16.jpg) no-repeat left center; padding-left:15px;"><a href="aboutus.php?type=66">正品保证</a></p>
+              <p style="background:url(image/default/dp_17.jpg) no-repeat left center; padding-left:15px;"><a href="aboutus.php?type=66">同城最低价</a></p></td>
+          </tr>
+        </table>
+        <{/if}>
+        
+        <{if $list_type=='2' }>
+        <div class="pro_list_col">
+          <ul>
+            <li>
+              <div class="probox"> <{if $com.open_info_type}> <a href="<{$config.weburl}>/?m=product&s=detail&id=<{$list.id}>" title="<{$list.pname}>" target="_blank"> <{else}> <a href="<{$config.weburl}>/?m=product&s=detail&id=<{$list.id}>" title="<{$list.pname}>" target="_blank"> <{/if}>
+                <{assign var="imgs" value=$list.img}>
+                <{html_image file=$imgs width=160 height=160 alt=$list.pname}> </a> </div>
+              <div class="probox1">
+                <p><span style="color:#9D0301; font-weight:bold; font-size:14px;">促销价：<{$config.money}><{$list.price}></span> </p>
+                <{if $com.open_info_type}> <a href="<{$config.weburl}>/?m=product&s=detail&id=<{$list.id}>" title="<{$list.pname}>" target="_blank"> <{else}> <a href="<{$config.weburl}>/?m=product&s=detail&id=<{$list.id}>" title="<{$list.pname}>" target="_blank"> <{/if}> <span><{$list.pname}></span> </a></a>
+                <ul>
+                  <li><img src="image/default/dp_15.jpg" ></li>
+                  <li><img src="image/default/dp_12.jpg" ></li>
+                  <li><img src="image/default/dp_13.jpg" ></li>
+                  <li><img src="image/default/dp_14.jpg"></li>
+                  <li><img src="image/default/dp_16.jpg"></li>
+                  <li><img src="image/default/dp_17.jpg"></li>
+                  <div class="clear"></div>
+                </ul>
+              </div>
+            </li>
+          </ul>
+        </div>
+        <{/if}>
+        <{/foreach}> </td>
+    </tr>
+    <tr>
+      <td colspan="2"><div class="page"><{$info.page}></div></td>
+    </tr>
+  </table>
+</div>

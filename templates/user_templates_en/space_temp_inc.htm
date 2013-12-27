@@ -1,0 +1,185 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<title><{if $title}><{$config.company}><{else}><{$config.company}><{/if}></title>
+<link rel="shortcut icon" href="favicon.ico" type="image/x-icon" />
+<link type="text/css" rel="stylesheet" href="<{$config.weburl}>/templates/user_templates_en/space.css">
+</head>
+<body>
+<div id="top">
+	<div id="top_sider">
+	<div class="top_sleft"> 
+    <a href="<{$config.weburl}>"> <img width="120" height="30"   src="<{if $config.logo}><{$config.logo}><{else}><{$config.weburl}>/image/default/logo.gif<{/if}>" /> </a> 
+    </div>
+  	<div class="top_sright">
+        <span style="float:left; padding:0; display:block; color:#003399;  padding-left:10px;">
+        	
+            <nobr><a style=" padding-left:20px;" href="<{$config.weburl}>">Home</a>  | <script src="<{$config.weburl}>/login_statu.php"></script></nobr>	
+        </span>
+         <span  class="shop_cart">
+          <a href="<{$config.weburl}>/?m=product&s=cart">Shopping Cart <b style="color:#F00;"><script src="<{$config.weburl}>/?m=product&s=cart_number"></script></b> pice</a>
+          </span>
+    </div>
+     </div>
+    <span style="float:right;  padding:0; display:block; color:#FFD0C0; ">
+      
+    </span>
+    
+   
+</div>
+
+<div id="wrapper">
+<div class="bgpic" style="<{if $shopconfig.headimage}>background-image:url(<{$shopconfig.headimage}>);<{/if}>">
+	<div class="cnamesech">
+		<div class="cname"><{$com.company}></div>
+    	<div class="cseach">
+          	<form method="get" name="sear" id="sear" action="<{$config.weburl}>/shop.php">
+            <table width="100%" border="0" cellspacing="0" cellpadding="0">
+              <tr align="right">
+                <td align="right">
+                <span class="en_plist"><a href="<{$config.weburl}>/?m=product&s=list">Best Selling</a></span>
+                 
+                	<input type="submit" class="button" value="In this store" />
+                    <input id="m" name="m" type="hidden" value="product" />
+                    <input id="s" name="s" type="hidden" value="list" />
+                    
+                  <input autocomplete="off" onkeyup="get_search_word(this.value);" value="<{$smarty.get.key}>" type="text" class="editbox" id="key" name="key"/>
+                 <div id="key_select"></div>
+                 <span class="com_info">
+                 	<div class="com_sc">
+                    	<span class="com_score">99.9% </span>
+                    	positive feedback
+					</div>
+                    <div class="wangw">
+                    <a class="ali" >&nbsp;</a>
+                    <span class="espand"> &nbsp; </span>
+                    </div>
+                </span>
+                
+                </td>
+              </tr>
+            </table>
+          	</form>
+         </div>
+ 	</div>
+  <div class="nav001">
+	
+    <ul id="nav01">
+      <{foreach item=list from=$shopconfig.menu}>
+      <{if $list.menu_show=='1'}>
+      <{if $list.menu_link!=''}>
+      <li class="<{if $list.menu_link==$smarty.get.action}>current001<{/if}>"  ><a style="color:#FFFFF" href="shop.php?uid=<{$com.userid}>&action=<{$list.menu_link}>&m=<{$list.module}>"><span><{$list.menu_name}></span></a> </li>
+      <{else}>
+      <li class="<{if $smarty.get.action==''}>current001<{/if}>" ><a style="color:#FFFFF"  href="<{geturl user=$com.user uid=$com.userid com=$com.company}>"><span><{$list.menu_name}></span></a> </li>
+      <{/if}>
+      <{/if}>
+      <{/foreach}>
+    </ul>
+    <div style="clear:both;"></div>
+  </div>
+</div>
+
+<div class="dipsp m1">
+  <div class="dipsp_l">
+      <{if count($custom_cat)>0}>
+    <div class="dp3lr">
+      <div class="dp3lrp"> <span class="el_tit">Store Categories</span> </div>
+      <div class="dp3lrte" >
+        <div class="dpzl">
+          <ul class="listxz">
+            <{foreach item=list from=$custom_cat}>
+            <li>
+              	<a href="shop.php?uid=<{$smarty.get.uid}>&action=product_list&m=product&cat=<{$list.id}>" title="<{$list.name}>"><{$list.name}>(<{$list.count}>)</a>
+            </li>
+            <{/foreach}>
+          </ul>
+        </div>
+      </div>
+    </div>
+    <{/if}>
+    <div class="dp3lr m1">
+        <div class="dp3lrte">
+         <div class="esjxy">
+            <dl>
+              <dt>
+                <p><{$lang.contact}>  <a style="color: #003399;" href="shop.php?uid=<{$com.userid}>&action=mail"><{$com.contact}></a></p>
+               </dt>
+            </dl>
+            <dl>
+              <dt>
+                <p><{$lang.tel}> <{$com.tel}></p>
+             </dt>
+            </dl>
+            <dl>
+              <dt>
+                <p>QQ:<{$com.qq}></p>
+              </dt>
+            </dl>
+          </div>
+         <div class="espjs">
+            <dl>
+             <a style="color: #003399;" href="<{$config.weburl}>/main.php?m=message&s=admin_friends&friendid=<{$com.userid}>"><img src="img/add.png" /><{$lang.addtomyfriend}></a>
+            </dl>
+          </div>
+        </div>
+    </div>
+    <div class="dp3lr m1">
+      <div class="dp3lrp"><span class="el_tit">Refine Search</span> </div>
+      <div class="dp3lrte jgfw">
+        <form name="pro_search" method="get" style="margin-top:0px;">
+          <input id="search" type="hidden" name="search" value="search" />
+          <table width="100%" border="0" cellspacing="0" cellpadding="0">
+          	<tr><td class="sinkey" ><p>Keywords:</p></td></tr>
+            <tr height="25">
+              
+              <td><input class="qqq" type="text" style="width:150px;" name="keyword" value="<{$smarty.get.keyword}>" ></td>
+            </tr>
+            <tr >
+              <td class="sinkey"><p>Price Per Unit: </p></td></tr>
+              <tr><td style="color:#999999;">
+              US$ &nbsp;<input class="qqq" type="text" style="width:50px;" name="price1"  value="<{$smarty.get.price1}>" />
+                -
+                <input class="qqq" type="text" style="width:50px;" name="price2" value="<{$smarty.get.price2}>" /></td>
+            </tr>
+            <tr height="40">
+              <td align="center"><input id="su" class="btn" type="submit" onmouseout="this.className='btn'" onmousedown="this.className='btn btn_h'" value=""></td>
+            </tr>
+          </table>
+            <input id="list_type" name="list_type" type="hidden" value="1" />
+            <input id="uid" name="uid" type="hidden" value="<{$smarty.get.uid}>" />
+            <input id="action" name="action" type="hidden" value="product_list" />
+            <input id="m" name="m" type="hidden" value="product" />
+        </form>
+      </div>
+    </div>
+    <div class="dp3lr m1">
+      <div class="dp3lrp"> <span class="el_tit">Store Categories</span> </div>
+      <div class="dp3lrte2" >
+       	<{foreach item=list  from=$rec_pro}>
+		<li class="es_rlist">
+			<a target="_blank" title="<{$list.pname}>" href="<{$config.weburl}>/?m=product&s=detail&id=<{$list.id}>">
+				<img src="<{$list.pic}>" width=45 height=45 alt="<{$list.pname}>" />
+			</a>
+        <div class="es_rdet">
+           <p><a  target="_blank" title="<{$list.pname}>" href="<{$config.weburl}>/?m=product&s=detail&id=<{$list.id}>"><{$list.pname|truncate:30:""}></a></p>
+			<p style="color: #BD1A1D; font-weight: bold;" ><{$config.money}>:<{$list.price}></p>
+       </div>
+		</li>
+	   <{/foreach}>
+      <div style=" clear:both;"></div> 
+      </div>
+    </div>
+   
+  </div>
+  <div class="dipsp_r"> <{$output}> </div>
+  <div class="clear"></div>
+</div>
+<div class="bottom m1">
+  <div class="bottext"> <{$web_con}><br />
+    <{$bt}> <br />
+  </div>
+  <div style="clear:both"></div>
+</div>
+</body>
+</html>

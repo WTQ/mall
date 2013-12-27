@@ -1,0 +1,13 @@
+<{foreach item=list from=$pro}>
+<li>
+    <div class="lerec_img">
+        <a target="_blank" href="<{$config.weburl}>/?m=product&s=detail&id=<{$list.id}>">
+            <img src='<{$list.pic}>' width=100 height=100 />
+        </a>
+    </div>
+    <div class="lerec_pname"><a style="color:#005AA0" target="_blank" href="<{$config.weburl}>/?m=product&s=detail&id=<{$list.id}>"><{$list.pname|truncate:40:""}></a>
+    </div>
+    <div class="lerec_price"><strong><{$config.money}><{$list.price}></strong>
+    </div>
+</li>
+<{/foreach}>

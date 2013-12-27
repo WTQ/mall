@@ -1,0 +1,167 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<title>二级域名</title>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<link href="admin.css" rel="stylesheet" type="text/css" />
+<script type="text/javascript" src="../script/jquery-1.4.4.min.js"></script>
+<script type="text/javascript" src="../script/jquery.validation.min.js"></script>
+<script>
+$(function(){
+	$('#form').validate({
+		errorPlacement: function(error, element){
+			element.next('.form-error').append(error);
+		},      
+		rules : {
+			member_name:{
+				remote: { 
+					url: "module.php?m=shop&s=shop_domin.php&operation=check",     //后台处理程序
+					type: "post",               //数据发送方式
+					dataType: "json",           //接受数据格式
+					data: {                     //要传递的数据
+						member_name: function() { 
+							return $("#member_name").val(); 
+						} 
+					} 
+				}
+			},
+
+		},
+		messages : {
+			member_name:{
+				
+				remote:"店主用户名不存在或已开启二级域名",
+			},
+		}
+	});
+});
+</script>
+</head>
+<body>
+	<div class="container">
+        <div class="flow"> 
+            <div class="itemtitle">
+                <h3>二级域名</h3>
+                <ul>
+                    <li <{if $smarty.get.operation==''}>class="current"<{/if}>><a href="?m=<{$smarty.get.m}>&s=<{$smarty.get.s}>"><span>管理</span></a></li>
+                    <li <{if $smarty.get.operation=='add'}>class="current"<{/if}>><a href="?m=<{$smarty.get.m}>&s=<{$smarty.get.s}>&operation=add"><span>添加</span></a></li>
+                    <{if $smarty.get.operation=='edit'}>
+                    <li class="current"><a href="#"><span>修改</span></a></li>
+                    <{/if}>
+                </ul>
+            </div>
+        </div>
+        <div class="h35"></div>  
+        <{if $smarty.get.operation=='add' or $smarty.get.operation=='edit' }>
+            <form name="form" id="form" method="post">
+            <table class="table">
+             	<thead>
+                    <tr>
+                        <th class="partition" colspan="99">二级域名</th>
+                </thead>
+                <tbody>
+                <{if $smarty.get.operation=='edit'}>
+                <tr>
+                    <td width="100">店铺名称</td>
+                    <td><a target="_blank" href="../shop.php?uid=<{$de.shop_id}>"><{$de.shop_name}></a></td>
+                </tr>
+                <tr>
+                    <td>店主用户名</td>
+                    <td><a target="_blank" href="../home.php?uid=<{$de.shop_id}>"><{$de.member_name}></a></td>
+                </tr>
+                <{else}>
+                <tr>
+                    <td width="100">店主用户名</td>
+                    <td>
+                    <input name="member_name" id="member_name" type="text" class="w350" value="<{$de.member_name}>"/>
+                    <div id="form-error" class="form-error"></div>
+                    </td>
+                </tr>
+                <{/if}>
+                <tr>
+                    <td width="100">二级域名</td>
+                    <td>
+                    <input name="domin" id="domin" type="text" class="w350" value="<{$de.domin}>"/>
+                    <div id="form-error" class="form-error"></div>
+                    </td>
+                </tr>
+               
+                <tr>
+                    <td>&nbsp;</td>
+                    <td>
+                    <input class="submit" type="submit" value="提交">
+                    <input name="act" type="hidden" id="action" value="<{if !$smarty.get.editid}>save<{else}>edit<{/if}>">
+                    </td>
+                </tr>
+                </tbody>
+            </table>
+            </form>
+        <{else}>
+		<script type="text/javascript">
+        $(function(){
+            /* 全选 */
+             $('.checkall').click(function(){
+                var _self = this;
+                $('.checkitem').each(function(){
+                    if (!this.disabled)
+                    {
+                        $(this).attr('checked', _self.checked);
+                    }
+                });
+                $('.checkall').attr('checked', this.checked);
+            });	 
+        });
+        </script>
+        <form action="" method="post">
+        <table class="table">
+        	<thead>
+                <tr>
+                    <th class="partition" colspan="99">二级域名</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr class="header">
+                    <th width="30"></th>
+                    <th width="200">店铺名称</th>
+                    <th>二级域名</th>
+                    <th width="200">店主用户名</th>
+                    <th width="100">创建时间</th>
+                    <th width="50"></th>
+                </tr>
+                <{foreach item=list from=$de.list}>
+                <tr>
+                    <td><input type="checkbox" value="<{$list.id}>" class="checkitem" name="chk[]"></td>
+                  	<td><{$list.shop_name}></td>
+                    <td><{$list.domin}></td>
+                    <td><{$list.member_name}></td>
+                    <td><{$list.create_time|date_format}></td>
+                    <td>
+                    <a href="?m=<{$smarty.get.m}>&s=<{$smarty.get.s}>&operation=edit&editid=<{$list.id}>"><{$editimg}></a> 
+                    <a onclick="return confirm('确定删除吗');" href="?m=<{$smarty.get.m}>&s=<{$smarty.get.s}>&delid=<{$list.id}>"><{$delimg}></a>
+                    </td>
+                </tr>
+                <{foreachelse}>
+                <tr>
+                    <td class="norecord" colspan="99"><i></i><span>暂无符合条件的数据记录</span></td>
+                </tr>
+                <{/foreach}>
+            </tbody>
+            <tfoot>
+                <tr>
+                	<td colspan="2">
+                        <div class="del">
+                        <input type="checkbox" class="checkall" id="del">
+                        <label for="del">删除</label>
+                        </div>
+                        <input type="hidden" name="act" value="op" />
+                        <input type="submit" value="提交" />
+                    </td>
+                    <td colspan="99"><div class="page"><{$de.page}></div></td>
+                </tr>
+            </tfoot>
+        </table>
+        </form>
+        <{/if}>
+    </div>
+</body>
+</html>

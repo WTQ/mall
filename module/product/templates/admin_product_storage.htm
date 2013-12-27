@@ -1,0 +1,125 @@
+<script type="text/javascript">
+$(function(){
+    /* 全选 */
+	 $('.checkall').click(function(){
+        var _self = this;
+        $('.checkitem').each(function(){
+            if (!this.disabled)
+            {
+                $(this).attr('checked', _self.checked);
+            }
+        });
+        $('.checkall').attr('checked', this.checked);
+    });
+	 
+	$('a[nc_type="batchbutton"]').click(function(){
+		/* 是否有选择 */
+		if($('.checkitem:checked').length == 0){    //没有选择
+			return false;
+		}
+		var _uri = $(this).attr('uri');
+		var _name = $(this).attr('name');
+		
+		var handleResult = function(uri,name) {
+			/* 获取选中的项 */
+			var items = '';
+				$('.checkitem:checked').each(function(){
+					items += this.value + ',';
+			});
+			items = items.substr(0, (items.length - 1));
+			$.get(uri, name + '=' + items,showResponse);
+			function showResponse(originalRequest)
+			{
+				document.location.reload();
+			}
+			return false;
+		}
+		handleResult(_uri,_name);
+	});
+});
+</script>
+<div class="path">
+    <div>
+    	<a href="main.php?cg_u_type=2">卖家中心</a> <span>&gt;</span> 
+        <{if $smarty.get.statu=='-1'}>违规的商品<{elseif $smarty.get.statu=='0'}>待审核的商品<{else}>仓库中的商品<{/if}>
+    </div>
+</div>
+<div class="main">
+	<div class="wrap">
+        <div class="hd">
+            <ul class="tabs">
+                <li class="<{if $smarty.get.statu!='-1' and $smarty.get.statu!='0'}>active<{else}>normal<{/if}>"><a href="main.php?m=product&s=admin_product_storage">仓库中的商品</a></li>
+                  <li class="<{if $smarty.get.statu=='0'}>active<{else}>normal<{/if}>"><a href="main.php?m=product&s=admin_product_storage&statu=0">待审核的商品</a></li>
+                <li class="<{if $smarty.get.statu=='-1'}>active<{else}>normal<{/if}>"><a href="main.php?m=product&s=admin_product_storage&statu=-1">违规的商品</a></li>
+            </ul>
+        </div>
+        <table class="table-list-style">
+        	<thead>
+            <tr>
+            	<th width="30"></th>
+            	<th width="70"></th>
+            	<th>商品名称</th>
+                <{if $smarty.get.statu!='0' && $smarty.get.statu=='-1'}>
+                <th width="180">违规禁售原因</th>
+                <{elseif $smarty.get.statu!='0' && $smarty.get.statu!='-1'}>
+                <th width="100">上架</th>
+                <{/if}>
+                <th width="100">价格</th>
+            	<th width="100">库存</th>
+            	<th width="90">操作</th>
+            </tr>
+            </thead>
+            <tbody>
+            <{foreach item=list from=$re.list}>
+            <tr>
+            	<th class="tc"><input type="checkbox" value="<{$list.id}>" class="checkitem" name="chk[]"></th>
+            	<th colspan="20">商品货号: <{$list.id}> </th>
+            </tr>
+            <tr> 
+                <td></td>
+                <td>
+                <div class="pic-small">
+                    <a target="_blank" href="<{$config.weburl}>/?m=product&s=detail&id=<{$list.id}>">
+                    	<img width=60 height=60 src="<{if !$list.pic }><{$config.weburl}>/image/default/nopic.gif<{else}><{$list.pic}><{/if}>" alt="<{$list.pname}>" />
+                    </a>
+                </div>
+                </td>
+                <td class="tl" valign="top"><a target="_blank" href="<{$config.weburl}>/?m=product&s=detail&id=<{$list.id}>"><{$list.pname}></a></td>
+                <{if $smarty.get.statu!='0'}>
+                <td>
+                    <{if $smarty.get.statu=='-1'}>
+                        <span style="color:#F60"><{$list.id|readauditing:'p'}></span>
+                    <{else}>
+                        <a class="btn2" href="?m=product&s=admin_product_storage&cstatu=1&ppid=<{$list.id}>">上架</a>
+                    <{/if}>
+                </td>
+                <{/if}>
+                <td><{$list.price|number_format:2}></td>
+                <td><{$list.amount}></td>
+                <td>
+                <p><a href="?edit=<{$list.id}>&m=product&s=admin_product">编辑</a></p>
+                <p><a href="?deid=<{$list.id}>&m=product&s=admin_product_storage&statu=<{$smarty.get.statu}>" onClick="return confirm('<{$lang.sure_del}>');">删除</a></p>
+                </td>
+            </tr>
+            <{foreachelse}>
+            <tr>
+            	<td colspan="20" class="norecord">
+                	<i></i><span>暂无符合条件的数据记录</span>	
+                </td>
+            </tr>
+            <{/foreach}>
+            </tbody>
+            <tfoot>
+            <tr>
+                <td class="tc"><input type="checkbox" class="checkall" id="del"></td>
+                <td colspan="20">
+                <label for="del" class="btn2">全选</label>
+                <a nc_type="batchbutton" confirm="您确定要删除吗?" name="pid" uri="main.php?m=product&s=admin_product_storage" class="btn2" href="javascript:void(0);">删除</a>
+                <div class="pagination"><{$re.page}></div>
+                </td>
+            </tr>
+            </tfoot>
+        </table>
+        
+    </div>    
+</div>        

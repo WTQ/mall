@@ -1,0 +1,63 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<title><{$detail.name}></title>
+</head>
+<style>
+a{color:#FFFFFF;text-decoration:none;}
+body{background-color:#000000; font-size:12px; font-family:Arial,Helvetica,"",sans-serif; color:#FFFFFF;}
+li{list-style:none; display:inherit; padding:0px;}
+
+.menu{ border-bottom:solid 2px #FFFFFF; float:left; text-align:left; padding:0px; padding-left:-20px;}
+.menu ul{margin:0px; padding-left:0px; margin-left:-15px;}
+.menu li{float:left; color:#FFFFFF; font-size:16px; display:block; margin-left:20px; font-weight:bold; 
+margin-top:0px;
+padding-left:15px;
+background-repeat:no-repeat;
+background-position:left;
+background-image:url(<{$config.weburl}>/templates/special_template/images/point.jpg);
+
+}
+.left{border-right:dashed 2px #262626; height:700px;}
+
+.new_box{float:left; margin-top:10px; width:267px;}
+.new_box ul{margin:0px; padding:0px;}
+.new_box_title{color:#FFFFFF; font-weight:bold}
+.new_title{color:#FFFFFF; float:left; width:200px; overflow:hidden; height:22px;}
+.new_time{float:right; width:70px; overflow:hidden}
+.new_con{padding:0px;}
+
+.pro_box{float:left; margin-top:10px; width:267px; padding:0px;}
+.pro_con{margin:0px; padding:0px}
+.pro_box_title{color:#FFFFFF; font-weight:bold}
+.pro_title{color:#FFFFFF; float:left; width:200px; overflow:hidden; height:22px;}
+.pro_time{float:right; width:70px; overflow:hidden}
+</style>
+<body>
+<table width="960" border="0" cellspacing="0" cellpadding="0" align="center">
+  <tr>
+    <td height="87" colspan="3"><{$top}></td>
+  </tr>
+  <tr>
+    <td width="20%" height="226" valign="top">
+    <div class="left">
+   <div class="new_box">
+	<div class="new_box_title">Featured</div>
+	<div class="new_con">
+            <ul>
+                <{$detail.con}>
+            </ul>
+      </div>
+    </div>    
+    <{$left}>
+    </div>
+    </td>
+    <td width="48%" colspan="2" valign="top" style="padding:5px;"><{$chenter}></td>
+  </tr>
+  <tr>
+    <td height="114" colspan="3" align="center"><{$footer}></td>
+  </tr>
+</table>
+</body>
+</html>

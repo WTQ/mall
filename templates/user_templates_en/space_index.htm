@@ -1,0 +1,33 @@
+<div class="dplist">
+<{ if $shopconfig.flash.0!=''}>
+  <object width="755" height="200" codebase="http://fpdownload.macromedia.com/pub/shockwave/cabs/flash/swflash.cab#version=6,0,0,0" classid="clsid:d27cdb6e-ae6d-11cf-96b8-444553540000">
+    <param value="<{$config.weburl}>/image/default/hot_new.swf" name="movie">
+    <param value="high" name="quality">
+    <param value="false" name="menu">
+    <param value="opaque" name="wmode">
+    <param value="bcastr_file=<{$shopconfig.flash.0}>|<{$shopconfig.flash.1}>|<{$shopconfig.flash.2}>|<{$shopconfig.flash.3}>|<{$shopconfig.flash.4}>&amp;bcastr_link=<{$links}>&amp;bcastr_title=<{$texts}>" name="FlashVars">
+    <embed width="770" height="316" pluginspage="http://www.macromedia.com/go/getflashplayer" type="application/x-shockwave-flash" quality="high" false="" flashvars="bcastr_file=<{$shopconfig.flash.0}>|<{$shopconfig.flash.1}>|<{$shopconfig.flash.2}>|<{$shopconfig.flash.3}>|<{$shopconfig.flash.4}>&amp;bcastr_link=<{$links}>&amp;bcastr_title=<{$texts}>&amp; menu=" wmode="opaque" src="<{$config.weburl}>/image/default/hot_new.swf">
+  </object>
+  <{else}>
+  	<img src="<{$config.weburl}>/templates/user_templates_default/img/ad1.jpg" />
+  <{/if}>
+</div>
+<div class="spinlist mt">
+  <div class="guide_ba">
+    <span>Hot Sale </span>
+  </div>
+  <div class="spc">
+    <ul>
+		<{foreach item=list from=$rec_pro}>
+		<li>
+			<a target="_blank" title="<{$list.pname}>" href="<{$config.weburl}>/?m=product&s=detail&id=<{$list.id}>">
+				<img src="<{$list.pic}>" width=160  height=160 alt="<{$list.pname}>" />
+			</a>
+			<h3><del>市场价：<{$config.money}> <{$list.market_price}> </del><br>促销价：<{$config.money}> <{$list.price}> </h3>
+			<p> <a target="_blank" title="<{$list.pname}>" href="<{$config.weburl}>/?m=product&s=detail&id=<{$list.id}>"><{$list.pname}></a></p>
+		</li>
+	   <{/foreach}>
+      <div class="clear"></div>
+    </ul>
+  </div>
+</div>

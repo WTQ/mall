@@ -1,0 +1,51 @@
+<link href="<{$config.weburl}>/module/brand/templates/brand.css" rel="stylesheet" type="text/css" />
+</div>
+<div id="babody">
+<center>
+	<div class="wrapper" style="width:960px;">
+
+        <div class="brl1">
+            <div class="brl11 ">
+               <li id="all" <{if $smarty.get.firstLetter=="" }>class="az"<{/if}> style="width:5%"><a href="?m=brand&s=brand_azlist">全部</a></li>
+                <{foreach item=list from=$AZ}>
+                <li id="<{$list}>" <{if $smarty.get.firstLetter==$list}>class="az"<{/if}>><a href="?m=brand&s=brand_azlist&firstLetter=<{$list}>"><{$list}></a></li>
+                <{/foreach}>
+            </div>
+            <div class="brl1d">
+            <{if $smarty.get.firstLetter}> 
+                <dl class="br_list clearf">
+                    <dt>类目</dt>
+                    <dd>
+                    <{foreach item=list from=$cat}>
+                        <a class="<{if $list.id!=$smarty.get.id}>brlist_bg<{else}>brlist_bg1<{/if}>" href="<{$config.weburl}>/?m=brand&s=brand_azlist&firstLetter=<{$smarty.get.firstLetter}>&id=<{$list.id}>"><{$list.catname}></a>
+                    <{/foreach}> 
+                    </dd>
+                </dl>
+                
+            <{/if}>
+            </div>
+        </div>
+
+		<{if $smarty.get.firstLetter}> 
+        	
+       		<h2><div class="brl2"><{foreach item=list from=$AZ}><{if $list==$smarty.get.firstLetter}><{$list}><{/if}><{/foreach}></div></h2>
+            <{foreach item=list from=$brand}>
+                <div class="brl3 clearf" style="padding: 20px 0 20px 20px; width:auto; height:auto">
+                    <li><a href="<{$config.weburl}>/?m=product&s=list&brand=<{$list.name}>"><{$list.name}></a></li>
+                </div>
+           <{/foreach}>	
+        <{else}>
+            <{foreach item=list key=num from=$AZ}>
+            	<{if $brand.$num}>
+                <h2><div class="brl2"><{$list}></div></h2>
+                <{foreach item=list from=$brand.$num}>
+                <div class="brl3 clearf" style="padding: 20px 0 20px 20px; width:auto; height:auto">
+                <li><a href="<{$config.weburl}>/?m=product&s=list&brand=<{$list.name}>"><{$list.name}></a></li>
+                </div>
+                <{/foreach}>
+                <{/if}>
+            <{/foreach}>
+        <{/if}>  
+	</div>
+</center>
+</div>

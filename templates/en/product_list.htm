@@ -1,0 +1,141 @@
+<link type="text/css" rel="stylesheet" href="<{$config.weburl}>/templates/en/enpro.css">
+<script src="<{$config.weburl}>/script/my_lightbox.js" language="javascript"></script>
+<script src="<{$config.weburl}>/script/index.js"></script>
+<div class="wrapper">
+  <div class="menu_bottom L1">
+    <div class="headtop_L"> <a href='<{$config.weburl}>/'><{$lang.indexpage}></a> &gt; <a href='<{$config.weburl}>/?m=product'><{$lang.procat}></a> &gt; <{$guide}><{if $guide==''}>Search<{/if}> </div>
+  </div>
+  	<div class="menu_left">
+    	<div class="menu_lrec" style="margin:0px;">
+      		<div class="tit">Premium Related Products</div>
+     		<div class="sec1">
+        <ul>
+          <{insert name="label" catid=$smarty.get.id type="product" temp="pro_list_rec2" limit=3}>
+        </ul>
+      </div>
+    	</div>
+	</div>
+  	<div class="menu_pright">
+  		<div <{if $subcat.0.cat||$brand.0.name||$catfile}>class="list_sechs"<{/if}> >
+	 		<{if $subcat.0.cat}>
+				<div class="right_list_box">
+		  <b> Classification :</b> 
+			  <span class="mlist_all">  <a class="curr" href="<{$config.weburl}>/?m=product&s=list&show_type=<{$smarty.get.show_type}>">ALL</a> </span>
+		 <ul class="mlist_list">
+			 <{foreach item=list from=$subcat}>
+				  <li> <a href="<{$config.weburl}>/?m=product&s=list&show_type=<{$smarty.get.show_type}>&id=<{$list.catid}>"><{$list.cat}></a> </li>
+			<{/foreach}>
+			<div class="clear"></div>
+		</ul>
+	</div>
+				<div class="bor_line"></div>
+    		<{/if}>  
+      		<{if $brand.0.name}>
+      			<div class="right_list_box"> <b>Brand:</b> <{assign var=b value=$smarty.get.brand}> <span class="mlist_all"><a <{if $smarty.get.brand==""}>class="curr"<{/if}> href="<{$config.weburl}>/?<{$url|replace:"&brand=$b":""}>&brand=">all</a></span>
+        <ul class="mlist_list">
+          <{foreach item=list from=$brand}>
+          <li> <a <{if $smarty.get.brand==$list.name}>class="on"<{/if}> href="<{$config.weburl}>/?<{$url|replace:"&brand=$b":""}>&brand=<{$list.name}>"><{$list.name}></a> </li>
+          <{/foreach}>
+          <div class="clear"></div>
+        </ul>
+      </div>
+			<{/if}>
+              <{foreach item=list key=num from=$catfile}>
+              <{assign var=fieldName value=$list.fieldName}>
+              <{assign var=s value=$smarty.get.$fieldName}>
+              <{if $num>0}><div class="bor_line"></div><{/if}>
+                    <div class="bor_line"></div>
+                    <div class="right_list_box"> <b><{$list.fieldDisplay}>:</b> <span class="mlist_all"><a <{if $smarty.get.$fieldName==""}>class="curr"<{/if}> href="<{$config.weburl}>/?<{$url|replace:"&$fieldName=$s":""}>&<{$list.fieldName}>=">ALL</a></span>
+                <ul class="mlist_list">
+                  <{foreach item=slist from=$list.catItem}>
+                  <li> <a <{if $smarty.get.$fieldName==$slist.0}>class="on"<{/if}> href="<{$config.weburl}>/?<{$url|replace:"&$fieldName=$s":""}>&<{$list.fieldName}>=<{$slist.0}>"><{$slist.1}></a> </li>
+                  <{/foreach}>
+                </ul>
+              </div>
+              <{/foreach}>
+	  	</div>
+  	<div class="plistr_con" style="width:788px;">
+      <div class="mselect_title">
+        <form action="<{$config.weburl}>/" method="get">
+          <input id="m" name="m" type="hidden" value="product" />
+          <input id="s" name="s" type="hidden" value="list" />
+          <input name="id" type="hidden" value="<{$smarty.get.id}>" />
+          <input name="brand" type="hidden" value="<{$smarty.get.brand}>" />
+          <input name="search_type" type="hidden" value="<{$smarty.get.search_type}>" />
+          <ul>
+          <{assign var=t value=$smarty.get.show_type}>
+          <{assign var=o value=$smarty.get.orderby}> <li <{if $smarty.get.show_type==2 || !$smarty.get.show_type}>class="normal"<{/if}>> <a href="<{$config.weburl}>/?<{$url|strip_tags|replace:"&$show_type=$t":""}>&show_type=2"> <span><img src="<{$config.weburl}>/image/default/row_list.gif" /><{$lang.bp}></span></a>
+          </li>
+          <li <{if $smarty.get.show_type==1}>class="normal"<{/if}> > <a href="<{$config.weburl}>/?<{$url|strip_tags|replace:"&$show_type=$t":""}>&show_type=1"> <span><img src="<{$config.weburl}>/image/default/col_list.gif" /><{$lang.ls}></span> </a>
+          </li>
+          <li <{if $smarty.get.orderby==7}>class="down"<{else}>class="default"<{/if}>><a href="<{$config.weburl}>/?<{$url|strip_tags|replace:"&orderby=$o":""}>&orderby=7"><span>Orders</span></a>
+          </li>
+          <li <{if $smarty.get.orderby==2}>class="down"<{else}>class="default"<{/if}>><a href="<{$config.weburl}>/?<{$url|strip_tags|replace:"&orderby=$o":""}>&orderby=2"><span>Ratings</span></a>
+          </li>
+          <li <{if $smarty.get.orderby==5}>class="priceUp"<{elseif $smarty.get.orderby==4}>class="priceDown"<{else}>class="defaultPrice"<{/if}>><a href="<{$config.weburl}>/?<{$url|strip_tags|replace:"&orderby=$o":""}>&orderby=<{if $smarty.get.orderby==4}>5<{else}>4<{/if}>"><span>Price</span></a>
+          </li>
+          <li><span style="padding:0 10px;">
+            <input size="5" name="sprice" type="text" value="<{$smarty.get.sprice}>" />
+            -
+            <input value="<{$smarty.get.eprice}>" size="5" name="eprice" type="text" />
+            <input class="mlibtn" type="submit" value="<{$lang.isure}>" />
+            </span></li>
+          <input  name="id" type="hidden" value="<{$smarty.get.id}>" />
+        </form>
+        <div class="clear"></div>
+        </ul>
+      </div>
+      <ul class="prlist">
+        <{foreach item=list from=$info.list}>
+        <{if $smarty.get.show_type==2}>
+        <div class="list_img">
+          <table style=" width:230px;margin: 0 auto;">
+            <tr>
+              <td align="center" colspan="2" valign="middle" class="list_img1"><a rel="nofollow" href="<{$config.weburl}>/?m=product&s=detail&id=<{$list.id}>"> <{html_image file=$list.img width=220 alt=$list.pname}> </a> </td>
+            </tr>
+            <tr>
+              <td align="left" class="list_pname"><h3><a href="<{$config.weburl}>/?m=product&s=detail&id=<{$list.id}>"><{$list.pname}></a></h3></td>
+            </tr>
+            <tr>
+              <td align="left" ><span class="amoney"><{$config.money}><{$list.price|number_format:2}></span>/ <span class="pst"><{$list.unit}></span><br />
+                <strong class="dfee"><{$lang.dfee}>:<{$list.freight|explode_one:","|number_format:2}> </strong></td>
+            </tr>
+            <tr>
+              <td><a target="_blank" href="<{geturl uid=$list.userid user=$list.user}>"> <{$list.company}><{$list.user_type}> </a> </td>
+            </tr>
+          </table>
+        </div>
+        <{else}>
+        <li>
+          <div class="Lb1"> <a rel="nofollow" href="<{$config.weburl}>/?m=product&s=detail&id=<{$list.id}>"> <{assign var=img value=$list.img}>
+            <{assign var=big_img value=$list.big_img}>
+            <{html_image onmouseout="view_big_img(this, '');" onmouseover="view_big_img(this,'$big_img');" file=$img width=120 alt=$list.pname}> </a> </div>
+          <div class="Lb2">
+            <h3> <a href="<{$config.weburl}>/?m=product&s=detail&id=<{$list.id}>"><{$list.pname}></a> </h3>
+            <span class="brief"><{$list.con|strip_tags|truncate:200:"...":true}></span>
+            <p> <a target="_blank" href="<{geturl uid=$list.userid user=$list.user}>"> <{$list.company}><{$list.user_type}> </a> </p>
+          </div>
+          <div class="Lb3"> <span class="prb3"> <span class="amoney"><{$config.money}><{$list.price|number_format:2}></span> / <span class="pst"><{$list.unit}></span><br />
+            <strong class="dfee"><{$lang.dfee}>:<{$list.freight|explode_one:","|number_format:2}><br />
+            </strong> <a >Orders：<{$list.sell_amount}><br />
+            </a> <a href="<{$config.weburl}>/main.php">+Add to Wish List</a> </div>
+        </li>
+        <{/if}>
+        <{/foreach}>
+      </ul>
+      <div class="page"><{$info.page}></div>
+      <div class="clear"></div>
+    </div>
+  </div>
+  <div class="big_img_div" id="big_img_div" style="display:none;"></div>
+</div>
+<script>
+function goto(v,type)
+{
+	var url='<{$queryurl}>';
+	if(type==1)
+		window.location='<{$config.weburl}>/?m=product&s=list&orderby='+v+url;
+	if(type==2)
+		window.location='<{$config.weburl}>/?m=product&s=list&province='+v+url;
+}
+</script>

@@ -1,0 +1,121 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<title>相册</title>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<link href="admin.css" rel="stylesheet" type="text/css" />
+<script type="text/javascript" src="../script/jquery-1.4.4.min.js"></script>
+</head>
+<body>
+	<div class="container">
+        <div class="flow">
+            <div class="itemtitle">
+                <h3>相册</h3>
+                <ul>
+                    <li <{if $smarty.get.operation==''}>class="current"<{/if}>><a href="?m=album&s=album.php"><span>管理</span></a></li>
+                </ul>
+            </div>
+        </div>
+        <div class="h35"></div>  
+        <script type="text/javascript">
+        $(function(){
+            /* 全选 */
+             $('.checkall').click(function(){
+                var _self = this;
+                $('.checkitem').each(function(){
+                    if (!this.disabled)
+                    {
+                        $(this).attr('checked', _self.checked);
+                    }
+                });
+                $('.checkall').attr('checked', this.checked);
+            });	 
+        });
+        </script>
+        <form action="" method="post">
+        <table class="table">
+        	<{if $smarty.get.id}>
+            <thead>
+                <tr>
+                    <th class="partition" colspan="99">图片列表</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr class="header">
+                    <th width="20"></th>
+                    <th width="120">图片</th>
+                    <th>图片名称</th>
+                    <th width="150">时间</th>
+                    <th width="150">发布者</th>
+                    <th width="100"></th>
+                </tr>
+                <{foreach item=list from=$de.list}>
+                <tr>
+                    <td valign="top"><input type="checkbox" value="<{$list.id}>" class="checkitem" name="chk[]"></td>
+                    <td><img class="img" src="<{$list.pic}>" width="70"></td>
+                    <td><{$list.zname}></td>
+                    <td><{$list.time|date_format}></td>
+                    <td><{$list.user}></td>
+                    <td>
+                    <a onclick="return confirm('确定删除吗');" href="?m=album&s=album.php&id=<{$smarty.get.id}>&delid=<{$list.id}>"><{$delimg}></a> 
+                    </td>
+                </tr>
+                <{foreachelse}>
+                <tr>
+                    <td class="norecord" colspan="99"><i></i><span>暂无符合条件的数据记录</span></td>
+                </tr>
+                <{/foreach}>
+            </tbody>
+            <{else}>
+            <thead>
+                <tr>
+                    <th class="partition" colspan="99">相册列表</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr class="header">
+                    <th width="20"></th>
+                    <th width="120">相册封面</th>
+                    <th width="200">相册名</th>
+                    <th>描述</th>
+                    <th width="150">发布者</th>
+                    <th width="100"></th>
+                </tr>
+                <{foreach item=list from=$de.list}>
+                <tr>
+                    <td valign="top"><input type="checkbox" value="<{$list.id}>" class="checkitem" name="chk[]"></td>
+                   
+                    <td><{if $list.pic}><img class="img" src="<{$list.pic}>" width="70"><{else}><img class="img" width="70" src="../image/default/nopic.gif" /><{/if}></td>
+                    <td><{$list.name}></td>
+                    <td><{$list.des}></td>
+                    <td><{$list.company}></td>
+                    <td>
+                    <a onclick="return confirm('确定删除吗');" href="?m=album&s=album.php&delid=<{$list.id}>"><{$delimg}></a> 
+                    <a href='?m=album&s=album.php&id=<{$list.id}>'><{$setimg}></a>
+                    </td>
+                </tr>
+                <{foreachelse}>
+                <tr>
+                    <td class="norecord" colspan="99"><i></i><span>暂无符合条件的数据记录</span></td>
+                </tr>
+                <{/foreach}>
+            </tbody>
+            <{/if}>
+            <tfoot>
+                <tr>
+                	<td colspan="2">
+                        <div class="del">
+                        <input type="checkbox" class="checkall" id="del">
+                        <label for="del">删除</label>
+                        </div>
+                        <input type="hidden" name="act" value="op" />
+                        <input type="submit" value="提交" />
+                    </td>
+                    <td colspan="99"><div class="page"><{$de.page}></div></td>
+                </tr>
+            </tfoot>
+        </table>
+        </form>
+    </div>
+</body>
+</html>

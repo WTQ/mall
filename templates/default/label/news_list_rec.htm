@@ -1,0 +1,8 @@
+<{foreach item=list name=name from=$news}>
+    <div class="jrl">
+        <h4><a target="_blank" title="<{$list.title}>" <{$list.style}>  href="<{$list.url}>"><{$list.ftitle|truncate:$leng}></a></h4>
+        <p><{$list.smalltext|truncate:78}></p>
+        <h5><a htarget="_blank"  href="<{$list.url}>">了解更多>></a></h5>
+    </div>
+    <div class="jrr"><img width="115" height="130" src="<{$list.pic}>" /></div>
+<{/foreach}>

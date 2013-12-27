@@ -1,0 +1,83 @@
+<script src="script/my_lightbox.js" language="javascript"></script>
+<script type="text/javascript" src="script/Validator.js"></script>
+<script type="text/javascript" src="<{$config.weburl}>/templates/user_templates_default/jquery.flexslider-min.js"></script>
+<div class="path">
+    <div>
+    	<a href="main.php?cg_u_type=2">卖家中心</a> <span>&gt;</span> 
+        <a href="main.php?m=shop&s=myshop">店铺设置</a> <span>&gt;</span> 
+        幻灯片设置
+    </div>
+</div>
+<div class="main">
+	<div class="wrap">
+        <div class="hd">
+            <ul class="tabs">
+                <li class="normal"><a href="main.php?m=shop&s=myshop">店铺设置</a></li>
+                <li class="normal"><a href="main.php?m=shop&s=admin_custom_service">客服中心</a></li>
+                <li class="normal"><a href="main.php?m=shop&s=admin_certification">认证设置</a></li>
+                <li class="active"><a href="main.php?m=shop&s=admin_shop_set">幻灯片设置</a></li>
+			</ul>
+        </div>
+        
+        <div class="form-style">
+            <div class="flexslider">
+                <ul class="slides">
+                	<{if $re.slide.0}>
+                	<{foreach item=list key=num from=$re.slide}>
+                    <li style="width: 100%; float: left; margin-right: -100%; display: <{if $num==0}>list-item<{else}>none<{/if}>;"> <img src="<{$list}>"></li>
+                  	<{/foreach}>
+                    <{else}>
+                    <li style="width: 100%; float: left; margin-right: -100%; display: list-item;"> <img src="<{$config.weburl}>/templates/user_templates_default/img/f01.jpg"> </li>
+                    <li style="width: 100%; float: left; margin-right: -100%; display: none;"> <img src="<{$config.weburl}>/templates/user_templates_default/img/f02.jpg"> </li>
+                    <li style="width: 100%; float: left; margin-right: -100%; display: none;"> <img src="<{$config.weburl}>/templates/user_templates_default/img/f03.jpg"> </li>
+                    <li style="width: 100%; float: left; margin-right: -100%; display: none;"> <img src="<{$config.weburl}>/templates/user_templates_default/img/f04.jpg"> </li>
+                    <{/if}>
+                </ul>
+            </div>
+    		<form action="" method="post" onSubmit="return Validator.Validate(this,3)">
+            	<input type="hidden" value="edit" name="submit" />
+                <div class="handle_pic">
+                <{section name=name loop=5}>
+                <{assign var=img value=$smarty.section.name.index}>
+          		<table width="20%">
+                	<tr>
+                    	<td>
+                            <div class="picture">
+                                <img id="img<{$smarty.section.name.index}>_img" width="142" height="80" src="<{if $re.slide.$img}><{$re.slide.$img}><{else}><{$config.weburl}>/image/default/user_admin/default.gif<{/if}>" />
+                            </div>
+                            <input type="hidden" value="<{$re.slide.$img}>" name="slide[]" id="img<{$smarty.section.name.index}>" class="text w145">
+                        </td>
+                    </tr>
+                    <tr>
+                    	<td>
+                         <p>跳转URL...</p>
+                         <input type="text" value="<{if $re.slideurl.$img}><{$re.slideurl.$img}><{else}>http://<{/if}>" name="slideurl[]" class="text w145">   
+                        </td>
+                    </tr>
+                    <tr>
+                    	<td>
+                         <a class="upload-button" href="javascript:uploadfile('Style images','img<{$smarty.section.name.index}>',790,444,'shop')">图片上传</a> 
+                        </td>
+                    </tr>
+                </table>
+                <{/section}>
+                <div class="clear"></div>
+                </div>
+                <div class="notes">
+                    <p>最多可上传5张幻灯片图片。</p>
+                    <p>支持jpg、jpeg、gif、png格式上传，建议图片宽度740px、高度在300px到400px之间、大小1.00M以内的图片。提交2~5张图片可以进行幻灯片播放，一张图片没有幻灯片播放效果。</p>
+                    <p>操作完成以后，按“提交”按钮，可以在当前页面进行幻灯片展示。</p>
+                    <p>跳转链接必须带有<b style="color:red;">“http://”</b></p>
+                </div>
+                <dl class="foot">
+                    <dd><input type="submit" value="提交" class="submit"></dd>
+                </dl>
+        	</form>
+        </div>    
+   </div>
+</div>     
+<script>
+$(window).load(function() {
+	$('.flexslider').flexslider();
+}); 
+</script>

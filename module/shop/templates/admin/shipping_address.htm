@@ -1,0 +1,94 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<title>发货地址</title>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<link href="admin.css" rel="stylesheet" type="text/css" />
+<script type="text/javascript" src="../script/jquery-1.4.4.min.js"></script>
+</head>
+<body>
+	<div class="container">
+        <div class="flow"> 
+            <div class="itemtitle">
+                <h3>发货地址</h3>
+                <ul>
+                    <li <{if $smarty.get.operation==''}>class="current"<{/if}>><a href="?m=<{$smarty.get.m}>&s=<{$smarty.get.s}>"><span>管理</span></a></li>
+                </ul>
+            </div>
+        </div>
+        <div class="h35"></div>  
+       
+		<script type="text/javascript">
+        $(function(){
+            /* 全选 */
+             $('.checkall').click(function(){
+                var _self = this;
+                $('.checkitem').each(function(){
+                    if (!this.disabled)
+                    {
+                        $(this).attr('checked', _self.checked);
+                    }
+                });
+                $('.checkall').attr('checked', this.checked);
+            });	 
+        });
+        </script>
+        <form action="" method="post">
+        <table class="table">
+        	<thead>
+                <tr>
+                    <th class="partition" colspan="99">发货地址</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr class="header">
+                    <th width="30"></th>
+                    <th width="80">店铺ID</th>
+                    <th width="80">店主用户名</th>
+                    <th width="140">店铺名称</th>
+                    <th width="80">收货人</th>
+                    <th>所在区域</th>
+                    <th width="140">电话</th>
+                    <th width="100">手机</th>
+                    <th width="60">邮编</th>
+                    <th width="30"></th>
+                </tr>
+                <{foreach item=list from=$de.list}>
+                <tr>
+                    <td><input type="checkbox" value="<{$list.id}>" class="checkitem" name="chk[]"></td>
+                    <td><{$list.userid}></td>
+                    <td><a target="_blank" href="../home.php?uid=<{$list.userid}>"><{$list.user}></a></td>   
+                    <td><a target="_blank" href="../shop.php?uid=<{$list.userid}>"><{$list.company}></a></td>
+                    <td><{$list.name}></td>
+                    <td><{$list.area}> <{$list.addr}></td>
+                    <td><{$list.tel}></td>
+                    <td><{$list.mobile}></td>
+                    <td><{$list.post}></td>
+                    <td>
+                    <a onclick="return confirm('确定删除吗');" href="?m=<{$smarty.get.m}>&s=<{$smarty.get.s}>&delid=<{$list.id}>"><{$delimg}></a>
+                    </td>
+                </tr>
+                <{foreachelse}>
+                <tr>
+                    <td class="norecord" colspan="99"><i></i><span>暂无符合条件的数据记录</span></td>
+                </tr>
+                <{/foreach}>
+            </tbody>
+            <tfoot>
+                <tr>
+                	<td colspan="2">
+                        <div class="del">
+                        <input type="checkbox" class="checkall" id="del">
+                        <label for="del">删除</label>
+                        </div>
+                        <input type="hidden" name="act" value="op" />
+                        <input type="submit" value="提交" />
+                    </td>
+                    <td colspan="99"><div class="page"><{$de.page}></div></td>
+                </tr>
+            </tfoot>
+        </table>
+        </form>
+    </div>
+</body>
+</html>

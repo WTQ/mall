@@ -1,0 +1,131 @@
+<link type="text/css" rel="stylesheet" href="<{$config.weburl}>/module/product/templates/pro.css">
+<script src="<{$config.weburl}>/script/index.js"></script>
+<div class="menu_bottom L1">
+  <div class="headtop_L"> <{$lang.you_are_here}><a href='<{$config.weburl}>/'><{$lang.indexpage}></a> &raquo; <{$guide}><{if $guide==''}>搜索<{/if}> </div>
+</div>
+<div id="main">
+  <div id="ml_left">
+    <div class="mlist_recs"><h2>推荐商品</h2></div>
+    <div class="hotsale">
+      <ul><{insert name="label" catid=$smarty.get.id type="product" rec=2 temp="pro_list_mrec" limit=3}></ul>
+    </div>
+ </div>
+  <div id="ml_right">
+    <div <{if $subcat.0.cat||$brand.0.name||$catfile}>class="list_sechs"<{/if}> >
+	 
+	 <{if $subcat.0.cat}>
+		  <div class="right_list_box">
+		  
+			  <b>分类:</b> 
+			  <span class="mlist_all"> 
+			  <a class="curr" href="<{$config.weburl}>/?m=product&s=list&show_type=<{$smarty.get.show_type}>">全部</a>
+			  </span>
+		  
+				<ul class="mlist_list">
+				  <{foreach item=list from=$subcat}>
+				  <li> <a href="<{$config.weburl}>/?m=product&s=list&show_type=<{$smarty.get.show_type}>&id=<{$list.catid}>"><{$list.cat}></a> </li>
+				  <{/foreach}>
+				  <div class="clear"></div>
+				</ul>
+				
+		  </div>
+		  <div class="bor_line"></div>
+      <{/if}>
+      
+      
+      <{if $brand.0.name}>
+      <div class="right_list_box"> <b>品牌:</b> <{assign var=b value=$smarty.get.brand}> <span class="mlist_all"><a <{if $smarty.get.brand==""}>class="curr"<{/if}> href="<{$config.weburl}>/?<{$url|replace:"&brand=$b":""}>&brand=">全部</a></span>
+        <ul class="mlist_list">
+          <{foreach item=list from=$brand}>
+          <li> <a <{if $smarty.get.brand==$list.name}>class="on"<{/if}> href="<{$config.weburl}>/?<{$url|replace:"&brand=$b":""}>&brand=<{$list.name}>"><{$list.name}></a> </li>
+          <{/foreach}>
+          <div class="clear"></div>
+        </ul>
+      </div>
+	  <div class="bor_line"></div>
+      <{/if}>
+      
+      <{foreach item=list key=num from=$catfile}>
+      <{assign var=fieldName value=$list.field}>
+      <{assign var=s value=$smarty.get.$fieldName}>
+      <{if $num>0}><div class="bor_line"></div><{/if}>
+      
+      <div class="right_list_box"> <b><{$list.field_name}>:</b> <span class="mlist_all"><a <{if $smarty.get.$fieldName==""}>class="curr"<{/if}> href="<{$config.weburl}>/?<{$url|replace:"&$fieldName=$s":""}>&<{$list.field}>=">全部</a></span>
+        <ul class="mlist_list">
+          <{foreach item=slist from=$list.catItem}>
+          <li> <a <{if $smarty.get.$fieldName==$slist.0}>class="on"<{/if}> href="<{$config.weburl}>/?<{$url|replace:"&$fieldName=$s":""}>&<{$list.field}>=<{$slist.0}>"><{$slist.1}></a> </li>
+          <{/foreach}>
+        </ul>
+      </div>
+      <{/foreach}>
+	  
+	  </div>
+    <div class="pro_list_con">
+      <div class="mselect_title">
+        <form action="<{$config.weburl}>/" method="get">
+          <input id="m" name="m" type="hidden" value="product" />
+          <input id="s" name="s" type="hidden" value="list" />
+          <input name="id" type="hidden" value="<{$smarty.get.id}>" />
+          <input name="brand" type="hidden" value="<{$smarty.get.brand}>" />
+          <input name="search_type" type="hidden" value="<{$smarty.get.search_type}>" />
+          <ul>
+          <{assign var=t value=$smarty.get.show_type}>
+          <{assign var=o value=$smarty.get.orderby}> <li <{if $smarty.get.show_type==2 || !$smarty.get.show_type}>class="normal"<{/if}>> <a href="<{$config.weburl}>/?<{$url|strip_tags|replace:"&$show_type=$t":""}>&show_type=2"> <span><img src="<{$config.weburl}>/image/default/row_list.gif" /><{$lang.bp}></span></a>
+          </li>
+          <li <{if $smarty.get.show_type==1}>class="normal"<{/if}> > <a href="<{$config.weburl}>/?<{$url|strip_tags|replace:"&$show_type=$t":""}>&show_type=1"> <span><img src="<{$config.weburl}>/image/default/col_list.gif" /><{$lang.ls}></span> </a>
+          </li>
+          <li <{if $smarty.get.orderby==7}>class="down"<{else}>class="default"<{/if}>><a href="<{$config.weburl}>/?<{$url|strip_tags|replace:"&orderby=$o":""}>&orderby=7"><span>销售量</span></a>
+          </li>
+          <li <{if $smarty.get.orderby==2}>class="down"<{else}>class="default"<{/if}>><a href="<{$config.weburl}>/?<{$url|strip_tags|replace:"&orderby=$o":""}>&orderby=2"><span>好评</span></a>
+          </li>
+          <li <{if $smarty.get.orderby==5}>class="priceUp"<{elseif $smarty.get.orderby==4}>class="priceDown"<{else}>class="defaultPrice"<{/if}>><a href="<{$config.weburl}>/?<{$url|strip_tags|replace:"&orderby=$o":""}>&orderby=<{if $smarty.get.orderby==4}>5<{else}>4<{/if}>"><span>价格</span></a>
+          </li>
+          <li><span style="padding:0 10px;">
+            <input size="5" name="sprice" type="text" value="<{$smarty.get.sprice}>" />
+            -
+            <input value="<{$smarty.get.eprice}>" size="5" name="eprice" type="text" />
+            <input class="mlibtn" type="submit" value="<{$lang.isure}>" />
+            </span></li>
+          <input  name="id" type="hidden" value="<{$smarty.get.id}>" />
+        </form>
+      </div>
+      <ul class="list9">
+        <{foreach item=list from=$info.list}>
+        <{if $smarty.get.show_type==1}>
+        <li>
+          <div class="Lb1"> <a rel="nofollow" href="<{$config.weburl}>/?m=product&s=detail&id=<{$list.id}>">          <img height="150" onmouseover="view_big_img(this,'<{$list.pic}>');" onmouseout="view_big_img(this, '');" alt="<{$list.pname}>" src="<{$list.pic}>_220X220.jpg">
+         </a> </div>
+          <div class="Lb2">
+            <p style="font-size:14px; font-weight:bold"> <a href="<{$config.weburl}>/?m=product&s=detail&id=<{$list.id}>"><{$list.pname}></a> </p>
+            <p> <{$lang.seller}> <a target="_blank" href="<{geturl uid=$list.userid user=$list.user}>"> <{$list.user}> </a> </p>
+          </div>
+          <div class="Lb3"> <{$config.money}><span class="bmoney"><{$list.price|number_format:2}></span></div>
+          <div class="Lb4">最近成交：<{$list.sell_amount}></div>
+        </li>
+        <{else}>
+        <li class="listimg"> <a class="listimg2" rel="nofollow" href="<{$config.weburl}>/?m=product&s=detail&id=<{$list.id}>">  <img alt="<{$list.pname}>" src="<{$list.pic}>_220X220.jpg"> </a>
+          <p class="liatname"> <a  href="<{$config.weburl}>/?m=product&s=detail&id=<{$list.id}>"><{$list.pname|truncate:50}></a></p>
+          <p class="price2"> <span class="pr1"><strong><{$config.money}><{$list.price}></strong></span><span class="xl">销量：<{$list.sell_amount}></span></p>
+          <div class="mlcompany"><span class="store_name"><a target="_blank" href="<{geturl uid=$list.userid user=$list.user}>"> <{$list.user}> </a></span></div>
+        </li>
+        <{/if}>
+        <{foreachelse}>
+        <div style="padding:20px; font-weight:bold"> </div>
+        <{/foreach}>
+      </ul>
+      <div class="page" style="padding-left:0px;"><{$info.page}></div>
+      <div class="clear"></div>
+    </div>
+  </div>
+</div>
+<div class="big_img_div" id="big_img_div" style="display:none;">&nbsp;</div>
+<script>
+function goto(v,type)
+{
+	var url='<{$queryurl}>';
+	if(type==1)
+		window.location='<{$config.weburl}>/?m=product&s=list&orderby='+v+url;
+	if(type==2)
+		window.location='<{$config.weburl}>/?m=product&s=list&province='+v+url;
+}
+</script>

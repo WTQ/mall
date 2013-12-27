@@ -1,0 +1,38 @@
+<{include file="header.htm"}>
+
+
+<style>
+
+#sitemap{width:958px; height:auto;  border:1px solid #999; margin-top:10px;}
+#sitemap .con{ border:0px; float:none;}
+#sitemap .con strong{ display:block; font-size:18px; margin-left:10px; padding:0px; }
+#sitemap .con .con_ul{ margin-left:25px; width:900px; margin-top:5px;}
+#sitemap .con ul{ display:inline;  }
+#sitemap .con ul li .con1{ margin-left:40px; word-break:break-all; word-wrap:break-word;}
+#sitemap .con ul li .con1 a{ padding:5px;}
+#sitemap.con ul li{line-height:22px; }
+.show{ font-weight:bold; font-size:14px;}
+
+</style>
+
+<div id='sitemap' >
+  <div class=con><strong><a href="<{$config.weburl}>/?m=product&s=list">商品</a></strong>
+   <div class=con_ul>
+    <ul>
+     	 <{insert name='label'  type='product_sitemap'  temp='sitemaps'}>
+    </ul>
+    </div>
+  </div>
+  <div class="clear"></div>
+  
+  <div class=con> <strong><a href="<{$config.weburl}>/?m=news&s=news_list">新闻</a></strong>
+     <div class=con_ul>
+    <ul>
+      	 <{insert name='label'  type='news_sitemap'  temp='sitemaps'}>
+    </ul>
+    </div>
+  </div>
+  
+</div>
+
+<{include file="footer.htm"}>

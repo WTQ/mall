@@ -1,0 +1,14 @@
+/*灰色*/
+.SonlineBox{ width:162px; font-size:12px;overflow:hidden; z-index:9999;}
+.SonlineBox .openTrigger{ width:31px; height:110px; position:absolute; top:0px;  z-index:1; cursor:pointer;  background:#7b7b7b url(img/grayOpen.jpg) no-repeat;} 
+.SonlineBox .titleBox{ width:158px; height:35px; line-height:35px; background:#00a91c url(img/grayTitleBg.gif) repeat-x; border-bottom:2px solid #7b7b7b;}
+.SonlineBox .titleBox span{ margin-left:10px; color:#fff; font-size:14px; font-family:'微软雅黑','黑体';}
+.SonlineBox .contentBox{ width:158px; height:auto; border:2px solid #7b7b7b; background:#fff; position:absolute; z-index:2;}
+.SonlineBox .contentBox .closeTrigger{ width:25px; height:25px; display:block; cursor:pointer;  position:absolute; top:5px;right:5px;-webkit-transition:all 0.8s ease-out;}
+.SonlineBox .contentBox .closeTrigger:hover{-webkit-transform:scale(1) rotate(360deg);}
+.SonlineBox .contentBox .listBox{overflow:hidden; margin-bottom:10px;}
+.SonlineBox .contentBox .listBox .QQList{ display:block; width:86%; height:32px; margin:10px auto 0px auto; border-bottom: 1px solid #E6E6E6;}
+.SonlineBox .contentBox .listBox .QQList span{float:left; line-height:22px;}
+.SonlineBox .contentBox .listBox .QQList a{float:left;}
+
+

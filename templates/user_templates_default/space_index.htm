@@ -1,0 +1,51 @@
+<script language="javascript" src="<{$config.weburl}>/templates/user_templates_default/jquery.flexslider-min.js"></script>
+
+<div class="flexslider">
+    <ul class="slides">
+    	<{if $com.slide.0}>
+        <{foreach item=list key=num from=$com.slide}>
+        <li style="width: 100%; float: left; margin-right: -100%; display: <{if $num==0}>list-item<{else}>none<{/if}>;"><{if $com.slideurl.$num}><a target="_blank" href="<{$com.slideurl.$num}>"><img src="<{$list}>"></a><{else}><img src="<{$list}>"><{/if}></li>
+        <{/foreach}>  
+        <{else}> 
+        <li style="width: 100%; float: left; margin-right: -100%; display: list-item;"> <img src="<{$config.weburl}>/templates/user_templates_default/img/f01.jpg"> </li>
+        <li style="width: 100%; float: left; margin-right: -100%; display: none;"> <img src="<{$config.weburl}>/templates/user_templates_default/img/f02.jpg"> </li>
+        <li style="width: 100%; float: left; margin-right: -100%; display: none;"> <img src="<{$config.weburl}>/templates/user_templates_default/img/f03.jpg"> </li>
+        <li style="width: 100%; float: left; margin-right: -100%; display: none;"> <img src="<{$config.weburl}>/templates/user_templates_default/img/f04.jpg"> </li>
+       <{/if}>
+    </ul>
+</div>
+  
+<script type="text/javascript">
+$(window).load(function() {
+	$('.flexslider').flexslider();
+}); 
+</script>  
+
+<div class="module_special" style="margin-top: 40px;">
+	<h2><{$lang.product_showcase}></h2>
+    <div class="con">
+    	<ul class="list">
+            <{foreach item=list from=$rec_pro}>
+            <li>
+                <div class="pic"><a target="_blank" title="<{$list.pname}>" href="<{$config.weburl}>/?m=product&s=detail&id=<{$list.id}>"><img src="<{$list.pic}>_220X220.jpg" width=150  height=150 alt="<{$list.pname}>" /></a></div>
+                <h3><a target="_blank" title="<{$list.pname}>" href="<{$config.weburl}>/?m=product&s=detail&id=<{$list.id}>"><{$list.pname}></a></h3> 
+                <p><{$config.money}> <{$list.price}></p>
+            </li>
+            <{/foreach}>
+        </ul>
+    </div>
+</div>
+<div class="module_special">
+	<h2><{$lang.new_listing}></h2>
+    <div class="con">
+    	<ul class="list">
+            <{foreach item=list from=$pro}>
+            <li>
+                <div class="pic"><a target="_blank" title="<{$list.pname}>" href="<{$config.weburl}>/?m=product&s=detail&id=<{$list.id}>"><img src="<{$list.pic}>_220X220.jpg" width=150  height=150 alt="<{$list.pname}>" /></a></div>
+                <h3><a target="_blank" title="<{$list.pname}>" href="<{$config.weburl}>/?m=product&s=detail&id=<{$list.id}>"><{$list.pname}></a></h3> 
+                <p><{$config.money}> <{$list.price}></p>
+            </li>
+            <{/foreach}>
+        </ul>
+    </div>
+</div>

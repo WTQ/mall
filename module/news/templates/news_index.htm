@@ -1,0 +1,74 @@
+
+<link href="<{$config.weburl}>/module/news/templates/news.css" rel="stylesheet" type="text/css" />
+<div style="height:10px; "></div>
+	<div id="mainbody">
+    	<div class="new_l">
+            <div class="news_left">
+                <div class="news_fl">
+                <script src='<{$config.weburl}>/api/ad.php?id=27&catid=<{$smarty.get.id}>&name=<{$smarty.get.key}>'></script>
+                </div>
+            </div>
+            <div class="new_le">
+                <div class="jrjj">
+                        <strong>今日特刊</strong>
+                        <{insert name="label" type='news' temp='news_list_rec' leng=25 limit=1}>
+                    </div>
+                <div class="xwrd">
+                     <ul>
+                        <{insert name="label" type='news' temp='news_list_m' leng=20 limit=11}>
+                    </ul>
+                </div>
+           </div>
+        </div>
+    	<div class="news_right">
+        	<div class="sectitle"><div class="title_left2 L2">点击排行</div></div>
+            <div class="seccon">
+                 <ul class="ul1">
+                  <{foreach item=list from=$hotnews}>
+				  	<li><a href="<{$config.weburl}>/?m=news&s=newsd&id=<{$list.nid}>"><{$list.title|truncate:32}></a></li>
+				  <{/foreach}>
+                 </ul>
+				 <div class="clear"></div>
+           </div>
+           <div class="newrad m1"><script src='<{$config.weburl}>/api/ad.php?id=31&catid=<{$smarty.get.id}>&name=<{$smarty.get.key}>'></script> </div>
+        </div>
+       
+        <div class="adv"><{$config.index_ad}></div>
+        
+        <div class="news_l">
+        	<{foreach item=list name=loop from=$news_menu}>
+                <div class="box">
+                    <div class="newtitle"><s></s><div class="title_left1 L2"><{$list.cat}></div> 
+                    	<a target="_blank" style="float:right; margin:5px;" href="<{$config.weburl}>/?m=news&s=news_list&id=<{$list.catid}>"><img src="<{$config.weburl}>/image/default/more.gif"></a>
+                    </div>
+                    <div class="newcon">
+                         <ul class="ul1">
+                             <{insert name="label" type='news' temp='news_list_picm' catid=$list.catid img='true' leng=42 limit=1}>
+                            <{insert name="label" type='news' temp='news_list_m1' catid=$list.catid leng=40  limit=5}>
+                         </ul>
+                   </div>
+                </div>
+            <{/foreach}>
+        </div>
+        <div class="news_r">
+        	<div class="tjtw">
+                <div class="sectitle"><div class="title_left2 L2"><{$lang.RecommendedGraphic}></div></div>
+                <div class="seccon" style="margin-bottom:10px; text-align:center;">
+                     <ul class="ul1">
+                       <{insert name="label" type='news' temp='news_list_2' img='true' leng=16 limit=$config.rec_pic_num}>
+                     </ul>
+                     <div class="clear"></div>
+               </div>
+            </div>
+           <div class="dcwj">
+               <div class="sectitle"><div class="title_left2 L2"><{$lang.questionnaire}></div></div>
+                <div class="seccon" style="margin-bottom:10px;">
+                     <ul class="ul1">
+                       <{insert name="label" type='vote' temp='vote_list' limit=2}>
+                     </ul>
+               </div>
+           </div>
+           
+        </div>
+    </div>
+</div>

@@ -1,0 +1,74 @@
+<div class="main">
+    <div class="wrap step">
+    	<div class="step1">
+        
+            <{if $de.seller_id==$buid&&$cg_u_type==2}>
+            <b>请您及时与买家协商处理本次原因</b>
+            <div class="mt10">
+                <a href="<{$config.weburl}>/main.php?m=product&s=admin_return_step&oid=<{$smarty.get.id}>&op=agree"><img src="image/default/user_admin/agree.gif" /></a>
+                <a href="<{$config.weburl}>/main.php?m=product&s=admin_return_step&oid=<{$smarty.get.id}>&op=refuse"><img src="image/default/user_admin/refuse.gif" /></a>
+            </div>
+            <{/if}>
+            
+            <div class="mt10">
+            <p>退货编号：<{$de.return_code}></p>
+            <p>申求时间：<{$de.add_time|date_format:"%Y-%m-%d %H:%M"}></p>
+            <p>退货类型：买家已收到货，退货并退款</p>
+            <p>退货状态：<{if $de.statu=='1'}>卖家拒绝退货<{if $de.buyer_id==$buid&&$cg_u_type==1}><a href="main.php?m=product&s=admin_return&id=<{$de.oid}>&t=1">，重新申请退货</a><{/if}><{elseif $de.statu==2}>退货申请等待卖家确认中<{elseif $de.statu==9}>退货成功<{else}>退货申请等待卖家确认中<{/if}></p>
+            <p>退货人：<{$de.return_addr_name}></p>
+            <p>退货地址：<{$de.return_addr}></p>
+            <p>退货邮编：<{$de.return_post}></p>
+            <{if $de.tel}><p>退货电话：<{$de.tel}></p><{/if}>
+            <{if $de.mobile}><p>退货手机：<{$de.mobile}></p><{/if}>
+            <p>退货原因：<{$de.message}></p>
+            </div>
+        </div>
+        <h4 class="rt">请说明原因</h4>
+        <table class="table-list-style returngoods">
+        	<tbody>
+            <{foreach item=plist from=$pro}>
+            <tr>
+                <td width="10" class="bdl"></td>
+                <td class="w80">
+                <div class="pic-small">
+                    <a target="_blank" href="<{$config.weburl}>/?m=product&s=detail&id=<{$plist.pid}>">
+                        <img width=60 height=60 src="<{$config.weburl}>/<{if !$plist.pic }>image/default/nopic.gif<{else}><{$plist.pic}><{/if}>" alt="<{$list.pname}>" />
+                    </a>
+                </div>
+                </td>
+                <td width="10" class="bdl"></td>
+                <td class="tl"> <a href="<{$config.weburl}>/?m=product&s=detail&id=<{$plist.pid}>"><{$plist.pname}></a></td>
+                <td width="100" class="bdl"><{$plist.price|number_format:2}></td>
+                <td width="100" class="bdl bdr"><{$plist.returnnum}> </td>
+            </tr>
+            <{/foreach}>
+            </tbody>
+        </table>
+        
+        <div class="step2 clearfix">
+        <{if $de.statu!=9}>
+        <form method="post">
+        <input type="hidden" name="submit" value="add" />
+        <input type="hidden" name="oid" value="<{$de.oid}>" />
+        <textarea name="msg" rows="4"></textarea>
+        <input type="submit" class="submit fr" value="留言" />
+        </form>
+        <{/if}>
+        <div class="clear"></div>
+        <div class="talk">
+        <{foreach item=list from=$talk}>
+        
+        	<div class="talk_t">
+            	<h3><{if $buid==$list.uid}>自己<{else}><{if $list.utype==1}>买家<{elseif $list.utype==2}>卖家<{/if}><{/if}></h3>
+                <{if $buid!=$list.uid}>
+                <{if $list.utype==2}><h3>&nbsp;&nbsp;<a target="_blank" href="<{$config.weburl}>/home.php?uid=<{$list.uid}>"><{$list.uname}></a></h3><{/if}>
+                <{/if}>
+            	<span><{$de.add_time|date_format:"%Y-%m-%d %H:%M:%S"}></span>
+            </div>
+        	<div class="talk_c"><{$list.content}></div>
+        <{/foreach}>
+        </div>    
+        </div>
+        </div>
+     </div>
+</div>

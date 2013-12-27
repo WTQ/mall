@@ -1,0 +1,178 @@
+<script type="text/javascript" src="../script/Validator.js"></script>
+<style>
+.scroller{ background: url(image/default/credit.png) 17px 23px no-repeat; display: block; height: 22px; padding: 0 0 17px 30px; text-align: left; width: 400px; margin-right:25px; }
+.scroller span {  display: block; height: 22px; width: 0; }
+.scroller em { background: url(image/default/credit.png)  -417px 2px no-repeat;  color: white; display: block; float: right; height: 22px; padding-top: 1px;  text-align: center; width: 30px; }
+.rate-desc { height: auto; overflow: hidden; width: 400px; }
+.rate-desc li { display: block; float: left; text-align: center; width: 80px; }
+.span { background: url(image/default/star.gif) 0 -27px ; display: inline-block; height: 12px; overflow: hidden; text-align: left; vertical-align: inherit; width: 60px; }
+
+caption .l{ float: left;  }
+caption .r{ float: right;  }
+.credit , .comment { line-height: 36px; border-collapse: collapse; margin-bottom:10px;}
+.credit .title , .comment .title { background-color: #F8F8F8; }
+.credit th , .comment th { color: #A9A9A9; font-weight: normal; border-top: 1px solid #D7D7D7; text-align: center; }
+.credit td { background-color: #FFF; color: #666666; text-align: center; }
+.credit th , .credit td { border-bottom: 1px solid #D7D7D7; }
+.cg { color: #FF0000; }
+.cm { color: #569636; }
+.cb { color: #3E3E3E; }
+.cz { color: #275BCB; }
+
+.comment a{ text-decoration: none; color: #3366CC; }
+.comment th { padding:0 5px;}
+.comment td { background-color: #FFF; color: #666666; padding:10px 5px 8px; border-bottom:1px solid #E2E2E2; vertical-align:top; line-height:18px;}
+.comment td p { color: #FF6600; font-weight: bold; line-height: 20px; }
+.comment ul { border-bottom: 2px solid #FF8C40; float:left; width:100%;}
+.comment ul li ,.comment ul li a,.comment ul li a span{ background: url(image/default/tab.png) no-repeat 1000px 1000px; display: block; height: 29px; line-height: 29px;}
+.comment ul li {  float: left; margin-right: 5px; padding-left: 4px; background-position: 0 -147px;}
+.comment ul li a { background-position: right -245px; color: #000000; padding-right: 4px; cursor:pointer;}
+.comment ul li a span { background-position: right -196px; background-repeat: repeat-x; padding: 0 10px;
+}
+.comment ul li.selected { background-position: 0 -293px;}
+.comment ul li.selected a { background-position: right -395px; color: #FFFFFF; font-weight: 700;}
+.comment ul li.selected a span { background-position: 0 -344px;}
+</style>
+<{if $smarty.session.USER_TYPE==2}>
+<caption>
+<div class="l"><b>商铺动态评分</b></div>
+</caption>
+<div style="border:1px solid #CCC; width:100%; padding:10px 0;" >
+  <table width="96%" style="margin:auto;">
+    <tr>
+      <td width="85" align="right">商品与描述相符
+        <p style="color:#FF6600; font-weight:bold"><{$u.a|number_format:1}>分</p></td>
+      <td align="right"><div class="scroller"> <span style="width: <{$u.aw}>%;"><em><{$u.a|number_format:1}></em></span> </div>
+        <div class="rate-desc">
+          <ul>
+            <li>非常不满</li>
+            <li>不满意</li>
+            <li>一般</li>
+            <li>满意</li>
+            <li>非常满意</li>
+          </ul>
+        </div></td>
+    </tr>
+    <tr>
+      <td align="right">卖家的服务态度
+        <p style="color:#FF6600; font-weight:bold"><{$u.b|number_format:1}>分</p></td>
+      <td align="right"><div class="scroller"> <span style="width: <{$u.bw}>%;"><em><{$u.b|number_format:1}></em></span> </div>
+        <div class="rate-desc">
+          <ul>
+            <li>非常不满</li>
+            <li>不满意</li>
+            <li>一般</li>
+            <li>满意</li>
+            <li>非常满意</li>
+          </ul>
+        </div></td>
+    </tr>
+    <tr>
+      <td align="right">卖家的发货速度
+        <p style="color:#FF6600; font-weight:bold"><{$u.c|number_format:1}>分</p></td>
+      <td align="right"><div class="scroller"> <span style="width: <{$u.cw}>%;"><em><{$u.c|number_format:1}></em></span> </div>
+        <div class="rate-desc">
+          <ul>
+            <li>非常不满</li>
+            <li>不满意</li>
+            <li>一般</li>
+            <li>满意</li>
+            <li>非常满意</li>
+          </ul>
+        </div></td>
+    </tr>
+    <tr>
+      <td align="right">物流发货的速度
+        <p style="color:#FF6600; font-weight:bold"><{$u.d|number_format:1}>分</p></td>
+      <td align="right"><div class="scroller"> <span style="width: <{$u.dw}>%;"><em><{$u.d|number_format:1}></em></span> </div>
+        <div class="rate-desc">
+          <ul>
+            <li>非常不满</li>
+            <li>不满意</li>
+            <li>一般</li>
+            <li>满意</li>
+            <li>非常满意</li>
+          </ul>
+        </div></td>
+    </tr>
+  </table>
+</div>
+<{/if}>
+<table width="100%" class="credit">
+  <caption>
+      <div class="l"><b><{if $smarty.session.USER_TYPE==2}>卖<{else}>买<{/if}>家累计信用：</b><b style="color:#3366CC"><{$credit.sellerpoints}></b></div>
+      <div class="r">
+		  好评率：<span style="color:#FF6600">
+			  <{if $count==0||$credit.sellerpoints==0}>
+			  	0
+			  <{else}>
+				  <{if $smarty.session.USER_TYPE==2}>
+					 <{math equation="x/y*100" x=$credit.sellerpoints y=$count format="%.2f"}>%
+				  <{else}>
+					 <{math equation="x/y*100" x=$credit.buyerpoints y=$count1 format="%.2f"}>%
+				  <{/if}>
+			  <{/if}>
+		  </span>
+	  </div>
+  </caption>
+  <tr class="title">
+    <th width="20%"></th>
+    <th width="15%">最近1周</th>
+    <th width="15%">最近1个月</th>
+    <th width="15%">最近6个月</th>
+    <th width="15%">6个月前</th>
+    <th width="15%">总计</th>
+  </tr>
+  <{foreach item=list key=num from=$de}>
+  <tr> <{assign var="name" value=credit$num}>
+    <th><b><{$lang.$name}></b></th>
+    <{foreach item=slist from=$list}>
+    <td><{$slist}></td>
+    <{/foreach}>
+    <td><{$list.3+$list.2}></td>
+  </tr>
+  <{/foreach}>
+  <tr>
+    <th><b><{$lang.credit3}></b></th>
+    <td><{$de.0.0+$de.1.0+$de.2.0+$de.3.0}></td>
+    <td><{$de.0.1+$de.1.1+$de.2.2+$de.3.3}></td>
+    <td><{$de.0.2+$de.1.2+$de.2.2+$de.3.2}></td>
+    <td><{$de.0.3+$de.1.3+$de.2.3+$de.3.3}></td>
+    <td><{$count}></td>
+  </tr>
+</table>
+
+<table width="100%" class="comment">
+  <caption>
+  	  <ul>
+      <li <{if !$smarty.get.type}>class="selected"<{/if}> ><a href="main.php?m=shop&s=admin_credit"><span>来自<{if $smarty.session.USER_TYPE==2}>买<{else}>卖<{/if}>家的评论</span></a></li>
+      <li <{if $smarty.get.type}>class="selected"<{/if}> ><a href="main.php?m=shop&s=admin_credit&type=1"><span>给他人的评论</span></a></li>
+      </ul>
+  </caption>
+  <tr class="title">
+    <th width="50"></th>
+    <th></th>
+    <th align="center" width="150">评价人</th>
+    <th align="left" width="200">商品</th>
+    <th width="80">时间</th>
+    <{if $smarty.get.type}>
+    <th width="50">操作</th>
+    <{/if}>
+  </tr>
+  <{foreach item=slist key=num from=$re.list}>
+  <tr>
+    <td align="center"><{if $slist.goodbad==1 }><{$lang.credit0}><{elseif $slist.goodbad==0 }><{$lang.credit1}><{else}><{$lang.credit2}><{/if}></td>
+    <td><{$slist.con}></td>
+    <td align="center"><a target="_blank" href="home.php?uid=<{$slist.userid}>"><{$slist.user}></a></td>
+    <td><a target="_blank" href="<{$config.weburl}>/?m=product&s=detail&id=<{$slist.pid}>"><{$slist.pname|truncate:28}></a>
+      <p><{$config.money}> <{$slist.price|number_format:2}></p></td>
+    <td align="center"><{$slist.uptime|date_format:"%Y-%m-%d <br> %H:%M:%S"}></td>
+    <{if $smarty.get.type}>
+    <td align="center"><{if $slist.goodbad!=1}><a href="main.php?m=shop&s=admin_credit&type=1&id=<{$slist.id}>">删除</a><{/if}></td>
+    <{/if}>
+  </tr>
+  <{/foreach}>
+  <tr>
+    <td colspan="20"><div class="page"><{$re.page}></div></td>
+  </tr>
+</table>

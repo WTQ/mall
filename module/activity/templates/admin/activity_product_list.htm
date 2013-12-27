@@ -1,0 +1,92 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<title>活动申请产品管理</title>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<link href="admin.css" rel="stylesheet" type="text/css" />
+<script type="text/javascript" src="../script/jquery-1.4.4.min.js"></script>
+</head>
+<body>
+	<div class="container">
+        <div class="flow">
+            <div class="itemtitle">
+                <h3>活动申请产品管理</h3>
+                <ul>
+                    <li <{if $smarty.get.t==''}>class="current"<{/if}> ><a href="module.php?m=activity&s=activity_product_list.php&editid=<{$smarty.get.editid}>"><span>所有产品</span></a></li>
+                    <li <{if $smarty.get.t=='1'}>class="current"<{/if}> ><a href="module.php?m=activity&s=activity_product_list.php&editid=<{$smarty.get.editid}>&t=1"><span>待审核产品</span></a></li>
+                    <li <{if $smarty.get.t=='2'}>class="current"<{/if}> ><a href="module.php?m=activity&s=activity_product_list.php&editid=<{$smarty.get.editid}>&t=2"><span>通过产品</span></a></li>
+                    <li <{if $smarty.get.t=='3'}>class="current"<{/if}> ><a href="module.php?m=activity&s=activity_product_list.php&editid=<{$smarty.get.editid}>&t=3"><span>未通过产品</span></a></li>
+                    <li <{if $smarty.get.t=='4'}>class="current"<{/if}> ><a href="module.php?m=activity&s=activity_product_list.php&editid=<{$smarty.get.editid}>&t=4"><span>再次申请产品</span></a></li>
+                </ul>
+            </div>
+        </div>
+        <div class="h35"></div>  
+		<script type="text/javascript">
+        $(function(){
+            /* 全选 */
+             $('.checkall').click(function(){
+                var _self = this;
+                $('.checkitem').each(function(){
+                    if (!this.disabled)
+                    {
+                        $(this).attr('checked', _self.checked);
+                    }
+                });
+                $('.checkall').attr('checked', this.checked);
+            });	 
+        });
+        </script>
+        <form action="" method="post">
+        <table class="table">
+        	<thead>
+                <tr>
+                    <th class="partition" colspan="99">申请产品列表</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr class="header">
+                    <th width="30"></th>
+                    <th width="70">显示顺序</th>
+                    <th colspan="2">产品名称</th>
+                    <th width="200">产品类型</th>
+                    <th width="100">价格</th>
+                    <th width="100">申请者</th>
+                    <th width="100">状态</th>
+                </tr>
+                <{foreach item=list from=$de.list}>
+				<tr>
+					<td><input type="checkbox" value="<{$list.product_id}>" class="checkitem" name="chk[]"></td>
+                    <td><input type="text" class="w50" name="displayorder[<{$list.id}>]" value="<{$list.displayorder}>" onbeforepaste="clipboardData.setData('text',clipboardData.getData('text').replace(/[^\d]/g,''))" onkeyup="value=value.replace(/[^\d]/g,'')"/></td>
+                    <td width="50"><div class="img"><img width="50" src="<{$list.pic}>"></div></td>
+                    <td>
+                    <a href="../?m=product&s=detail&id=<{$list.product_id}>" target="_blank"><{$list.pname}></a></td>
+                    <td><{$list.cat}></td>
+                    <td><{$config.money}> <{$list.price}></td>
+                    <td><{$list.member_name}></td>
+                    <td><{if $list.status==1}>待审核<{elseif $list.status==2}>已通过<{elseif $list.status==3}>未通过<{elseif $list.status==4}>再次申请<{/if}></td>
+               </tr>
+                <{foreachelse}>
+                <tr>
+                    <td class="norecord" colspan="99"><i></i><span>暂无符合条件的数据记录</span></td>
+                </tr>
+                <{/foreach}>
+            </tbody>
+            <tfoot>
+                <tr>
+                	<td colspan="4">
+                        <div class="del">
+                        <input type="checkbox" class="checkall" id="del">
+                        <label for="del">全选</label>
+                        </div>
+                        <input name="submit" type="submit" onclick="return confirm('确定删除吗');" value="<{$lang.del}>">
+                        <input name="submit" type="submit" value="<{$lang.tg}>" >  
+                        <input name="submit" type="submit" value="<{$lang.btg}>" > 
+                    </td>
+                    <td colspan="99"><div class="page"><{$de.page}></div></td>
+                </tr>
+            </tfoot>
+        </table>
+        </form>
+    </div>
+</body>
+</html>

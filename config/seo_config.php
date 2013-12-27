@@ -1,0 +1,1 @@
+<?php $config = array_merge($config, unserialize('a:5:{s:10:"opensuburl";s:1:"1";s:7:"rewrite";s:1:"0";s:5:"title";s:3:"111";s:7:"keyword";s:3:"111";s:11:"description";s:3:"111";}'));?>

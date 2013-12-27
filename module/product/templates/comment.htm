@@ -1,0 +1,152 @@
+<link type="text/css" rel="stylesheet" href="<{$config.weburl}>/module/product/templates/pro.css">
+<script>
+function $(id) {
+	return !id ? null : document.getElementById(id);
+}
+function select_sort(s,v)
+{
+	
+	for(i = 1; i<= 5; i++)
+	{
+		if(i <= v )
+		{
+			$('img_' + s + i).src = "<{$config.weburl}>/image/default/icon_star2.gif";
+		}
+		else
+		{
+			$('img_' + s + i).src = "<{$config.weburl}>/image/default/icon_star1.gif";
+		}
+	}
+	if(v == 1)
+	{
+		$('stext' + s).innerHTML = "<b>1分</b> - &nbsp;很差";
+		$('snum' + s).value = 1;
+	}
+	else if(v == 2)
+	{
+		$('stext' + s).innerHTML = "<b>2分</b> - &nbsp;差";
+		$('snum' + s).value = 2;
+	}
+	else if(v == 3)
+	{
+		$('stext' + s).innerHTML = "<b>3分</b> - &nbsp;一般";
+		$('snum' + s).value = 3;
+	}
+	else if(v == 4)
+	{
+		$('stext' + s).innerHTML = "<b>4分</b> - &nbsp;好";
+		$('snum' + s).value = 4;
+	}
+	else if(v == 5)
+	{
+		$('stext' + s).innerHTML = "<b>5分</b> - 很好";
+		$('snum' + s).value = 5;
+	}
+}
+</script>
+<div id="mainbody1" class="m1" style="width:961px; margin:0 auto;">
+    <div class="flow-steps" style="width:961px;">
+        <ul>
+            <li class="don"><span class="firstg">1.查看购物车</span></li>
+            <li class="don"><span class="firstg">2.拍下商品</span></li>
+            <li class="don"><span class="firstg">3.付款到网站</span></li>
+            <li class="don current-prev"><span class="firstg">4.确认收货</span></li>
+            <li class="current">5.评论</li>
+        </ul>
+    </div>
+	
+    <div class="comment">
+    	<h3>对商品进行评价</h3>
+    	<{foreach item=list key=n from=$pro}>
+        <ul>
+        	<li class="product">商品</li>
+            <li>好评</li>
+            <li>中评</li>
+            <li>差评</li>
+        </ul>
+        <form method="post">
+        <div class="comment_con">
+        	<div class="left">
+            	<div class="img">
+                    <a target="_blank" href="<{$config.weburl}>/?m=product&s=detail&id=<{$list.id}>">
+                    <{if $list.pic}>
+                    	<img height="110" src="<{$list.pic}>" width="110" />
+                    <{else}>
+                    	<img height="110" src="image/default/nopic.gif" width="110" />
+                    <{/if}>
+                    </a>
+                </div>
+                <p><a target="_blank" href="<{$config.weburl}>/?m=product&s=detail&id=<{$list.id}>"><{$list.pname}></a></p>
+            </div>
+        	<div class="right">
+            	<table align="top" width="100%">
+                	<tr>
+                    	<td width="66"><input type="radio" name="g<{$n}>" id="good" value="1" checked="checked" /><label for="good"><img src="<{$config.weburl}>/image/default/good.gif" /></label></td>
+                    	<td width="66"><input type="radio" name="g<{$n}>" id="middle" value="0" /><label for="middle"><img src="<{$config.weburl}>/image/default/middle.gif" /></label></td>
+                    	<td><input type="radio" name="g<{$n}>" id="bad" value="-1" /><label for="bad"><img src="<{$config.weburl}>/image/default/bad.gif" /></label></td>
+                    </tr>
+                </table>
+                <div class="comment_text"><textarea name="comment_text<{$n}>"></textarea></div>    
+            </div>
+            <div class="clear"></div>
+        </div>
+        <{/foreach}>
+        <h3>商铺动态评分</h3>
+        <div class="comment_con1">
+        	<table>
+        		<tr>
+                	<td width="90">商品与描述相符</td>
+                    <td width="150">
+                  	<img align="absmiddle" onMouseOver="select_sort('a','1')" src="<{$config.weburl}>/image/default/icon_star2.gif" id="img_a1">
+                    <img align="absmiddle" onMouseOver="select_sort('a','2')" src="<{$config.weburl}>/image/default/icon_star2.gif" id="img_a2">
+                    <img align="absmiddle" onMouseOver="select_sort('a','3')" src="<{$config.weburl}>/image/default/icon_star2.gif" id="img_a3">
+                    <img align="absmiddle" onMouseOver="select_sort('a','4')" src="<{$config.weburl}>/image/default/icon_star2.gif" id="img_a4">
+                    <img align="absmiddle" onMouseOver="select_sort('a','5')" src="<{$config.weburl}>/image/default/icon_star2.gif" id="img_a5">
+                    <input type="hidden" value="5" id="snuma" name="snuma">
+                    </td>
+                    <td><span id="stexta"><b>5分</b> - &nbsp;很好</span></td>
+                </tr>
+                <tr>
+                	<td>卖家的服务态度</td>
+                    <td>
+                  	<img align="absmiddle" onMouseOver="select_sort('b','1')" src="<{$config.weburl}>/image/default/icon_star2.gif" id="img_b1">
+                    <img align="absmiddle" onMouseOver="select_sort('b','2')" src="<{$config.weburl}>/image/default/icon_star2.gif" id="img_b2">
+                    <img align="absmiddle" onMouseOver="select_sort('b','3')" src="<{$config.weburl}>/image/default/icon_star2.gif" id="img_b3">
+                    <img align="absmiddle" onMouseOver="select_sort('b','4')" src="<{$config.weburl}>/image/default/icon_star2.gif" id="img_b4">
+                    <img align="absmiddle" onMouseOver="select_sort('b','5')" src="<{$config.weburl}>/image/default/icon_star2.gif" id="img_b5">
+                    <input type="hidden" value="5" id="snumb" name="snumb">
+                    </td>
+                    <td><span id="stextb"><b>5分</b> - &nbsp;很好</span></td>
+                </tr>
+                <tr>
+                	<td>卖家的发货速度</td>
+                    <td>
+                  	<img align="absmiddle" onMouseOver="select_sort('c','1')" src="<{$config.weburl}>/image/default/icon_star2.gif" id="img_c1">
+                    <img align="absmiddle" onMouseOver="select_sort('c','2')" src="<{$config.weburl}>/image/default/icon_star2.gif" id="img_c2">
+                    <img align="absmiddle" onMouseOver="select_sort('c','3')" src="<{$config.weburl}>/image/default/icon_star2.gif" id="img_c3">
+                    <img align="absmiddle" onMouseOver="select_sort('c','4')" src="<{$config.weburl}>/image/default/icon_star2.gif" id="img_c4">
+                    <img align="absmiddle" onMouseOver="select_sort('c','5')" src="<{$config.weburl}>/image/default/icon_star2.gif" id="img_c5">
+                    <input type="hidden" value="5" id="snumc" name="snumc">
+                    </td>
+                    <td><span id="stextc"><b>5分</b> - &nbsp;很好</span></td>
+                </tr>
+                <tr>
+                	<td>物流发货的速度</td>
+                    <td>
+                  	<img align="absmiddle" onMouseOver="select_sort('d','1')" src="<{$config.weburl}>/image/default/icon_star2.gif" id="img_d1">
+                    <img align="absmiddle" onMouseOver="select_sort('d','2')" src="<{$config.weburl}>/image/default/icon_star2.gif" id="img_d2">
+                    <img align="absmiddle" onMouseOver="select_sort('d','3')" src="<{$config.weburl}>/image/default/icon_star2.gif" id="img_d3">
+                    <img align="absmiddle" onMouseOver="select_sort('d','4')" src="<{$config.weburl}>/image/default/icon_star2.gif" id="img_d4">
+                    <img align="absmiddle" onMouseOver="select_sort('d','5')" src="<{$config.weburl}>/image/default/icon_star2.gif" id="img_d5">
+                    <input type="hidden" value="5" id="snumd" name="snumd">
+                    </td>
+                    <td><span id="stextd"><b>5分</b> - &nbsp;很好</span></td>
+                </tr>
+            </table>
+            <input type="hidden" name="submit" value="submit" />
+            <div class="div_btn"><input class="btn" type="submit" value="提交评论" /></div>
+        </div>
+        </form>
+    </div>
+    
+</div>

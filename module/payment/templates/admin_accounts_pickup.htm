@@ -1,0 +1,93 @@
+<div class="path">
+    <div>
+    	<{if $cg_u_type==1}>
+    		<a href="main.php?cg_u_type=1">我的商城</a> <span>&gt;</span>
+        <{else}>
+    		<a href="main.php?cg_u_type=2">卖家中心</a> <span>&gt;</span>
+        <{/if}>
+        <a href="main.php?m=payment&s=admin_accounts_pickup">资金提现</a> <span>&gt;</span>
+        <{if $smarty.get.type=='add'}>资金提现<{else}>提现记录<{/if}>
+    </div>
+</div>
+<div class="main">
+	<div class="wrap">
+        <div class="hd">
+            <ul class="tabs">
+                <li class="<{if $smarty.get.type=='add'}>normal<{else}>active<{/if}>"><a href="main.php?m=payment&s=admin_accounts_pickup">提现记录</a></li>
+                <li class="<{if $smarty.get.type=='add'}>active<{else}>normal<{/if}>"><a href="main.php?m=payment&s=admin_accounts_pickup&type=add">资金提现</a></li>
+            </ul>
+        </div>
+        <{if $smarty.get.type=='add' or $smarty.get.type=='edit'}>
+        <div class="form-style">
+            <form action="" method="post">
+            <input type="hidden" value="add" name="submit">
+            <dl>
+                <dt>账户余额：</dt>
+                <dd><{$config.money}> <{$re.cash|number_format:2}></dd>
+            </dl>
+            <dl>
+                <dt><em>*</em>提现金额：</dt>
+                <dd><input type="text" name="pickup" class="text w150" /></dd>
+            </dl>
+            <dl>
+                <dt><em>*</em>支付密码：</dt>
+                <dd><input type="password" name="pword" class="text w150" /></dd>
+            </dl>
+            <dl>
+                <dt>提现银行：</dt>
+                <dd><{foreach item=list from=$bank_list}><{$list.master}> <{$list.bank}> <{$list.bank_addr}> <{$list.accounts}><input type="hidden" name="bank_id" value="<{$list.id}>" /><{/foreach}></dd>
+            </dl>
+            <dl class="foot">
+                <dt>&nbsp;</dt>
+                <dd><input type="submit" value="提交" class="submit"></dd>
+            </dl>
+            </form>
+        </div>  
+        <{else}>
+        <table class="table-list-style">
+            <thead>
+            <tr>
+                <th width="120">流水号</th>
+                <th width="110">金额</th>
+                <th width="110">申请时间</th>
+                <th width="110">状态</th>
+                <th width="110">完成时间</th>
+                <th class="tl">备注</th>
+            </tr>
+            </thead>
+            <tbody>
+            <{foreach item=list key=num from=$plist.list}>
+            <tr>
+            	<td><{$list.cashflowid }></td>
+            	<td><{$list.amount}></td>
+                <td><{$list.add_time|date_format:"%Y-%m-%d </br> %H:%M:%S"}></td>
+                <td><{if $list.is_succeed==1}>成功<{elseif $list.is_succeed==0}>新提交<{elseif $list.is_succeed==2}>取消<{/if}></td>
+                <td><{if $list.check_time}><{$list.check_time|date_format:"%Y-%m-%d </br> %H:%M:%S"}><{else}>等待完成<{/if}></td>
+                <td class="tl"><{$list.bankflow}></td>
+            </tr>
+            <{foreachelse}>
+            <tr>
+            	<td colspan="20" class="norecord">
+                	<i></i><span>暂无符合条件的数据记录</span>	
+                </td>
+            </tr>
+            <{/foreach}>
+            </tbody>
+            
+            <tfoot>
+            <tr>
+                <td colspan="20">
+                <div class="pagination"><{$plist.page}></div>
+                </td>
+            </tr>
+            </tfoot>
+        </table>
+        <{/if}>
+    </div>
+</div>    
+
+<{if $smarty.get.casherror==1 }>
+	 <{$lang.pickup_b}>
+<{elseif $smarty.get.casherror==2 }>
+	 <{$lang.pickup_c}>
+<{/if}>

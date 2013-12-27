@@ -1,0 +1,51 @@
+<style>
+.cbox a{text-decoration:none;}
+.cbox table{height:100px;}
+.cbox td{line-height:20px; height:20px; padding:0px;}
+.cbox{
+	background: url('image/default/cart.png') no-repeat scroll 0 0 transparent;
+    background-position: -132px 12px;
+    border: 1px solid #4DBF00;
+    color: #404040;
+    min-height: 112px;
+    width: 400px;
+	padding:5px;
+}
+#close_box{
+	background: url('image/default/cart.png') no-repeat scroll 0 0 transparent;
+	background-position: 0 -35px;
+    color: #999999;
+    height: 15px;
+    right: 5px;
+    text-align: right;
+    top: 5px;
+    width: 45px; display:block; float:right;
+	text-decoration:none;
+}
+.go_to_pay{
+	background:url('image/default/cart.png') no-repeat scroll 0 0 transparent;
+    cursor: pointer;
+    display: inline-block;
+    font-size: 12px;
+    font-weight: bold;
+    height: 25px;
+    line-height: 25px;
+    text-align: center;
+    width: 100px;
+}
+</style>
+<div class="cbox">
+<a id="close_box" href="#" onclick="$('#cart_show').fadeOut(500);return false;">&nbsp;&nbsp;</a>
+<table width="100%" border="0" cellspacing="0" cellpadding="0">
+  <tr>
+    <td width="50" rowspan="3"></td>
+    <td><h4 style="font-size:14px; height:20px; line-height:20px;">产品已成功添加到购物车！</h4></td>
+  </tr>
+  <tr>
+    <td>购物车共有<strong><{$nums}></strong>件宝贝，合计：<strong><{$price|number_format:2}></strong>元</td>
+  </tr>
+  <tr>
+    <td height="25"><a style="color:#FFFFFF" href="<{$config.weburl}>/?m=product&s=cart" class="go_to_pay">去购物车结算</a> <a onclick="$('#cart_show').fadeOut(500);return false;" href="#" style="padding-left:40px;">再看看</a></td>
+  </tr>
+</table>
+</div>

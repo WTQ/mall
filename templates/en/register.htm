@@ -1,0 +1,58 @@
+<{if $config.closetype==2}>
+<div style="height:300px; padding-top:150px; color:#FF0000;border: 1px solid #A9B9D3; font-size:16px"> <{$config.closecon}> </div>
+<{else}>
+<table width="100%" border="0" align="left" cellspacing="1" >
+  <tr>
+    <td bgcolor="#FFFFFF" align="left" valign="middle"><form action="" method="post">
+        <table width='100%' border='0' cellspacing='0' cellpadding='0'>
+          <tr>
+            <td height="28" colspan="3" align="left"  style="font-size:20px; color:#F05309;">&nbsp;<{$lang.baseinfo}></td>
+          </tr>
+          <tr valign="middle" height="35">
+            <td width="305" align="right"><strong><{$lang.randcode}></strong></td>
+            <td width="300"><input onFocus="show_yzm();" name="yzm" type="text" id="yzm" class="input" onChange="check_yzm()" style="width:300px;" /></td>
+            <td width="373"><span id="yzm_pic"></span><span id="tishi2"></span></td>
+          </tr>
+          <{if $config.user_reg_verf}>
+          <tr valign="middle" height="35">
+            <td width="305" align="right"><strong><{$lang.randques}></strong></td>
+            <td width="300"><input onFocus="check_yzm();show_yzwt();"  name="ckyzwt" type="text" id="ckyzwt" class="input" onChange="check_yzwt()" onclick="show_yzwt();" style="width:300px;" /></td>
+            <td width="373"><span id="yzwt" ></span>&nbsp;&nbsp;<span id="tishi8" style="color:#FF0000"></span></td>
+          </tr>
+          <{/if}>
+          <tr>
+            <td width='305' height="35" align="right"><strong><{$lang.user_name}></strong></td>
+            <td colspan="2"><input onblur="check_user();" name='user' type='text' id="user" <{if $config.user_reg_verf}> onFocus="check_yzwt();" <{/if}> class="input" style="width:300px;"/><span id="tishi"></span></td>
+          </tr>
+          <tr>
+            <td width="305" height="60" align="right"><strong><{$lang.email}></strong></td>
+            <td colspan="2"><input onblur="check_email();" name='email' type='text' class="input" id="email" size='20' maxlength="40" style="width:300px;"/>
+              <span id="tishi_email"></span><br />
+              <span class="bz"><{$lang.email_msg}></span></td>
+          </tr>
+          <tr>
+            <td width='305' height='40' align="right"><strong><{$lang.user_pass}></strong></td>
+            <td colspan="2"><input onFocus="check_user();" type='password'  name='password' id="password" class="input" style="width:300px;"/></td>
+          </tr>
+          <tr>
+            <td width='305' height='40' align="right"><strong><{$lang.pass_reenter}></strong></td>
+            <td height='*' colspan="2"><input type='password'  name='re_password' id="re_password" size='20' class="input" style="width:300px;"/></td>
+          </tr>
+          <tr>
+            <td width="305" height="35" align="right"><strong><{$lang.reg_lim}></strong></td>
+            <td colspan="2"><textarea readonly="readonly" name="trtext" rows="5"  style="font-size:12px;algin:left;margin-top:5px; width:300px;"><{$config.association}></textarea>
+              <br/>
+              <input name="readme" id="readme" type="checkbox" value="checkbox"  onclick="dis()" style="margin-top:5px;"/>
+              <{$lang.reg_read}> </td>
+          </tr>
+          <tr>
+            <td width='305' height="30"></td>
+            <td height="35" colspan="2"><input class="buttonSkinA L" type='submit' name='submitreg' id="submitreg" value='Create My Account' class="input" onClick="return check()" disabled="disabled"/>
+              <input name="forward" type="hidden" id="forward" value="<{$smarty.get.forward}>" />
+              <input name="connect_id" type="hidden" id="forward" value="<{$smarty.get.connect_id}>" /></td>
+          </tr>
+        </table>
+      </form></td>
+  </tr>
+</table>
+<{/if}>

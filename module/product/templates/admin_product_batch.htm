@@ -1,0 +1,162 @@
+<script src="<{$config.weburl}>/script/jquery-1.4.4.min.js" type=text/javascript></script>
+<script type="text/javascript" charset="utf-8" src="<{$config.weburl}>/script/district.js" ></script>
+<script language="javascript">
+var weburl="<{$config.weburl}>";
+</script>
+<div class="path">
+  <div> <a href="main.php?cg_u_type=2">卖家中心</a> <span>&gt;</span> 淘宝导入 </div>
+</div>
+<div class="main">
+  <div class="wrap">
+    <div class="hd">
+      <ul class="tabs">
+        <li class="active"><a href="main.php?m=product&s=admin_product_batch">淘宝导入</a></li>
+      </ul>
+    </div>
+    <div class="form-style">
+      <form method="post" action="" enctype="multipart/form-data">
+        <input type="hidden" value="add" name="submit">
+        <dl>
+          <dt><em>*</em>请选择文件：</dt>
+          <dd>
+            <p>
+              <input type="file" id='csv' name="csv" value="" />
+            </p>
+            <p class="hint">导入程序默认从第二行执行导入，请保留CSV文件第一行的标题行，最大12M</p>
+          </dd>
+        </dl>
+        <dl>
+          <dt><em>*</em>商品分类：</dt>
+          <dd>
+            <p>
+              <select class="select" name="catid" id="catid" onChange="getHTML(this.value,'tcatid')">
+                <option value=""><{$lang.selec_category}></option>
+                <{foreach item=list from=$cat}> <option value="<{$list.catid}>" <{if $list.catid==$de.catid}>selected="selected"<{/if}> ><{$list.cat}>
+                </option>
+                <{/foreach}>
+              </select>
+              <select class="select" style="visibility:hidden" name="tcatid" id="tcatid" onChange="getHTML(this.value,'scatid')">
+              </select>
+              <select class="select" style="visibility:hidden" name="scatid" id="scatid" onChange="getHTML(this.value,'sscatid')">
+              </select>
+              <select class="select" style="visibility:hidden"  name="sscatid" id="sscatid">
+              </select>
+            </p>
+            <p class="hint">请选择商品分类（必须选到最后一级）</p>
+          </dd>
+        </dl>
+        <dl>
+          <dt>所在地：</dt>
+          <dd>
+            <input type="hidden" name="t" id="t" value="" />
+            <input type="hidden" name="province" id="id_1" value="" />
+            <input type="hidden" name="city" id="id_2" value="" />
+            <input type="hidden" name="area" id="id_3" value="" />
+            <select id="select_1" onChange="selClass(this);">
+            <option value="">--请选择--</option>
+            <{$prov}>
+            </select>
+            <select id="select_2" onChange="selClass(this);" class="hidden"></select>
+            <select id="select_3" onChange="selClass(this);" class="hidden"></select>
+          </dd>
+        </dl>
+        <dl>
+          <dt>本店分类：</dt>
+          <dd>
+            <p>
+              <select name="custom_cat">
+                <option value=""><{$lang.no_cat}></option>
+                <{foreach item=list from=$custom_cat}>
+                <option value="<{$list.id}>"><{$list.name}></option>
+                <{foreach item=slist from=$list.subcat}>
+                <option value="<{$slist.id}>">&nbsp;&nbsp;|-<{$slist.name}></option>
+                <{/foreach}> <{/foreach}>
+              </select>
+            <p class="hint">可以从属于多个本店分类</p>
+          </dd>
+        </dl>
+        <dl>
+          <dt>字符编码：</dt>
+          <dd>
+            <p>unicode</p>
+          </dd>
+        </dl>
+        <dl>
+          <dt>文件格式：</dt>
+          <dd>
+            <p>csv文件 <a href="lib/csv/product_cn.csv" target="_blank"><{$lang.product_batch_tem_cn}></a></p>
+          </dd>
+        </dl>
+        <dl>
+          <dt>导入说明：</dt>
+          <dd>
+            <p> 1.如果修改CSV文件请务必使用微软excel软件，且必须保证第一行表头名称含有如下项目: 商品名称、商品价格、商品单位、商品数量、品牌、关键字、宝贝描述、商品详情。<br />
+              2.如果因为淘宝助理版本差异表头名称有出入，请先修改成上述的名称方可导入，不区分全新、二手、闲置等新旧程度，导入后商品类型都是全新。<br />
+              3.如果CSV文件超过12M请通过excel软件编辑拆成多个文件进行导入。 </p>
+          </dd>
+        </dl>
+        <dl class="foot">
+          <dt>&nbsp;</dt>
+          <dd>
+            <input type="submit" value="提交" class="submit" onClick="return check_value();">
+          </dd>
+        </dl>
+      </form>
+    </div>
+  </div>
+</div>
+<script type="text/javascript">
+<{if $uploaded==1}>
+alert("<{$lang.uploaded}>");
+<{/if}>
+var scatid='';
+var tcatid='';
+function getHTML(v,ob)
+{	
+	var url = '<{$config.weburl}>/ajax_back_end.php';
+	var sj = new Date();
+	var pars = 'shuiji=' + sj+'&cattype=pro&pcatid='+v;
+	$.post(url, pars,showResponse);
+	function showResponse(originalRequest)
+	{
+		var tempStr = 'var MyMe = ' + originalRequest; 
+		var i=1;var j=0;
+		eval(tempStr);
+		for(var s in MyMe)
+		{
+			++j;
+		}
+		if(j>0)
+			document.getElementById(ob).style.visibility="visible";
+		else
+			document.getElementById(ob).style.visibility="hidden";
+		document.getElementById(ob).options.length =j+1;
+		document.getElementById(ob).options[0].value = '';
+		document.getElementById(ob).options[0].text = '<{$lang.select_sub_categories}>';
+		document.getElementById(ob).options[0].selected = true;
+		//alert(j);
+		for(var k in MyMe)
+		{
+			var cityId=MyMe[k][0];
+			var ciytName=MyMe[k][1];
+			
+			document.getElementById(ob).options[i].value = cityId;
+			document.getElementById(ob).options[i].text = ciytName;
+			i++;
+        }
+    }
+}
+//==========================================
+function check_value()
+{
+	if(!document.getElementById('catid').value){
+		alert('<{$lang.product_category}>');
+		return false;
+	}
+	if(!document.getElementById('csv').value){
+		alert('<{$lang.select_csv}>');
+		document.getElementById('csv').focus();
+		return false;
+	}
+}
+</script>

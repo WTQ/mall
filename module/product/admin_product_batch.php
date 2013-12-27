@@ -1,0 +1,19 @@
+<?php
+//============================================
+if($_POST['submit']=="add")
+{
+	include_once("$config[webroot]/module/product/includes/plugin_pro_class.php");
+	$pro=new pro();
+	$pro->add_product_batch();
+	$tpl->assign("uploaded",1);
+}
+$re=$admin->getCatName(PCAT);
+$tpl->assign("cat",$re);
+$tpl->assign("prov",GetDistrict());
+$tpl->assign("custom_cat",$admin->get_custom_cat_list(1,0));
+//==============================================
+$nocheck=true;
+$tpl->assign("config",$config);
+$tpl->assign("lang",$lang);
+$output=tplfetch("admin_product_batch.htm");
+?>

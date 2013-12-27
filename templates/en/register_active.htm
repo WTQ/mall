@@ -1,0 +1,12 @@
+<table width="100%" border="0" align="left" cellspacing="1" bgcolor="#b6daeb" style="margin-top:0px">
+	<tr>
+		<td height="300" align="center" valign="middle" bgcolor="#FFFFFF">
+		  <{if $smarty.get.randErr}>
+			　<b>Activation link error</b>
+		  <{else}>
+			  <b><{$lang.reg_mail_msg}></b>
+			  <br /> <a href="<{$config.weburl}>/<{$config.regname}>?re_email=1">If you do not receive the activation email, click here retransmission mail</a>
+		  <{/if}>
+		</td>
+	</tr>
+</table>

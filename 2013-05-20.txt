@@ -1,0 +1,326 @@
+RENAME TABLE `mallbuilder_activity_detail` TO `mallbuilder_activity_product_list` ;
+
+DROP TABLE IF EXISTS `mallbuilder_activity`;
+CREATE TABLE `mallbuilder_activity` (
+  `id` int(10) unsigned NOT NULL auto_increment,
+  `title` varchar(100) NOT NULL,
+  `desc` text NOT NULL,
+  `ads_code` varchar(100) NOT NULL,
+  `start_time` int(10) NOT NULL,
+  `end_time` int(10) NOT NULL,
+  `templates` varchar(30) NOT NULL,
+  `create_time` int(10) unsigned NOT NULL,
+  `status` tinyint(1) NOT NULL default '0',
+  `displayorder` smallint(6) NOT NULL default '0',
+  PRIMARY KEY  (`id`)
+) ENGINE=MyISAM AUTO_INCREMENT=1 DEFAULT CHARSET=utf8;
+
+
+DROP TABLE IF EXISTS `mallbuilder_activity_product_list`;
+CREATE TABLE `mallbuilder_activity_product_list` (
+  `id` int(10) NOT NULL auto_increment,
+  `activity_id` int(10) NOT NULL,
+  `product_id` int(10) NOT NULL,
+  `product_name` varchar(100) NOT NULL,
+  `member_id` int(11) NOT NULL,
+  `member_name` varchar(30) NOT NULL,
+  `create_time` int(10) unsigned NOT NULL,
+  `status` tinyint(1) NOT NULL,
+  `displayorder` smallint(6) NOT NULL default '0',
+  PRIMARY KEY  (`id`)
+) ENGINE=MyISAM AUTO_INCREMENT=1 DEFAULT CHARSET=utf8;
+
+
+RENAME TABLE `mallbuilder_notice` TO `mallbuilder_announcement` ;
+
+DROP TABLE IF EXISTS `mallbuilder_announcement` ;
+CREATE TABLE `mallbuilder_announcement` (
+  `id` int(11) NOT NULL auto_increment,
+  `title` varchar(100) NOT NULL COMMENT '标题',
+  `content` text NOT NULL COMMENT '内容',
+  `url` varchar(100) default NULL COMMENT '跳转链接',
+  `create_time` int(10) unsigned NOT NULL COMMENT '发布时间',
+  `status` tinyint(1) NOT NULL default '0' COMMENT '状态 0 为关闭 1为开启',
+  `displayorder` smallint(6) NOT NULL default '255' COMMENT '排序',
+  PRIMARY KEY  (`id`)
+) ENGINE=MyISAM DEFAULT CHARSET=utf8 AUTO_INCREMENT=1 ;
+
+DROP TABLE IF EXISTS `mallbuilder_brand` ;
+CREATE TABLE `mallbuilder_brand` (
+  `id` int(11) NOT NULL auto_increment,
+  `name` varchar(80) NOT NULL,
+  `char_index` char(1) NOT NULL,
+  `catid` int(11) NOT NULL,
+  `logo` varchar(150) NOT NULL,
+  `displayorder` smallint(6) NOT NULL default '0',
+  `status` tinyint(1) NOT NULL default '1',
+  `create_time` int(10) unsigned NOT NULL,
+  `hits` int(11) NOT NULL default '0',
+  PRIMARY KEY  (`id`)
+) ENGINE=MyISAM  DEFAULT CHARSET=utf8 AUTO_INCREMENT=1;
+
+DROP TABLE IF EXISTS `mallbuilder_brand_cat`;
+CREATE TABLE `mallbuilder_brand_cat` (
+  `id` int(11) NOT NULL auto_increment,
+  `parent_id` int(11) NOT NULL default '0',
+  `displayorder` smallint(6) NOT NULL default '255',
+  `catname` varchar(100) NOT NULL,
+  PRIMARY KEY  (`id`)
+) ENGINE=MyISAM  DEFAULT CHARSET=utf8 AUTO_INCREMENT=1 ;
+
+
+ALTER TABLE `mallbuilder_shop`
+  DROP `fax`,
+  DROP `zip`,
+  DROP `ctype`,
+  DROP `video`;
+  
+ALTER TABLE `mallbuilder_shop` ADD `create_time` INT( 10 ) UNSIGNED NOT NULL COMMENT '创店时间' AFTER `uptime` ;
+
+RENAME TABLE `mallbuilder_user_cat` TO `mallbuilder_shop_cat` ;
+
+DROP TABLE IF EXISTS `mallbuilder_shop_grade`;
+CREATE TABLE `mallbuilder_shop_grade` (
+  `id` int(11) NOT NULL auto_increment,
+  `name` varchar(50) NOT NULL COMMENT '组名',
+  `fee` float NOT NULL default '0' COMMENT '收费标准',
+  `des` text NOT NULL COMMENT '描述',
+  `create_time` int(10) NOT NULL COMMENT '创建时间',
+  `status` tinyint(1) NOT NULL default '1' COMMENT '状态 0,1',
+  PRIMARY KEY  (`id`)
+) ENGINE=MyISAM  DEFAULT CHARSET=utf8 AUTO_INCREMENT=1 ;
+
+RENAME TABLE `mallbuilder_user_template` TO `mallbuilder_shop_template` ;
+
+DROP TABLE IF EXISTS `mallbuilder_shop_template` ;
+CREATE TABLE `mallbuilder_shop_template` (
+  `id` int(11) NOT NULL auto_increment,
+  `name` varchar(60) NOT NULL,
+  `style` varchar(50) NOT NULL COMMENT '风格',
+  `temp_file` varchar(60) NOT NULL,
+  `create_time` int(10) unsigned NOT NULL,
+  `displayorder` smallint(6) NOT NULL default '255',
+  `status` tinyint(1) NOT NULL default '0' COMMENT '0、1,停用、启用',
+  PRIMARY KEY  (`id`)
+) ENGINE=MyISAM  DEFAULT CHARSET=utf8 AUTO_INCREMENT=1 ;
+
+RENAME TABLE `mallbuilder_user_domin` TO `mallbuilder_shop_domin` ;
+
+DROP TABLE IF EXISTS `mallbuilder_shop_domin` ;
+CREATE TABLE `mallbuilder_shop_domin` (
+  `id` int(11) NOT NULL auto_increment,
+  `domin` varchar(50) NOT NULL,
+  `shop_id` int(8) NOT NULL,
+  `shop_name` varchar(60) NOT NULL,
+  `member_name` varchar(30) NOT NULL,
+  `create_time` int(10) unsigned NOT NULL,
+  PRIMARY KEY  (`id`),
+  KEY `domin` (`domin`)
+) ENGINE=MyISAM  DEFAULT CHARSET=utf8 AUTO_INCREMENT=1 ;
+
+
+ALTER TABLE `mallbuilder_product_order` ADD `time_expand` TINYINT( 1 ) NOT NULL DEFAULT '0' COMMENT '延长时间';
+
+RENAME TABLE `mallbuilder_user_all` TO `mallbuilder_member` ;
+
+RENAME TABLE `mallbuilder_user_orderadder` TO `mallbuilder_delivery_address` ;
+
+RENAME TABLE `mallbuilder_logistics_addr` TO `mallbuilder_shipping_address` ;
+
+RENAME TABLE `mallbuilder_user_link` TO `mallbuilder_shop_link` ;
+
+
+DROP TABLE IF EXISTS `mallbuilder_shop_link` ;
+CREATE TABLE `mallbuilder_shop_link` (
+  `id` int(11) NOT NULL auto_increment,
+  `shop_id` int(11) NOT NULL,
+  `name` varchar(40) NOT NULL,
+  `url` varchar(100) NOT NULL,
+  `desc` varchar(100) default NULL,
+  `displayorder` smallint(6) default '0',
+  `status` tinyint(1) NOT NULL default '0' COMMENT '1已审核',
+  PRIMARY KEY  (`id`)
+) ENGINE=MyISAM  DEFAULT CHARSET=utf8 AUTO_INCREMENT=1;
+
+
+DROP TABLE IF EXISTS `mallbuilder_tg_cat` ;
+CREATE TABLE `mallbuilder_tg_cat` (
+  `id` int(6) NOT NULL auto_increment,
+  `parent_id` int(11) NOT NULL default '0' COMMENT '父类id',
+  `catname` varchar(30) NOT NULL COMMENT '类别名称',
+  `displayorder` smallint(8) NOT NULL default '255' COMMENT '排序',
+  PRIMARY KEY  (`id`)
+) ENGINE=MyISAM  DEFAULT CHARSET=utf8 COMMENT='团购分类表' AUTO_INCREMENT=1;
+
+
+RENAME TABLE `mallbuilder_tg_products` TO `mallbuilder_tg` ;
+ALTER TABLE `mallbuilder_tg` COMMENT = '团购表' 
+
+DROP TABLE IF EXISTS `mallbuilder_tg` ;
+CREATE TABLE `mallbuilder_tg` (
+  `id` int(8) NOT NULL auto_increment,
+  `catid` int(6) NOT NULL,
+  `name` varchar(50) NOT NULL,
+  `content` text NOT NULL,
+  `pic` varchar(255) NOT NULL,
+  `market_price` float(10,2) NOT NULL default '0.00',
+  `price` float(10,2) unsigned NOT NULL default '0.00',
+  `hits` int(6) NOT NULL default '0',
+  `sell_amount` int(6) NOT NULL default '0',
+  `limit_quantity` int(6) NOT NULL default '0',
+  `virtual_quantity` int(6) NOT NULL default '0',
+  `status` tinyint(1) NOT NULL default '0',
+  `create_time` int(10) unsigned NOT NULL,
+  `stock` int(10) NOT NULL default '1',
+  `provinceid` int(11) NOT NULL,
+  `cityid` int(11) NOT NULL,
+  `areaid` int(11) NOT NULL,
+  `area` varchar(255) NOT NULL,
+  `displayorder` smallint(6) NOT NULL default '255',
+  PRIMARY KEY  (`id`)
+) ENGINE=MyISAM  DEFAULT CHARSET=utf8 COMMENT='团购表' AUTO_INCREMENT=1 ;
+
+
+DROP TABLE IF EXISTS `mallbuilder_tg_order` ;
+CREATE TABLE `mallbuilder_tg_order` (
+  `id` int(11) NOT NULL auto_increment,
+  `order_id` varchar(15) NOT NULL COMMENT '订单号',
+  `member_id` int(11) default NULL,
+  `member_name` varchar(50) NOT NULL,
+  `tg_id` int(11) NOT NULL COMMENT '订购产品id',
+  `tg_name` varchar(80) NOT NULL COMMENT '订购产品名',
+  `tg_pic` varchar(80) default NULL COMMENT '订购产品图片',
+  `contact` varchar(30) default NULL,
+  `address` varchar(200) default NULL,
+  `tel` varchar(20) default NULL,
+  `remark` varchar(200) default NULL,
+  `admin_remark` varchar(200) default NULL COMMENT '管理员备注',
+  `price` decimal(10,2) default '0.00',
+  `quantity` varchar(10) NOT NULL,
+  `create_time` int(10) default NULL,
+  `payment_time` int(10) default NULL,
+  `shipping_time` int(10) default NULL,
+  `finished_time` int(10) default NULL,
+  `status` tinyint(2) default '20',
+  `shipping_name` varchar(50) default NULL COMMENT '发货人',
+  `shipping_address` varchar(255) default NULL COMMENT '发货地址',
+  `shipping_tel` varchar(20) default NULL COMMENT '联系电话',
+  `shipping_company` varchar(50) default NULL COMMENT '物流名称',
+  `shipping_code` varchar(50) default NULL COMMENT '物流单号',
+  PRIMARY KEY  (`id`)
+) ENGINE=MyISAM  DEFAULT CHARSET=utf8 COMMENT='团购订单表' AUTO_INCREMENT=1 ;
+
+
+DROP TABLE IF EXISTS `mallbuilder_shop_cat` ;
+CREATE TABLE `mallbuilder_shop_cat` (
+  `id` int(9) NOT NULL auto_increment,
+  `name` varchar(100) NOT NULL,
+  `parent_id` int(9) NOT NULL default '0',
+  `displayorder` smallint(6) NOT NULL default '255',
+  PRIMARY KEY  (`id`)
+) ENGINE=MyISAM  DEFAULT CHARSET=utf8 AUTO_INCREMENT=1 ;
+
+
+ALTER TABLE `mallbuilder_shop` ADD `shop_auth` TINYINT( 1 ) NULL DEFAULT '0' COMMENT '店铺认证',
+ADD `shopkeeper_auth` TINYINT( 1 ) NULL DEFAULT '0' COMMENT '店主认证',
+ADD `shop_auth_pic` VARCHAR( 100 ) NULL ,
+ADD `shopkeeper_auth_pic` VARCHAR( 100 ) NULL ;
+
+DROP TABLE `mallbuilder_business_info`
+
+RENAME TABLE `mallbuilder_user_earnest` TO `mallbuilder_shop_earnest` ;
+
+DROP TABLE IF EXISTS `mallbuilder_shop_earnest` ;
+CREATE TABLE `mallbuilder_shop_earnest` (
+  `id` int(11) unsigned NOT NULL auto_increment,
+  `shop_id` int(11) default NULL,
+  `money` float default NULL,
+  `content` text,
+  `admin` varchar(30) default NULL,
+  `create_time` int(11) unsigned default NULL,
+  PRIMARY KEY  (`id`)
+) ENGINE=MyISAM  DEFAULT CHARSET=utf8 AUTO_INCREMENT=1 ;
+
+
+
+RENAME TABLE `mallbuilder_web_extend_cat` TO `mallbuilder_property` ;
+RENAME TABLE `mallbuilder_web_extend_file` TO `mallbuilder_property_value` ;
+
+CREATE TABLE `mallbuilder_property` (
+  `id` int(11) NOT NULL auto_increment,
+  `displayorder` smallint(6) NOT NULL default '255',
+  `name` varchar(100) default NULL,
+  PRIMARY KEY  (`id`)
+) ENGINE=MyISAM  DEFAULT CHARSET=utf8 AUTO_INCREMENT=1 ;
+
+DROP TABLE IF EXISTS `mallbuilder_property_value` ;
+CREATE TABLE `mallbuilder_property_value` (
+  `id` int(6) NOT NULL auto_increment,
+  `field` varchar(100) default NULL COMMENT '字段数据库字段名',
+  `field_name` varchar(200) default NULL COMMENT '字段名称',
+  `field_desc` varchar(100) default NULL COMMENT '字段描述',
+  `is_required` tinyint(1) default '0' COMMENT '是否为必填',
+  `default_value` varchar(200) default NULL COMMENT '默认值',
+  `field_type` varchar(100) default NULL COMMENT '字段属性(int,char等)',
+  `field_length` int(4) default NULL COMMENT '字段长度',
+  `is_buy_item` tinyint(1) NOT NULL default '0' COMMENT 'checkbox时 是否为购买项 ',
+  `display_type` int(1) default NULL COMMENT '前台显示类型（单行文本框，多行文件框等）',
+  `item` varchar(300) default NULL COMMENT '选项列表',
+  `is_search` tinyint(1) default '0' COMMENT '是否被搜索',
+  `property_id` int(11) default NULL COMMENT '属性ID',
+  `module` varchar(30) default NULL,
+  `statu` tinyint(1) default '1',
+  PRIMARY KEY  (`id`),
+  KEY `catid` (`property_id`)
+) ENGINE=MyISAM  DEFAULT CHARSET=utf8 COMMENT='管理员自定义字段表' AUTO_INCREMENT=1 ;
+
+
+RENAME TABLE `mallbuilder_blog` TO `mallbuilder_sns` ;
+
+RENAME TABLE `mallbuilder_friend` TO `mallbuilder_sns_friend` ;
+
+RENAME TABLE `mallbuilder_shareproduct` TO `mallbuilder_sns_shareproduct` ;
+
+RENAME TABLE `mallbuilder_shareproduct_info` TO `mallbuilder_shareproduct_info` ;
+
+RENAME TABLE `mallbuilder_shareshop` TO `mallbuilder_sns_shareshop` ;
+
+
+
+
+
+DROP TABLE IF EXISTS `mallbuilder_sns` ;
+CREATE TABLE `mallbuilder_sns` (
+  `id` int(11) NOT NULL auto_increment COMMENT '自增ID',
+  `original_id` int(11) NOT NULL default '0' COMMENT '原动态ID 默认为0',
+  `original_member_id` int(11) NOT NULL default '0' COMMENT '原帖会员编号',
+  `original_status` tinyint(1) NOT NULL default '0' COMMENT '原帖的删除状态 0为正常 1为删除',
+  `member_id` int(11) NOT NULL COMMENT '会员ID',
+  `member_name` varchar(100) NOT NULL COMMENT '会员名称',
+  `member_img` varchar(100) default NULL COMMENT '会员头像',
+  `title` varchar(500) default NULL COMMENT '动态标题',
+  `content` text NOT NULL COMMENT '动态内容',
+  `create_time` int(11) NOT NULL COMMENT '添加时间',
+  `status` tinyint(1) NOT NULL default '0' COMMENT '状态  0正常 1为禁止显示 默认为0',
+  `privacy` tinyint(1) NOT NULL default '0' COMMENT '隐私可见度 0所有人可见 1好友可见 2仅自己可见',
+  `comment_count` int(11) NOT NULL default '0' COMMENT '评论数',
+  `copy_count` int(11) NOT NULL default '0' COMMENT '转发数',
+  `original_comment_count` int(11) NOT NULL default '0' COMMENT '原帖评论次数',
+  `original_copy_count` int(11) NOT NULL default '0' COMMENT '原帖转帖次数',
+  PRIMARY KEY  (`id`)
+) ENGINE=MyISAM  DEFAULT CHARSET=utf8 COMMENT='动态信息表' AUTO_INCREMENT=1 ;
+
+ALTER TABLE `mallbuilder_mail_mod` ADD `type` TINYINT( 1 ) NOT NULL ;
+
+ALTER TABLE `mallbuilder_mail_mod` CHANGE `type` `type` TINYINT( 1 ) NOT NULL DEFAULT '0' 
+
+
+
+ALTER TABLE `mallbuilder_shop` ADD `earnest` FLOAT( 10, 2 ) UNSIGNED NULL DEFAULT '0.00' AFTER `shop_collect` ;
+
+
+ALTER TABLE `mallbuilder_products`
+  DROP `maintenance`,
+  DROP `invoice`;
+
+ALTER TABLE `mallbuilder_products` ADD `pic_more` TEXT NULL AFTER `pic` ;

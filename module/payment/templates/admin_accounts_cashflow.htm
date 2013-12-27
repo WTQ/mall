@@ -1,0 +1,105 @@
+<div class="path">
+    <div>
+    	<{if $cg_u_type==1}>
+    		<a href="main.php?cg_u_type=1">我的商城</a> <span>&gt;</span>
+        <{else}>
+    		<a href="main.php?cg_u_type=2">卖家中心</a> <span>&gt;</span>
+        <{/if}>
+        <a href="main.php?m=payment&s=admin_accounts_cashflow">资金流水</a> <span>&gt;</span>
+        资金流水
+    </div>
+</div>
+<div class="main">
+	<div class="wrap">
+        <div class="hd">
+            <ul class="tabs">
+                <li class="active"><a href="main.php?m=payment&s=admin_accounts_cashflow">资金流水</a></li>
+            </ul>
+        </div>
+        <table class="table-list-style">
+            <thead>
+            <tr>
+                <th width="120">流水号</th>
+                <th width="100">金额</th>
+                <th width="100">时间</th>
+                <th class="tl">备注</th>
+                <th width="100">状态</th>
+            </tr>
+            </thead>
+            <tbody>
+            <{foreach item=list key=num from=$re.list}>
+            <tr>
+            	<td>
+                <{if $list.order_id}>
+                    <{if $list.type==1}>
+                    <a href="main.php?m=payment&s=admin_pay&order_id=<{$list.order_id}>"><{$list.flow_id}></a>
+                    <{elseif $list.type==2}>
+                    <a href="main.php?m=product&s=admin_orderdetail&id=<{$list.order_id}>"><{$list.flow_id}></a>
+                    <{/if}>
+                <{else}>
+                    <{$list.flow_id}>
+                <{/if}>
+                </td>
+                <td><{$list.price}></td>
+   				<td><{$list.time|date_format}></td>
+   				<td class="tl"><{$list.note}></td>
+                <td>
+                <{if $list.statu==0}>
+                	已取消
+                <{elseif $list.statu==1}>
+                    <{if $list.buyer_email==''&&$list.seller_email!=''}>
+                        <a href="main.php?m=payment&s=admin_pay&order_id=<{$list.order_id}>">付款</a>
+                    <{elseif $list.buyer_email==''&&$list.seller_email==''}>
+                        待处理
+                    <{else}>
+                        等待付款
+                    <{/if}>
+                <{elseif $list.statu==2}>
+                    <{if $list.buyer_email==''}>
+                    	已付款
+                    <{else}>
+                    	等待发货
+                    <{/if}>
+                <{elseif $list.statu==3}>
+                    <{if $list.buyer_email==''}>
+                    	等待确认收货
+                    <{else}>
+                    	已发货
+                    <{/if}>
+                <{elseif $list.statu==4}>
+                	成功
+                <{elseif $list.statu==5}>
+                    <{if $list.buyer_email==''}>
+                    	已审请退货
+                    <{else}>
+                    	要求退货
+                    <{/if}>
+                <{elseif $list.statu==6}>
+                	已退货
+                <{/if}>
+                </td>
+            </tr>
+            <{foreachelse}>
+            <tr>
+            	<td colspan="20" class="norecord">
+                	<i></i><span>暂无符合条件的数据记录</span>	
+                </td>
+            </tr>
+            <{/foreach}>
+            </tbody>
+            
+            <tfoot>
+            <tr>
+            	<td colspan="3">
+                <{$lang.flow_h}> <{$config.money}><{$earning|number_format:2}>&nbsp;&nbsp;&nbsp;
+                <{$lang.flow_o}> <{$config.money}><{$pay|number_format:2}>&nbsp;&nbsp;&nbsp;
+                <{$lang.flow_p}> <{$config.money}><{$allt|number_format:2}>
+                </td>
+                <td colspan="20">
+                <div class="pagination"><{$re.page}></div>
+                </td>
+            </tr>
+            </tfoot>
+        </table>
+    </div>
+</div>

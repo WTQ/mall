@@ -1,0 +1,88 @@
+<div id="mainbody1" style="width:900px; margin:0 auto;">
+	<div class="flow-steps">
+    	<ul>
+        <li class="current">
+        	<span class="firstg">1.查看购物车</span>
+        </li>
+        <li >2.拍下商品</li>
+        <li >3.付款到网站</li>
+        <li >4.确认收货</li>
+        <li class="lastg">5.评论</li>
+        </ul>
+	</div>
+    <div class="cat_listg">
+        <table width="100%" border="0" height="28" cellspacing="1"  class="order_table">
+        <tr style="text-align:center;">
+          <td width="37%"  >店铺产品</td>
+          <td width="15%"  >单价(元)</td>
+          <td width="22%"  >数量</td>
+          <td width="17%"  >小计</td>
+          <td width="5%" >操作</td>
+        </tr>
+        </table>
+  </div>
+  <{if $smarty.get.type=="clear"}>
+  <div align="center"><font color="#FF0000" >购物车已经清空</font></div>
+  <{else}>    
+  <{if $smarty.get.type=="numf"}>
+  <div align="center"><font color="#FF0000">库存数量不够(已经为定订购商品的最大值)</font></div>
+  <{elseif $smarty.get.type=="pronull"}>
+  <div align="center"> <font color="#FF0000">商品不存在或订购销完或已经删除</font></div>
+  <{elseif $smarty.get.type=="del"}>
+  <div align="center"><font color="#FF0000">购物车不存在该商品已经删除</font></div>
+  <{/if}>
+	<div class="buyer_list">
+  <table width="100%" border="0" style="border-bottom:1px solid #B2D1FF;"  cellspacing="1" class="order_table"/>
+  
+  <{foreach item=list from=$cart.cart}>  
+  <tr >
+    <td colspan="5" height="28" style="font-weight:bold;text-align:left;">
+	卖家：<a href="<{$config.weburl}>/shop.php?uid=<{$list.company.sell_userid}>"><{$list.company}></a>公司，电话：<{$list.tel}>
+	</td>
+  </tr>
+  
+  <{foreach item=pro key=num  from=$list.prolist}>
+  <tr bgcolor="#FAFCFF">
+    <td width="375" style="float:left;border-top:1px dashed #B2D1FF">
+	  <a href="<{$config.weburl}>/?m=product&s=detail&id=<{$pro.pid}>">
+		 <img height="80" alt="<{$pro.pname}>" src="<{$pro.pic}>">
+		  <span><{$pro.pname}> <{$pro.setmealname}></span>
+	  </a>
+	  </td>
+    <td width="145" style="border-top:1px dashed #B2D1FF"><{$config.money}><{$pro.price|number_format:2}></td>
+    <td width="200" style="border-top:1px dashed #B2D1FF">
+	  <a href="<{$config.weburl}>/?m=product&s=cart&id=<{$pro.id}>&cgnum=<{$pro.num-1}>">-</a>
+      <input name="nums" id="nums<{$num}>"  onkeyup="check_nums();" type="text" size="5" value="<{$pro.num}>" />
+      <a href="<{$config.weburl}>/?m=product&s=cart&id=<{$pro.id}>&cgnum=<{$pro.num+1}>">+</a>(库存：<{$pro.amount}>件)
+      	 <script>
+		 function check_nums()
+		 {
+			var v=document.getElementById('nums'+<{$num}>).value*1;
+			if(!v)
+				document.getElementById('nums'+<{$num}>).value=1;
+			if(v><{$pro.amount}>*1)
+			{
+				document.getElementById('nums'+<{$num}>).value=<{$pro.amount}>*1;
+				return false;
+			}
+		 }
+		 </script>
+	 </td>
+    <td width="130" style="border-top:1px dashed #B2D1FF"><{$config.money}><{$pro.sumprice|number_format:2}></td>
+    <td align="center" style="border-top:1px dashed #B2D1FF" width="40"><a href="<{$config.weburl}>/?m=product&s=cart&deid=<{$pro.id}>">删除</a></td>
+  </tr>
+  <{/foreach}>
+  
+  <{/foreach}>
+  </table>
+  </div>
+  	<div class="cat_button">
+  <table width="100%" border="0" cellspacing="0" cellpadding="0">
+    <tr>
+      <td align="right">商品总价：<{$config.money}> <{$cart.sumprice|number_format:2}>
+        <input name="" type="button" onclick="javascript:window.location='<{$config.weburl}>/?m=product&s=cart&clear=1';" value="清空购物车" />
+        <input name="" type="button" onclick="javascript:window.location='<{$config.weburl}>/?m=product&s=confirm_order';" value="去结算" /></td>
+    </tr>
+  </table>
+  <{/if}> </div>
+  </div>

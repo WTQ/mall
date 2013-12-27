@@ -1,0 +1,118 @@
+<script>
+function collect_goods(id){
+	
+	var url = '<{$config.weburl}>/module/sns/ajax_update.php';
+	var uname='<{$smarty.cookies.USER}>';
+	if(uname=='')
+	{
+		alert('<{$lang.no_logo}>');
+		window.location.href='<{$config.weburl}>/login.php?forward=shop.php?uid=<{$smarty.get.uid}>';
+		return false;
+	}
+	var pars = 'pid='+id+'&uname='+uname;
+	$.post(url, pars,showResponse);
+	function showResponse(originalRequest)
+	{
+		if(originalRequest>1)
+			alert('<{$lang.fav_ok}>');
+		else if (originalRequest>0)
+			alert('<{$lang.fav_isbing}>');
+		else
+			alert('<{$lang.error}>');
+	}
+	
+}
+</script>
+<div class="main-widget">
+	<h3 class="item-hd">
+    	<a class="read-more" href="<{$config.weburl}>/home.php?uid=<{$smarty.get.uid}>&act=product">查看全部</a>
+        <span><a href="<{$config.weburl}>/home.php?uid=<{$smarty.get.uid}>&act=product">我分享的宝贝</a></span>
+    </h3>
+    <div class="item-bd">
+    	<ul class="clearfix">
+        	<{foreach item=list name=name from=$sharegoods}>
+            <li <{if $smarty.foreach.name.iteration==3}>class="last"<{/if}>>
+            	<div class="sitem">
+                	<div class="pic">
+                    <a title="<{$list.pname}>" href="<{$config.weburl}>/?m=product&s=detail&id=<{$list.pid}>" target="_blank"><img width="226" height="210" src="<{if $list.image}><{$list.image}><{else}>image/default/nopic.gif<{/if}>" /></a>
+                    </div>
+                	<div class="content"><{if $list.content}><{$list.content}><{else}>分享了商品<{/if}></div>
+                    <div class="func">
+                        <span class="collect">
+                            <a href="javascript:collect_goods('<{$list.pid}>');"><i></i>收藏</a>
+                            <strong> <{$list.collectnum}> </strong>
+                        </span>
+                    </div>
+                </div>
+            </li>
+            <{/foreach}>
+        </ul>
+    </div>
+</div>
+<div class="main-widget clearfix">
+	<h3 class="item-hd">
+    	<a href="<{$config.weburl}>/home.php?uid=<{$smarty.get.uid}>&act=trace" class="read-more">查看全部</a>
+        <span><a href="<{$config.weburl}>/home.php?uid=<{$smarty.get.uid}>&act=trace">我的新鲜事</a></span>
+    </h3>
+    <div class="item-bd">
+    	<{foreach item=list key=num from=$blog}>
+        <div class="fd-item" <{if !$num}>style="padding-top:5px"<{/if}> >
+            
+            <div class="fd-wrap">
+                <div class="fd-text"> <p class="fd-title"><a target="_blank" href="home.php?uid=<{$list.member_id}>"><{$list.member_name}></a> : <span><{$list.title}></span></p></div>
+                <{if $list.original_id }>
+                <div class="quote-wrap">
+                     <{if $list.original_status==1}>原文已删除<{else}>
+                     <div class="fd-text"><p class="fd-title"><a target="_blank" href="home.php?uid=<{$list.ouid}>"><{$list.ouser}></a> : <span><{$list.otitle}></span></p></div>
+                    <{$list.ocontent}>
+                    <{/if}>
+                </div>
+                <{else}>
+                	<{$list.content}>
+                <{/if}>
+                <div class="fd-extra">
+                    <span class="fd-time"><{$list.addtime|date_format}></span>
+                    <span class="fd-action">
+                        <span><a data-param="{&quot;bid&quot;:&quot;<{$list.id}>&quot;}" nc_type="fd_forwardbtn" href="javascript:void(0);">转发</a></span>
+                    </span>
+                </div>
+                <div id="forward_<{$list.id}>" style="display:none;">
+                <div class="forward">
+                <form action="" method="post" id="forwardform_<{$list.id}>">
+                <input type="hidden" name="submit" value="forward">
+                <input type="hidden" name="forwardid" value="<{$list.id}>">
+                <textarea name="forwardcontent" class="ftextarea" id="content_forward<{$list.id}>" resize="none"></textarea>
+                <span class="error"></span>
+                <p>
+                <span id="forwardcharcount<{$list.id}>"></span>
+                <span style="float:right"><input type="submit" value="转发" class="button"></span>
+                </p>
+                </form>
+                </div>
+                </div>
+            </div>
+        </div>
+        <{/foreach}>
+        <div class="fd-ft"><a href="<{$config.weburl}>/home.php?uid=<{$smarty.get.uid}>&act=trace">去看更多新鲜事<i></i></a></div>
+    </div>
+</div>
+<script type="text/javascript" src="<{$config.weburl}>/script/dialog/dialog.js" id="dialog_js"></script>
+<script>
+function ajax_form(id, title, url, width, model)
+{
+    if (!width)	width = 480;
+    if (!model) model = 1;
+    var d = DialogManager.create(id);;
+    d.setTitle(title);
+    d.setContents('ajax', url);
+    d.setWidth(width);
+    d.show('center',model);
+    return d;
+}
+$("[nc_type='fd_forwardbtn']").live('click',function(){
+	var data = $(this).attr('data-param');
+	eval("data = "+data);
+	ajax_form("forward_form", '转发', '<{$config.weburl}>/main.php?m=sns&s=sns&op=forward&bid='+data.bid, 500);
+	return false;
+});
+</script>

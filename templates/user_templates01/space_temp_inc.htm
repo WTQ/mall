@@ -1,0 +1,192 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<title><{if $title}><{$title}>,<{$config.company}><{else}><{$config.title}>,<{$config.company}><{/if}></title>
+<link rel="shortcut icon" href="favicon.ico" type="image/x-icon" />
+<link type="text/css" rel="stylesheet" href="<{$config.weburl}>/templates/user_templates01/space.css">
+</head>
+<body>
+<div id="top">
+  <div id="top_sider"> <span style="float:left; padding:0; display:block; color:#FFD0C0;  padding-left:10px;"> <nobr><a style="color:#FFD0C0; background:url(<{$config.weburl}>/image/default/shop/homes2.png) no-repeat left center; padding-left:19px;" href="<{$config.weburl}>">返回首页</a> | <a style="color:#FFD0C0; background:url(<{$config.weburl}>/image/default/shop/spgwc.png) no-repeat left center; padding-left:20px;" href="<{$config.weburl}>/?m=product&s=cart">购物车
+    <script src="<{$config.weburl}>/?m=product&s=cart_number"></script>
+    件</a> |
+    <script src="<{$config.weburl}>/login_statu.php"></script>
+    </nobr> </span> <span id="shop_info">
+    <div class="shop_info_simple">
+      <p class="shop_name"><{$com.company}></p>
+    </div>
+    <div class="shop_info_details">
+      <dl style="width:170px">
+        <dt>描述相符：</dt>
+        <dd><span class="star"><em style=" width:<{$score.aw}>%"><{$score.a|number_format:1}></em></span><span class="num"><{$score.a|number_format:1}>分</span></dd>
+        <dt>服务态度：</dt>
+        <dd><span class="star"><em style=" width:<{$score.bw}>%"><{$score.b|number_format:1}></em></span><span class="num"><{$score.b|number_format:1}>分</span></dd>
+        <dt>发货速度：</dt>
+        <dd><span class="star"><em style=" width:<{$score.bw}>%"><{$score.c|number_format:1}></em></span><span class="num"><{$score.c|number_format:1}>分</span></dd>
+      </dl>
+      <dl style="width:170px">
+        <dt>店主：</dt>
+        <dd><{$com.contact}></dd>
+        <dt>创店时间：</dt>
+        <dd><{$com.regtime|strip_tags|truncate:10:""}></dd>
+        <dt>所在地区：</dt>
+        <dd><{$com.area}></dd>
+      </dl>
+      <dl style="width:150px">
+        <dt>保证金：</dt>
+        <dd><{$com.earnest}></dd>
+        <dt>商品数量：</dt>
+        <dd><{$com.count}></dd>
+        <dt>联系方式：</dt>
+        <dd><{if $com.qq}>
+          <p><a target="_blank" href="http://wpa.qq.com/msgrd?V=1&amp;Uin=<{$com.qq}>&amp;Site=qq&amp;Menu=yes"><img alt="QQ" src=" http://wpa.qq.com/pa?p=2:<{$com.qq}>}:47"></a></p>
+          <{/if}></dd>
+      </dl>
+    </div>
+    </span> <span style="float:right; width:311px; padding:0; margin-top:5px; display:block; color:#FFD0C0; ">
+    <form method="get" name="sear" id="sear" action="<{$config.weburl}>/shop.php">
+      <table width="95%" border="0" cellspacing="0" cellpadding="0">
+        <tr style="float:left;">
+          <td><input autocomplete="off" onkeyup="get_search_word(this.value);" value="<{$smarty.get.key}>" type="text" class="editbox" id="key" name="key"/>
+            <div id="key_select"></div></td>
+          <td><input type="submit" class="button" value="搜索" />
+            <input id="m" name="m" type="hidden" value="product" />
+            <input id="s" name="s" type="hidden" value="list" />
+          </td>
+        </tr>
+      </table>
+    </form>
+    </span> </div>
+</div>
+<div id="wrapper">
+<div class="bgpic" style="<{if $shopconfig.headimage}>background-image:url(<{$shopconfig.headimage}>);<{/if}>">
+  <div class="cname">
+    <table width="960" border="0" cellspacing="0" cellpadding="0">
+      <tr>
+        <td width="220" height="90" align="center" valign="middle"><{if $com.logo}> <img src="<{$com.logo}>" align="middle" /><{/if}> </td>
+        <td width="745" align="left" valign="middle" class="company_name"><h4><{$com.company}></h4></td>
+      </tr>
+    </table>
+  </div>
+  <div class="nav001">
+    <ul class="nav01">
+      <{foreach item=list from=$nav_menu}>
+      <{if $list.menu_show=='1'}>
+      <{if $list.menu_link!=''}>
+      <li class="<{if $list.menu_link==$smarty.get.action}>current001<{/if}>"  ><a style="color:#FFFFF" href="shop.php?uid=<{$com.userid}>&action=<{$list.menu_link}>&m=<{$list.module}>"><{$list.menu_name}></a> </li>
+      <{else}>
+      <li class="<{if $smarty.get.action==''}>current001<{/if}>" ><a style="color:#FFFFF"  href="<{geturl user=$com.user uid=$com.userid com=$com.company}>"><{$list.menu_name}></a> </li>
+      <{/if}>
+      <{/if}>
+      <{/foreach}>
+      <{foreach item=list from=$shop_nav}>
+        <li class="<{if $smarty.get.action=='public' and $smarty.get.id==$list.id }>active<{else}>normal<{/if}>"  ><a <{if $list.new_open==1}>target="_blank"<{/if}> href="<{if $list.url}><{$list.url}><{else}>shop.php?uid=<{$com.userid}>&action=public&m=shop&id=<{$list.id}><{/if}>"><span><{$list.title}></span></a></li>
+    <{/foreach}>
+    </ul>
+    <div style="clear:both;"></div>
+  </div>
+</div>
+<div class="dipsp m1">
+  <div class="dipsp_l">
+    <div class="dipsp_lu"> 商家介绍 </div>
+    <div class="dp3lrte">
+      <div class="sjxy">
+        <dl>
+          <dt> <{if $com.plogo}> <img width="65" height="60" src="<{$com.plogo}>"> <{else}> <img src="image/default/nopic.gif" width="65" height="60" /> <{/if}> </dt>
+          <dd><font color="#3366CC" style="font-weight:bold;"><{$com.contact}></font> <a href="main.php?m=message&s=admin_message_sed&uid=<{$com.userid}>" target="_blank"> <img alt="发站内信" src="<{$config.weburl}>/templates/user_templates_default/img/mail.gif"></a></dd>
+          <dd><{if $com.sellerpointsimg}><img alt="卖家信用:<{$com.sellerpoints}>" title="卖家信用:<{$com.sellerpoints}>" align="absmiddle" src="<{$config.weburl}>/image/points/<{$com.sellerpointsimg}>"><{else}>卖家信用:<{$com.sellerpoints}><{/if}></dd>
+          <dd>好评率：<{$com.favorablerate|number_format:2}>%</dd>
+        </dl>
+      </div>
+      <div class="sjxy">
+        <h2>动态评价</h2>
+        <p>描述相符：<span class="stars"><em style=" width:<{$score.aw}>%"><{$score.a|number_format:1}></em></span><span class="num"><{$score.a|number_format:1}>分</span></p>
+        <p>服务态度：<span class="stars"><em style=" width:<{$score.bw}>%"><{$score.b|number_format:1}></em></span><span class="num"><{$score.b|number_format:1}>分</span></p>
+        <p>发货速度：<span class="stars"><em style=" width:<{$score.cw}>%"><{$score.c|number_format:1}></em></span><span class="num"><{$score.c|number_format:1}>分</span></p>
+        <p>物流速度：<span class="stars"><em style=" width:<{$score.dw}>%"><{$score.d|number_format:1}></em></span><span class="num"><{$score.d|number_format:1}>分</span></p>
+      </div>
+      <div class="sjxy">
+        <h2>店铺信息</h2>
+        <p>保证金：<{$com.earnest}></p>
+        <p>商品数量: <{$com.count}></p>
+        <p>所在地区: <{$com.province}> <{$com.city}></p>
+        <p>创店时间: <{$com.regtime|strip_tags|truncate:10:""}></p>
+      </div>
+      <div class="spjs">
+        <h2>联系方式</h2>
+        <{if $com.qq}>
+        <p><a target="_blank" href="http://wpa.qq.com/msgrd?V=1&amp;Uin=<{$com.qq}>&amp;Site=qq&amp;Menu=yes"><img alt="QQ" src="http://wpa.qq.com/pa?p=1:<{$com.qq}>:4"></a></p>
+        <{/if}> </div>
+    </div>
+    <div class="dp3lr">
+      <div class="dp3lrp"><span class="span1">搜索</span><span class="span2">店内宝贝</span> </div>
+      <div class="dp3lrte jgfw">
+        <form name="pro_search" method="get" style="margin-top:0px;">
+          <input id="search" type="hidden" name="search" value="search" />
+          <table width="100%" border="0" cellspacing="0" cellpadding="0">
+            <tr height="25">
+              <td align="right"><p>关键字：</p></td>
+              <td><input class="qqq" type="text" style="width:110px;" name="keyword" value="<{$smarty.get.keyword}>" ></td>
+            </tr>
+            <tr height="25">
+              <td align="right"><p>价格：</p></td>
+              <td><input class="qqq" type="text" style="width:40px;" name="price1"  value="<{$smarty.get.price1}>" />
+                &nbsp;到&nbsp;
+                <input class="qqq" type="text" style="width:40px;" name="price2" value="<{$smarty.get.price2}>" /></td>
+            </tr>
+            <tr height="40">
+              <td>&nbsp;</td>
+              <td><input id="su" class="btn" type="submit" onmouseout="this.className='btn'" onmousedown="this.className='btn btn_h'" value=""></td>
+            </tr>
+          </table>
+          <input id="list_type" name="list_type" type="hidden" value="1" />
+          <input id="uid" name="uid" type="hidden" value="<{$smarty.get.uid}>" />
+          <input id="action" name="action" type="hidden" value="product_list" />
+          <input id="m" name="m" type="hidden" value="product" />
+        </form>
+      </div>
+    </div>
+    <{if count($custom_cat)>0}>
+    <div class="dp3lr">
+      <div class="dp3lrp"> <span class="span1">商品</span><span class="span2">分类</span> </div>
+      <div class="dp3lrte" >
+        <div class="dpzl">
+          <ul class="listxz">
+            <{foreach item=list from=$custom_cat}>
+            <li>
+              <p><a href="shop.php?uid=<{$smarty.get.uid}>&action=product_list&m=product&cat=<{$list.id}>" title="<{$list.name}>"><{$list.name}>(<{$list.count}>)</a></p>
+            </li>
+            <{/foreach}>
+          </ul>
+        </div>
+      </div>
+    </div>
+    <{/if}>
+    <{if count($ulink)>0}>
+    <div class="dp3lr">
+      <div class="dp3lrp"> <span class="span1">友情</span><span class="span2">链接</span> </div>
+      <div class="dp3lrte" >
+        <div class="dpzl">
+          <ul class="listxz">
+            <{foreach item=link from=$ulink}>
+            <li>
+              <p><a target="_blank" href="<{$link.url}>" title="<{$link.desc}>"><{$link.name}></a></p>
+            </li>
+            <{/foreach}>
+          </ul>
+        </div>
+      </div>
+    </div>
+    <{/if}> </div>
+  <div class="dipsp_r"> <{$output}> </div>
+  <div class="clear"></div>
+</div>
+<div class="bottom m1">
+  <div class="bottext"> <{$web_con}><br />
+    <{$bt}> <br />
+  </div>
+  <div style="clear:both"></div>
+</div>
+</body>
+</html>

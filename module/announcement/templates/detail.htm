@@ -1,0 +1,45 @@
+<div class="menu_bottom L1">				
+    <div class="headtop_L">
+        <{$lang.you_are_here}><a href='<{$config.weburl}>/'><{$lang.indexpage}></a> &raquo;<{$lang.announcem}>
+    </div>	
+</div>
+
+<div id="mainbody1" class="m1">
+<div class="leftbar">
+	<div class="title4" ><div class="title_left2 L2">网站公告</div></div>
+	 <div class="content4">
+   <{if $noticecontent.content==''}>
+		<font size="6" color="red" ><{$lang.annou_msg}></font>
+   <{else}>
+		<div class="newstitle"><{$noticecontent.title}></div> 
+		<div class="newstime" style="text-align:center"><{$noticecontent.create_time|date_format:"%Y-%m-%d %H:%M:%S"}></div>
+		<hr size="1" width="98%"  noshade style="border:1px dotted #dddddd">
+		<div class="newscon">
+				<{$noticecontent.content}>  
+		</div>
+	<{/if}>
+	</div>
+</div>
+	<!--右边开始-->	
+
+<div class="rightbar">
+		 <div class="right1">
+			<div class="sectitle" >
+					<div class="title_left1 L2"><{$lang.allannou}></div>
+			</div>
+			<div class="seccon" >
+				<ul class="li_list">
+					  <{foreach item=notlist from=$noticlist}>
+						<li>
+							  <a href="<{if $notlist.url}><{$notlist.url}><{else}><{$config.weburl}>/?m=announcement&s=detail&id=<{$notlist.id}><{/if}>" <{if $notlist.url}> target="_blank"<{/if}>  title="<{$notlist.title}>" ><{$notlist.title}></a>
+						</li>
+					<{/foreach}>
+					<div class="clear"></div>
+			   </ul>
+			</div>
+			<div class="bottom5"></div>
+			<div class="clear"></div>
+		</div>
+</div>		
+<!--右边结束-->
+</div>

@@ -1,0 +1,146 @@
+<?php
+$menu=array( 
+	'main'=>array(
+			'name'=>'我是卖家',
+			'action'=>'main',
+			'sub'=>array(array(
+							'name'=>'商品管理',
+							'type'=>array(2),
+							'action'=>array(
+								'?m=product&s=admin_product'=>'商品发布',
+								'?m=product&s=admin_product_list'=>'出售中的商品',
+								'?m=product&s=admin_product_storage'=>'仓库中的商品',
+								'?m=product&s=admin_product_batch'=>'淘宝导入',
+								'?m=product&s=admin_product_cat'=>'分类管理',
+							)
+						 ),
+						 array(
+							'name'=>'交易管理',
+							'type'=>array(2),
+							'action'=>array(
+								'?m=product&s=admin_sellorder'=>'订单管理',
+								'?m=product&s=admin_deliver'=>'发货',
+								'?m=logistics&s=admin_start_addr'=>'发货地址',
+								'?m=logistics&s=admin_logistics_temp'=>'物流工具',
+								'?m=company&s=admin_credit'=>'我的评论',
+								'?m=product&s=admin_orderdetail'=>'',
+							)
+						 ),
+						 array(
+							'name'=>$lang['shop_setting'],
+							'type'=>array(2),
+							'action'=>array(
+								$config['weburl'].'/shop.php?uid='.$buid=>'我的店铺',
+								'?m=company&s=myshop'=>'店铺设置',
+								'template'=>'主题设置',
+								'?m=company&s=admin_shop_navigation'=>'导航管理',
+								'?m=company&s=admin_link'=>'合作伙伴管理',
+							)
+						),
+						array(
+							'name'=>'客服管理',
+							'type'=>array(1,2),
+							'action'=>array(
+								'?m=report&s=admin_report'=>'被举报禁售',
+							)
+						),
+						array(
+							'name'=>'促销管理',
+							'type'=>array(2),
+							'action'=>array(
+								'?m=promotion&s=admin_promotion'=>'促销活动',
+							    '?m=promotion&s=admin_promoddetail'=>'',
+							)
+						 ),
+						array(
+							'name'=>'其他设置',
+							'type'=>array(1,2),
+							'action'=>array(
+								'?m=album&s=admin_album_cat'=>'图片空间',
+								
+							)
+						),
+					),
+		),
+	'pay'=>array(
+		'name'=>'账户管理',
+		'sub'=>array(
+					 array(
+					'name'=>'个人资料',
+					'action'=>array(
+						'admin_personal'=>'个人资料',
+						'?m=product&s=admin_orderadder'=>'收货地址',
+						'?m=product&s=admin_invoice'=>'发票信息',
+					)
+				),
+				array(
+					'name'=>'支付账户',
+					'type'=>array(1,2),
+					'action'=>array(
+						'?m=payment&s=admin_accounts_base'=>'账户信息',
+						'?m=payment&s=admin_accounts_cashflow'=>'资金流水',
+						'?m=payment&s=admin_accounts_pay'=>'账户充值',
+						'?m=payment&s=admin_accounts_bind'=>'提现银行',
+						'?m=payment&s=admin_accounts_pickup'=>'资金提现',
+						'?m=payment&s=admin_info'=>'支付账户',
+						'?m=payment&s=admin_pay'=>'',
+					)
+				)
+		)
+	),
+	'inquire'=>array(
+			'name'=>'消息中心',
+			'sub'=>array(
+						array(
+							'name'=>$lang['mes'],
+							'type'=>array(1,2),
+							'action'=>array(
+								'?m=message&s=admin_message_sed'=>'写邮件',
+								'?m=message&s=admin_message_list_outbox'=>$lang['outbox'],
+								'?m=message&s=admin_message_list_inbox'=>$lang['inbox'],
+								'?m=message&s=admin_message_list_savebox'=>$lang['savebox'],
+								'?m=message&s=admin_message_list_delbox'=>$lang['delbox'],
+								'?m=message&s=admin_message_det'=>'',
+							)
+						),
+						
+			)
+	),
+
+);
+
+//----------------------
+foreach($menu as $key=>$v)
+{
+	if(isset($menu[$key]['sub']))
+	{
+		
+		foreach($menu[$key]['sub'] as $sv)
+		{
+			foreach($sv['action'] as $sskey=>$ssv)
+			{
+				if($sskey==$_GET['action']||$sskey=='?m='.$_GET['m'].'&s='.$_GET['s'])
+					$cmenu=$key;
+			}
+		}
+		ksort($menu[$key]['sub']);
+	}
+	if(isset($admin))
+	{	
+		if($key!='main'&&is_array($menu[$key]['sub']))
+		{
+			$act=each($menu[$key]['sub']);$subkey=$act['key'];//取出第一个下标
+			$act=@each($menu[$key]['sub'][$subkey]['action']);
+			$menu[$key]['action']=$act['key'];
+		}
+	}
+}
+//----------------------------------------
+if(isset($tpl))
+{
+	$cmenu=!empty($cmenu)?$cmenu:'main';
+	$tpl->assign("submenu",$menu[$cmenu]);
+	$tpl->assign("menu",$menu);
+	$tpl->assign("cmenu",$cmenu);
+}
+?>

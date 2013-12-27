@@ -1,0 +1,270 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+
+<title><{if $com.shop_title!=''}><{$com.shop_title}><{else}><{$title}>-<{$config.company}><{/if}></title>
+<meta name="description" content="<{if $com.shop_keywords!=''}><{$com.shop_keywords}><{else}><{$keyword}><{/if}>">
+<meta name="keywords" content="<{if $com.shop_description!=''}><{$com.shop_description}><{else}><{$de.description|truncate:100:"...":true}><{/if}>">
+
+<link type="text/css" rel="stylesheet" href="<{$config.weburl}>/templates/user_templates_default/space.css">
+<link rel="stylesheet" type="text/css" href="<{$config.weburl}>/templates/user_templates_default/gray.css"/>
+<script src="<{$config.weburl}>/script/jquery-1.4.4.min.js" type="text/javascript"></script>
+<script language="javascript" src="<{$config.weburl}>/templates/user_templates_default/jquery.Sonline.js"></script>
+<script type="text/javascript">
+function getfavshop()
+{	
+	var url = '<{$config.weburl}>/module/sns/ajax_update.php';
+	
+	var uname='<{$smarty.cookies.USER}>';
+	if(uname=='')
+	{
+		alert('<{$lang.no_logo}>');
+		window.location.href='<{$config.weburl}>/login.php?forward=shop.php?uid=<{$smarty.get.uid}>';
+		return false;
+	}
+	var shopid='<{$smarty.get.uid}>';
+	var shopname="<{$com.company|regex_replace:"/[\r\t\n]/":""}>";
+	var pars = 'uname='+uname+'&shopid='+shopid+'&shopname='+shopname;
+	$.post(url, pars,showResponse);
+	function showResponse(originalRequest)
+	{
+		if(originalRequest>1)
+			alert('<{$lang.fav_ok}>');
+		else if (originalRequest>0)
+			alert('<{$lang.fav_isbing}>');
+		else
+			alert('<{$lang.error}>');
+	 }
+	
+}
+$(function(){
+	$("body").Sonline({
+		Position:"right",//left或right
+		Top:200,//顶部距离，默认200px
+		Effect:true, //滚动或者固定两种方式，布尔值：true或false
+		DefaultsOpen:true, //默认展开：true,默认收缩：false
+		Qqlist:"<{$cs}>" //多个QQ用','隔开，QQ和客服名用'|'隔开
+	});
+})	
+</script>
+</head>
+<body>
+    <div id="head">
+        <h1 title="MallBuilder"><a href="<{$config.weburl}>/shop.php?uid=<{$smarty.get.uid}>"><img  width="180" src="<{if $com.shop_logo}><{$com.shop_logo}><{else}><{if $config.logo}><{$config.logo}><{else}><{$config.weburl}>/image/default/logo.gif<{/if}><{/if}>" ></a></h1>
+        <div id="subnav">
+            <p><script src="<{$config.weburl}>/login_statu.php"></script></p>
+            <p>
+                <a href="<{$config.weburl}>/?m=product&s=cart" class="shopping"><{$lang.cart}> <span>(<script src="<{$config.weburl}>/?m=product&s=cart_number"></script>)</span></a> <i>|</i>
+                <a href="<{$config.weburl}>/main.php?m=sns&s=admin_share_product" class="favorite"><{$lang.favorites}></a> <i>|</i>
+                <a href="<{$config.weburl}>/main.php?m=message&s=admin_message_list_inbox" class="note"><{$lang.news_station}></a>
+            </p>
+        </div>
+        <div id="path">
+        	<{$lang.current_location}> <a href="<{$config.weburl}>"><{$lang.home_page}></a><span>›</span><a href="<{$config.weburl}>?m=shop"><{$lang.all_shops}></a><span>›</span><{$com.company}>
+        </div>
+        <div id="shop_info">
+        	<div class="shop_info_simple">
+            	<p><a class="shop_name" href="#"><{$com.company}></a></p>
+                <div class="shop_credit">
+                	<h5><{$lang.credit_of_seller}></h5>
+                    <span><{if $com.sellerpointsimg}><img alt="<{$com.sellerpoints}>" title="<{$com.sellerpoints}>" align="absmiddle" src="<{$config.weburl}>/image/points/<{$com.sellerpointsimg}>"><{else}><{$com.sellerpoints}><{/if}></span>
+                </div>
+            </div>
+            <div class="shop_info_details">
+            	<dl style="width:190px">
+                	<dt><{$lang.description_match}></dt>
+                    <dd><span class="star"><em style=" width:<{$score.aw}>%"><{$score.a|number_format:1}></em></span><span class="num"><{$score.a|number_format:1}><{$lang.fraction}></span></dd>
+                    <dt><{$lang.service_attitude}></dt>
+                    <dd><span class="star"><em style=" width:<{$score.bw}>%"><{$score.b|number_format:1}></em></span><span class="num"><{$score.b|number_format:1}><{$lang.fraction}></span></dd>
+                    <dt><{$lang.delivery_speed}></dt>
+                    <dd><span class="star"><em style=" width:<{$score.bw}>%"><{$score.c|number_format:1}></em></span><span class="num"><{$score.c|number_format:1}><{$lang.fraction}></span></dd>
+                </dl>
+                <dl style="width:160px">
+                	<dt><{$lang.owner}></dt>
+                    <dd><{$com.name}></dd>
+                    <dt><{$lang.record_shop_in_time}></dt>
+                    <dd><{$com.regtime|strip_tags|truncate:10:""}></dd>
+				</dl>
+              	<dl style="width:150px">
+					<dt><{$lang.goods_num}></dt>
+                    <dd><{$com.count}></dd>
+                    <dt><{$lang.margin}></dt>
+					<dd><{if $com.earnest}><{$com.earnest}><{else}>0<{/if}></dd>
+                </dl>
+                <dl style="width:320px">
+                    <dt><{$lang.region}></dt>
+                    <dd><{$com.area}></dd>
+                    <dt><{$lang.ctel}></dt>
+                    <dd><{$com.tel}></dd>
+                </dl>
+            </div>
+        </div>
+        <div id="search">
+            <div class="input">
+            <form action="<{$config.weburl}>/shop.php" method="get">
+                
+                    <input type="text" autocomplete="off" onkeyup="get_search_word(this.value);" value="<{$smarty.get.keyword}>" name="keyword" class="search_input">
+                    <input type="submit" value="" class="search_btn">
+               
+                <input id="search" type="hidden" name="search" value="search" />
+                <input id="uid" name="uid" type="hidden" value="<{$smarty.get.uid}>" />
+                <input id="action" name="action" type="hidden" value="product_list" />
+                <input id="m" name="m" type="hidden" value="product" />
+            </form>
+            </div>
+		</div>
+    </div>
+    
+    <div id="nav">
+        <div class="banner">
+        	<img width="961" src="<{if $com.shop_banner}><{$com.shop_banner}><{else}><{$config.weburl}>/templates/user_templates_default/img/banner.png<{/if}>">
+        </div>
+        <ul>
+            <{foreach item=list from=$nav_menu}>
+            <{if $list.menu_show=='1'}>
+                <li class="<{if $list.menu_link==$smarty.get.action}>active<{else}>normal<{/if}>"  ><a href="shop.php?uid=<{$com.userid}>&action=<{$list.menu_link}>&m=<{$list.module}>"><span><{$list.menu_name}></span></a></li>
+            <{/if}>
+            <{/foreach}>
+            <{foreach item=list from=$shop_nav}>
+            	<li class="<{if $smarty.get.action=='public' and $smarty.get.id==$list.id }>active<{else}>normal<{/if}>"  ><a <{if $list.new_open==1}>target="_blank"<{/if}> href="<{if $list.url}><{$list.url}><{else}>shop.php?uid=<{$com.userid}>&action=public&m=shop&id=<{$list.id}><{/if}>"><span><{$list.title}></span></a></li>
+            <{/foreach}>
+            <a href="javascript:getfavshop();" class="collection"></a>
+        </ul>
+        <div class="nav_bg"></div>
+    </div>
+    
+    <div id="content">
+    	
+        <div id="left">
+        	<div class="user clearfix">
+                <div class="user_photo">
+                	<h2><{$com.company}></h2>
+                    <dl>
+                        <dt>
+                        	<{if $com.plogo}>
+                            	<img width="65" height="60" src="<{$com.plogo}>">
+                            <{else}>
+                            	<img src="image/default/nopic.gif" width="65" height="60" />
+                            <{/if}>
+                        </dt>
+                        <dd><font color="#3366CC" style="font-weight:bold;"><a href="<{$config.weburl}>/home.php?uid=<{$com.userid}>"><{$com.name}></a></font> <a href="main.php?m=message&s=admin_message_sed&uid=<{$com.userid}>" target="_blank"> <img alt="<{$lang.send_message}>" src="<{$config.weburl}>/templates/user_templates_default/img/mail.gif"></a></dd>
+                        <dd><{if $com.sellerpointsimg}><img alt="<{$lang.credit_of_seller}>:<{$com.sellerpoints}>" title="<{$lang.credit_of_seller}>:<{$com.sellerpoints}>" align="absmiddle" src="<{$config.weburl}>/image/points/<{$com.sellerpointsimg}>"><{else}><{$lang.credit_of_seller}>:<{$com.sellerpoints}><{/if}></dd>
+                        <dd><{$lang.positive_feedback}><{$com.favorablerate|number_format:2}>%</dd>
+                    </dl> 
+                </div>
+                <div class="clear"></div>
+                <div class="user_data">
+                	<h2><{$lang.dynamic_evaluation}></h2>
+                    <p><{$lang.description_match}><span class="star"><em style=" width:<{$score.aw}>%"><{$score.a|number_format:1}></em></span><span class="num"><{$score.a|number_format:1}><{$lang.fraction}></span></p>
+                    <p><{$lang.service_attitude}><span class="star"><em style=" width:<{$score.bw}>%"><{$score.b|number_format:1}></em></span><span class="num"><{$score.b|number_format:1}><{$lang.fraction}></span></p>
+                    <p><{$lang.delivery_speed}><span class="star"><em style=" width:<{$score.cw}>%"><{$score.c|number_format:1}></em></span><span class="num"><{$score.c|number_format:1}><{$lang.fraction}></span></p>
+                    <p><{$lang.logistics_speed}><span class="star"><em style=" width:<{$score.dw}>%"><{$score.d|number_format:1}></em></span><span class="num"><{$score.d|number_format:1}><{$lang.fraction}></span></p>
+                	<h2><{$lang.shop_information}></h2>
+                    <p><{$lang.authentication_information}>
+                    <img src="image/default/certification<{if $com.shop_auth!='1'}>_no<{/if}>.gif" />
+					<img src="image/default/certautonym<{if $com.shopkeeper_auth!='1'}>_no<{/if}>.gif" />
+                    </p>
+           			<p><{$lang.margin}><{$com.earnest}></p>
+                    <p><{$lang.goods_num}><{$com.count}></p>
+                    <p><{$lang.region}><{$com.area}></p>
+                    <p><{$lang.record_shop_in_time}><{$com.regtime|strip_tags|truncate:10:""}></p>
+                </div>
+                <div class="shop_other">
+                    <ul>
+                        <li class="info_qrcode">
+                            <a href="javascript:void(0)">
+                            <span><{$lang.shop_two_dimensional_code}></span><b></b>
+                            <p class="qrcode"><img src="<{$config.weburl}>/uploadfile/phpqrcode/<{$smarty.get.uid}>.jpg"></p>
+                            </a>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+            <div class="module_common">
+            	<h2><{$lang.search_in_shop}></h2>
+                <div class="con">
+                	<div class="con_child">
+                        <div class="web_search">
+                            <form method="get" name="" id="">
+                                <input type="text" name="keyword" value="<{$smarty.get.keyword}>" class="text">
+                                <input type="submit" value="" class="btn">
+                                <input id="search" type="hidden" name="search" value="search" />
+                                <input id="list_type" name="list_type" type="hidden" value="1" />
+                                <input id="uid" name="uid" type="hidden" value="<{$smarty.get.uid}>" />
+                                <input id="action" name="action" type="hidden" value="product_list" />
+                                <input id="m" name="m" type="hidden" value="product" />
+                            </form>
+                            <div class="clear"></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="module_common">
+            	<h2><{$lang.categories}></h2>
+                <div class="con">
+                	<div class="con_child">
+                    	<ul class="submenu">
+                        	<li><a class="none_ico" href="shop.php?uid=<{$smarty.get.uid}>&action=product_list&m=product" title="<{$lang.whole}>"><{$lang.whole}></a>
+                            </li></li>
+                            <{foreach item=list from=$custom_cat}>
+                            <li>
+                            <a class="<{if $list.con}>block_ico<{else}>none_ico<{/if}>" href="shop.php?uid=<{$smarty.get.uid}>&action=product_list&m=product&cat=<{$list.id}>" title="<{$list.name}>"><{$list.name}></a>
+                            <{if $list.con}>
+                            <ul>
+                            	<{foreach item=lists from=$list.con}>
+                                	<li><a href="shop.php?uid=<{$smarty.get.uid}>&action=product_list&m=product&cat=<{$lists.id}>" title="<{$lists.name}>"><{$lists.name}></a></li>
+                           		<{/foreach}>
+                            </ul>
+                            <{/if}>
+                            </li>
+                            <{/foreach}>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+            
+  			<{if count($ulink)>0}>
+            <div class="module_common">
+            	<h2><{$lang.links}></h2>
+                <div class="con">
+                	<div class="con_child">
+                    	<ul class="submenu">
+                            <{foreach item=link from=$ulink}>
+                            <li><a target="_blank" class="link_ico" href="<{$link.url}>" title="<{$link.desc}>"><{$link.name}></a></li>
+                            <{/foreach}>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+            <{/if}>
+        </div>
+        <div id="right"><{$output}></div>
+        <div class="clear"></div>
+     
+    </div>
+    
+    <div id="footer">
+        <p><{$web_con}></p><{$bt}> 
+    </div>
+    
+    <div id="credit_card" class="credit_card">
+    	<div class="credit_card_bd">
+        	<div class="credit_card_tit">
+            	<p><{$com.name}></p>
+                <p><img align="absmiddle" src="<{$config.weburl}>/image/points/<{$com.sellerpointsimg}>"></p>
+                <div class="clear"></div>
+            </div>
+        	<div class="credit_card_con">
+            	<p><b><{$lang.shop_dynamic_rating}></b></p>
+            	<p><{$lang.description_match}><span><{$score.a|number_format:1}></span><span class="star"><em style=" width:<{$score.aw}>%"><{$score.a|number_format:1}></em></span></p>
+            	<p><{$lang.service_attitude}><span><{$score.b|number_format:1}></span><span class="star"><em style=" width:<{$score.bw}>%"><{$score.b|number_format:1}></em></span></p>
+                <p><{$lang.delivery_speed}><span><{$score.c|number_format:1}></span><span class="star"><em style=" width:<{$score.cw}>%"><{$score.c|number_format:1}></em></span></p>
+                <p><{$lang.logistics_speed}><span><{$score.d|number_format:1}></span><span class="star"><em style=" width:<{$score.dw}>%"><{$score.d|number_format:1}></em></span></p>
+            </div>
+            <div class="credit_card_arrow"></div>
+            <div class="credit_card_arrow_inner"></div>
+        </div>
+    </div>
+</body>
+</html>

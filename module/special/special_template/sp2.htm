@@ -1,0 +1,61 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<title><{$detail.name}></title>
+</head>
+<style>
+a{color:#002277;text-decoration:none;}
+body{font-size:12px; font-family:Arial,Helvetica,"",sans-serif; color:#002277; margin-top:0px;}
+li{list-style:none; display:inherit; padding:0px;}
+
+.menu{ border-bottom:solid 2px #002277; float:left; text-align:left; padding:0px; padding-left:-20px;}
+.menu ul{margin:0px; padding-left:0px; margin-left:-15px;}
+.menu li{float:left; color:#002277; font-size:16px; display:block; margin-left:20px; font-weight:bold; 
+margin-top:0px;
+padding-left:15px;
+background-repeat:no-repeat;
+background-position:left;
+background-image:url(<{$config.weburl}>/templates/special_template/images/point.jpg);
+}
+.chenter{width:382px}
+.b1{border:1px solid #B9C6D9}
+.left{ height:auto; width:304px;}
+
+.new_box{border:1px solid #B9C6D9; margin-top:5px;}
+.new_box_title{ color:#002277; background-image:url(http://img1.qq.com/tech/pics/15286/15286075.gif);
+font-weight:bold; padding:5px; overflow:hidden;}
+.new_con{padding:0px; line-height:25px; padding:3px; overflow:hidden;}
+
+.pro_box{border:1px solid #B9C6D9; margin-top:5px; padding:2px; height:auto; float:left; width:99%;}
+.pro_box_title{ color:#002277; background-image:url(http://img1.qq.com/tech/pics/15286/15286075.gif);
+font-weight:bold; padding:5px; overflow:hidden; text-align:left;}
+.pro_con{padding:0px; line-height:25px; padding:3px; overflow:hidden;}
+.pro_img_title{float:left; display:block; list-style:none; padding:0px; width:125px; height:150px; overflow:hidden; margin-left:5px; border:solid 1px #999999; margin-top:5px;}
+.pro_img{height:125px; overflow:hidden; vertical-align:middle;}
+.pro_img img{border:0px; width:125px; vertical-align:middle}
+</style>
+<body>
+<table width="960" border="0" cellspacing="0" cellpadding="0" align="center">
+<tr>
+<td colspan="3" height="30" background="http://mat1.qq.com/www/images/public/bg.gif">
+<span style="float:left">　<{$config.company}></span>
+<span style="float:right">返回主站 | 新闻中心 | 产品目录 | 产品目录 | 会员中心　</span>
+</td>
+</tr>
+  <tr>
+    <td height="160" colspan="3"><{$top}></td>
+  </tr>
+  <tr>
+    <td class="left" width="15%" height="226" valign="top">
+    <{$left}>
+    </td>
+    <td class="chenter" valign="top" style="padding:5px;"><{$chenter}></td>
+    <td class="right" valign="top" style="padding:5px;"><{$right}></td>
+  </tr>
+  <tr>
+    <td height="114" colspan="3" align="center"><{$footer}></td>
+  </tr>
+</table>
+</body>
+</html>

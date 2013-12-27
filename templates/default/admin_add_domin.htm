@@ -1,0 +1,40 @@
+<div class="admin_right_top"><{$lang.binding_domain}></div>
+<{if $smarty.session.USER_LANG=='cn'}>
+<table border="0" cellspacing="0" cellpadding="0" class="admin_table">
+  <tr>
+	<td height="56" align="left">
+	绑定顶级域名步骤：<br />
+	1.请和管理员确认您拥有绑定顶级域名的权限。<br />
+	2.请将您的域名做好DNS解析，在DNS管理面板中将您的域名增加“别名记录”，并指向<{$config.weburl}>。<br />
+	3.在下面输入框中输入您的顶级或二级域名，必须以http://开头，如果设置正确，一般两天内会生效，如果还没有生效请联系客服进行咨询解答。
+	</td>
+ </tr>
+   <tr>
+	<td height="65" align="left">
+	<form action="" method="post">
+	<input name="domain" type="text" id="domain" value="<{if $domin!=''}><{$domin}><{else}>http://<{/if}>" size="50" />
+	<input class="btn" type="submit" value="<{$lang.submit}>" />
+	</form>
+	</td>
+ </tr>
+</table>
+<{else}>
+<table border="0" cellspacing="0" cellpadding="0" class="admin_table">
+  <tr>
+	<td height="56" align="left">
+Binding domain steps: <br />
+1. Administrator to make sure that you have permission to bind to the top-level domain. <br />
+Please send your domain name do DNS resolution, alias record in DNS management panel will increase your domain name, and point <{$config.weburl}>. <br />
+Entered in the input box below your top-level or second-level domain names must begin with http://, if set up correctly, will take effect in general within two days, if not yet in force, please contact customer service.
+	</td>
+ </tr>
+   <tr>
+	<td height="65" align="left">
+	<form action="" method="post">
+	<input name="domain" type="text" id="domain" value="<{if $domin!=''}><{$domin}><{else}>http://<{/if}>" size="50" />
+	<input class="btn" type="submit" value="<{$lang.submit}>" />
+	</form>
+	</td>
+ </tr>
+</table>
+<{/if}>

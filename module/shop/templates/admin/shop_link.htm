@@ -1,0 +1,185 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<title>友情链接</title>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<link href="admin.css" rel="stylesheet" type="text/css" />
+<script type="text/javascript" src="../script/jquery-1.4.4.min.js"></script>
+<script type="text/javascript" src="../script/jquery.validation.min.js"></script>
+<script>
+$(function(){
+	$('#form').validate({
+		errorPlacement: function(error, element){
+			element.next('.form-error').append(error);
+		}, 
+		rules : {
+			name:{
+				required:true
+			},
+			url:{
+				required:true
+			},
+		},
+		messages : {
+			name:{
+				required:'请填写名称',
+			},
+			url:{
+				required:'请填写URL',
+			},
+		}
+	});
+});
+</script>
+</head>
+<body>
+	<div class="container">
+        <div class="flow"> 
+            <div class="itemtitle">
+                <h3>友情链接</h3>
+                <ul>
+                    <li <{if $smarty.get.operation==''}>class="current"<{/if}>><a href="?m=<{$smarty.get.m}>&s=<{$smarty.get.s}>"><span>管理</span></a></li>
+                    <{if $smarty.get.operation=='edit'}>
+                    <li class="current"><a href="#"><span>修改</span></a></li>
+                    <{/if}>
+                </ul>
+            </div>
+        </div>
+        <div class="h35"></div>  
+        <{if $smarty.get.operation=='edit' }>
+            <form name="form" id="form" method="post">
+            <input name="id" type="hidden" id="id" value="<{$de.id}>">
+            <table class="table">
+             	<thead>
+                    <tr>
+                        <th class="partition" colspan="99">友情链接</th>
+                </thead>
+                <tbody>
+         
+                <tr>
+                    <td width="100">店铺名称</td>
+                    <td><a target="_blank" href="../shop.php?uid=<{$de.shop_id}>"><{$de.shop_name}></a></td>
+                </tr>
+                <tr>
+                    <td>店主用户名</td>
+                    <td><a target="_blank" href="../home.php?uid=<{$de.shop_id}>"><{$de.member_name}></a></td>
+                </tr>
+                
+                <tr>
+                    <td>标题</td>
+                    <td>
+                    <input name="name" id="name" type="text" class="w350" value="<{$de.name}>"/>
+                    <div id="form-error" class="form-error"></div>
+                    </td>
+                </tr>
+                
+                <tr>
+                    <td>链接</td>
+                    <td>
+                    <input name="url" id="url" type="text" class="w350" value="<{$de.url}>"/>
+                    <div id="form-error" class="form-error"></div>
+                    </td>
+                </tr>
+                
+                <tr>
+                    <td>描述</td>
+                    <td>
+                    <textarea name="desc" id="desc"  class="w350"><{$de.desc}></textarea>
+                    </td>
+                </tr>
+                
+                <tr>
+                    <td>状态</td>
+                    <td>
+                    <input type="radio" name="status" value="1" id="open" <{if $de.status==1}>checked="checked"<{/if}>/><label for="open">开启</label>
+                    <input type="radio" name="status" value="0" id="close" <{if $de.status!=1}>checked="checked"<{/if}>/><label for="close">关闭</label>
+                    </td>
+                </tr>
+                
+                <tr>
+                    <td>&nbsp;</td>
+                    <td>
+                    <input class="submit" type="submit" value="提交">
+                    <input name="act" type="hidden" id="action" value="edit">
+                    </td>
+                </tr>
+                </tbody>
+            </table>
+            </form>
+        <{else}>
+		<script type="text/javascript">
+        $(function(){
+            /* 全选 */
+             $('.checkall').click(function(){
+                var _self = this;
+                $('.checkitem').each(function(){
+                    if (!this.disabled)
+                    {
+                        $(this).attr('checked', _self.checked);
+                    }
+                });
+                $('.checkall').attr('checked', this.checked);
+            });	 
+        });
+        </script>
+        <form action="" method="post">
+        <table class="table">
+        	<thead>
+                <tr>
+                    <th class="partition" colspan="99">友情链接</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr class="header">
+                    <th width="30"></th>
+                    <th width="70">店铺ID</th>
+                    <th width="100">店主用户名</th>
+                    <th width="100">店铺名称</th>
+                    <th width="100">标题</th>
+                    <th width="250">链接</th>
+                    <th>描述</th>
+                    <th width="100">状态</th>
+                    <th width="50"></th>
+                </tr>
+                <{foreach item=list from=$de.list}>
+                <tr>
+                    <td><input type="checkbox" value="<{$list.id}>" class="checkitem" name="chk[]"></td>
+                  	<td><{$list.shop_id}></td>
+                  	<td><a target="_blank" href="../home.php?uid=<{$list.shop_id}>"><{$list.member_name}></a></td>
+                  	<td><a target="_blank" href="../shop.php?uid=<{$list.shop_id}>"><{$list.shop_name}></a></td>
+                    <td><{$list.name}></td>
+                    <td><{$list.url}></td>
+                    <td><{$list.desc}></td>
+                    <td><{if $list.status}>开启<{else}>关闭<{/if}></td>
+                    <td>
+                    <a href="?m=<{$smarty.get.m}>&s=<{$smarty.get.s}>&operation=edit&editid=<{$list.id}>"><{$editimg}></a> 
+                    <a onclick="return confirm('确定删除吗');" href="?m=<{$smarty.get.m}>&s=<{$smarty.get.s}>&delid=<{$list.id}>"><{$delimg}></a>
+                    </td>
+                </tr>
+                <{foreachelse}>
+                <tr>
+                    <td class="norecord" colspan="99"><i></i><span>暂无符合条件的数据记录</span></td>
+                </tr>
+                <{/foreach}>
+            </tbody>
+            <tfoot>
+                <tr>
+                	<td colspan="5">
+                        <div class="del">
+                        <input type="checkbox" class="checkall" id="del">
+                        <label for="del">全选</label>
+                        </div>
+                        <input type="hidden" name="act" value="op" />
+                        <input type="submit" name="submit" value="<{$lang.btn_submit}>" />
+                        <input type="submit" name="submit" value="<{$lang.btn_open}>" />
+                        <input type="submit" name="submit" value="<{$lang.btn_close}>" />
+                    </td>
+                    <td colspan="99"><div class="page"><{$de.page}></div></td>
+                </tr>
+            </tfoot>
+        </table>
+        </form>
+        <{/if}>
+    </div>
+</body>
+</html>

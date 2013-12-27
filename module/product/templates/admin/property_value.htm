@@ -1,0 +1,390 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<title>产品属性</title>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<link href="admin.css" rel="stylesheet" type="text/css" />
+<script type="text/javascript" src="../script/jquery-1.4.4.min.js"></script>
+<script type="text/javascript" src="../script/jquery.validation.min.js"></script>
+<script>
+$(function(){
+	
+	
+	$('#form').validate({
+		errorPlacement: function(error, element){
+			element.next('.form-error').append(error);
+		}, 
+		rules : {
+			field:{
+				required:true,
+				istrue:true,
+				isrepeat:true,
+			},
+			field_length:{
+				required:true,
+				range:[1,255],
+			},
+			field_name:{
+				required:true
+			},
+		},
+		messages : {
+			field:{
+				required:'请填写数据表键',
+			},
+			field_length:{
+				required:'请填写字段长度',
+				range:'1~255',
+			},
+			field_name:{
+				required:'请填写字段名',
+			}
+		}
+		
+	});
+	
+	jQuery.validator.addMethod("istrue", function(value, element) { 
+	
+		var patrn=/^[a-z]{1}([a-z0-9]|[_]){2,19}$/;  
+		if (!patrn.exec(value))
+		{
+			return false ; 
+		}
+		else
+		{
+			return true ; 
+		}
+	}, "只能输入3-20个以字母开头、可带数字、“_”、的字串 ");
+	
+	jQuery.validator.addMethod("isrepeat", function(value, element) { 
+		
+		var url = '<{$config.weburl}>/module/product/admin/property.php';
+		var sid='';
+		<{if $de.id}>
+		sid='&sid='+<{$de.id}>;
+		<{/if}>
+		var pars = 'value='+value+'&id='+<{$smarty.get.id}>+sid;
+
+		var ajax=$.post(url, pars,showResponse);
+		
+		function showResponse(originalRequest)
+		{		
+			if(originalRequest==1)
+			{
+				str = true;
+			}
+			else
+			{
+				str = false; 
+			}
+		}
+		return str;
+		
+	}, "已存在");
+});
+</script>
+</head>
+<body>
+	<div class="container">
+        <div class="flow"> 
+            <div class="itemtitle">
+                <h3>产品属性</h3>
+                <ul>
+                    <li <{if $smarty.get.operation=='list'}>class="current"<{/if}>><a href="?m=<{$smarty.get.m}>&s=<{$smarty.get.s}>&operation=list&id=<{$smarty.get.id}>"><span>管理</span></a></li>
+                    <li <{if $smarty.get.operation=='add'}>class="current"<{/if}>><a href="?m=<{$smarty.get.m}>&s=<{$smarty.get.s}>&operation=add&id=<{$smarty.get.id}>"><span>添加</span></a></li>
+                    <{if $smarty.get.operation=='edit'}>
+                    <li class="current"><a href="#"><span>修改</span></a></li>
+                    <{/if}>
+                </ul>
+            </div>
+        </div>
+        <div class="h35"></div>  
+        <{if $smarty.get.operation=='add' or $smarty.get.operation=='edit' }>
+            <form name="form" id="form" method="post">
+            <input name="id" type="hidden" id="id" value="<{$de.id}>">
+            <table class="table">
+                <thead>
+                    <tr>
+                        <th class="partition" colspan="99">活动</th>
+                    </tr>
+                </thead>
+                <tbody>
+                <tr>
+                    <td width="100">数据表键</td>
+                    <td width="360">
+                    <{if $de.field!='color'}>
+                    <input name="field" id="field" type="text" class="w350" value="<{$de.field}>"><div id="form-error" class="form-error"></div>
+                    <{else}>
+                    <{$de.field}>
+                    <input name="field" id="field" type="hidden" value="<{$de.field}>">
+                    <{/if}>
+                    <input name="oldName" id="oldName" type="hidden" value="<{$de.field}>">
+                    </td>
+                    <td><{if $de.field!='color'}>小写字母(a-z),数字(0-9)推荐使用字母，不能以数字开头<{/if}></td>
+                </tr>
+                <tr>
+                    <td>字段属性</td>
+                    <td>
+                    <select class="w350" name="field_type">
+                    <{foreach item=list key=key from=$fieldtype}>
+                    <option <{if $key==$de.field_type}>selected="selected"<{/if}> value="<{$key}>"><{$list}></option>
+                    <{/foreach}>
+                    </select>
+                    </td>
+                    <td></td>
+                </tr>
+                <tr>
+                    <td>字段长度</td>
+                    <td>
+                    <input name="field_length" id="field_length" type="text" class="w350" value="<{$de.field_length}>"><div id="form-error" class="form-error"></div>
+                    </td>
+                    <td>1~255</td>
+                </tr>
+                <tr>
+                    <td>字段名</td>
+                    <td>
+                    <input name="field_name" id="field_name" type="text" class="w350" value="<{$de.field_name}>"><div id="form-error" class="form-error"></div>
+                    </td>
+                    <td>用于在页面上展示</td>
+                </tr>
+                <tr>
+                    <td>字段描述</td>
+                    <td>
+                    <input name="field_desc" id="field_desc" type="text" class="w350" value="<{$de.field_desc}>">
+                    </td>
+                    <td>信息备注，便于识别，表单提示信息</td>
+                </tr>
+                <tr>
+                    <td>展示类型</td>
+                    <td>
+                    <{if $de.field!='color'}>
+                    <select class="w350" name="display_type" onchange="select_onchange(this.value)">
+                    <{foreach item=list key=key from=$type}>
+                    <option <{if $key==$de.display_type}>selected="selected"<{/if}> value="<{$key}>"><{$list}></option>
+                    <{/foreach}>
+                    </select>
+                    <{else}>
+                    <{assign var=num value=$de.display_type}><{$type.$num}>
+                    <input type="hidden" name="display_type" value="<{$de.display_type}>" />
+                    <{/if}>
+                    </td>
+                </tr>
+                <tr>
+                    <td>默认值</td>
+                    <td>
+                    <input name="default_value" id="default_value" type="text" class="w350" value="<{$de.default_value}>">
+                    </td>
+                    <td></td>
+                </tr>
+                </tbody>
+            </table>  
+            <table class="table <{if $de.display_type<3}>hidden<{/if}>" id="tbody1">  
+                <tbody>
+                <tr>
+                	<td rowspan="99" width="100">属性值</td>
+                    <td width="70">排序</td>
+                    <td>值</td>
+                </tr>
+                <{foreach item=list from=$de.items }>
+                <tr>
+                	<td><input type="text" class="w50" value="<{$list.0}>" maxlength="3" name="displayorder[]" /></td>
+                    <td><div><input type="text" class="w150" name="name[]" value="<{$list.1}>" /><a href="javascript:void(0);" class="deleterow" onClick="deleterow(this);addrow1(this);">删除</a></div></td>
+                </tr>
+                <{foreachelse}>
+                <tr>
+                	<td><input type="text" class="w50" maxlength="3" name="displayorder[]" value="1" /></td>
+                    <td><input type="text" class="w150" name="name[]" /></td>
+                </tr>
+                <{/foreach}>
+                <tr>
+                    <td colspan="2"><div><a class="addtr" onclick="addrow(this, 0,addrowkey)" href="javascript:void(0);">添加属性值</a></div></td>
+                </tr>
+                </tbody>
+          	</table>  
+            <table class="table">
+                <tbody id="tbody2" <{if $de.display_type!=5}>class="hidden"<{/if}>>
+                <tr>
+                    <td width="100">是否为购买项</td>
+                    <td width="360">
+                    <input type="radio" name="is_buy_item" value="1" id="yes0" <{if $de.is_buy_item==1}>checked="checked"<{/if}>/><label for="yes0">是</label>
+                    <input type="radio" name="is_buy_item" value="0" id="no0" <{if $de.is_buy_item!=1}>checked="checked"<{/if}>/><label for="no0">否</label>
+                    </td>
+                    <td></td>
+                </tr>
+                </tbody>
+                
+                <tbody>
+                <tr>
+                    <td width="100">是否为必填</td>
+                    <td width="360">
+                    <input type="radio" name="is_required" value="1" id="yes" <{if $de.is_required==1}>checked="checked"<{/if}>/><label for="yes">是</label>
+                    <input type="radio" name="is_required" value="0" id="no" <{if $de.is_required!=1}>checked="checked"<{/if}>/><label for="no">否</label>
+                    </td>
+                    <td></td>
+                </tr>
+                
+                <tr>
+                    <td>是否在搜索中显示</td>
+                    <td>
+                    <input type="radio" name="is_search" value="1" id="yes1" <{if $de.is_search==1}>checked="checked"<{/if}>/><label for="yes1">是</label>
+                    <input type="radio" name="is_search" value="0" id="no1" <{if $de.is_search!=1}>checked="checked"<{/if}>/><label for="no1">否</label>
+                     <input type="hidden" name="old_is_search" value="<{$de.is_search}>" />
+                    </td>
+                    <td></td>
+                </tr>
+                
+                <tr>
+                    <td>状态</td>
+                    <td>
+                    <input type="radio" name="statu" value="1" id="open" <{if $de.statu==1}>checked="checked"<{/if}>/><label for="open">开启</label>
+                    <input type="radio" name="statu" value="0" id="close" <{if $de.statu!=1}>checked="checked"<{/if}>/><label for="close">关闭</label>
+                    </td>
+                    <td></td>
+                </tr>
+                
+                <tr>
+                    <td>&nbsp;</td>
+                    <td colspan="99">
+                    <input class="submit" type="submit" value="提交">
+                    <input name="act" type="hidden" id="action" value="<{if !$smarty.get.editid}>save<{else}>edit<{/if}>">
+                    </td>
+                </tr>
+                </tbody>
+            </table>
+            </form>
+        <script>
+        function select_onchange(val) {
+			
+			var tbody1=$("#tbody1");
+			var tbody2=$("#tbody2");
+			if(val<3)
+			{
+				tbody1.addClass('hidden');
+				tbody2.addClass('hidden');
+			}
+			else
+			{
+				tbody1.removeClass('hidden');
+				if(val==5)
+				{
+					tbody2.removeClass('hidden');
+				}
+				else
+				{
+					tbody2.addClass('hidden');
+				}
+			}
+		}
+		var rowtypedata = [
+			[
+				[1,'<input type="text" class="w50" maxlength="3" name="displayorder[]" value="{1}" />'], 
+				[1, '<div><input name="name[]" class="w150" type="text" /><a href="javascript:;" class="deleterow" onClick="deleterow(this)">删除</a></div>'],
+				[1, '']
+			],
+		];
+		
+		var addrowdirect = 0;
+		<{if $de.items}>
+		var addrowkey=<{$de.items|@count}>+1;
+		<{else}>
+		var addrowkey=2;
+		<{/if}>
+		
+		function addrow(obj, type) {
+			var table = obj.parentNode.parentNode.parentNode.parentNode.parentNode;
+			if(!addrowdirect) {
+				var row = table.insertRow(obj.parentNode.parentNode.parentNode.rowIndex);
+			} else {
+				var row = table.insertRow(obj.parentNode.parentNode.parentNode.rowIndex + 1);
+			}
+			var typedata = rowtypedata[type];
+			for(var i = 0; i <= typedata.length - 1; i++) {
+				var cell = row.insertCell(i);
+				cell.colSpan = typedata[i][0];
+				var tmp = typedata[i][1];
+				if(typedata[i][2]) {
+					cell.className = typedata[i][2];
+				}
+				tmp = tmp.replace(/\{(n)\}/g, function($1) {return addrowkey;});
+				tmp = tmp.replace(/\{(\d+)\}/g, function($1, $2) {return addrow.arguments[parseInt($2) + 1];});
+				cell.innerHTML = tmp;
+			}
+			addrowkey ++;
+			addrowdirect = 0;
+		}
+		function deleterow(obj) {
+			var table = obj.parentNode.parentNode.parentNode.parentNode.parentNode;
+			var tr = obj.parentNode.parentNode.parentNode;
+			table.deleteRow(tr.rowIndex);
+		}
+		</script>   
+        <{else}>
+		<script type="text/javascript">
+        $(function(){
+            /* 全选 */
+             $('.checkall').click(function(){
+                var _self = this;
+                $('.checkitem').each(function(){
+                    if (!this.disabled)
+                    {
+                        $(this).attr('checked', _self.checked);
+                    }
+                });
+                $('.checkall').attr('checked', this.checked);
+            });	 
+        });
+        </script>
+        <form action="" method="post">
+        <table class="table">
+        	<thead>
+                <tr>
+                    <th class="partition" colspan="99">产品属性</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr class="header">
+                    <th width="30"></th>
+                    <th width="150">属性名称</th>
+                    <th width="150">类型</th>
+                    <th>属性值</th>
+                    <th width="100">状态</th>
+                    <th width="50"></th>
+                </tr>
+                <{foreach item=list from=$de.list}>
+                <tr>
+                    <td><input type="checkbox" <{if $list.field=='color'}>disabled="disabled"<{/if}> value="<{$list.id}>" class="checkitem" name="chk[]"></td>
+                    <td><{$list.field_name}> (<{$list.field}>)</td>
+                    <td><{assign var=num value=$list.display_type}><{$type.$num}></td>
+                    <td><{if $list.items}><{$list.items}><{else}>NULL<{/if}></td>
+                    <td><{if $list.statu}>开启<{else}>关闭<{/if}></td>
+                    <td>
+                    <a href="?m=<{$smarty.get.m}>&s=<{$smarty.get.s}>&operation=edit&editid=<{$list.id}>&id=<{$smarty.get.id}>"><{$editimg}></a>
+                    
+                    <{if $list.field!='color'}><a onclick="return confirm('确定删除吗');" href="?m=<{$smarty.get.m}>&s=<{$smarty.get.s}>&operation=list&delid=<{$list.id}>&id=<{$smarty.get.id}>"><{$delimg}></a><{/if}>
+                    </td>
+                </tr>
+                <{foreachelse}>
+                <tr>
+                    <td class="norecord" colspan="99"><i></i><span>暂无符合条件的数据记录</span></td>
+                </tr>
+                <{/foreach}>
+            </tbody>
+            <tfoot>
+                <tr>
+                	<td colspan="3">
+                        <div class="del">
+                        <input type="checkbox" class="checkall" id="del">
+                        <label for="del">删除</label>
+                        </div>
+                        <input type="hidden" name="act" value="op" />
+                        <input type="submit" name="submit" value="<{$lang.btn_submit}>" />
+                    </td>
+                    <td colspan="99"><div class="page"><{$de.page}></div></td>
+                </tr>
+            </tfoot>
+        </table>
+        </form>
+        <{/if}>
+    </div>
+</body>
+</html>

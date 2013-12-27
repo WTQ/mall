@@ -1,0 +1,106 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<title>保证金</title>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<link href="admin.css" rel="stylesheet" type="text/css" />
+<script type="text/javascript" src="../script/jquery-1.4.4.min.js"></script>
+</head>
+<body>
+	<div class="container">
+        <div class="flow">
+            <div class="itemtitle">
+                <h3>保证金</h3>
+                <ul>
+                    <li class="current"><a href="?m=<{$smarty.get.m}>&s=<{$smarty.get.s}>"><span>管理</span></a></li>
+                    <li><a href="?m=<{$smarty.get.m}>&s=shop.php"><span>店铺管理</span></a></li>
+                </ul>
+            </div>
+        </div>
+        <div class="h35"></div>
+		<script type="text/javascript">
+        $(function(){
+            /* 全选 */
+             $('.checkall').click(function(){
+                var _self = this;
+                $('.checkitem').each(function(){
+                    if (!this.disabled)
+                    {
+                        $(this).attr('checked', _self.checked);
+                    }
+                });
+                $('.checkall').attr('checked', this.checked);
+            });	 
+        });
+        </script>
+        <form action="" method="post">
+        <table class="table">
+        	<thead>
+                <tr>
+                    <th class="partition" colspan="99">保证金</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr class="header">
+                    <th width="30"></th>
+                    <th width="120">店主用户名</th>
+                    <th>商铺名称</th>
+                    <th width="120">店铺分类</th>
+                    <th width="120">店铺等级</th>
+                    <th width="120">保证金</th>
+                    <th width="120">交纳时间</th>
+                    <th width="120">负责人</th>
+                    <th width="100"></th>
+                </tr>
+                <{foreach item=list from=$de.list}>
+                <tr>
+                    <td><input type="checkbox" value="<{$list.userid}>" class="checkitem" name="chk[]"></td>
+                    <td><a target="_blank" href="../home.php?uid=<{$list.userid}>"><{$list.user}></a></td>
+                    <td>
+                    <a target="_blank" href="../shop.php?uid=<{$list.userid}>"><{$list.company}></a>&nbsp;
+                    <{if $list.shop_auth==1}>
+                    <a target="_blank" href="<{$list.shop_auth_pic}>"><img align="absmiddle" src="../image/default/certification.gif" /></a>
+                    <{else}>
+                    <img align="absmiddle" src="../image/default/certification_no.gif" />
+                    <{/if}>
+                    <{if $list.shopkeeper_auth==1}>
+                    <a target="_blank" href="<{$list.shopkeeper_auth_pic}>"><img align="absmiddle" src="../image/default/certautonym.gif" /></a>
+                    <{else}>
+                    <img align="absmiddle" src="../image/default/certautonym_no.gif" />
+                    <{/if}>
+                    </td>
+                    <td><{$list.cat}></td>
+                    <td><{$list.grade}></td>
+                    <td><{$list.money|number_format:2}></td>
+                    <td><{$list.time|date_format:"%Y-%m-%d <br> %H:%M:%S"}></td>
+                    <td><{$list.admin}></td>
+                    <td>
+                    <a href="?m=<{$smarty.get.m}>&s=shop.php&type=earnest&operation=edit&editid=<{$list.userid}>"><{$editimg}></a> 
+                    <a onclick="return confirm('确定删除吗');" href="?m=<{$smarty.get.m}>&s=<{$smarty.get.s}>&delid=<{$list.userid}>"><{$delimg}></a> 
+                   
+                    </td>
+                </tr>
+                <{foreachelse}>
+                <tr>
+                    <td class="norecord" colspan="99"><i></i><span>暂无符合条件的数据记录</span></td>
+                </tr>
+                <{/foreach}>
+            </tbody>
+            <tfoot>
+                <tr>
+                	<td colspan="2">
+                        <div class="del">
+                        <input type="checkbox" class="checkall" id="del">
+                        <label for="del">删除</label>
+                        </div>
+                        <input type="hidden" name="act" value="op" />
+                        <input type="submit" value="提交" />
+                    </td>
+                    <td colspan="99"><div class="page"><{$de.page}></div></td>
+                </tr>
+            </tfoot>
+        </table>
+        </form>
+    </div>
+</body>
+</html>

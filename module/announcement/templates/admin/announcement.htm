@@ -1,0 +1,185 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<title>公告</title>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<link href="admin.css" rel="stylesheet" type="text/css" />
+<script type="text/javascript" src="../script/jquery-1.4.4.min.js"></script>
+<script type="text/javascript" src="../script/jquery.validation.min.js"></script>
+<script>
+$(function(){
+	$('#form').validate({
+		errorPlacement: function(error, element){
+			element.next('.form-error').append(error);
+		},      
+		rules : {
+			title:{
+				required:true
+			},
+			
+		},
+		messages : {
+			title:{
+				required:'请填写标题',
+			},
+		}
+	});
+});
+</script>
+</head>
+<body>
+	<div class="container">
+        <div class="flow">
+            <div class="itemtitle">
+                <h3>公告</h3>
+                <ul>
+                    <li <{if $smarty.get.operation==''}>class="current"<{/if}>><a href="?m=announcement&s=announcement.php"><span>管理</span></a></li>
+                    <li <{if $smarty.get.operation=='add'}>class="current"<{/if}>><a href="?m=announcement&s=announcement.php&operation=add"><span>添加</span></a></li>
+                    <{if $smarty.get.operation=='edit'}>
+                    <li class="current"><a href="#"><span>修改</span></a></li>
+                    <{/if}>
+                </ul>
+            </div>
+        </div>
+        <div class="h35"></div>  
+        <{if $smarty.get.operation=='add' or $smarty.get.operation=='edit' }>
+            <form name="form" id="form" method="post">
+            <input name="id" type="hidden" id="id" value="<{$de.id}>">
+            <table class="table">
+                <thead>
+                    <tr>
+                        <th class="partition" colspan="99">公告</th>
+                    </tr>
+                </thead>
+                
+                <tbody>
+                <tr>
+                    <td width="100">标题</td>
+                    <td>
+                    <input name="title" id="title" type="text" class="w350" value="<{$de.title}>"><div id="form-error" class="form-error"></div>
+                    </td>
+                </tr>
+                
+                <tr>
+                    <td>外部链接</td>
+                    <td>
+                    <input name="url" type="text" class="w350" value="<{$de.url}>">
+                    </td>
+                </tr>
+                
+                <tr>
+                    <td>公告内容</td>
+                    <td>
+                    	<script charset="utf-8" src="../lib/kindeditor/kindeditor-min.js"></script>
+						<script>
+						var editor;
+						KindEditor.ready(function(K) {
+							editor = K.create('textarea[name="content"]', {
+								resizeType : 1,
+								allowPreviewEmoticons : false,
+								allowImageUpload : false,
+								langType :'<{$config.language}>',
+							});
+						});
+						</script>
+                        <textarea style="width:80%; height:300px" name="content"><{$de.content}></textarea>
+                    </td>
+                </tr>
+                
+                <tr>
+                    <td>发布时间</td>
+                    <td>
+                    <input name="create_time" id="create_time" type="text" class="w150" value="<{if $de.create_time}><{$de.create_time|date_format:"%Y-%m-%d %H:%M:%S"}><{else}><{$time|date_format:"%Y-%m-%d %H:%M:%S"}><{/if}>">
+                    <input type="button" onclick="document.getElementById('create_time').value='<{$time|date_format:"%Y-%m-%d %H:%M:%S"}>'" value="设为当前时间" class="btn">
+                    </td>
+                </tr>
+                
+                <tr>
+                    <td>状态</td>
+                    <td>
+                    <input type="radio" name="status" value="1" id="open" <{if $de.status==1}>checked="checked"<{/if}>/><label for="open">开启</label>
+                    <input type="radio" name="status" value="0" id="close" <{if $de.status!=1}>checked="checked"<{/if}>/><label for="close">关闭</label>
+                    </td>
+                </tr>
+                
+                <tr>
+                    <td>&nbsp;</td>
+                    <td>
+                    <input class="submit" type="submit" value="提交">
+                    <input name="act" type="hidden" id="action" value="<{if !$smarty.get.editid}>save<{else}>edit<{/if}>">
+                    </td>
+                </tr>
+                </tbody>
+            </table>
+            </form>
+        <{else}>
+		<script type="text/javascript">
+        $(function(){
+            /* 全选 */
+             $('.checkall').click(function(){
+                var _self = this;
+                $('.checkitem').each(function(){
+                    if (!this.disabled)
+                    {
+                        $(this).attr('checked', _self.checked);
+                    }
+                });
+                $('.checkall').attr('checked', this.checked);
+            });	 
+        });
+        </script>
+        <form action="" method="post">
+        <table class="table">
+        	<thead>
+                <tr>
+                    <th class="partition" colspan="99">公告列表</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr class="header">
+                    <th width="30"></th>
+                    <th width="70">显示顺序</th>
+                    <th width="200">标题</th>
+                    <th>内容</th>
+                    <th width="50">状态</th>
+                    <th width="100">发布时间</th>
+                    <th width="50"></th>
+                </tr>
+                <{foreach item=list from=$de.list}>
+                <tr>
+                    <td><input type="checkbox" value="<{$list.id}>" class="checkitem" name="chk[]"></td>
+                    <td><input type="text" class="w50" maxlength="3" name="displayorder[<{$list.id}>]" value="<{$list.displayorder}>" onbeforepaste="clipboardData.setData('text',clipboardData.getData('text').replace(/[^\d]/g,''))" onkeyup="value=value.replace(/[^\d]/g,'')" /></td>
+                    <td><{$list.title}></td>
+                    <td><{if $list.url}><{$list.url}><{else}><{$list.content|strip_tags|truncate:100}><{/if}></td>
+                    <td><{if $list.status==1}>开启<{else}>关闭<{/if}></td>
+                    <td><{$list.create_time|date_format:"%Y-%m-%d <br> &nbsp;%H:%M:%S"}></td>
+                    <td>
+                    <a href="?m=announcement&s=announcement.php&operation=edit&editid=<{$list.id}>"><{$editimg}></a> 
+                    <a onclick="return confirm('确定删除吗');" href="?m=announcement&s=announcement.php&delid=<{$list.id}>"><{$delimg}></a> 
+                    </td>
+                </tr>
+                <{foreachelse}>
+                <tr>
+                    <td class="norecord" colspan="99"><i></i><span>暂无符合条件的数据记录</span></td>
+                </tr>
+                <{/foreach}>
+            </tbody>
+            <tfoot>
+                <tr>
+                	<td colspan="2">
+                        <div class="del">
+                        <input type="checkbox" class="checkall" id="del">
+                        <label for="del">删除</label>
+                        </div>
+                        <input type="hidden" name="act" value="op" />
+                        <input type="submit" value="提交" />
+                    </td>
+                    <td colspan="99"><div class="page"><{$de.page}></div></td>
+                </tr>
+            </tfoot>
+        </table>
+        </form>
+        <{/if}>
+    </div>
+</body>
+</html>

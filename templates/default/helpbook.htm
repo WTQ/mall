@@ -1,0 +1,37 @@
+<{include file="header.htm"}>
+<div class="search-box">
+<table width="100%" border="0" cellspacing="0" cellpadding="0">
+  <form method="get" name="sear" id="sear" action="helpbook.php">
+  <tr height="40">
+    <td width="779" align="right">贸易手册：
+    <input name="key" type="text" id="key" value="<{$smarty.get.key}>" size="52">
+　　</td>
+    <td width="134" align="center"><input type="image" src="../image/default/home_search_go_cn.gif" style="border:0px"></td>
+    <td width="221"></td>
+  </tr>
+  </form>
+</table>
+</div>
+<div class="guide">您的位置：<a href='../'>首页</a> &raquo; <a href="../guide">贸易手册</a> &raquo; <{$catName}> </div>
+
+	
+	<div class="help-left-div">
+		<div class="help-left-top">贸易手册</div>
+		<{foreach item=list from=$menu}>
+		<div class="lheader" <{if $smarty.get.id==$list.catid}>style="background:#E9EFF3;"<{/if}>><a href="../guide-<{$list.catid}>/">&raquo; <{$list.cat}></a></div>
+		<{/foreach}>
+	</div>
+	
+	
+	<div class="help-right-div">
+		<div class="header"><{$catName}></div>
+		<{foreach item=list from=$news.list}>
+		<li>
+		<a href="../?m=news&s=newsd&id=<{$list.newsid}>">&raquo; <{$list.title}></a>
+		</li>
+		<{/foreach}>
+		<div style="text-align:right; font-size:14px; padding:5px;"><{$news.page}></div>
+	</div>
+	
+
+<{include file="footer.htm"}>

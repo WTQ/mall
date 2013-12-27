@@ -1,0 +1,60 @@
+<script>
+function rewiew()
+{
+	<{if $buid==''}>
+	alert('您还没有登录,请先登录后再写评论');
+	window.location='<{$config.weburl}>/login.php<{$return}>';
+	return false;
+	<{/if}>
+}
+</script>
+<form onsubmit="return rewiew();" action="" method="post">
+<table class="pro_info" style="width:100%;"cellpadding="0" cellspacing="0" bordercolor="#EAFAFD">
+	<tr>
+	  <td align="left" width="99%" valign="middle">
+	  <div style="border-bottom:1px #CCCCCC solid; padding-bottom:8px; padding-top:8px; width:100%;">
+	  <table width="100%" border="0" cellspacing="1" cellpadding="0">
+        <tr>
+          <td width="14%" height="20"><img width="36" height="12" align="absmiddle" alt="" src="<{$config.weburl}>/image/default/star1.gif"></td>
+          <td width="*%"><div style="background:#FFF7D2; height:15px;"><div style="background-color:#FFA40D; height:15px;width:<{$r1+0}>%">&nbsp;</div></div></td>
+          <td width="12%" align="center"><{$r1+0}>%</td>
+          <td width="12%" align="center" bgcolor="#e1f0fb"><{$rank_a.1}></td>
+        </tr>
+        <tr>
+          <td height="20"><img width="36" height="12" align="absmiddle" alt="" src="<{$config.weburl}>/image/default/star2.gif"></td>
+          <td ><div style="background:#FFF7D2; height:15px;"><div style="background-color:#FFA40D; height:15px; width:<{$r2+0}>%">&nbsp;</div></div></td>
+          <td align="center"><{$r2+0}>%</td>
+          <td align="center" bgcolor="#f2f8fd"><{$rank_a.2}></td>
+        </tr>
+        <tr>
+          <td height="20"><img width="36" height="12" align="absmiddle" alt="" src="<{$config.weburl}>/image/default/star3.gif"></td>
+          <td><div style="background:#FFF7D2; height:15px;"><div style="background-color:#FFA40D; height:15px; width:<{$r3+0}>%">&nbsp;</div></div></td>
+          <td align="center"><{$r3+0}>%</td>
+          <td align="center" bgcolor="#f9fcfe"><{$rank_a.3}></td>
+        </tr>
+      </table>
+	  </div>	  </td>
+	</tr>
+	<tr>
+	    <td align="left" valign="middle" style="padding-top:5px;">
+		<div>
+		<input checked="checked" name="rank" type="radio" value="1" /> <img width="36" height="12" align="absmiddle" alt="" src="<{$config.weburl}>/image/default/star1.gif">
+		<input name="rank" type="radio" value="2" /> <img width="36" height="12" align="absmiddle" alt="" src="<{$config.weburl}>/image/default/star2.gif">
+		<input name="rank" type="radio" value="3" /> <img width="36" height="12" align="absmiddle" alt="" src="<{$config.weburl}>/image/default/star3.gif">		</div>
+		<textarea onclick="document.getElementById('rands_num').style.display='block';" id="reviewcon" name="reviewcon" style="font-size:12px;width:90%; height:80px;"></textarea>
+		<div style="display:none; height:30px;" id="rands_num">
+		<table width="100%" border="0" cellspacing="0" cellpadding="0">
+		  <tr>
+			<td width="80"><{$lang.encode}></td>
+			<td width="60">
+			<input style="height:18px;" onclick="document.getElementById('randimg').style.display='block';this.value='';" value="click on" name="myrands" type="text" id="myrands" size="6" maxlength="6" />			</td>
+			<td align="left"><img id="randimg" style="padding-top:3px; display:none;" src='<{$config.weburl}>/includes/rand_func.php'/> </td>
+		  </tr>
+		</table>
+		</div>		</td>
+	</tr>
+	<tr>
+  <td align="left"><input type="submit" name="rewiews" value="<{$lang.submit}>" /></td>
+  </tr>
+</table>
+</form>

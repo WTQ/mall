@@ -1,0 +1,14 @@
+<?php
+//=====================管理员后台===============
+/*
+$mem[6][1][]=array(
+	'网站专题',
+	array(
+		'add_special.php,1,special,发布专题',
+		'special_list.php,1,special,管理专题',
+		'special_con.php,0,special,组合内容',
+		'modules_con_set.php,0,special,内容设置',
+	)
+)
+*/
+?>

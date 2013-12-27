@@ -1,0 +1,111 @@
+<script src="<{$config.weburl}>/script/my_lightbox.js" language="javascript"></script>
+<script>
+function alertContents()
+{
+	if(Http_Request.readyState==4)
+	{
+		if(Http_Request.status==200)
+		{
+			XMLDocument=Http_Request.responseText;
+			if(XMLDocument!="None")
+			{
+			   Fillset(XMLDocument);
+			}
+		}
+		else
+		{
+			XMLDocument=null;
+		}
+	}
+	else
+	{
+		XMLDocument=null;
+	}
+}
+
+function downadd(id,t)
+{
+	oAjax.sendUrl="<{$config.weburl}>/?m=tg&s=detail&ajax="+t+"&id="+id;
+	oAjax.getRequest();
+	oAjax.getXMLResponse();
+}
+
+function checkval(myform)
+{
+	if(myform.content.value=="")
+	{
+		alert("请填写评论!");
+		return (false);
+	}
+	if(myform.username.value=="")
+	{
+		alert("请填写用户名!");
+		return (false);
+	}
+}
+</script>
+<link type="text/css" rel="stylesheet" href="<{$config.weburl}>/module/tg/templates/tg.css">
+<div id="mainbody1" class="m1">
+  <div class="tgleftbar">
+    <div class="tde_info">
+      <h2><{$detail.name}></h2>
+      <div class="tde_buy">
+        <div class="tde_buy_l">
+          <div class="price"><{$config.money}><{$detail.price}></div>
+          <ul>
+            <li>原价<del><{$detail.market_price|number_format:2}></del></li>
+            <li>折扣<span><{$detail.price/$detail.market_price*10|number_format:1}></span></li>
+            <li>节省<span><{$detail.market_price-$detail.price}></span></li>
+          </ul>
+          <{if $detail.stock==0}>
+          <p>抱歉，该产品已售完</p>
+          <{else}>
+          <p> <a class="buyer" href="<{$config.weburl}>?m=<{$smarty.get.m}>&s=order&id=<{$detail.id}>">立即抢购</a> </p>
+          <{/if}>
+          <p> <strong class="buy_time"><{$detail.virtual_quantity+$detail.sell_amount}></strong>人已购买 </p>
+        </div>
+        <div class="tde_buy_r"> <img width="500" height="310" src="<{$detail.pic}>"> </div>
+        <div class="clear"></div>
+        <div class="fenx">
+          <div class="bshare-custom">
+          <a title="分享到" href="http://www.bShare.cn/" id="bshare-shareto" class="bshare-more">分享到</a>
+          <a title="分享到QQ空间" class="bshare-qzone">QQ空间</a>
+          <a title="分享到新浪微博" class="bshare-sinaminiblog">新浪微博</a>
+          <a title="分享到人人网" class="bshare-renren">人人网</a>
+          <a title="分享到腾讯微博" class="bshare-qqmb">腾讯微博</a>
+          <a title="分享到豆瓣" class="bshare-douban">豆瓣</a>
+          <a title="更多平台" class="bshare-more bshare-more-icon more-style-addthis"></a>
+          <span class="BSHARE_COUNT bshare-share-count">0</span></div>
+          <script type="text/javascript" charset="utf-8" src="http://static.bshare.cn/b/buttonLite.js#style=-1&amp;uuid=&amp;pophcol=2&amp;lang=zh"></script>
+          <script type="text/javascript" charset="utf-8" src="http://static.bshare.cn/b/bshareC0.js"></script>
+        </div>
+      </div>
+    </div>
+    <div class="tgtt m1" >
+      <h2 class="tde_tt">商品信息</h2>
+    </div>
+    <div class="content4">
+      <div class="tgbody"><{$detail.content}></div>
+      
+       </div>
+  </div>
+  <div class="rightbar">
+    <div class="right1 mgt10">
+      <div class="tgtt" >
+        <div class="tde_tt">推荐商品</div>
+      </div>
+      <div class="seccon">
+        <ul>
+          <{foreach item=list key=num from=$tj}>
+          <li class="tg_rec" style="margin:2px;"> <a style="color:#333333; margin-top:10px;" href="<{$config.weburl}>/?m=tg&s=detail&id=<{$list.id}>"> <img width="190" height="125" src="<{$list.pic}>">
+            <p><{$list.name|truncate:27:""}></p>
+            </a> <span class="left"> <strong ><{$config.money}><{$list.price}></strong>
+            <p> 已售出<strong><{$list.sell_amount+$list.virtual_quantity}></strong>件</p>
+            </span> <span class="right"> <a class="buyers" href="<{$config.weburl}>/?m=tg&s=detail&id=<{$list.id}>">立即抢购</a> </span> </li>
+          <{/foreach}>
+        </ul>
+        <div class="clear"></div>
+      </div>
+    </div>
+  </div>
+</div>

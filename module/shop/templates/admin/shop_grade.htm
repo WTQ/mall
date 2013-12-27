@@ -1,0 +1,180 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<title>店铺等级</title>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<link href="admin.css" rel="stylesheet" type="text/css" />
+<script type="text/javascript" src="../script/jquery-1.4.4.min.js"></script>
+<script language="javascript" src="../script/Calendar.js"></script>
+<script type="text/javascript" src="../script/jquery.validation.min.js"></script>
+<script>
+$(function(){
+	$('#form').validate({
+		errorPlacement: function(error, element){
+			element.next('.form-error').append(error);
+		},      
+		rules : {
+			name:{
+				required:true
+			},
+			desc:{
+				required:true
+			},
+		},
+		messages : {
+			name:{
+				required:'请填写名称',
+			},
+			desc:{
+				required:'请填写描述',
+			},
+		}
+	});
+});
+</script>
+</head>
+<body>
+	<div class="container">
+        <div class="flow"> 
+            <div class="itemtitle">
+                <h3>店铺等级</h3>
+                <ul>
+                    <li <{if $smarty.get.operation==''}>class="current"<{/if}>><a href="?m=shop&s=shop_grade.php"><span>管理</span></a></li>
+                    <li <{if $smarty.get.operation=='add'}>class="current"<{/if}>><a href="?m=shop&s=shop_grade.php&operation=add"><span>添加</span></a></li>
+                    <{if $smarty.get.operation=='edit'}>
+                    <li class="current"><a href="#"><span>修改</span></a></li>
+                    <{/if}>
+                </ul>
+            </div>
+        </div>
+        <div class="h35"></div>  
+        <{if $smarty.get.operation=='add' or $smarty.get.operation=='edit' }>
+            <form name="form" id="form" method="post">
+            <table class="table">
+             	<thead>
+                    <tr>
+                        <th class="partition" colspan="99">店铺等级</th>
+                    </tr><input name="id" type="hidden" id="id" value="<{$de.id}>">
+                </thead>
+                <tbody>
+                <tr>
+                    <td width="100">名称</td>
+                    <td>
+                    <input name="name" id="name" type="text" class="w350" value="<{$de.name}>"><div id="form-error" class="form-error"></div>
+                    </td>
+                </tr>
+                <tr>
+                    <td width="100">收费标准</td>
+                    <td>
+                    <input name="fee" id="fee" type="text" value="<{if $de.fee}><{$de.fee}><{else}>0<{/if}>" onbeforepaste="clipboardData.setData('text',clipboardData.getData('text').replace(/[^\d.]/g,''))" onkeyup="value=value.replace(/[^\d.]/g,'')">
+                    </td>
+                </tr>
+                <tr>
+                    <td width="100">描述</td>
+                    <td>
+                    <textarea class="w350" name="desc" id="desc"><{$de.desc}></textarea>
+                    <div id="form-error" class="form-error"></div>
+                    </td>
+                </tr>
+                <tr>
+                    <td>状态</td>
+                    <td>
+                    <input type="radio" name="status" value="1" id="open" <{if $de.status==1}>checked="checked"<{/if}>/><label for="open">开启</label>
+                    <input type="radio" name="status" value="0" id="close" <{if $de.status!=1}>checked="checked"<{/if}>/><label for="close">关闭</label>
+                    </td>
+                </tr>
+                
+                <tr>
+                    <td>&nbsp;</td>
+                    <td>
+                    <input class="submit" type="submit" value="提交">
+                    <input name="act" type="hidden" id="action" value="<{if !$smarty.get.editid}>save<{else}>edit<{/if}>">
+                    </td>
+                </tr>
+                </tbody>
+            </table>
+            </form>
+        <{else}>
+		<script type="text/javascript">
+        $(function(){
+            /* 全选 */
+             $('.checkall').click(function(){
+                var _self = this;
+                $('.checkitem').each(function(){
+                    if (!this.disabled)
+                    {
+                        $(this).attr('checked', _self.checked);
+                    }
+                });
+                $('.checkall').attr('checked', this.checked);
+            });	 
+        });
+        </script>
+        <table class="table">
+            <tr>
+                <th class="partition" colspan="99">操作提示</th>
+            </tr>
+            <tr>
+                <td>
+                    <ul class="tips">
+                        <li>店铺等级默认包括4种店铺等级。默认店铺等级不可以删除。</li>
+                        <li>如果店铺等级不够，可以自定以填加。自定义店铺等级可以删除。 </li>
+                    </ul>
+                </td>
+            </tr>
+        </table>
+        <form action="" method="post">
+        <table class="table">
+        	<thead>
+                <tr>
+                    <th class="partition" colspan="99">店铺等级</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr class="header">
+                    <th width="30"></th>
+                    <th width="100">名称</th>
+                    <th>描述</th>
+                    <th width="100">收费标准</th>
+                    <th width="80">状态</th>
+                    <th width="100">创建时间</th>
+                    <th width="50"></th>
+                </tr>
+                <{foreach item=list from=$de.list}>
+                <tr>
+                    <td><input <{if $list.id<5}>disabled="disabled"<{/if}> type="checkbox" value="<{$list.id}>" class="checkitem" name="chk[]"></td>
+                    <td><{$list.name}></td>
+                    <td><{$list.desc}></td>
+                    <td><{$list.fee|number_format:2}></td>
+                    <td><{if $list.status}>开启<{else}>关闭<{/if}></td>
+                    <td><{$list.create_time|date_format}></td>
+                    <td>
+                    <a href="?m=shop&s=shop_grade.php&operation=edit&editid=<{$list.id}>"><{$editimg}></a> 
+                    <{if $list.id>4}><a onclick="return confirm('确定删除吗');" href="?m=shop&s=shop_grade.php&delid=<{$list.id}>"><{$delimg}></a><{/if}>
+                    </td>
+                </tr>
+                <{foreachelse}>
+                <tr>
+                    <td class="norecord" colspan="99"><i></i><span>暂无符合条件的数据记录</span></td>
+                </tr>
+                <{/foreach}>
+            </tbody>
+            <tfoot>
+                <tr>
+                	<td colspan="2">
+                        <div class="del">
+                        <input type="checkbox" class="checkall" id="del">
+                        <label for="del">删除</label>
+                        </div>
+                        <input type="hidden" name="act" value="op" />
+                        <input type="submit" value="提交" />
+                    </td>
+                    <td colspan="99"><div class="page"><{$de.page}></div></td>
+                </tr>
+            </tfoot>
+        </table>
+        </form>
+        <{/if}>
+    </div>
+</body>
+</html>

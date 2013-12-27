@@ -1,0 +1,13 @@
+<{foreach item=cList key=num from=$cat}>
+	<div style=" float:left; width:190px; text-align:left; padding:10px 10px 10px 30px; ">
+		<a style="background: #F5F5F5;color:#000000;"href="<{$config.weburl}>/?m=product&s=list&id=<{$cList.catid}>" title="<{$cList.cat}>"><{$cList.cat}></a>
+        <div style=" border-bottom:1px dashed #5A5A5A;"></div>
+			<p class="nav_men_list">
+		 		<{foreach item=sublist from=$cList.scat key=nums}>
+		 			<{if $nums<6}>
+						<a style="background: #F5F5F5; color:#5A5A5A; float:left; padding:0 2px; font-size:12px; width:56px; font-weight:100;" href="<{$config.weburl}>/?m=product&s=list&id=<{$sublist.catid}>" title="<{$sublist.cat}>"><{$sublist.cat}></a>
+					<{/if}>
+		 		<{/foreach}>
+			</p>
+		</div>
+<{/foreach}>

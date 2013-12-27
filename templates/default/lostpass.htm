@@ -1,0 +1,67 @@
+<{include file="header.htm"}>
+<div class="menu_bottom L1">				
+    <div class="headtop_L">
+        <{$lang.you_are_here}><a href='<{$config.weburl}>/'><{$lang.indexpage}></a> &raquo; <{$lang.callpass}></a>
+    </div>	
+</div>
+<script type="text/javascript" src="script/Validator.js"></script>
+<!--主体开始 -->
+	<div id="mainbody1" class="topm">
+			<div class="about_ltit"><div class="title_left2 L2"><{$lang.callpass}></div></div>
+			<div class="content4 overflow">
+			<div style="line-height:25px;height:280px;width:500px;margin-right:5px; padding:10px; text-align:center;  margin-left: auto;
+    margin-right: auto;">
+			<form method="post" action="" onSubmit="return Validator.Validate(this,3)">
+                <table width="100%" border="0" cellspacing="0" cellpadding="0" align="center"  >
+                  <tr>
+                    <td width="60" height="50" align="right"><{$lang.entercomname}></td>
+                    <td width="300"  align="left"><input name="user" class="i-text" type="text" id="user" dataType="Require" msg="<{$lang.pls_user}>" size="25" value="<{$smarty.post.user}>" style="width:300px;"/></td>
+                  </tr>
+                  <tr>
+                    <td height="50" align="right"><{$lang.email}></td>
+                    <td align="left"><input name="email" class="i-text" size="25" type="text" value="<{$smarty.post.email}>" dataType="Email" msg="<{$lang.pls_email}>"style="width:300px;" /></td>
+                  </tr>
+                  <tr>
+                    <td></td>
+                    <td align="left" >
+                    	<input class="button" type="submit" name="Submit" value="<{$lang.isure}>" />
+                        <input name="action" type="hidden" id="action" value="com" />
+                      </td>
+                  </tr>
+                </table>
+			</form>		
+			<{if $smarty.post.action!=''}>
+			<form action="" method="post">
+			<table width="100%" border="0" cellpadding="0" cellspacing="0"  style="margin-top:20px;">
+			  
+              	
+                    <{if $company.userid!=""}>
+                    <tr>
+                    <td width="60" height="50" align="right"></td>
+					<td width="300"  align="left">
+                            <input name="userid" type="radio" value="<{$company.userid}>|<{$company.email}>" />
+                            <a href="shop.php?uid=<{$company.userid}>" target="_blank"><{$company.user}></a>
+                            <br />
+                     </td>
+			  </tr> 
+              <tr>  
+              <td width="60" height="50" align="right"></td>
+					<td width="300"  align="left">     
+                            <input  name="action" type="hidden" id="action" value="submit" />
+                            <input class="button" name="<{$lang.isure}>" type="submit" value="<{$lang.isure}>" />
+                      </td>
+			  </tr>
+                    <{else}>
+                            <{$lang.nosearch}><a href="<{$config.regname}>" target="_blank"><{$lang.reguser}></a>
+                            <{$lang.contactme}><a href="aboutus.php?type=3" target="_blank"><{$lang.conme}></a>．
+                    <{/if}>
+					
+				
+			</table>
+			</form>
+			<{/if}>
+			</div>
+			<div class="clear"></div>
+			</div>
+</div>
+<{include file="footer.htm"}>

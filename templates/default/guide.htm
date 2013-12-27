@@ -1,0 +1,61 @@
+r<{include file="header.htm"}>
+<div class="navboleft"></div>
+<div class="navbocenter">
+	<div class="searchdiv">
+	<form method="get" name="sear" id="sear" action="../helpbook.php">
+	<input type="text" class="searchnav" name="key" id="key"  value="<{$smarty.get.key}>"/>
+	<input name="submit" type="submit" class="buttonnav" id="submit" value="搜 索" />
+	</form>
+	</div>
+	<div class="searchhot"><script src='<{$config.weburl}>/api/ad.php?id=33'></script></div>
+</div>
+<div class="navboright"></div>
+</div>
+
+<div id="zxbody">
+<div class="guide">您的位置：<a href='../'>首页</a> &raquo; <a href="../guide">贸易手册</a> &raquo; <{$catName}> </div>
+    <div id="zxleftbox">
+
+		<div class="subboxtop">
+			<ul class="left"></ul>
+			<ul class="center2" style="width:711px">
+				<span class="bigtitle"><{$catName}></span></ul>
+			<ul class="right"></ul>
+		</div>
+		
+        <div class="bigboxbody2">
+      	<{foreach item=list from=$news.list}>
+		<li  style="height:22px; border-bottom:1px #eee dashed; padding-top:10px">
+		<a href="../news/<{$list.newsid}>">&raquo; <{$list.title}></a>
+		</li>
+		<{/foreach}>
+		<div style="text-align:right; font-size:14px; padding:5px;"><{$news.page}></div>
+   		</div>
+        
+        
+    </div>
+    
+ 
+    
+
+    
+    
+    <div id="zxright">
+        
+        	<ul class="top">贸易手册</ul>
+            <ul>
+            	<{foreach item=list from=$menu}>
+		<li <{if $smarty.get.id==$list.catid}>style=" font-weight:bold"<{/if}>><a href="guide.php?id=<{$list.catid}>">&raquo; <{$list.cat}></a></li>
+		<{/foreach}>
+            </ul>
+       		
+    </div>
+</div>
+
+
+
+
+
+
+
+<{include file="footer.htm"}>

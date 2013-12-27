@@ -1,0 +1,141 @@
+<script language="javascript">
+$(function(){
+    /* 全选 */
+	 $('.checkall').click(function(){
+        var _self = this;
+        $('.checkitem').each(function(){
+            if (!this.disabled)
+            {
+                $(this).attr('checked', _self.checked);
+            }
+        });
+        $('.checkall').attr('checked', this.checked);
+    });
+	 
+	$('a[nc_type="batchbutton"]').click(function(){
+		/* 是否有选择 */
+		if($('.checkitem:checked').length == 0){    //没有选择
+			return false;
+		}
+		var _uri = $(this).attr('uri');
+		var _name = $(this).attr('name');
+		
+		var handleResult = function(uri,name) {
+			/* 获取选中的项 */
+			var items = '';
+				$('.checkitem:checked').each(function(){
+					items += this.value + ',';
+			});
+			items = items.substr(0, (items.length - 1));
+			/* 将选中的项通过GET方式提交给指定的URI */
+			//window.location.href=uri + '&' + name + '=' + items;
+			$.get(uri, name + '=' + items,showResponse);
+			function showResponse(originalRequest)
+			{
+				document.location.reload();
+			}
+			return false;
+		}
+		handleResult(_uri,_name);
+	});
+});
+</script>
+<div class="path">
+    <div>
+    	<{if $cg_u_type==1}>
+    		<a href="main.php?cg_u_type=1">我的商城</a> <span>&gt;</span>
+        <{else}>
+    		<a href="main.php?cg_u_type=2">卖家中心</a> <span>&gt;</span>
+        <{/if}> 
+        <{if $smarty.get.s=='admin_message_list_outbox'}><{$lang.outbox}>
+        <{elseif $smarty.get.s=='admin_message_list_savebox'}><{$lang.savebox}>
+        <{elseif $smarty.get.s=='admin_message_list_delbox'}><{$lang.delbox}>
+        <{else}><{$lang.inbox}>
+        <{/if}>
+    </div>
+</div>
+<div class="main">
+	<div class="wrap">
+        <div class="hd">
+            <ul class="tabs">
+				<li class="<{if $smarty.get.s=='admin_message_list_outbox'}>active<{else}>normal<{/if}>"><a href="main.php?m=message&s=admin_message_list_outbox"><{$lang.outbox}></a></li>
+                <li class="<{if $smarty.get.s=='admin_message_list_inbox'}>active<{else}>normal<{/if}>"><a href="main.php?m=message&s=admin_message_list_inbox"><{$lang.inbox}></a></li>
+                <li class="<{if $smarty.get.s=='admin_message_list_savebox'}>active<{else}>normal<{/if}>"><a href="main.php?m=message&s=admin_message_list_savebox"><{$lang.savebox}></a></li>
+                <li class="<{if $smarty.get.s=='admin_message_list_delbox'}>active<{else}>normal<{/if}>"><a href="main.php?m=message&s=admin_message_list_delbox"><{$lang.delbox}></a></li>
+            </ul>
+        </div>
+        <table class="table-list-style">
+            <thead>
+            <tr>
+                <th width="60"><input type="checkbox" class="checkall" id="del"></th>
+                <th width="10"></th>
+                <th class="tl" width="200">
+                <{if $smarty.get.s=='admin_message_list_delbox'}>
+                	<{$lang.from_to}>
+                <{else}>
+                    <{if $smarty.get.s=='admin_message_list_outbox'}>
+                    	<{$lang.receiv}>
+                    <{else}>
+                    	<{$lang.from}>
+                    <{/if}>
+                <{/if}>
+                </th>
+                <th class="tl">主题</th>
+                <th width="120">时间</th>
+            </tr>
+            </thead>
+            <tbody>
+            <{foreach item=list from=$re.list}>
+            <tr>
+            	<td><input type="checkbox" value="<{$list.id}>" class="checkitem" name="chk[]"></td>
+                <td></td>
+                <td class="tl">
+                <{if !$list.iflook}>
+                	<img src="image/default/unred.gif" width="16" height="14" />
+                <{elseif $list.iflook==3}>
+                	<img src="image/default/replied.gif" width="16" height="14" />
+                <{elseif $list.iflook==1||$list.iflook==2}>
+                	<img src="image/default/read.gif" width="16" height="14" />
+                <{/if}>
+                <{if $list.fromuserid or $list.msgtype=='3'}>
+                    <{if $list.msgtype=='3'}>
+                    	<{$lang.system_msg}>
+                    <{else}>
+                    	<{$list.fromname}>
+                    <{/if}>
+                <{else}>
+                    <{$lang.tourists}>
+                <{/if}>
+                </td>
+                <td class="tl"><a href="<{$config.weburl}>/main.php?m=message&s=admin_message_det&id=<{$list.id}>"><{$list.sub}></a></td>
+                <td><{$list.date}></td>
+            </tr>
+            <{foreachelse}>
+            <tr>
+            	<td colspan="20" class="norecord">
+                	<i></i><span>暂无符合条件的数据记录</span>	
+                </td>
+            </tr>
+            <{/foreach}>
+            </tbody>
+            <tfoot>
+            <tr>
+                <td class="tc"><input type="checkbox" class="checkall" id="del"></td>
+                <td colspan="20">
+                <label for="del" class="btn2">全选</label>
+                <{if $smarty.get.s=='admin_message_list_delbox'}>
+                <a nc_type="batchbutton" confirm="您确定要删除吗?" name="did" uri="main.php?m=message&s=admin_message_list_delbox" class="btn2" href="javascript:void(0);">删除</a>
+                <a nc_type="batchbutton" name="rid" uri="main.php?m=message&s=admin_message_list_delbox" class="btn2" href="javascript:void(0);"><{$lang.recover}></a>
+               	<{else}>
+                <a nc_type="batchbutton" name="did" uri="main.php?m=message&s=admin_message_list_inbox" class="btn2" href="javascript:void(0);">删除</a>
+                <{if $smarty.get.s=='admin_message_list_inbox'}>
+                <a nc_type="batchbutton" name="sid" uri="main.php?m=message&s=admin_message_list_inbox" class="btn2" href="javascript:void(0);">储存</a>
+                <{/if}>
+                 <{/if}>
+                <div class="pagination"><{$re.page}></div>
+                </td>
+            </tr>
+            </tfoot>
+        </table>
+     </div>   
+</div>

@@ -1,0 +1,67 @@
+<{include file="header.htm"}>
+<style>
+.con td{text-align:left;}
+</style>
+<div id="mainbody1" class="topm">
+<table width="100%" border="0" align="center" cellspacing="0" style="margin-top:5px">
+  <tr>
+    <td height="381" align="left" valign="top" bgcolor="#FFFFFF">
+      <table width='100%' border='0' cellspacing='0' cellpadding='0' align="center" class="con">
+			<tr>
+              <td height="28" colspan="2" align="left" bgcolor="#E8F3FD">&nbsp;&raquo;<b>Personal business cards</b></td>
+            </tr>
+			<tr align="center">
+              <td width="247" height="1" bgcolor="#DDDDDD"></td>
+              <td width="774" bgcolor="#DDDDDD"></td>
+			</tr>
+			 <tr>
+			 <td valign="top" style="padding-top:50px; padding-left:30px;" width="247">
+				<a href="<{$config.weburl}>">
+				<img src="<{if $config.logo}><{$config.logo}><{else}><{$config.weburl}>/image/default/logo.gif<{/if}>" /></a><br />
+				<b><{$config.company}>Notice:</b><br />
+				The Member card information by Member Registered fill.<br />
+				<{$config.company}> not provide validity authentication.
+			 
+			 </td>
+              <td height="400" align="center">
+			  <table style="background-image:url(image/default/mpbj.jpg);" width="513" height="311" border="0" cellspacing="0" cellpadding="0">
+					  <tr>
+					    <td width="35%" rowspan="9" valign="top" style="padding-top:30px;" align="center">
+						<{if $com.plogo==0||$com.plogo==''}>
+							<img width="120" src="image/default/photo.png" /><br />
+						<{else}>
+							<img width="120" src="<{$com.plogo}>" /><br />
+						<{/if}>
+						<a href="<{$config.weburl}>/main.php?m=message&s=admin_friends&friendid=<{$com.userid}>">+Add to my friend</a>
+						</td>
+					    <td></td>
+			   		</tr>
+					  <tr><td height="15">&nbsp;</td></tr>
+					  <tr><td><span style="font-size:24px;"><{$com.name}></span>&nbsp;<{$com.position}></td></tr>
+					  <tr>
+					    <td width="73%">Tel:<{$com.mobile}></td>
+					  </tr>
+					  <tr>
+					    <td>Email:<{$com.email}></td>
+					  </tr>
+					  <tr>
+					    <td>QQ:<{$com.qq}></td>
+					  </tr>
+					  <tr>
+					    <td>Skype:<{$com.skype}></td>
+					  </tr>
+					  <tr>
+					    <td>Address：<{$com.province}>.<{$com.city}></td>
+					  </tr>
+					  <tr><td>&nbsp;</td></tr>
+					  
+				</table>
+
+			  </td>
+            </tr>
+      </table>
+	</td>
+  </tr>
+</table>
+</div>
+<{include file="footer.htm"}>
