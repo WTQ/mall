@@ -3,4 +3,4 @@
 .buildpath
 .project
 /cache/*
-/templates_c/*.php
+/templates_c/*
