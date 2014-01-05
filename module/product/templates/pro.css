@@ -423,7 +423,8 @@ a:hover {
 	margin-top: 10px;
 	margin-bottom: 10px;
 	border: 1px solid #DDDDDD;
-	height: 544px;
+	border-bottom: none;
+	border-left: none;
 }
 .main_topa h2 a {
 	background-color: #E18455;

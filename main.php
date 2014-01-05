@@ -16,8 +16,8 @@ if(!empty($_POST)||!empty($_GET['deid'])||!empty($_GET['rec']))
 //---------------------登录检查,个人或企业会员
 $admin->is_login($action);
 $is_company=$admin->check_myshop();
-if(empty($_SESSION['USER_TYPE']))
-	$_SESSION['USER_TYPE']=$is_company;
+// if(empty($_SESSION['USER_TYPE']))
+$_SESSION['USER_TYPE']=$is_company;
 if($_GET['cg_u_type'])
 	$_SESSION['USER_TYPE']=$_GET['cg_u_type']*1;
 
@@ -25,7 +25,7 @@ $tpl->assign("cg_u_type",$_SESSION['USER_TYPE']);
 
 //-------店铺信息不存在，但是却进入的是卖家的后台，需要申请开店
 if($is_company==1&&$_SESSION['USER_TYPE']==2&&$_GET['s']!='admin_step'&&$_GET['action']!='msg')
-	header("Location:main.php?m=shop&s=admin_step");
+	header("Location:main.php");
 
 //--------------------更换语言包
 if(!empty($_GET['lang']))
@@ -50,7 +50,7 @@ else
 
 //店铺是否开启
 include_once("module/shop/includes/plugin_shop_class.php");
-$shop=new shop();	
+$shop=new shop();
 $shop_statu=$shop->GetShopStatus($buid);
 
 switch ($action){

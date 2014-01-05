@@ -3,7 +3,7 @@
 -- http://www.phpmyadmin.net
 --
 -- 主机: localhost
--- 生成日期: 2013 年 12 月 27 日 15:31
+-- 生成日期: 2013 年 12 月 31 日 20:28
 -- 服务器版本: 5.1.53
 -- PHP 版本: 5.3.4
 
@@ -97,7 +97,7 @@ CREATE TABLE IF NOT EXISTS `mallbuilder_admin` (
 --
 
 INSERT INTO `mallbuilder_admin` (`id`, `user`, `name`, `password`, `group_id`, `desc`, `logonums`, `lastlogotime`, `logoip`, `province`, `city`, `area`, `type`, `lang`) VALUES
-(1, 'admin', NULL, '21232f297a57a5a743894a0e4a801fc3', 0, NULL, 1867, 1387007710, '114.66.201.17', NULL, NULL, NULL, 1, 'cn');
+(1, 'admin', NULL, '21232f297a57a5a743894a0e4a801fc3', 0, NULL, 1869, 1388370546, '10.0.6.67', NULL, NULL, NULL, 1, 'cn');
 
 -- --------------------------------------------------------
 
@@ -131,7 +131,7 @@ CREATE TABLE IF NOT EXISTS `mallbuilder_admin_operation_log` (
   `url` varchar(200) DEFAULT NULL,
   `time` int(11) DEFAULT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=MyISAM  DEFAULT CHARSET=utf8 AUTO_INCREMENT=1731 ;
+) ENGINE=MyISAM  DEFAULT CHARSET=utf8 AUTO_INCREMENT=1794 ;
 
 --
 -- 转存表中的数据 `mallbuilder_admin_operation_log`
@@ -1869,7 +1869,71 @@ INSERT INTO `mallbuilder_admin_operation_log` (`id`, `user`, `scriptname`, `url`
 (1727, 'admin', 'main.php', '/admin/main.php', 1387007708),
 (1728, 'admin', 'advs_con_list.php', '/admin/advs_con_list.php?endtime=1', 1387007728),
 (1729, 'admin', 'system_config.php', '/admin/system_config.php', 1387007736),
-(1730, 'admin', 'home_config.php', '/admin/home_config.php', 1387007763);
+(1730, 'admin', 'home_config.php', '/admin/home_config.php', 1387007763),
+(1731, 'admin', 'main.php', '/admin/main.php', 1388200538),
+(1732, 'admin', 'system_config.php', '/admin/system_config.php', 1388200539),
+(1733, 'admin', 'module_config.php', '/admin/module.php?m=payment&amp;s=module_config.php', 1388200541),
+(1734, 'admin', 'system_config.php', '/admin/system_config.php', 1388200541),
+(1735, 'admin', 'web_con_type.php', '/admin/web_con_type.php', 1388200594),
+(1736, 'admin', 'upload_config.php', '/admin/upload_config.php', 1388200595),
+(1737, 'admin', 'nav_menu.php', '/admin/nav_menu.php', 1388200596),
+(1738, 'admin', 'mail_config.php', '/admin/mail_config.php', 1388200596),
+(1739, 'admin', 'reg_config.php', '/admin/reg_config.php', 1388200597),
+(1740, 'admin', 'seo_config.php', '/admin/seo_config.php', 1388200598),
+(1741, 'admin', 'nav_menu.php', '/admin/nav_menu.php', 1388200598),
+(1742, 'admin', 'connect_config.php', '/admin/connect_config.php', 1388200599),
+(1743, 'admin', 'home_config.php', '/admin/home_config.php', 1388200600),
+(1744, 'admin', 'home_config.php', '/admin/home_config.php', 1388200603),
+(1745, 'admin', 'home_config.php', '/admin/home_config.php&amp;post=,1', 1388200633),
+(1746, 'admin', 'home_config.php', '/admin/home_config.php', 1388200634),
+(1747, 'admin', 'main.php', '/admin/main.php', 1388370292),
+(1748, 'admin', 'prolist.php', '/admin/module.php?m=product&amp;s=prolist.php', 1388370294),
+(1749, 'admin', 'cpmod.php', '/admin/module.php?id=6&amp;m=product&amp;s=prolist.php&amp;sta', 1388370300),
+(1750, 'admin', 'prolist.php', '/admin/module.php?m=product&amp;s=prolist.php', 1388370304),
+(1751, 'admin', 'product_cat.php', '/admin/module.php?m=product&amp;s=product_cat.php', 1388370307),
+(1752, 'admin', 'property.php', '/admin/module.php?m=product&amp;s=property.php', 1388370308);
+INSERT INTO `mallbuilder_admin_operation_log` (`id`, `user`, `scriptname`, `url`, `time`) VALUES
+(1753, 'admin', 'property.php', '/admin/module.php?m=product&amp;s=property.php', 1388370308),
+(1754, 'admin', 'pro_move.php', '/admin/module.php?m=product&amp;s=pro_move.php', 1388370309),
+(1755, 'admin', 'module_config.php', '/admin/module.php?m=product&amp;s=module_config.php', 1388370310),
+(1756, 'admin', 'brand.php', '/admin/module.php?m=brand&amp;s=brand.php', 1388370322),
+(1757, 'admin', 'module_config.php', '/admin/module.php?m=product&amp;s=module_config.php', 1388370323),
+(1758, 'admin', 'pro_move.php', '/admin/module.php?m=product&amp;s=pro_move.php', 1388370324),
+(1759, 'admin', 'property.php', '/admin/module.php?m=product&amp;s=property.php', 1388370325),
+(1760, 'admin', 'property.php', '/admin/module.php?m=product&amp;s=property.php', 1388370326),
+(1761, 'admin', 'product_cat.php', '/admin/module.php?m=product&amp;s=product_cat.php', 1388370326),
+(1762, 'admin', 'product_cat.php', '/admin/module.php?m=product&amp;s=product_cat.php&amp;oper', 1388370330),
+(1763, 'admin', 'prolist.php', '/admin/module.php?m=product&amp;s=prolist.php', 1388370344),
+(1764, 'admin', 'cpmod.php', '/admin/module.php?id=6&amp;m=product&amp;s=prolist.php&amp;sta', 1388370367),
+(1765, 'admin', 'cpmod.php', '/admin/module.php?id=6&amp;m=produ', 1388370384),
+(1766, 'admin', 'prolist.php', '/admin/module.php?m=product&amp;s=prolist.php&amp;statu=1', 1388370384),
+(1767, 'admin', 'member.php', '/admin/module.php?m=member&amp;s=member.php', 1388370392),
+(1768, 'admin', 'shop.php', '/admin/module.php?m=shop&amp;s=shop.php', 1388370393),
+(1769, 'admin', 'user_order.php', '/admin/module.php?m=product&amp;s=user_order.php', 1388370395),
+(1770, 'admin', 'prolist.php', '/admin/module.php?m=product&amp;s=prolist.php', 1388370440),
+(1771, 'admin', 'prolist.php', '/admin/module.php?m=product&amp;s=prolist.php&amp;statu=-2', 1388370442),
+(1772, 'admin', 'prolist.php', '/admin/module.php?m=product&amp;s=prolist.php&amp;statu=0', 1388370442),
+(1773, 'admin', 'prolist.php', '/admin/module.php?m=product&amp;s=prolist.php&amp;statu=-1', 1388370443),
+(1774, 'admin', 'prolist.php', '/admin/module.php?m=product&amp;s=prolist.php&amp;statu=1', 1388370445),
+(1775, 'admin', 'property.php', '/admin/module.php?m=product&amp;s=property.php', 1388370456),
+(1776, 'admin', 'pro_move.php', '/admin/module.php?m=product&amp;s=pro_move.php', 1388370456),
+(1777, 'admin', 'module_config.php', '/admin/module.php?m=product&amp;s=module_config.php', 1388370457),
+(1778, 'admin', 'brand.php', '/admin/module.php?m=brand&amp;s=brand.php', 1388370458),
+(1779, 'admin', 'product_cat.php', '/admin/module.php?m=product&amp;s=product_cat.php', 1388370458),
+(1780, 'admin', 'pro_move.php', '/admin/module.php?m=product&amp;s=pro_move.php', 1388370459),
+(1781, 'admin', 'property.php', '/admin/module.php?m=product&amp;s=property.php', 1388370459),
+(1782, 'admin', 'product_cat.php', '/admin/module.php?m=product&amp;s=product_cat.php', 1388370460),
+(1783, 'admin', 'prolist.php', '/admin/module.php?m=product&amp;s=prolist.php', 1388370460),
+(1784, 'admin', 'system_config.php', '/admin/system_config.php', 1388370545),
+(1785, 'admin', 'system_config.php', '/admin/system_config.php', 1388370746),
+(1786, 'admin', 'module_config.php', '/admin/module.php?m=payment&amp;s=module_config.php', 1388370846),
+(1787, 'admin', 'prolist.php', '/admin/module.php?m=product&amp;s=prolist.php', 1388371592),
+(1788, 'admin', 'prolist.php', '/admin/module.php?m=product&amp;s=prolist.php&amp;', 1388371598),
+(1789, 'admin', 'prolist.php', '/admin/module.php?m=product&amp;s=prolist.php&amp;', 1388371603),
+(1790, 'admin', 'prolist.php', '/admin/module.php?m=product&amp;s=prolist.php&amp;', 1388371609),
+(1791, 'admin', 'prolist.php', '/admin/module.php?m=product&amp;s=prolist.php&amp;', 1388371974),
+(1792, 'admin', 'prolist.php', '/admin/module.php?m=product&amp;s=prolist.php&amp;', 1388371978),
+(1793, 'admin', 'prolist.php', '/admin/module.php?m=product&amp;s=prolist.php&amp;', 1388371981);
 
 -- --------------------------------------------------------
 
@@ -1960,7 +2024,7 @@ INSERT INTO `mallbuilder_advs_con` (`ID`, `userid`, `group_id`, `name`, `type`, 
 (77, NULL, 9, '', '3', 'http://', '', '771386596196.jpg', 1, NULL, '', '', NULL, '', '', 0, NULL, 0, 0, 181, 1351526400, 1417968000, 0),
 (5, NULL, 11, '', '2', '', '<script type="text/javascript"><!--\r\ngoogle_ad_client = "pub-4124985563260650";\r\n/* 产品列表右 */\r\ngoogle_ad_slot = "4445364967";\r\ngoogle_ad_width = 120;\r\ngoogle_ad_height = 240;\r\n//-->\r\n</script>\r\n<script type="text/javascript"\r\nsrc="http://pagead2.googlesyndication.com/pagead/show_ads.js">\r\n</script>', '', 1, NULL, '', '', NULL, '', '', 0, NULL, 0, 0, 312, NULL, NULL, 0),
 (6, NULL, 10, '', '2', '', '<script type="text/javascript"><!--\r\ngoogle_ad_client = "pub-4124985563260650";\r\n/* 产品列表上 */\r\ngoogle_ad_slot = "1404105526";\r\ngoogle_ad_width = 728;\r\ngoogle_ad_height = 90;\r\n//-->\r\n</script>\r\n<script type="text/javascript"\r\nsrc="http://pagead2.googlesyndication.com/pagead/show_ads.js">\r\n</script>', '', 1, NULL, '', '', NULL, '', '', 0, NULL, 0, 0, 499, 1386518400, 1417968000, 0),
-(76, NULL, 8, 'd', '3', 'http://mall.te168.cn/', '', '761386578472.jpg', 1, NULL, '', '', NULL, '', '', 0, NULL, 0, 0, 1884, 1350748800, 1416844800, 0),
+(76, NULL, 8, 'd', '3', 'http://mall.te168.cn/', '', '761386578472.jpg', 1, NULL, '', '', NULL, '', '', 0, NULL, 0, 0, 1929, 1350748800, 1416844800, 0),
 (8, NULL, 12, '', '2', '', '<script type="text/javascript"><!--\r\ngoogle_ad_client = "pub-4124985563260650";\r\n/* 产品详情左 */\r\ngoogle_ad_slot = "1946228338";\r\ngoogle_ad_width = 250;\r\ngoogle_ad_height = 250;\r\n//-->\r\n</script>\r\n<script type="text/javascript"\r\nsrc="http://pagead2.googlesyndication.com/pagead/show_ads.js">\r\n</script>', '', 1, NULL, '', '', NULL, '', '', 0, NULL, 0, 0, 305, 1386518400, 1418659200, 0),
 (17, NULL, 21, '', '2', '', '<script type="text/javascript"><!--\r\ngoogle_ad_client = "pub-4124985563260650";\r\n/* 公司列表右 */\r\ngoogle_ad_slot = "3563010812";\r\ngoogle_ad_width = 200;\r\ngoogle_ad_height = 200;\r\n//-->\r\n</script>\r\n<script type="text/javascript"\r\nsrc="http://pagead2.googlesyndication.com/pagead/show_ads.js">\r\n</script>', '', 1, NULL, '', '', NULL, '', '', 0, NULL, 0, 0, 196, NULL, NULL, 0),
 (22, NULL, 27, '', '2', '', '<script type="text/javascript"><!--\r\ngoogle_ad_client = "ca-pub-4124985563260650";\r\n/* 新闻封面中 */\r\ngoogle_ad_slot = "3335817674";\r\ngoogle_ad_width = 728;\r\ngoogle_ad_height = 90;\r\n//-->\r\n</script>\r\n<script type="text/javascript"\r\nsrc="http://pagead2.googlesyndication.com/pagead/show_ads.js">\r\n</script>', '', 1, NULL, '', '', NULL, '', '', 0, NULL, 0, 0, 351, NULL, NULL, 0),
@@ -1971,8 +2035,8 @@ INSERT INTO `mallbuilder_advs_con` (`ID`, `userid`, `group_id`, `name`, `type`, 
 (74, 48, 1, '所有页面头部', NULL, NULL, NULL, '', 0, 1345979787, NULL, NULL, NULL, NULL, NULL, NULL, 'day', 1, 0, 929, NULL, NULL, 0),
 (75, 1, 1, '所有页面头部', NULL, NULL, NULL, '', 0, 1349609590, NULL, NULL, NULL, NULL, NULL, NULL, 'day', 1, 0, 638, NULL, NULL, 0),
 (78, NULL, 1, 'ye', '3', 'http://', '', '1367471143.jpg', 1, NULL, '', '', '', '', '', 0, NULL, 0, 0, 9, 1367424000, 1370361600, 0),
-(79, NULL, 8, 'd', '3', 'http://mall.te168.cn/', '', '791386578212.jpg', 1, NULL, '', '', '', '', '', 0, NULL, 0, 0, 550, 1370275200, 1404835200, 0),
-(80, NULL, 8, 'h', '3', 'http://mall.te168.cn/', '', '801386578189.jpg', 1, NULL, '', '', '', '', '', 0, NULL, 0, 0, 549, 1370275200, 1404748800, 0);
+(79, NULL, 8, 'd', '3', 'http://mall.te168.cn/', '', '791386578212.jpg', 1, NULL, '', '', '', '', '', 0, NULL, 0, 0, 595, 1370275200, 1404835200, 0),
+(80, NULL, 8, 'h', '3', 'http://mall.te168.cn/', '', '801386578189.jpg', 1, NULL, '', '', '', '', '', 0, NULL, 0, 0, 594, 1370275200, 1404748800, 0);
 
 -- --------------------------------------------------------
 
@@ -2033,12 +2097,19 @@ CREATE TABLE IF NOT EXISTS `mallbuilder_auditing` (
   `uptime` int(11) NOT NULL,
   `statu` tinyint(4) NOT NULL DEFAULT '0',
   PRIMARY KEY (`itemid`)
-) ENGINE=MyISAM DEFAULT CHARSET=utf8 AUTO_INCREMENT=1 ;
+) ENGINE=MyISAM  DEFAULT CHARSET=utf8 AUTO_INCREMENT=7 ;
 
 --
 -- 转存表中的数据 `mallbuilder_auditing`
 --
 
+INSERT INTO `mallbuilder_auditing` (`itemid`, `itemtype`, `argument`, `uid`, `uptime`, `statu`) VALUES
+(6, 'p', '', 'admin', 1388371598, 0),
+(5, 'p', '', 'admin', 1388371603, 0),
+(4, 'p', '', 'admin', 1388371609, 0),
+(3, 'p', '', 'admin', 1388371974, 0),
+(2, 'p', '', 'admin', 1388371978, 0),
+(1, 'p', '', 'admin', 1388371980, 0);
 
 -- --------------------------------------------------------
 
@@ -47583,10 +47654,10 @@ INSERT INTO `mallbuilder_member` (`userid`, `pid`, `user`, `password`, `rand`, `
 (10, NULL, 'test', '098f6bcd4621d373cade4e832627b4f6', NULL, '百度', 1, '', '123456', '12345', '12345', '', '', '407295198@qq.com', NULL, 1, 37, 568, '北京市 东城区 东四街道', '0', '127.0.0.1', 0, 2, '2013-06-09 09:49:32', 1371539472, NULL, 0, 0),
 (24, NULL, 'wangte', 'd4b501ba3fdf2cb76cf319f3a8135241', NULL, '', 0, '', NULL, '', '', NULL, '', 'wangte168@sina.com', NULL, NULL, NULL, NULL, NULL, '0', '127.0.0.1', NULL, 2, '2013-11-29 10:06:20', 1386554784, NULL, 0, 0),
 (25, NULL, 'wangte168', 'd4b501ba3fdf2cb76cf319f3a8135241', '97550', '', 0, '', NULL, '', '', NULL, '', '284297035@qq.com', NULL, NULL, NULL, NULL, NULL, '0', '10.15.5.168', 0, 2, '2013-12-08 10:02:01', 1386468121, NULL, 0, 0),
-(26, NULL, 'test2', '96e79218965eb72c92a549dd5a330112', NULL, '王格', 1, '经理', NULL, '', '', NULL, '13488123042', 'ai_doyou@126.com', NULL, NULL, NULL, NULL, NULL, '0', '127.0.0.1', NULL, 2, '2013-12-09 10:10:36', 1386816057, NULL, 0, 0),
+(26, NULL, 'test2', '96e79218965eb72c92a549dd5a330112', NULL, '王格', 1, '经理', NULL, '', '', NULL, '13488123042', 'ai_doyou@126.com', NULL, NULL, NULL, NULL, NULL, '0', '127.0.0.1', NULL, 2, '2013-12-09 10:10:36', 1388200390, NULL, 0, 0),
 (27, NULL, 'test3', '96e79218965eb72c92a549dd5a330112', NULL, 'asdf', 1, 'aaa', NULL, '', '', NULL, '13488123042', 'aaa@dasd.com', NULL, NULL, NULL, NULL, NULL, '0', '127.0.0.1', NULL, 2, '2013-12-09 10:11:45', 1386555105, NULL, 0, 0),
 (28, NULL, 'test4', '96e79218965eb72c92a549dd5a330112', NULL, 'aweta', 1, 'asdf', NULL, '', '', NULL, '13488123042', 'asdf@sina.com', NULL, NULL, NULL, NULL, NULL, '0', '127.0.0.1', NULL, 2, '2013-12-09 10:12:29', 1386555149, NULL, 0, 0),
-(29, NULL, 'test5', '96e79218965eb72c92a549dd5a330112', NULL, 'asdfa', 1, 'asd', NULL, '', '', NULL, '13488123042', 'asdf@sss.com', NULL, NULL, NULL, NULL, NULL, '0', '127.0.0.1', NULL, 2, '2013-12-09 10:15:13', 1386578720, NULL, 0, 0),
+(29, NULL, 'test5', '96e79218965eb72c92a549dd5a330112', NULL, 'asdfa', 1, 'asd', NULL, '', '', NULL, '13488123042', 'asdf@sss.com', NULL, NULL, NULL, NULL, NULL, '0', '127.0.0.1', NULL, 2, '2013-12-09 10:15:13', 1388282907, NULL, 0, 0),
 (30, NULL, 'qjx12388', '6f641cbfe9eb8d1aa156f90f6fdc3de5', NULL, '', 0, '', NULL, '', '', NULL, '', 'qjx12388@gmail.com', NULL, NULL, NULL, NULL, NULL, '0', '111.206.102.225', NULL, 2, '2013-12-14 15:06:56', 1387008710, NULL, 0, 0);
 
 -- --------------------------------------------------------
@@ -47774,7 +47845,7 @@ CREATE TABLE IF NOT EXISTS `mallbuilder_page_view` (
   KEY `ip` (`ip`),
   KEY `username` (`username`),
   KEY `url` (`url`)
-) ENGINE=MyISAM  DEFAULT CHARSET=utf8 AUTO_INCREMENT=4075 ;
+) ENGINE=MyISAM  DEFAULT CHARSET=utf8 AUTO_INCREMENT=4284 ;
 
 --
 -- 转存表中的数据 `mallbuilder_page_view`
@@ -51861,7 +51932,216 @@ INSERT INTO `mallbuilder_page_view` (`id`, `url`, `ip`, `time`, `username`, `fil
 (4071, '%2Fshop.php%3Fuid%3D29', '10.0.6.67', '2013-12-27 15:22:23', '', '/shop.php'),
 (4072, '%2F%3Fm%3Dproduct%26s%3Dcart_n', '10.0.6.67', '2013-12-27 15:22:23', '', '/index.php'),
 (4073, '%2F', '10.0.6.67', '2013-12-27 15:22:24', '', '/index.php'),
-(4074, '%2F%3Fm%3Dproduct%26s%3Dcart_n', '10.0.6.67', '2013-12-27 15:22:24', '', '/index.php');
+(4074, '%2F%3Fm%3Dproduct%26s%3Dcart_n', '10.0.6.67', '2013-12-27 15:22:24', '', '/index.php'),
+(4075, '%2F', '10.0.6.67', '2013-12-28 11:10:59', '', '/index.php'),
+(4076, '%2F%3Fm%3Dproduct%26s%3Dcart_n', '10.0.6.67', '2013-12-28 11:10:59', '', '/index.php'),
+(4077, '%2Flogin.php', '10.0.6.67', '2013-12-28 11:11:18', '', '/login.php'),
+(4078, '%2F%3Fm%3Dproduct%26s%3Dcart_n', '10.0.6.67', '2013-12-28 11:11:18', '', '/index.php'),
+(4079, '%2Flogin.php', '10.0.6.67', '2013-12-28 11:12:13', '', '/login.php'),
+(4080, '%2Fimage%2Fdefault%2Fuser_admi', '10.0.6.67', '2013-12-28 11:12:14', 'test5', '/404.php'),
+(4081, '%2Findex.php', '10.0.6.67', '2013-12-28 11:12:52', '', '/index.php'),
+(4082, '%2F%3Fm%3Dproduct%26s%3Dcart_n', '10.0.6.67', '2013-12-28 11:12:52', '', '/index.php'),
+(4083, '%2Flogin.php', '10.0.6.67', '2013-12-28 11:12:53', '', '/login.php'),
+(4084, '%2F%3Fm%3Dproduct%26s%3Dcart_n', '10.0.6.67', '2013-12-28 11:12:53', '', '/index.php'),
+(4085, '%2Flogin.php', '10.0.6.67', '2013-12-28 11:12:58', '', '/login.php'),
+(4086, '%2Flogin.php%3Ferry%3D-3', '10.0.6.67', '2013-12-28 11:12:58', '', '/login.php'),
+(4087, '%2F%3Fm%3Dproduct%26s%3Dcart_n', '10.0.6.67', '2013-12-28 11:12:58', '', '/index.php'),
+(4088, '%2Flogin.php', '10.0.6.67', '2013-12-28 11:13:10', '', '/login.php'),
+(4089, '%2F', '10.0.6.67', '2013-12-28 11:15:22', 'test2', '/index.php'),
+(4090, '%2F%3Fm%3Dproduct%26s%3Dcart_n', '10.0.6.67', '2013-12-28 11:15:23', 'test2', '/index.php'),
+(4091, '%2F', '10.0.6.67', '2013-12-28 11:15:44', 'test2', '/index.php'),
+(4092, '%2F%3Fm%3Dproduct%26s%3Dcart_n', '10.0.6.67', '2013-12-28 11:15:44', 'test2', '/index.php'),
+(4093, '%2F%3Fm%3Dproduct%26s%3Dlist%2', '10.0.6.67', '2013-12-28 11:16:04', 'test2', '/index.php'),
+(4094, '%2F%3Fm%3Dproduct%26s%3Dcart_n', '10.0.6.67', '2013-12-28 11:16:04', 'test2', '/index.php'),
+(4095, '%2F', '10.0.6.67', '2013-12-28 11:16:05', 'test2', '/index.php'),
+(4096, '%2F%3Fm%3Dproduct%26s%3Dcart_n', '10.0.6.67', '2013-12-28 11:16:05', 'test2', '/index.php'),
+(4097, '%2F', '10.0.6.67', '2013-12-28 11:17:15', 'test2', '/index.php'),
+(4098, '%2F%3Fm%3Dproduct%26s%3Dcart_n', '10.0.6.67', '2013-12-28 11:17:15', 'test2', '/index.php'),
+(4099, '%2F%3Fm%3Dproduct%26s%3Dlist%2', '10.0.6.67', '2013-12-28 11:17:41', 'test2', '/index.php'),
+(4100, '%2F%3Fm%3Dproduct%26s%3Dcart_n', '10.0.6.67', '2013-12-28 11:17:42', 'test2', '/index.php'),
+(4101, '%2F', '10.0.6.67', '2013-12-28 11:17:42', 'test2', '/index.php'),
+(4102, '%2F%3Fm%3Dproduct%26s%3Dcart_n', '10.0.6.67', '2013-12-28 11:17:43', 'test2', '/index.php'),
+(4103, '%2F%3Fm%3Dproduct%26s%3Dlist%2', '10.0.6.67', '2013-12-28 11:17:43', 'test2', '/index.php'),
+(4104, '%2F%3Fm%3Dproduct%26s%3Dcart_n', '10.0.6.67', '2013-12-28 11:17:44', 'test2', '/index.php'),
+(4105, '%2F', '10.0.6.67', '2013-12-28 11:17:44', 'test2', '/index.php'),
+(4106, '%2F%3Fm%3Dproduct%26s%3Dcart_n', '10.0.6.67', '2013-12-28 11:17:45', 'test2', '/index.php'),
+(4107, '%2F%3Fm%3Dproduct%26s%3Dlist%2', '10.0.6.67', '2013-12-28 11:17:45', 'test2', '/index.php'),
+(4108, '%2F%3Fm%3Dproduct%26s%3Dcart_n', '10.0.6.67', '2013-12-28 11:17:46', 'test2', '/index.php'),
+(4109, '%2F', '10.0.6.67', '2013-12-28 11:17:47', 'test2', '/index.php'),
+(4110, '%2F%3Fm%3Dproduct%26s%3Dcart_n', '10.0.6.67', '2013-12-28 11:17:47', 'test2', '/index.php'),
+(4111, '%2F%3Fm%3Dproduct%26s%3Dlist%2', '10.0.6.67', '2013-12-28 11:17:48', 'test2', '/index.php'),
+(4112, '%2F%3Fm%3Dproduct%26s%3Dcart_n', '10.0.6.67', '2013-12-28 11:17:48', 'test2', '/index.php'),
+(4113, '%2F', '10.0.6.67', '2013-12-28 11:17:48', 'test2', '/index.php'),
+(4114, '%2F%3Fm%3Dproduct%26s%3Dcart_n', '10.0.6.67', '2013-12-28 11:17:49', 'test2', '/index.php'),
+(4115, '%2F%3Fm%3Dproduct%26s%3Dlist%2', '10.0.6.67', '2013-12-28 11:17:49', 'test2', '/index.php'),
+(4116, '%2F%3Fm%3Dproduct%26s%3Dcart_n', '10.0.6.67', '2013-12-28 11:17:49', 'test2', '/index.php'),
+(4117, '%2F', '10.0.6.67', '2013-12-28 11:17:50', 'test2', '/index.php'),
+(4118, '%2F%3Fm%3Dproduct%26s%3Dcart_n', '10.0.6.67', '2013-12-28 11:17:50', 'test2', '/index.php'),
+(4119, '%2F%3Fm%3Dproduct%26s%3Dlist%2', '10.0.6.67', '2013-12-28 11:17:52', 'test2', '/index.php'),
+(4120, '%2F%3Fm%3Dproduct%26s%3Dcart_n', '10.0.6.67', '2013-12-28 11:17:52', 'test2', '/index.php'),
+(4121, '%2F', '10.0.6.67', '2013-12-28 11:17:53', 'test2', '/index.php'),
+(4122, '%2F%3Fm%3Dproduct%26s%3Dcart_n', '10.0.6.67', '2013-12-28 11:17:53', 'test2', '/index.php'),
+(4123, '%2F%3Fm%3Dproduct%26s%3Dlist%2', '10.0.6.67', '2013-12-28 11:17:54', 'test2', '/index.php'),
+(4124, '%2F%3Fm%3Dproduct%26s%3Dcart_n', '10.0.6.67', '2013-12-28 11:17:54', 'test2', '/index.php'),
+(4125, '%2F', '10.0.6.67', '2013-12-28 11:17:55', 'test2', '/index.php'),
+(4126, '%2F%3Fm%3Dproduct%26s%3Dcart_n', '10.0.6.67', '2013-12-28 11:17:55', 'test2', '/index.php'),
+(4127, '%2F%3Fm%3Dproduct%26s%3Dlist%2', '10.0.6.67', '2013-12-28 11:18:42', 'test2', '/index.php'),
+(4128, '%2F%3Fm%3Dproduct%26s%3Dcart_n', '10.0.6.67', '2013-12-28 11:18:42', 'test2', '/index.php'),
+(4129, '%2F', '10.0.6.67', '2013-12-28 11:18:43', 'test2', '/index.php'),
+(4130, '%2F%3Fm%3Dproduct%26s%3Dcart_n', '10.0.6.67', '2013-12-28 11:18:43', 'test2', '/index.php'),
+(4131, '%2F%3Fm%3Dproduct%26s%3Dlist%2', '10.0.6.67', '2013-12-28 11:18:45', 'test2', '/index.php'),
+(4132, '%2F%3Fm%3Dproduct%26s%3Dcart_n', '10.0.6.67', '2013-12-28 11:18:45', 'test2', '/index.php'),
+(4133, '%2F%3Fm%3Dproduct%26s%3Dlist%2', '10.0.6.67', '2013-12-28 11:18:47', 'test2', '/index.php'),
+(4134, '%2F%3Fm%3Dproduct%26s%3Dcart_n', '10.0.6.67', '2013-12-28 11:18:47', 'test2', '/index.php'),
+(4135, '%2F%3Fm%3Dproduct%26s%3Dlist%2', '10.0.6.67', '2013-12-28 11:18:48', 'test2', '/index.php'),
+(4136, '%2F%3Fm%3Dproduct%26s%3Dcart_n', '10.0.6.67', '2013-12-28 11:18:48', 'test2', '/index.php'),
+(4137, '%2F%3Fm%3Dproduct%26s%3Dlist%2', '10.0.6.67', '2013-12-28 11:18:49', 'test2', '/index.php'),
+(4138, '%2F%3Fm%3Dproduct%26s%3Dcart_n', '10.0.6.67', '2013-12-28 11:18:49', 'test2', '/index.php'),
+(4139, '%2F%3Fm%3Dproduct%26s%3Dlist%2', '10.0.6.67', '2013-12-28 11:18:50', 'test2', '/index.php'),
+(4140, '%2F%3Fm%3Dproduct%26s%3Dcart_n', '10.0.6.67', '2013-12-28 11:18:50', 'test2', '/index.php'),
+(4141, '%2F', '10.0.6.67', '2013-12-28 11:18:51', 'test2', '/index.php'),
+(4142, '%2F%3Fm%3Dproduct%26s%3Dcart_n', '10.0.6.67', '2013-12-28 11:18:51', 'test2', '/index.php'),
+(4143, '%2F%3Fm%3Dproduct%26s%3Dlist%2', '10.0.6.67', '2013-12-28 11:18:55', 'test2', '/index.php'),
+(4144, '%2F%3Fm%3Dproduct%26s%3Dcart_n', '10.0.6.67', '2013-12-28 11:18:55', 'test2', '/index.php'),
+(4145, '%2F', '10.0.6.67', '2013-12-28 11:18:56', 'test2', '/index.php'),
+(4146, '%2F%3Fm%3Dproduct%26s%3Dcart_n', '10.0.6.67', '2013-12-28 11:18:56', 'test2', '/index.php'),
+(4147, '%2F%3Fm%3Dproduct%26s%3Dlist%2', '10.0.6.67', '2013-12-28 11:18:57', 'test2', '/index.php'),
+(4148, '%2F%3Fm%3Dproduct%26s%3Dcart_n', '10.0.6.67', '2013-12-28 11:18:57', 'test2', '/index.php'),
+(4149, '%2F', '10.0.6.67', '2013-12-28 11:18:58', 'test2', '/index.php'),
+(4150, '%2F%3Fm%3Dproduct%26s%3Dcart_n', '10.0.6.67', '2013-12-28 11:18:58', 'test2', '/index.php'),
+(4151, '%2F%3Fm%3Dproduct%26s%3Dlist%2', '10.0.6.67', '2013-12-28 11:18:59', 'test2', '/index.php'),
+(4152, '%2F%3Fm%3Dproduct%26s%3Dcart_n', '10.0.6.67', '2013-12-28 11:18:59', 'test2', '/index.php'),
+(4153, '%2F', '10.0.6.67', '2013-12-28 11:19:00', 'test2', '/index.php'),
+(4154, '%2F%3Fm%3Dproduct%26s%3Dcart_n', '10.0.6.67', '2013-12-28 11:19:00', 'test2', '/index.php'),
+(4155, '%2F', '10.0.6.67', '2013-12-28 14:35:59', 'test2', '/index.php'),
+(4156, '%2F%3Fm%3Dproduct%26s%3Dcart_n', '10.0.6.67', '2013-12-28 14:35:59', 'test2', '/index.php'),
+(4157, '%2F', '10.0.6.67', '2013-12-28 14:52:59', 'test2', '/index.php'),
+(4158, '%2F%3Fm%3Dproduct%26s%3Dcart_n', '10.0.6.67', '2013-12-28 14:52:59', 'test2', '/index.php'),
+(4159, '%2F%3Fm%3Dproduct%26s%3Dlist%2', '10.0.6.67', '2013-12-28 14:57:19', 'test2', '/index.php'),
+(4160, '%2F%3Fm%3Dproduct%26s%3Dcart_n', '10.0.6.67', '2013-12-28 14:57:19', 'test2', '/index.php'),
+(4161, '%2F', '10.0.6.67', '2013-12-28 14:57:20', 'test2', '/index.php'),
+(4162, '%2F%3Fm%3Dproduct%26s%3Dcart_n', '10.0.6.67', '2013-12-28 14:57:20', 'test2', '/index.php'),
+(4163, '%2F', '10.0.6.67', '2013-12-29 10:08:09', '', '/index.php'),
+(4164, '%2F%3Fm%3Dproduct%26s%3Dcart_n', '10.0.6.67', '2013-12-29 10:08:09', '', '/index.php'),
+(4165, '%2Flogin.php', '10.0.6.67', '2013-12-29 10:08:20', '', '/login.php'),
+(4166, '%2F%3Fm%3Dproduct%26s%3Dcart_n', '10.0.6.67', '2013-12-29 10:08:20', '', '/index.php'),
+(4167, '%2Flogin.php', '10.0.6.67', '2013-12-29 10:08:27', '', '/login.php'),
+(4168, '%2Fimage%2Fdefault%2Fuser_admi', '10.0.6.67', '2013-12-29 10:08:28', 'test5', '/404.php'),
+(4169, '%2F', '10.0.6.67', '2013-12-29 10:08:40', 'test5', '/index.php'),
+(4170, '%2F', '10.0.6.67', '2013-12-29 10:09:14', 'test5', '/index.php'),
+(4171, '%2F%3Fm%3Dproduct%26s%3Dlist%2', '10.0.6.67', '2013-12-29 10:09:16', 'test5', '/index.php'),
+(4172, '%2F%3Fm%3Dproduct%26s%3Dcart_n', '10.0.6.67', '2013-12-29 10:09:16', 'test5', '/index.php'),
+(4173, '%2F', '10.0.6.67', '2013-12-29 10:09:18', 'test5', '/index.php'),
+(4174, '%2F%3Fm%3Dproduct%26s%3Dcart_n', '10.0.6.67', '2013-12-29 10:09:18', 'test5', '/index.php'),
+(4175, '%2F', '10.0.6.67', '2013-12-29 10:16:01', 'test5', '/index.php'),
+(4176, '%2F%3Fm%3Dproduct%26s%3Dcart_n', '10.0.6.67', '2013-12-29 10:16:02', 'test5', '/index.php'),
+(4177, '%2F', '10.0.6.67', '2013-12-30 09:58:24', '', '/index.php'),
+(4178, '%2F%3Fm%3Dproduct%26s%3Dcart_n', '10.0.6.67', '2013-12-30 09:58:25', '', '/index.php'),
+(4179, '%2Ffavicon.ico', '10.0.6.67', '2013-12-30 09:58:26', '', '/404.php'),
+(4180, '%2F%3Fm%3Dproduct%26s%3Dlist%2', '10.0.6.67', '2013-12-30 09:58:28', '', '/index.php'),
+(4181, '%2F%3Fm%3Dproduct%26s%3Dcart_n', '10.0.6.67', '2013-12-30 09:58:28', '', '/index.php'),
+(4182, '%2Ffavicon.ico', '10.0.6.67', '2013-12-30 09:58:28', '', '/404.php'),
+(4183, '%2F', '10.0.6.67', '2013-12-30 09:58:30', '', '/index.php'),
+(4184, '%2F%3Fm%3Dproduct%26s%3Dcart_n', '10.0.6.67', '2013-12-30 09:58:30', '', '/index.php'),
+(4185, '%2F%3Fm%3Dproduct%26s%3Ddetail', '10.0.6.67', '2013-12-30 09:59:38', '', '/index.php'),
+(4186, '%2F%3Fm%3Dproduct%26s%3Dcart_n', '10.0.6.67', '2013-12-30 09:59:38', '', '/index.php'),
+(4187, '%2F', '10.0.6.67', '2013-12-30 10:00:21', '', '/index.php'),
+(4188, '%2F%3Fm%3Dproduct%26s%3Dcart_n', '10.0.6.67', '2013-12-30 10:00:22', '', '/index.php'),
+(4189, '%2F', '10.0.6.67', '2013-12-30 10:00:23', '', '/index.php'),
+(4190, '%2F%3Fm%3Dproduct%26s%3Dcart_n', '10.0.6.67', '2013-12-30 10:00:23', '', '/index.php'),
+(4191, '%2Flogin.php', '10.0.6.67', '2013-12-30 10:00:38', '', '/login.php'),
+(4192, '%2F%3Fm%3Dproduct%26s%3Dcart_n', '10.0.6.67', '2013-12-30 10:00:38', '', '/index.php'),
+(4193, '%2F', '10.0.6.67', '2013-12-30 10:00:40', '', '/index.php'),
+(4194, '%2F%3Fm%3Dproduct%26s%3Dcart_n', '10.0.6.67', '2013-12-30 10:00:40', '', '/index.php'),
+(4195, '%2F%3Fm%3Dproduct%26s%3Dlist%2', '10.0.6.67', '2013-12-30 10:06:16', '', '/index.php'),
+(4196, '%2F%3Fm%3Dproduct%26s%3Dcart_n', '10.0.6.67', '2013-12-30 10:06:16', '', '/index.php'),
+(4197, '%2F', '10.0.6.67', '2013-12-30 10:06:17', '', '/index.php'),
+(4198, '%2F%3Fm%3Dproduct%26s%3Dcart_n', '10.0.6.67', '2013-12-30 10:06:17', '', '/index.php'),
+(4199, '%2F', '10.0.6.67', '2013-12-30 10:17:35', '', '/index.php'),
+(4200, '%2F', '10.0.6.67', '2013-12-30 10:17:57', '', '/index.php'),
+(4201, '%2F%3Fm%3Dproduct%26s%3Dcart_n', '10.0.6.67', '2013-12-30 10:17:57', '', '/index.php'),
+(4202, '%2F', '10.0.6.67', '2013-12-30 10:24:15', '', '/index.php'),
+(4203, '%2F%3Fm%3Dproduct%26s%3Dcart_n', '10.0.6.67', '2013-12-30 10:24:15', '', '/index.php'),
+(4204, '%2F', '10.0.6.67', '2013-12-30 10:24:18', '', '/index.php'),
+(4205, '%2F%3Fm%3Dproduct%26s%3Dcart_n', '10.0.6.67', '2013-12-30 10:24:18', '', '/index.php'),
+(4206, '%2Flogin.php', '10.0.6.67', '2013-12-30 10:24:40', '', '/login.php'),
+(4207, '%2F%3Fm%3Dproduct%26s%3Dcart_n', '10.0.6.67', '2013-12-30 10:24:40', '', '/index.php'),
+(4208, '%2F%3Fm%3Dproduct%26s%3Ddetail', '10.0.6.67', '2013-12-30 10:25:49', '', '/index.php'),
+(4209, '%2F%3Fm%3Dproduct%26s%3Dcart_n', '10.0.6.67', '2013-12-30 10:25:49', '', '/index.php'),
+(4210, '%2F', '10.0.6.67', '2013-12-30 10:26:26', '', '/index.php'),
+(4211, '%2F%3Fm%3Dproduct%26s%3Dcart_n', '10.0.6.67', '2013-12-30 10:26:26', '', '/index.php'),
+(4212, '%2F', '10.0.6.67', '2013-12-30 10:45:01', '', '/index.php'),
+(4213, '%2F', '10.0.6.67', '2013-12-30 10:46:59', '', '/index.php'),
+(4214, '%2F%3Fm%3Dproduct%26s%3Dcart_n', '10.0.6.67', '2013-12-30 10:46:59', '', '/index.php'),
+(4215, '%2F', '10.0.6.67', '2013-12-30 10:53:09', '', '/index.php'),
+(4216, '%2F', '10.0.6.67', '2013-12-30 10:55:47', '', '/index.php'),
+(4217, '%2F%3Fm%3Dproduct%26s%3Dcart_n', '10.0.6.67', '2013-12-30 10:55:47', '', '/index.php'),
+(4218, '%2F', '10.0.6.67', '2013-12-30 10:56:13', '', '/index.php'),
+(4219, '%2F%3Fm%3Dproduct%26s%3Dcart_n', '10.0.6.67', '2013-12-30 10:56:13', '', '/index.php'),
+(4220, '%2F', '10.0.6.67', '2013-12-30 10:56:25', '', '/index.php'),
+(4221, '%2F%3Fm%3Dproduct%26s%3Dcart_n', '10.0.6.67', '2013-12-30 10:56:25', '', '/index.php'),
+(4222, '%2F', '10.0.6.67', '2013-12-30 10:57:51', '', '/index.php'),
+(4223, '%2F%3Fm%3Dproduct%26s%3Dcart_n', '10.0.6.67', '2013-12-30 10:57:51', '', '/index.php'),
+(4224, '%2F', '127.0.0.1', '2013-12-30 10:58:46', '', '/index.php'),
+(4225, '%2F%3Fm%3Dproduct%26s%3Dcart_n', '127.0.0.1', '2013-12-30 10:58:46', '', '/index.php'),
+(4226, '%2Ffavicon.ico', '127.0.0.1', '2013-12-30 10:58:46', '', '/404.php'),
+(4227, '%2Ffavicon.ico', '127.0.0.1', '2013-12-30 10:58:46', '', '/404.php'),
+(4228, '%2Ffavicon.ico', '127.0.0.1', '2013-12-30 10:58:46', '', '/404.php'),
+(4229, '%2F', '10.0.6.67', '2013-12-30 12:05:51', '', '/index.php'),
+(4230, '%2F%3Fm%3Dproduct%26s%3Dcart_n', '10.0.6.67', '2013-12-30 12:05:52', '', '/index.php'),
+(4231, '%2F', '10.0.6.67', '2013-12-30 14:32:37', '', '/index.php'),
+(4232, '%2F%3Fm%3Dproduct%26s%3Dcart_n', '10.0.6.67', '2013-12-30 14:32:37', '', '/index.php'),
+(4233, '%2F', '10.0.6.67', '2013-12-30 14:46:31', '', '/index.php'),
+(4234, '%2F%3Fm%3Dproduct%26s%3Dcart_n', '10.0.6.67', '2013-12-30 14:46:31', '', '/index.php'),
+(4235, '%2F%3Fm%3Dproduct%26s%3Dlist%2', '10.0.6.67', '2013-12-30 14:47:43', '', '/index.php'),
+(4236, '%2F%3Fm%3Dproduct%26s%3Dcart_n', '10.0.6.67', '2013-12-30 14:47:44', '', '/index.php'),
+(4237, '%2F', '10.0.6.67', '2013-12-30 14:47:46', '', '/index.php'),
+(4238, '%2F%3Fm%3Dproduct%26s%3Dcart_n', '10.0.6.67', '2013-12-30 14:47:46', '', '/index.php'),
+(4239, '%2F%3Fm%3Dproduct%26s%3Ddetail', '10.0.6.67', '2013-12-30 14:47:51', '', '/index.php'),
+(4240, '%2F%3Fm%3Dproduct%26s%3Dcart_n', '10.0.6.67', '2013-12-30 14:47:51', '', '/index.php'),
+(4241, '%2F', '127.0.0.1', '2013-12-30 14:53:16', '', '/index.php'),
+(4242, '%2F%3Fm%3Dproduct%26s%3Dcart_n', '127.0.0.1', '2013-12-30 14:53:16', '', '/index.php'),
+(4243, '%2F', '127.0.0.1', '2013-12-30 14:53:52', '', '/index.php'),
+(4244, '%2F%3Fm%3Dproduct%26s%3Dcart_n', '127.0.0.1', '2013-12-30 14:53:53', '', '/index.php'),
+(4245, '%2F', '127.0.0.1', '2013-12-30 14:53:59', '', '/index.php'),
+(4246, '%2F%3Fm%3Dproduct%26s%3Dcart_n', '127.0.0.1', '2013-12-30 14:53:59', '', '/index.php'),
+(4247, '%2F', '127.0.0.1', '2013-12-30 15:02:16', '', '/index.php'),
+(4248, '%2F%3Fm%3Dproduct%26s%3Dcart_n', '127.0.0.1', '2013-12-30 15:02:16', '', '/index.php'),
+(4249, '%2F', '127.0.0.1', '2013-12-30 15:19:05', '', '/index.php'),
+(4250, '%2F%3Fm%3Dproduct%26s%3Dcart_n', '127.0.0.1', '2013-12-30 15:19:05', '', '/index.php'),
+(4251, '%2F%3Fm%3Dproduct%26s%3Dlist%2', '127.0.0.1', '2013-12-30 15:19:08', '', '/index.php'),
+(4252, '%2F%3Fm%3Dproduct%26s%3Dlist%2', '127.0.0.1', '2013-12-30 15:19:08', '', '/index.php'),
+(4253, '%2F%3Fm%3Dproduct%26s%3Dcart_n', '127.0.0.1', '2013-12-30 15:19:08', '', '/index.php'),
+(4254, '%2F', '127.0.0.1', '2013-12-30 15:19:09', '', '/index.php'),
+(4255, '%2F%3Fm%3Dproduct%26s%3Dcart_n', '127.0.0.1', '2013-12-30 15:19:10', '', '/index.php'),
+(4256, '%2F', '127.0.0.1', '2013-12-30 15:50:41', '', '/index.php'),
+(4257, '%2F%3Fm%3Dproduct%26s%3Dcart_n', '127.0.0.1', '2013-12-30 15:50:41', '', '/index.php'),
+(4258, '%2F%3Fm%3Dproduct%26s%3Dlist%2', '127.0.0.1', '2013-12-30 15:51:05', '', '/index.php'),
+(4259, '%2F%3Fm%3Dproduct%26s%3Dlist%2', '127.0.0.1', '2013-12-30 15:51:06', '', '/index.php'),
+(4260, '%2F%3Fm%3Dproduct%26s%3Dcart_n', '127.0.0.1', '2013-12-30 15:51:06', '', '/index.php'),
+(4261, '%2F%3Fm%3Dproduct%26s%3Dlist%2', '127.0.0.1', '2013-12-30 15:51:08', '', '/index.php'),
+(4262, '%2F%3Fm%3Dproduct%26s%3Dlist%2', '127.0.0.1', '2013-12-30 15:51:08', '', '/index.php'),
+(4263, '%2F%3Fm%3Dproduct%26s%3Dcart_n', '127.0.0.1', '2013-12-30 15:51:08', '', '/index.php'),
+(4264, '%2F', '10.0.6.67', '2013-12-31 09:24:47', '', '/index.php'),
+(4265, '%2F%3Fm%3Dproduct%26s%3Dcart_n', '10.0.6.67', '2013-12-31 09:24:47', '', '/index.php'),
+(4266, '%2F', '10.0.6.67', '2013-12-31 09:25:00', '', '/index.php'),
+(4267, '%2F%3Fm%3Dproduct%26s%3Dcart_n', '10.0.6.67', '2013-12-31 09:25:00', '', '/index.php'),
+(4268, '%2F', '10.0.6.67', '2013-12-31 19:12:25', '', '/index.php'),
+(4269, '%2F%3Fm%3Dproduct%26s%3Dcart_n', '10.0.6.67', '2013-12-31 19:12:25', '', '/index.php'),
+(4270, '%2F', '10.0.6.67', '2013-12-31 19:26:19', '', '/index.php'),
+(4271, '%2F%3Fm%3Dproduct%26s%3Dcart_n', '10.0.6.67', '2013-12-31 19:26:19', '', '/index.php'),
+(4272, '%2F%3Fm%3Dproduct%26s%3Dlist%2', '10.0.6.67', '2013-12-31 19:40:06', '', '/index.php'),
+(4273, '%2F%3Fm%3Dproduct%26s%3Dcart_n', '10.0.6.67', '2013-12-31 19:40:06', '', '/index.php'),
+(4274, '%2F', '10.0.6.67', '2013-12-31 19:40:08', '', '/index.php'),
+(4275, '%2F%3Fm%3Dproduct%26s%3Dcart_n', '10.0.6.67', '2013-12-31 19:40:08', '', '/index.php'),
+(4276, '%2F%3Fm%3Dproduct%26s%3Ddetail', '10.0.6.67', '2013-12-31 19:53:46', '', '/index.php'),
+(4277, '%2F%3Fm%3Dproduct%26s%3Dcart_n', '10.0.6.67', '2013-12-31 19:53:46', '', '/index.php'),
+(4278, '%2Fshop.php%3Fuid%3D29', '10.0.6.67', '2013-12-31 19:53:50', '', '/shop.php'),
+(4279, '%2F%3Fm%3Dproduct%26s%3Dcart_n', '10.0.6.67', '2013-12-31 19:53:50', '', '/index.php'),
+(4280, '%2F', '10.0.6.67', '2013-12-31 19:53:52', '', '/index.php'),
+(4281, '%2F%3Fm%3Dproduct%26s%3Dcart_n', '10.0.6.67', '2013-12-31 19:53:52', '', '/index.php'),
+(4282, '%2F', '10.0.6.67', '2013-12-31 19:54:43', '', '/index.php'),
+(4283, '%2F%3Fm%3Dproduct%26s%3Dcart_n', '10.0.6.67', '2013-12-31 19:54:43', '', '/index.php');
 
 -- --------------------------------------------------------
 
@@ -52138,12 +52418,12 @@ CREATE TABLE IF NOT EXISTS `mallbuilder_products` (
 --
 
 INSERT INTO `mallbuilder_products` (`id`, `userid`, `user`, `catid`, `ptype`, `pname`, `keywords`, `brand`, `market_price`, `price`, `amount`, `sell_amount`, `code`, `pic`, `pic_more`, `maintenance`, `invoice`, `credit`, `stime_type`, `stime`, `validTime`, `weight`, `cubage`, `freight`, `freight_type`, `post_price`, `express_price`, `ems_price`, `province`, `city`, `areaid`, `area`, `read_nums`, `rank`, `uptime`, `statu`, `custom_cat_id`, `promotion_id`, `point`, `goodbad`, `shop_rec`) VALUES
-(1, 29, 'test5', 10230201, 0, '测试下看看', '', '', 0.00, 100.00, 100, 0, '', 'http://mall.te168.cn/uploadfile/product/29/2013/12/09/1386576372.jpg', 'http://mall.te168.cn/uploadfile/product/29/2013/12/09/1386576372.jpg,http://mall.te168.cn/uploadfile/product/29/2013/12/09/1386576375.jpg', 1, 1, 0, 1, 1386576565, 1, NULL, NULL, 0, 0, 0, 0, 0, 1, 44, 678, '北京市 海淀区 中关村街道', 26, 0, '2013-12-09 16:09:25', 1, 0, 0, 0, NULL, 0),
-(2, 29, 'test5', 10230201, 0, '继续测试看看撒', '', '', 0.00, 200.00, 100, 0, '', 'http://mall.te168.cn/uploadfile/product/29/2013/12/09/1386576672.jpg', 'http://mall.te168.cn/uploadfile/product/29/2013/12/09/1386576672.jpg,http://mall.te168.cn/uploadfile/product/29/2013/12/09/1386576677.jpg', 1, 1, 0, 1, 1386576685, 1, NULL, NULL, 0, 0, 0, 0, 0, 1, 37, 568, '北京市 东城区 东四街道', 8, 0, '2013-12-09 16:11:25', 1, 0, 0, 0, NULL, 0),
-(3, 29, 'test5', 10230201, 0, '继续测试看看撒', '', '', 0.00, 123.00, 200, 0, '', 'http://mall.te168.cn/uploadfile/product/29/2013/12/09/1386576726.jpg', 'http://mall.te168.cn/uploadfile/product/29/2013/12/09/1386576726.jpg,http://mall.te168.cn/uploadfile/product/29/2013/12/09/1386576735.jpg', 1, 1, 0, 1, 1386576741, 1, NULL, NULL, 0, 0, 0, 0, 0, 1, 38, 578, '北京市 西城区 展览路街道', 32, 0, '2013-12-09 16:12:21', 1, 0, 0, 0, NULL, 1),
-(4, 29, 'test5', 10230201, 0, '测试下看看', '', '', 0.00, 123.00, 100, 0, '', 'http://mall.te168.cn/uploadfile/product/29/2013/12/09/1386576779.jpg', 'http://mall.te168.cn/uploadfile/product/29/2013/12/09/1386576779.jpg', 1, 1, 0, 1, 1386576787, 1, NULL, NULL, 0, 0, 0, 0, 0, 4, 85, 1310, '山西省 大同市 大同县', 18, 0, '2013-12-09 16:13:07', 1, 0, 0, 0, NULL, 1),
-(5, 29, 'test5', 10230201, 0, '继续测试看看撒', '', '', 0.00, 258.00, 123, 0, '', 'http://mall.te168.cn/uploadfile/product/29/2013/12/09/1386576876.jpg', 'http://mall.te168.cn/uploadfile/product/29/2013/12/09/1386576876.jpg', 1, 1, 0, 1, 1386576883, 1, NULL, NULL, 0, 0, 0, 0, 0, 2, 56, 891, '天津市 河东区 中山门街道', 47, 0, '2013-12-09 16:14:43', 1, 0, 0, 0, NULL, 1),
-(6, 29, 'test5', 10230201, 0, '测试下看看', '', '', 0.00, 123.00, 123, 0, '', 'http://mall.te168.cn/uploadfile/product/29/2013/12/09/1386580746.jpg', 'http://mall.te168.cn/uploadfile/product/29/2013/12/09/1386580746.jpg', 1, 1, 0, 1, 1386580753, 1, NULL, NULL, 0, 0, 0, 0, 0, 13, 203, 2329, '福建省 福州市 仓山区', 5, 0, '2013-12-09 17:19:13', 1, 0, 0, 0, NULL, 0);
+(1, 29, 'test5', 10230201, 0, '测试下看看', '', '', 0.00, 100.00, 100, 0, '', 'http://mall.te168.cn/uploadfile/product/29/2013/12/09/1386576372.jpg', 'http://mall.te168.cn/uploadfile/product/29/2013/12/09/1386576372.jpg,http://mall.te168.cn/uploadfile/product/29/2013/12/09/1386576375.jpg', 1, 1, 0, 1, 1386576565, 1, NULL, NULL, 0, 0, 0, 0, 0, 1, 44, 678, '北京市 海淀区 中关村街道', 26, 0, '2013-12-09 16:09:25', 2, 0, 0, 0, NULL, 0),
+(2, 29, 'test5', 10230201, 0, '继续测试看看撒', '', '', 0.00, 200.00, 100, 0, '', 'http://mall.te168.cn/uploadfile/product/29/2013/12/09/1386576672.jpg', 'http://mall.te168.cn/uploadfile/product/29/2013/12/09/1386576672.jpg,http://mall.te168.cn/uploadfile/product/29/2013/12/09/1386576677.jpg', 1, 1, 0, 1, 1386576685, 1, NULL, NULL, 0, 0, 0, 0, 0, 1, 37, 568, '北京市 东城区 东四街道', 9, 0, '2013-12-09 16:11:25', 2, 0, 0, 0, NULL, 0),
+(3, 29, 'test5', 10230201, 0, '继续测试看看撒', '', '', 0.00, 123.00, 200, 0, '', 'http://mall.te168.cn/uploadfile/product/29/2013/12/09/1386576726.jpg', 'http://mall.te168.cn/uploadfile/product/29/2013/12/09/1386576726.jpg,http://mall.te168.cn/uploadfile/product/29/2013/12/09/1386576735.jpg', 1, 1, 0, 1, 1386576741, 1, NULL, NULL, 0, 0, 0, 0, 0, 1, 38, 578, '北京市 西城区 展览路街道', 32, 0, '2013-12-09 16:12:21', 2, 0, 0, 0, NULL, 1),
+(4, 29, 'test5', 10230201, 0, '测试下看看', '', '', 0.00, 123.00, 100, 0, '', 'http://mall.te168.cn/uploadfile/product/29/2013/12/09/1386576779.jpg', 'http://mall.te168.cn/uploadfile/product/29/2013/12/09/1386576779.jpg', 1, 1, 0, 1, 1386576787, 1, NULL, NULL, 0, 0, 0, 0, 0, 4, 85, 1310, '山西省 大同市 大同县', 18, 0, '2013-12-09 16:13:07', 2, 0, 0, 0, NULL, 1),
+(5, 29, 'test5', 10230201, 0, '继续测试看看撒', '', '', 0.00, 258.00, 123, 0, '', 'http://mall.te168.cn/uploadfile/product/29/2013/12/09/1386576876.jpg', 'http://mall.te168.cn/uploadfile/product/29/2013/12/09/1386576876.jpg', 1, 1, 0, 1, 1386576883, 1, NULL, NULL, 0, 0, 0, 0, 0, 2, 56, 891, '天津市 河东区 中山门街道', 48, 0, '2013-12-09 16:14:43', 2, 0, 0, 0, NULL, 1),
+(6, 29, 'test5', 10230201, 0, '测试下看看', '', '', 0.00, 123.00, 123, 0, '', 'http://mall.te168.cn/uploadfile/product/29/2013/12/09/1386580746.jpg', 'http://mall.te168.cn/uploadfile/product/29/2013/12/09/1386580746.jpg', 1, 1, 0, 1, 1386580753, 1, NULL, NULL, 0, 0, 0, 0, 0, 13, 203, 2329, '福建省 福州市 仓山区', 7, 1, '2013-12-09 17:19:13', 2, 0, 0, 0, NULL, 0);
 
 -- --------------------------------------------------------
 
@@ -53282,7 +53562,7 @@ CREATE TABLE IF NOT EXISTS `mallbuilder_shop` (
 
 INSERT INTO `mallbuilder_shop` (`userid`, `user`, `catid`, `company`, `tel`, `addr`, `provinceid`, `cityid`, `areaid`, `area`, `main_pro`, `logo`, `template`, `stime`, `etime`, `statu`, `rank`, `view_times`, `uptime`, `create_time`, `shop_statu`, `credit`, `shop_collect`, `earnest`, `grade`, `shop_auth`, `shopkeeper_auth`, `shop_auth_pic`, `shopkeeper_auth_pic`) VALUES
 (24, 'wangte', '', '测试仪', '13411823234', '北京市海淀区中关村南大街', 1, 44, 678, '北京市 海淀区 中关村街道', '', '', NULL, NULL, NULL, NULL, 0, 19, 1385691007, 1385691007, 1, NULL, 0, 0.00, 1, 0, 0, NULL, NULL),
-(29, 'test5', '', 'basd', '', 'asdf', 0, NULL, NULL, NULL, NULL, NULL, '', 1386518400, 1418054400, 0, 0, 216, 1386555313, 0, 1, 0, 0, 0.00, 1, 0, 0, NULL, NULL),
+(29, 'test5', '', 'basd', '', 'asdf', 0, NULL, NULL, NULL, NULL, NULL, '', 1386518400, 1418054400, 0, 0, 221, 1386555313, 0, 1, 0, 0, 0.00, 1, 0, 0, NULL, NULL),
 (30, 'qjx12388', '', '111', '111111111', '1111', 0, 0, 0, '', '111', '', NULL, NULL, NULL, NULL, 0, 5, 1387006885, 1387006885, 0, NULL, 0, 0.00, 1, 0, 0, NULL, NULL);
 
 -- --------------------------------------------------------
@@ -54069,8 +54349,8 @@ INSERT INTO `mallbuilder_web_config` (`id`, `index`, `value`, `statu`, `type`, `
 (38, 'hot_commen', '1,2,3,4,5', 1, 'home', NULL),
 (39, 'new_pro', '1', 1, 'home', NULL),
 (40, 'index_catid', '1023,1001', 1, 'home', NULL),
-(41, 'index_newsid', '1001', 1, 'home', NULL),
-(42, 'list_catid', '1001', 1, 'home', NULL),
+(41, 'index_newsid', '1023', 1, 'home', NULL),
+(42, 'list_catid', '1023', 1, 'home', NULL),
 (43, 'title', 'adf', 1, 'module_company', NULL),
 (44, 'keyword', '', 1, 'module_company', NULL),
 (45, 'description', '', 1, 'module_company', NULL),
