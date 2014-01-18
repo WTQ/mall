@@ -34,8 +34,8 @@ class orderadder
 	function add_orderadder()
 	{			  	
 		global $buid;
-		if(!empty($_POST['submit'])&&(empty($_POST['name'])||empty($_POST['province'])||empty($_POST['city'])||empty($_POST['address'])||empty($_POST['zip'])))
-			return 'error';
+// 		if(!empty($_POST['submit'])&&(empty($_POST['name'])||empty($_POST['province'])||empty($_POST['city'])||empty($_POST['address'])||empty($_POST['zip'])))
+// 			return 'error';
 		$sql="select * from userid=$buid";
 		$num=$this->db->num_rows();
 	    if($num==5)
@@ -56,8 +56,8 @@ class orderadder
 		global $buid;
 		if($id)
 		{
-			if(!empty($_POST['submit'])&&(empty($_POST['name'])||empty($_POST['province'])||empty($_POST['city'])||empty($_POST['address'])||empty($_POST['zip'])))
-			return 'error';
+// 			if(!empty($_POST['submit'])&&(empty($_POST['name'])||empty($_POST['province'])||empty($_POST['city'])||empty($_POST['address'])||empty($_POST['zip'])))
+// 			return 'error';
 			
 			$_POST['zip']*=1;
 			$sql="UPDATE ".USODADDER." SET `name` = '$_POST[name]',`provinceid` = '$_POST[province]',`cityid` = '$_POST[city]', `areaid` = '$_POST[area]', `area` = '$_POST[t]', `address` = '$_POST[address]',`zip` = '$_POST[zip]',`tel` = '$_POST[tel]',`mobile` = '$_POST[mobile]' WHERE  `id` ='$id' ";
