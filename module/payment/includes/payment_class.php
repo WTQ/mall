@@ -255,6 +255,26 @@ class payment
 			$alipayService = new AlipayService($configs);
 			echo $alipayService->create_direct_pay_by_user($parameter);
 		}
+		
+		// add by wangte 2014-01-16
+		// 添加网银在线的支付功能
+		if($_POST['payment_type']=='chinabank'&&$id) {
+			$autoreceive = $config['weburl'] . '/module/payment/includes/chinabank/AutoReceive.php';
+			
+			$v_oid			= $id;
+			$v_mid			= '22870234';								    // 1001是网银在线的测试商户号，商户要替换为自己的商户号。
+			$v_url			= $config['weburl']."/main.php?m=payment&s=admin_accounts_base&onlinepaytype=chinabank";	// 商户自定义返回接收支付结果的页面。对应Receive.php示例。
+			$key			= 'tuoyu100100';								    // 参照"网银在线支付B2C系统商户接口文档v4.1.doc"中2.4.1进行设置。
+			$remark2		= '[url:='. $autoreceive .']';	// 通知URL
+			$v_amount 		= $amount;                   //支付金额
+			$v_moneytype 	= 'CNY';                                            //币种
+			$text 			= $v_amount.$v_moneytype.$v_oid.$v_mid.$v_url.$key;        //md5加密拼凑串,注意顺序不能变
+			$v_md5info 		= strtoupper(md5($text));                             //md5函数加密并转化成大写字母
+
+			// 包含send文件
+			include dirname(__FILE__) . '/chinabank/Send.php';
+			exit;
+		}
 	}
 	
 	//处理在线友付返回结果。
@@ -263,6 +283,8 @@ class payment
 		global $config;
 		if(empty($_GET['onlinepaytype']))
 			return NULL;
+		
+		
 		if(!empty($_GET['onlinepaytype'])&&$_GET['onlinepaytype']=='alipay')
 		{
 			unset($_GET['m']);unset($_GET['s']);unset($_GET['onlinepaytype']);//删除原有参数，不然会影响他原来的值
@@ -302,21 +324,56 @@ class payment
 			else 
 				$verify_result=false;
 		}
-
+		
+		// add by wangte 2014-01-16
+		if(!empty($_GET['onlinepaytype'])&&$_GET['onlinepaytype']=='chinabank') {
+			
+			$key = 'tuoyu100100';
+			
+			$v_oid     = isset($_POST['v_oid']) ? trim($_POST['v_oid']) : '';
+			$v_pmode   = isset($_POST['v_pmode']) ? trim($_POST['v_pmode']) : '';
+			$v_pstatus = isset($_POST['v_pstatus']) ? trim($_POST['v_pstatus']) : '';
+			$v_pstring = isset($_POST['v_pstring']) ? trim($_POST['v_pstring']) : '';
+			$v_amount  = isset($_POST['v_amount']) ? trim($_POST['v_amount']) : '';
+			$v_moneytype  = isset($_POST['v_moneytype']) ? trim($_POST['v_moneytype']) : '';
+			$remark1   = isset($_POST['remark1']) ? trim($_POST['remark1' ]) : '';
+			$remark2   = isset($_POST['remark2']) ? trim($_POST['remark2' ]) : '';
+			$v_md5str  = isset($_POST['v_md5str']) ? trim($_POST['v_md5str' ]) : '';
+			
+			$total_fee = $v_amount;
+			
+			// 重新计算md5的值
+			$md5string=strtoupper(md5($v_oid.$v_pstatus.$v_amount.$v_moneytype.$key)); //拼凑加密串
+			if ($v_md5str==$md5string)
+			{
+				if($v_pstatus=="20")
+				{
+					//支付成功
+					//商户系统的逻辑处理（例如判断金额，判断支付状态(20成功,30失败),更新订单状态等等）......
+					$tradeno = $v_oid;
+					$verify_result = true;
+					$suc = true;
+				}
+			}else{
+				$verify_result = false;
+			}
+		}
+		
 		$sql="select flow_id,pay_uid,statu from ".CASHFLOW." where id='$tradeno'";//验证签名
 		$this->db->query($sql);
 		$re=$this->db->fetchRow();
 		$userid=$re['pay_uid'];
 		$is_succeed=$re['statu'];
 		if($verify_result&&$is_succeed==1)//如果验证成功,并且流水表中的记录为新提交
-		{	
+		{
 			if($suc==true)
 			{
 				$sql="update ".CASHFLOW." set 
 				price='$total_fee',flow_id='$payflowid',statu='4' where id='$tradeno'";
 				$this->db->query($sql);
 				
-				$sql="update ".PUSER." set cash=cash+$total_fee where userid='$userid'";
+				$sql="update ".PUSER." set cash=cash+$total_fee where pay_uid=$userid";
+
 				$this->db->query($sql);
 				return TRUE;
 			}

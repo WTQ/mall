@@ -1,16 +1,16 @@
 <?php
 /**
- * ¼´Ê±µ½ÕÊÇëÇóÀà
+ * ï¿½ï¿½Ê±ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
  * ============================================================================
- * apiËµÃ÷£º
- * init(),³õÊ¼»¯º¯Êý£¬Ä¬ÈÏ¸øÒ»Ð©²ÎÊý¸³Öµ£¬Èçcmdno,dateµÈ¡£
- * getGateURL()/setGateURL(),»ñÈ¡/ÉèÖÃÈë¿ÚµØÖ·,²»°üº¬²ÎÊýÖµ
- * getKey()/setKey(),»ñÈ¡/ÉèÖÃÃÜÔ¿
- * getParameter()/setParameter(),»ñÈ¡/ÉèÖÃ²ÎÊýÖµ
- * getAllParameters(),»ñÈ¡ËùÓÐ²ÎÊý
- * getRequestURL(),»ñÈ¡´ø²ÎÊýµÄÇëÇóURL
- * doSend(),ÖØ¶¨Ïòµ½²Æ¸¶Í¨Ö§¸¶
- * getDebugInfo(),»ñÈ¡debugÐÅÏ¢
+ * apiËµï¿½ï¿½ï¿½ï¿½
+ * init(),ï¿½ï¿½Ê¼ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ä¬ï¿½Ï¸ï¿½Ò»Ð©ï¿½ï¿½ï¿½ï¿½Öµï¿½ï¿½ï¿½ï¿½cmdno,dateï¿½È¡ï¿½
+ * getGateURL()/setGateURL(),ï¿½ï¿½È¡/ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Úµï¿½Ö·,ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Öµ
+ * getKey()/setKey(),ï¿½ï¿½È¡/ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ô¿
+ * getParameter()/setParameter(),ï¿½ï¿½È¡/ï¿½ï¿½ï¿½Ã²ï¿½ï¿½ï¿½Öµ
+ * getAllParameters(),ï¿½ï¿½È¡ï¿½ï¿½ï¿½Ð²ï¿½ï¿½ï¿½
+ * getRequestURL(),ï¿½ï¿½È¡ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½URL
+ * doSend(),ï¿½Ø¶ï¿½ï¿½òµ½²Æ¸ï¿½Í¨Ö§ï¿½ï¿½
+ * getDebugInfo(),ï¿½ï¿½È¡debugï¿½ï¿½Ï¢
  * 
  * ============================================================================
  *
@@ -24,52 +24,52 @@ class PayRequestHandler extends RequestHandler {
 	}
 	
 	function PayRequestHandler() {
-		//Ä¬ÈÏÖ§¸¶Íø¹ØµØÖ·
-		$this->setGateURL("http://service.tenpay.com/cgi-bin/v3.0/payservice.cgi");	
+		//Ä¬ï¿½ï¿½Ö§ï¿½ï¿½ï¿½ï¿½Øµï¿½Ö·
+		$this->setGateURL("https://www.tenpay.com/cgi-bin/v1.0/pay_gate.cgi");	
 	}
 	
 	/**
 	*@Override
-	*³õÊ¼»¯º¯Êý£¬Ä¬ÈÏ¸øÒ»Ð©²ÎÊý¸³Öµ£¬Èçcmdno,dateµÈ¡£
+	*ï¿½ï¿½Ê¼ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ä¬ï¿½Ï¸ï¿½Ò»Ð©ï¿½ï¿½ï¿½ï¿½Öµï¿½ï¿½ï¿½ï¿½cmdno,dateï¿½È¡ï¿½
 	*/
 	function init() {
-		//ÈÎÎñ´úÂë
+		//ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
 		$this->setParameter("cmdno", "1");
 		
-		//ÈÕÆÚ
+		//ï¿½ï¿½ï¿½ï¿½
 		$this->setParameter("date",  date("Ymd"));
 		
-		//ÉÌ»§ºÅ
+		//ï¿½Ì»ï¿½ï¿½ï¿½
 		$this->setParameter("bargainor_id", "");
 		
-		//²Æ¸¶Í¨½»Ò×µ¥ºÅ
+		//ï¿½Æ¸ï¿½Í¨ï¿½ï¿½ï¿½×µï¿½ï¿½ï¿½
 		$this->setParameter("transaction_id", "");
 		
-		//ÉÌ¼Ò¶©µ¥ºÅ
+		//ï¿½Ì¼Ò¶ï¿½ï¿½ï¿½ï¿½ï¿½
 		$this->setParameter("sp_billno", "");
 		
-		//ÉÌÆ·¼Û¸ñ£¬ÒÔ·ÖÎªµ¥Î»
+		//ï¿½ï¿½Æ·ï¿½Û¸ï¿½ï¿½Ô·ï¿½Îªï¿½ï¿½Î»
 		$this->setParameter("total_fee", "");
 		
-		//»õ±ÒÀàÐÍ
+		//ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
 		$this->setParameter("fee_type",  "1");
 		
-		//·µ»Øurl
+		//ï¿½ï¿½ï¿½ï¿½url
 		$this->setParameter("return_url",  "");
 		
-		//×Ô¶¨Òå²ÎÊý
+		//ï¿½Ô¶ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
 		$this->setParameter("attach",  "");
 		
-		//ÓÃ»§ip
+		//ï¿½Ã»ï¿½ip
 		$this->setParameter("spbill_create_ip",  "");
 		
-		//ÉÌÆ·Ãû³Æ
+		//ï¿½ï¿½Æ·ï¿½ï¿½ï¿½
 		$this->setParameter("desc",  "");
 		
-		//ÒøÐÐ±àÂë
+		//ï¿½ï¿½ï¿½Ð±ï¿½ï¿½ï¿½
 		$this->setParameter("bank_type",  "0");
 		
-		//×Ö·û¼¯±àÂë
+		//ï¿½Ö·ï¿½ï¿½ï¿½ï¿½
 		$this->setParameter("cs",  "gbk");
 		
 		//ÕªÒª
@@ -79,7 +79,7 @@ class PayRequestHandler extends RequestHandler {
 	
 	/**
 	*@Override
-	*´´½¨Ç©Ãû
+	*ï¿½ï¿½ï¿½ï¿½Ç©ï¿½ï¿½
 	*/
 	function createSign() {
 		$cmdno = $this->getParameter("cmdno");
@@ -114,7 +114,7 @@ class PayRequestHandler extends RequestHandler {
 		
 		$this->setParameter("sign", $sign);
 		
-		//debugÐÅÏ¢
+		//debugï¿½ï¿½Ï¢
 		$this->_setDebugInfo($signPars . " => sign:" . $sign);
 		
 	}
