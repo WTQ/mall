@@ -58,8 +58,8 @@ if(!empty($_GET['id']))
           <td><input class="text" type="text" name="url" value="<?php echo $val['url'];?>" /><spa class="bz">卖家发货后可以通过此接口查询货物状态</span></td>
         </tr>
         <tr>
-          <td>企业ＬＯＧＯ</td>
-          <td><input class="text" type="text" name="logo" value="<?php echo $val['logo'];?>" />[<a href="javascript:uploadfile('上传LOGO','logo',180,60,'')">上传</a>] 
+          <td>企业LOGO</td>
+          <td><input class="text" type="text" name="logo" id="logo" value="<?php echo $val['logo'];?>" />[<a href="javascript:uploadfile('上传LOGO','logo',180,60,'')">上传</a>] 
             [<a href="javascript:preview('logo');">预览</a>]
             [<a onclick="javascript:$('#logo').val('');" href="#">删除</a>] </td>
         </tr>
